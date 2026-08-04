@@ -29,8 +29,8 @@ export const HCToDraftmancer = (
       : idList?.length
       ? getRelatedsFromCards(idList, cardMap)
       : { cards: cardMap, tokens: new CardMap() };
-  const draftCards = HCCards.map(card => compressHCCardFaces(card));
-  const draftTokens = HCTokens.map(card => compressHCCardFaces(card));
+  const draftCards = HCCards.mapToMap(card => compressHCCardFaces(card));
+  const draftTokens = HCTokens.mapToMap(card => compressHCCardFaces(card));
 
   const getExportNameFromId = (id: string | undefined): string | undefined => {
     if (!id) return;
@@ -85,7 +85,7 @@ export const HCToDraftmancer = (
     }
   };
 
-  const tokens = draftTokens.mapToArray(card => {
+  const tokens = draftTokens.map(card => {
     const draftCard = HCCardToDraftmancerCard(card);
     const related = getRelatedList(card);
     if (related) {
@@ -98,7 +98,7 @@ export const HCToDraftmancer = (
     return draftCard;
   });
 
-  const cards = draftCards.mapToArray(card => {
+  const cards = draftCards.map(card => {
     const draftCard = HCCardToDraftmancerCard(card);
     const related = getRelatedList(card);
     if (related) {

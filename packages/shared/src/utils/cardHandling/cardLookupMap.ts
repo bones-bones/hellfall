@@ -194,6 +194,9 @@ class DoubleMap {
   };
 }
 
+/**
+ * Maps a card's names to the ids that it should use. Only for use in CardMap.
+ */
 export class CardLookupMap {
   /**
    * This maps a name to its individual maps

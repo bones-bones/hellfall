@@ -1,5 +1,5 @@
 import { DefaultInvariantMap, printInput } from './invariantMap';
-import { CardMap, landIdList } from './cardMap';
+import { landIdList } from './cardMap';
 
 const tokenOracleIdList: printInput[] = [
   ['Food', 'a468338f-635e-4206-89d6-72d723071d45'],
@@ -97,21 +97,5 @@ export const landNames = [
 ];
 
 export const landInvariantMap = new DefaultInvariantMap(landIdList);
-
-/**
- * Checks if a card name is the name of a land that can be used with {@linkcode getRandomLand}.
- * @param name name to check
- */
-export const isLandName = (name: string) => landInvariantMap.hasName(name);
-
-/**
- * Gets a random land given a land name.
- * @param name name of the land to get
- * @param cardMap CardMap to get the land from
- */
-export const getRandomLand = (name: string, cardMap: CardMap) =>
-  isLandName(name)
-    ? cardMap.getAllPrints(landInvariantMap.getOracleId(name)!).getRandomCard()
-    : undefined;
 
 export const tokenInvariantMap = new DefaultInvariantMap(tokenOracleIdList);

@@ -63,7 +63,7 @@ const mergeDatabases = (
   newTokens: CardMap
 ): HCCard.Any[] => {
   // newCards.forEach((newCard: HCCard.Any, id: string) => {});
-  const mergedCards = newCards.map((newCard: HCCard.Any, id: string) => {
+  const mergedCards = newCards.mapToMap((newCard: HCCard.Any, id: string) => {
     const existingCard = existingCards.get(movedIds[id] ?? id);
     if (existingCard) {
       existingCards.delete(existingCard.hcid);
@@ -79,7 +79,7 @@ const mergeDatabases = (
     });
   }
 
-  const mergedTokens = newTokens.map((newCard: HCCard.Any, id: string) => {
+  const mergedTokens = newTokens.mapToMap((newCard: HCCard.Any, id: string) => {
     const existingCard = existingTokens.get(movedIds[id] ?? id);
     if (existingCard) {
       existingTokens.delete(existingCard.hcid);
@@ -378,7 +378,7 @@ const main = async () => {
       if (card.layout == 'front') {
         updateParts(
           card,
-          finalCards.filterFromSetExact('HCJ', value => value.tags?.includes(card.tags![0]))
+          finalCards.filterFromSetExactToMap('HCJ', value => value.tags?.includes(card.tags![0]))
         );
       } else {
         updateParts(card, getAllRelatedPermissive(card, finalCards));

@@ -5,11 +5,9 @@ import {
   HCCardFace,
   HCFrameEffect,
   HCKind,
-  isSetCode,
   rootPropType,
 } from '@hellfall/shared/types';
 import {
-  allPartsChange,
   anyChange,
   cardFacesChange,
   changeType,
@@ -24,8 +22,6 @@ import {
   sortChanges,
 } from './changeTypes';
 import {
-  allPartsChangeIsValid,
-  getPartChangeIndex,
   isFaceChangePropType,
   isFaceChangeValueType,
   isRootChangePropType,

@@ -1,6 +1,6 @@
 import { HCCardSymbol, HCColors } from '@hellfall/shared/types';
 import { unescapeText } from '../textHandling';
-import { listsAreLooselyEqual, listsAreLooselyEqualLower, listsShare } from '../listHandling';
+import { getRandom, listsAreLooselyEqual, listsAreLooselyEqualLower, listsShare, stringIterable } from '../listHandling';
 import { orderColors } from './orderColors';
 
 const fixPip = (text: string) => unescapeText(text, true).replaceAll(' ', '');
@@ -150,18 +150,34 @@ export class PipMap {
   };
 
   /**
+   * Returns a portion of the PipMap object as a list, based on the provided list of symbols.
+   * @param symbolList the list of symbols to get
+   * @returns Returns the portion of the PipMap with the given symbols.
+   */
+  getMultiple = (symbolList: stringIterable): HCCardSymbol[] => {
+    const pips: HCCardSymbol[] = [];
+    for (const symbol of symbolList) {
+      const pip = this.get(symbol);
+      if (pip) {
+        pips.push(pip);
+      }
+    }
+    return pips;
+  }
+
+  /**
    * Returns a subset of the PipMap object as a new PipMap, based on the provided list of symbols.
    * @param symbolList the list of symbols to get
    * @returns Returns the subset of the PipMap with the given symbols.
    */
-  getSubset(symbolList: string[] | Set<string>): this {
+  getSubset(symbolList: stringIterable): this {
     const subMap = new (this.constructor as any)() as this;
-    symbolList.forEach(symbol => {
+    for (const symbol of symbolList) {
       const pip = this.get(symbol);
       if (pip) {
         subMap.set(pip);
       }
-    });
+    }
     return subMap;
   }
 
@@ -248,13 +264,13 @@ export class PipMap {
     }
   }
   /**
-   * Returns an array of the pips in the PipMap. This is symbolentical to `Array.from(PipMap.values())`
+   * Returns an array of the pips in the PipMap. This is identical to `Array.from(PipMap.values())`
    */
   pips(): HCCardSymbol[] {
     return Array.from(this.symbolMap.values());
   }
   /**
-   * Returns an array of the symbols in the PipMap. This is symbolentical to `Array.from(PipMap.keys())`
+   * Returns an array of the symbols in the PipMap. This is identical to `Array.from(PipMap.keys())`
    */
   symbols(): string[] {
     return Array.from(this.symbolMap.keys());
@@ -392,12 +408,12 @@ export class PipMap {
   /**
    * Gets a random symbol from this PipMap
    */
-  getRandomSymbol = (): string => this.symbols()[Math.floor(Math.random() * this.size)];
+  getRandomSymbol = (): string => getRandom(this.symbols());
 
   /**
    * Gets a random pip from this PipMap
    */
-  getRandomPip = (): HCCardSymbol => this.pips()[Math.floor(Math.random() * this.size)];
+  getRandomPip = (): HCCardSymbol => getRandom(this.pips())
 
   // #REGEXES
 
@@ -642,7 +658,7 @@ export class PipMap {
 
   /**
    * Calls a defined callback function on each pip, then flattens the resulting array.
-   * This is symbolentical to a map followed by flat with depth 1.
+   * This is identical to a map followed by flat with depth 1.
    * @template T The type that `callback` returns
    * @param callback A function that accepts up to two arguments.
    * The flatMap method calls the callbackfn function one time for each pip.
@@ -686,14 +702,44 @@ export class PipMap {
   /**
    * Returns the pips that meet the condition specified in a callback function.
    *
+   * If you're only checking the symbols, just use {@linkcode getMultiple} instead,
+   * since that'll be much faster
+   * @param predicate A function that accepts up to two arguments.
+   * The filter method calls the predicate function one time for each pip.
+   */
+  filter(predicate: (pip: HCCardSymbol) => any): HCCardSymbol[];
+  filter(predicate: (pip: HCCardSymbol, symbol: string) => any): HCCardSymbol[];
+  filter(predicate: (...args: any[]) => any): HCCardSymbol[] {
+    const pips: HCCardSymbol[] = [];
+    for (const [symbol, pip] of this) {
+      switch (predicate.length) {
+        case 2: {
+          if (predicate(pip, symbol)) {
+            pips.push(pip);
+          }
+          break;
+        }
+        default: {
+          if (predicate(pip)) {
+            pips.push(pip);
+          }
+        }
+      }
+    }
+    return pips;
+  }
+
+  /**
+   * Returns the pips that meet the condition specified in a callback function.
+   *
    * If you're only checking the symbols, just use {@linkcode getSubset} instead,
    * since that'll be much faster
    * @param predicate A function that accepts up to two arguments.
    * The filter method calls the predicate function one time for each pip.
    */
-  filter(predicate: (pip: HCCardSymbol) => any): this;
-  filter(predicate: (pip: HCCardSymbol, symbol: string) => any): this;
-  filter(predicate: (...args: any[]) => any): this {
+  filterToMap(predicate: (pip: HCCardSymbol) => any): this;
+  filterToMap(predicate: (pip: HCCardSymbol, symbol: string) => any): this;
+  filterToMap(predicate: (...args: any[]) => any): this {
     const subMap = new (this.constructor as any)() as this;
     for (const [symbol, pip] of this) {
       switch (predicate.length) {

@@ -12,7 +12,7 @@ import { makeSort, searchCards } from '@hellfall/shared/filters';
 export const useSearchResults = (asRandom?: boolean) => {
   // const { user } = useAuth();
   const [resultSet, setResultSet] = useState<HCCard.Any[]>([]);
-  const cards = useAtomValue(cardsAtom).filter(e => !e.tags?.includes('offensive'));
+  const cards = useAtomValue(cardsAtom).filterToMap(e => !e.tags?.includes('offensive'));
   const query = useAtomValue(queryAtom);
   const sortRules = useAtomValue(sortAtom);
   const [page, setPageAtom] = useAtom(pageAtom);
@@ -30,11 +30,8 @@ export const useSearchResults = (asRandom?: boolean) => {
   });
 
   useEffect(() => {
-    const tempResults = (
-      asRandom && query == '*'
-        ? cards
-        : searchCards(cards, query, inputUnique /*, user?.defaultPrefer, user?.defaultCludes */)
-    ).cards();
+    const tempResults =  asRandom && query == '*' ? cards.cards() : searchCards(cards, query, inputUnique /*, user?.defaultPrefer, user?.defaultCludes */);
+    
     if (asRandom) {
       setResultSet(tempResults);
       return;

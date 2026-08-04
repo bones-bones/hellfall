@@ -610,3 +610,16 @@ export const wrapArray = <T>(value: T | T[] | undefined): T[] | undefined =>
  */
 export const ensureArray = <T>(value: T | T[] | undefined): T[] =>
   value == undefined ? [] : !Array.isArray(value) ? [value] : value;
+
+export type stringIterable = string[]|Set<string>|IterableIterator<string>
+
+/**
+ * Gets a random element from a list
+ * @param list list to get a random from
+ */
+export const getRandom = (list: any[] | Set<any>) => {
+  if (Array.isArray(list)) {
+    return list[Math.floor(Math.random() * list.length)];
+  }
+  return Array.from(list)[Math.floor(Math.random() * list.size)];
+};

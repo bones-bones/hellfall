@@ -4,7 +4,10 @@ import { pushProp, xor } from '../listHandling';
 import { CardMap } from './cardMap';
 import { cardToRelatedCard } from './partsHandling';
 
-export type faceInvariant = { name: string; export_name?: string };
+/**
+ * The subset of a card face used for a {@linkcode printInvariant}
+ */
+type faceInvariant = { name: string; export_name?: string };
 
 /**
  * An object containing a card's invariant properties (i.e. those that don't change depending on the card print).
@@ -78,7 +81,7 @@ export const cardToInvariant = (card: HCCard.Any) => {
  * @param oldInvariant old invariant to merge
  * @param newInvariant new invariant to merge
  */
-export const mergeInvariants = (oldInvariant: printInvariant, newInvariant: printInvariant) => {
+const mergeInvariants = (oldInvariant: printInvariant, newInvariant: printInvariant) => {
   if (!oldInvariant.kind) {
     oldInvariant.kind = newInvariant.kind;
     if (oldInvariant.name != newInvariant.name) {
@@ -163,7 +166,7 @@ const mergeParts = (invariant: printInvariant, cardMap: CardMap) => {
   if (!newParts) {
     return;
   }
-  const defaultToken = cardToRelatedCard(tokensToUpdate.cards()[0]);
+  const defaultToken = cardToRelatedCard(tokensToUpdate[0]);
   const oracleSet = new Set(newParts.map(part => part.oracle_id));
   oracleSet.forEach(oracle_id => {
     const makersToUpdate = cardMap.getAllPrints(oracle_id);
@@ -177,7 +180,7 @@ const mergeParts = (invariant: printInvariant, cardMap: CardMap) => {
       }
       makerParts.push(defaultToken);
     });
-    const defaultMaker = cardToRelatedCard(makersToUpdate.cards()[0], 'token_maker');
+    const defaultMaker = cardToRelatedCard(makersToUpdate[0], 'token_maker');
 
     tokensToUpdate.forEach(token => {
       if (!token.all_parts) {
@@ -203,7 +206,7 @@ export type printInput = [string, string] | printInvariant;
  * Converts {@linkcode printInput} to {@linkcode printInvariant}
  * @param input input to convert
  */
-export const inputToInvariant = (input: printInput) =>
+const inputToInvariant = (input: printInput) =>
   Array.isArray(input) ? { name: input[0], oracle_id: input[1] } : input;
 
 /**
@@ -211,7 +214,7 @@ export const inputToInvariant = (input: printInput) =>
  * For use when you don't want to bother with {@linkcode inputToInvariant}.
  * @param input input to get the name from
  */
-export const getNameFromInput = (input: printInput) => {
+const getNameFromInput = (input: printInput) => {
   if (Array.isArray(input)) {
     return input[0];
   }
@@ -223,7 +226,7 @@ export const getNameFromInput = (input: printInput) => {
  * For use when you don't want to bother with {@linkcode inputToInvariant}.
  * @param input input to get the oracle id from
  */
-export const getOracleIdFromInput = (input: printInput) => {
+const getOracleIdFromInput = (input: printInput) => {
   if (Array.isArray(input)) {
     return input[1];
   }
@@ -246,7 +249,7 @@ export class InvariantMap {
   constructor();
   /**
    * Creates a new InvariantMap
-   * @param inputs The initial {@linkcode printInput} objects to set, if any
+   * @param inputs The initial {@linkcode printInput} or {@linkcode HCCard.Any} objects to set, if any
    */
   constructor(inputs: (printInput | HCCard.Any)[]);
   constructor(inputs?: (printInput | HCCard.Any)[]) {
@@ -283,19 +286,20 @@ export class InvariantMap {
    * Adds multiple new {@linkcode printInput} objects to the InvariantMap, skipping invalid oracle ids
    * @param inputs the inputs to add
    */
-  setMultiple(inputs: printInput[]): void;
+  setMultiple(inputs: (printInput|HCCard.Any)[]): void;
+  /**
+   * Adds all invariants in another InvariantMap to the InvariantMap, skipping invalid oracle ids
+   * @param inputs the inputs to add
+   */
   setMultiple(inputs: this): void;
-  setMultiple(inputs: printInput[] | this): void {
-    inputs.forEach(this.set);
-  }
-
   /**
    * Adds a CardMap to the InvariantMap, skipping invalid oracle ids
-   * @param cardMap the CardMap to add
+   * @param inputs the inputs to add
    */
-  setCardMap = (cardMap: CardMap) => {
-    cardMap.forEach(this.set);
-  };
+  setMultiple(inputs: CardMap): void;
+  setMultiple(inputs: (printInput|HCCard.Any)[] | this|CardMap): void {
+    (inputs as any).forEach(this.set);
+  }
 
   /**
    * @param oracle_id the oracle id to delete
@@ -522,8 +526,7 @@ export class InvariantMap {
   /**
    * Returns the first invariant that meets the condition specified in a callback function.
    *
-   * If you're only checking the oracle_id or name, just use {@linkcode getFromOracleId} or
-   * {@linkcode getFromName}, respectively, instead, since that'll be much faster
+   * Only use this if the normal getters won't be enough, since those use maps.
    * @param predicate A function that accepts up to three arguments.
    * The find method calls the predicate function one time for each invariant
    * until it finds one where the predicate returns true. If such an element is found,
@@ -694,6 +697,8 @@ export class InvariantMap {
 /**
  * The class for mapping names and oracle IDs to invariant properties
  * (i.e. those that don't change depending on the card print).
+ * 
+ * This one is for use on the backend only.
  */
 export class DefaultInvariantMap extends InvariantMap {
   /**
@@ -777,23 +782,6 @@ export class DefaultInvariantMap extends InvariantMap {
     this.oracleIdMap.set(invariant.oracle_id, invariant);
   };
 
-  /**
-   * Adds multiple new {@linkcode printInput} objects to the InvariantMap, skipping invalid oracle ids
-   * @param inputs the inputs to add
-   */
-  setMultiple(inputs: printInput[]): void;
-  setMultiple(inputs: this): void;
-  setMultiple(inputs: printInput[] | this): void {
-    inputs.forEach(this.set);
-  }
-
-  /**
-   * Adds a CardMap to the InvariantMap, skipping invalid oracle ids
-   * @param cardMap the CardMap to add
-   */
-  setCardMap = (cardMap: CardMap) => {
-    cardMap.forEach(this.set);
-  };
 
   /**
    * @param input the input to delete (only deletes exact matches)

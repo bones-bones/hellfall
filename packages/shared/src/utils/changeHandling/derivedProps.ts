@@ -674,9 +674,8 @@ export const buildInvariant = (card: HCCard.Any, takenNames: Set<string>): print
 /**
  * Builds the invariant props for all cards in a {@linkcode CardMap} (including export props)
  * @param cardMap The CardMap to use
- * @param takenNames list of names that are already taken (for the purposes of setting `export_name`)
  */
-export const buildInvariantMap = (cardMap: CardMap, takenNames: string[]) => {
+export const buildInvariantMap = (cardMap: CardMap) => {
   const invariantMap = new InvariantMap();
   cardMap.forEach(card => {
     if (invariantMap.has(card.oracle_id)) {

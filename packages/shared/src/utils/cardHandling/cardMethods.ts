@@ -400,8 +400,8 @@ export const getHc5 = (): CardMap =>
  * @param card card to get the related cards to
  * @param cardMap CardMap containing all cards
  *
- * This version will also try to match hcid and name, so it's exhaustive,
- * but it's not suitable for use on the frontend due to its slowness
+ * This version will also try to match hcid and name, so it's exhaustive, but it's not as suitable
+ * for use on the frontend. However, it's probably ok in general since it uses maps only now.
  *
  * For a fast version, use {@linkcode getAllRelated}
  */
@@ -425,7 +425,6 @@ export const getAllRelated = (card: HCCard.Any, cardMap: CardMap): CardMap =>
  * Gets the cards and tokens for a list of card ids
  * @param idList List of card ids to get
  * @param cardMap CardMap containing all cards
- * @returns
  */
 export const getRelatedsFromCards = (
   idList: string[],
@@ -461,11 +460,11 @@ export const getRelatedsFromSet = (
   if (set == 'HCJ' && moveNonDraftablesToTokens) {
     const { cards, tokens } = getRelatedsFromSet(set, cardMap, false);
     cards.setMultiple(tokens);
-    const fronts = cards.getAllInSet('FHCJ');
+    const fronts = cards.getAllInSetAsSubmap('FHCJ');
     cards.deleteMultiple(fronts.ids());
     return { cards: fronts, tokens: cards };
   }
-  const cards: CardMap = cardMap.getAllInSetDirect(set);
+  const cards: CardMap = cardMap.getAllInSetDirectAsSubmap(set);
   const tokens: CardMap = cardMap.getSubset(
     cards.flatMap(
       card =>
@@ -484,3 +483,10 @@ export const getRelatedsFromSet = (
   }
   return { cards, tokens };
 };
+
+/**
+ * Checks whether a card can be in decks
+ * @param card card to check
+ */
+export const canBeInDecks = (card: HCCard.Any) =>
+  ['card'].includes(card.kind) || card.tags?.includes('draftpartner');

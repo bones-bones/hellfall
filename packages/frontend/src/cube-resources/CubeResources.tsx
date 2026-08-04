@@ -335,7 +335,7 @@ export const CubeResources = () => {
                         };
                       });
 
-                      const printableCards = intCards.mapToArray(cardEntry => {
+                      const printableCards = intCards.map(cardEntry => {
                         const matches = cardList.filter(e => e.Cardname == cardEntry.name);
                         if (cardEntry.name.includes('// Elves')) {
                           console.log(cardList, matches);

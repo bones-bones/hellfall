@@ -4,6 +4,14 @@ import { wrapArray } from './listHandling';
 
 const sets = setsData.data;
 
+/**
+ * maps set codes to sets
+ */
+const setMap = new Map(sets.map(set=>[set.code,set]));
+
+/**
+ * The list of sets 
+ */
 export const colorOrderSetList = sets.filter(set => set.use_color_order).map(set => set.code);
 
 export const toSetNumber = (code: SetCode) => allSetsList.indexOf(code);
@@ -25,7 +33,7 @@ export const displaySetCode = <T extends string>(code: T) =>
  * @param code input to fix
  */
 export const fixSetCodeMaybe = <T extends string>(code?: T) =>
-  code ? (code.toUpperCase().replaceAll('.', '_') as T) : code;
+  code ? (fixSetCode(code)) : code;
 
 /**
  * The list of sets that should only be included if include:extras is used
@@ -50,8 +58,7 @@ export const allExceptNormal = allSetsList.filter(set => set != 'NRM');
  * Gets the set object given a set code
  * @param code the set code to get the set for
  */
-export const getSet = (code: SetCode): HCSet | undefined =>
-  sets.find(set => set.code == fixSetCode(code));
+export const getSet = (code: SetCode): HCSet | undefined => setMap.get(fixSetCode(code));
 
 /**
  * Gets the src of a set symbol image

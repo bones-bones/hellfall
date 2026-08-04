@@ -211,13 +211,13 @@ export const invariantToCockProps = (
 ): CockCardProps => {
   const prints = cardMap.getAllPrints(invariant.oracle_id);
   const compressedPrints = prints.map(compressHCCardFaces);
-  const defaultPrint = compressedPrints.cards()[0];
+  const defaultPrint = compressedPrints[0];
   const cockCard: CockCardProps = {
     coloridentity: defaultPrint.color_identity.join(''),
     props: [],
     prints: [],
   };
-  cockCard.prints = compressedPrints.mapToArray(print => {
+  cockCard.prints = compressedPrints.map(print => {
     const cockPrint: CockPrintProps = {
       hcid: print.hcid,
       uuid: print.id,
