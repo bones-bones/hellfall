@@ -1,15 +1,17 @@
 import { Firestore } from '@google-cloud/firestore';
 import { HCCard, HCKind, HCImageStatus, SetCode } from '@hellfall/shared/types';
 import {
+  baseInvariantMap,
   getDefaultCard,
   isValidV4UUID,
   setDerivedProps,
-  splitMasterpiece,
+  stripMasterpiece,
 } from '@hellfall/shared/utils';
 import { cardToFirestore, cardsCollection, firestoreCard } from '@hellfall/shared/utils/firestore';
 import { withCors, env, requirePostcardAuth, HandlerRequest, HandlerResponse } from './lib';
 import { scheduleCatalogPublish } from '../lib/publishCatalog.ts';
 import { uploadImageBase64ToGcs } from '../lib/imageGcs.ts';
+import { cardMap } from './cardMap.ts';
 
 const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
 const cardsCol: cardsCollection = db.collection(env.FIRESTORE_CARDS_COLLECTION);
@@ -23,6 +25,8 @@ type PostcardBody = {
   creators?: string;
   set?: string;
   hcid?: string;
+  /** Hellfall print UUID (sheet BB). Used for GCS image keys; never use hcid for that. */
+  id?: string;
   kind?: PostcardKind;
 };
 
@@ -97,12 +101,29 @@ function newCardId(): string {
 }
 const newUnlessValid = (id?: string) => (id && isValidV4UUID(id) ? id : newCardId());
 
-// function resolveCardId(docId: string, data: firestoreCard): string {
-//   const fromDoc = data?.id?.trim();
-//   if (fromDoc && isValidV4UUID(fromDoc)) return fromDoc;
-//   if (isValidV4UUID(docId)) return docId;
-//   return newCardId();
-// }
+function catalogIdForHcid(hcid: string): string | undefined {
+  const id = cardMap.getFromHCID(hcid)?.id?.trim();
+  return id && isValidV4UUID(id) ? id : undefined;
+}
+
+/** Resolve print UUID for GCS image keys — never use hcid as the object key. */
+function resolvePostcardCardId(
+  body: PostcardBody,
+  existing: { id: string; data: () => firestoreCard | undefined } | null,
+  previous: firestoreCard | null
+): string {
+  const fromBody = body.id?.trim();
+  if (fromBody && isValidV4UUID(fromBody)) return fromBody;
+  const fromData = previous?.id?.trim();
+  if (fromData && isValidV4UUID(fromData)) return fromData;
+  if (existing && isValidV4UUID(existing.id)) return existing.id;
+  const hcid = body.hcid?.trim();
+  if (hcid) {
+    const fromCatalog = catalogIdForHcid(hcid);
+    if (fromCatalog) return fromCatalog;
+  }
+  return newCardId();
+}
 // function resolveOracleId(docId: string, data: firestoreCard, oracleId?: string): string {
 //   const fromDoc = data?.oracle_id?.trim();
 //   if (fromDoc && isValidV4UUID(fromDoc)) return fromDoc;
@@ -148,11 +169,11 @@ async function findByHcid(hcid: string) {
   return matches.docs[0] ?? null;
 }
 
-async function findMasterpiece(name: string) {
-  const match = (
-    await cardsCol.where('name', '==', splitMasterpiece(name).name).limit(2).get()
-  ).docs[0].data();
-  return match.oracle_id;
+async function findMasterpiece(name: string): Promise<string | undefined> {
+  const snapshot = await cardsCol.where('name', '==', stripMasterpiece(name)).limit(2).get();
+  const doc = snapshot.docs[0];
+  if (!doc) return undefined;
+  return doc.data().oracle_id;
 }
 
 // async function findByNameAndSet(name: string, setId: string) {
@@ -221,7 +242,7 @@ async function upsertPostcard(body: PostcardBody) {
   const setId = kind === 'token' ? 'HCT' : body.set;
   const existing = await findByHcid(body.hcid.trim());
   const previous: firestoreCard | null = existing?.data() ?? null;
-  const cardId = newUnlessValid(previous?.id);
+  const cardId = resolvePostcardCardId(body, existing, previous);
   const oracle_id = newUnlessValid(previous?.oracle_id ?? (await findMasterpiece(body.name)));
 
   const imageUrl = await resolveImageUrl(body, cardId);
@@ -229,7 +250,7 @@ async function upsertPostcard(body: PostcardBody) {
 
   if (existing?.exists && previous) {
     const update: firestoreCard = {
-      name: splitMasterpiece(body.name).name,
+      name: stripMasterpiece(body.name),
       image: imageUrl,
       image_status: HCImageStatus.HighRes,
       creators: parseCreators(body.creators),
@@ -240,10 +261,12 @@ async function upsertPostcard(body: PostcardBody) {
     if (oracle_id !== previous.oracle_id) update.oracle_id = oracle_id;
     await existing.ref.update(update);
     scheduleCatalogPublish();
+    const int_oracle_id = baseInvariantMap.getName(oracle_id) ?? oracle_id;
+    const oracle_id_to_use = int_oracle_id == body.name.toLowerCase() ? '' : int_oracle_id;
     return {
       docId: existing.id,
       id: cardId,
-      oracle_id: oracle_id,
+      oracle_id: oracle_id_to_use,
       wasCreate: false,
       previous,
       imageUrl,
