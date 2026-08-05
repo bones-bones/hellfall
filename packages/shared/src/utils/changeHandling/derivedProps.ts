@@ -36,6 +36,7 @@ import {
   toFaces,
   cleanParts,
   updateParts,
+  getAllRelatedPermissive,
 } from '../cardHandling';
 import { orderColors, orderHybrid, pipMap } from '../pipsAndColors';
 import { isInteger } from '../numHandling';
@@ -567,24 +568,13 @@ export const buildInvariant = (card: HCCard.Any, takenNames: Set<string>): print
         exportName += ' Token';
       }
     }
-    // if (exportName.startsWith('(')) {
-    //   // #test
-    //   exportName = '_' + exportName;
-    // }
     if (/^[\d/]+ /.test(exportName)) {
-      // #test
       exportName = '_' + exportName;
     }
-    // if (exportName.endsWith(')')) {
-    //   // #test
-    //   exportName += '_';
-    // }
     if (isInteger(exportName)) {
-      // #test
       exportName = '_' + exportName;
     }
     while (takenNames.has(exportName.toLowerCase())) {
-      // #test
       exportName += '_';
     }
     return exportName;
@@ -744,9 +734,9 @@ export const mergeFromSheet = (existingCard: HCCard.Any, newCard: HCCard.Any): H
  * @param cardMap the map of cards
  */
 export const applyFromMap = (card: HCCard.Any, changeList: anyChange[], cardMap: CardMap) => {
-  const oldRelateds = getAllRelated(card, cardMap);
+  const oldRelateds = getAllRelatedPermissive(card, cardMap);
   if (!applyChanges(card, changeList)) return;
-  const newRelateds = getAllRelated(card, cardMap);
+  const newRelateds = getAllRelatedPermissive(card, cardMap);
   setDerivedProps(card);
   updateParts(card, newRelateds);
   cleanParts(card, oldRelateds);

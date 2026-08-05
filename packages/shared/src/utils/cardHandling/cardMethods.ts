@@ -401,13 +401,13 @@ export const getHc5 = (): HCCard.Any[] =>
  * @param card card to get the related cards to
  * @param cardMap CardMap containing all cards
  *
- * This version will also try to match hcid and name, so it's exhaustive, but it's not as suitable
- * for use on the frontend. However, it's probably ok in general since it uses maps only now.
+ * This version will also try to match hcid and name, so it's exhaustive, and it also builds a CardMap.
+ * Don't use this on the frontend.
  *
  * For a fast version, use {@linkcode getAllRelated}
  */
-export const getAllRelatedPermissive = (card: HCCard.Any, cardMap: CardMap): HCCard.Any[] =>
-  card.all_parts?.flatMap(part => cardMap.getFromPart(part) ?? []) ?? [];
+export const getAllRelatedPermissive = (card: HCCard.Any, cardMap: CardMap): CardMap =>
+  new CardMap(card.all_parts?.flatMap(part => cardMap.getFromPart(part) ?? []) ?? []);
 
 /**
  * Gets all related cards to a given card

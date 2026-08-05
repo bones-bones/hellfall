@@ -417,7 +417,6 @@ const main = async () => {
         tokenNames.includes(newInvariant.name) ? '(Token)' : 'Token'
       }`;
       while (takenNames.has(exportName.toLowerCase())) {
-        // #test
         exportName += '_';
       }
       newInvariant.export_name = exportName;
