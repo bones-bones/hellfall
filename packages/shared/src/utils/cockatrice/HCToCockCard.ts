@@ -1,7 +1,7 @@
 import { faceType, HCCard, HCLayout, HCRelatedCard } from '@hellfall/shared/types';
 import { CockCardProps, CockFaceProps, CockPrintProps, CockRelatedProps } from './cockTypes';
 import { orderColors } from '../pipsAndColors';
-import { CardMap, mergeHCCardFaces, printInvariant, toFaces } from '../cardHandling';
+import { CardMap, LightCardMap, mergeHCCardFaces, printInvariant, toFaces } from '../cardHandling';
 import { listIncludesValueLower } from '../listHandling';
 import { toTitleCase } from '../textHandling';
 
@@ -207,7 +207,7 @@ const compressHCCardFaces = (card: HCCard.Any): HCCard.Any => {
  */
 export const invariantToCockProps = (
   invariant: printInvariant,
-  cardMap: CardMap
+  cardMap: LightCardMap
 ): CockCardProps => {
   const prints = cardMap.getAllPrints(invariant.oracle_id);
   const compressedPrints = prints.map(compressHCCardFaces);

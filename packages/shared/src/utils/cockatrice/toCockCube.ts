@@ -2,11 +2,17 @@
 import { DOMParser, XMLSerializer } from 'xmldom';
 import { allSetsList, HCSet, SetCode } from '@hellfall/shared/types';
 import { CockCardProps } from './cockTypes';
-import { CardMap, getRelatedsFromCards, getRelatedsFromSet, InvariantMap } from '../cardHandling';
+import {
+  CardMap,
+  getRelatedsFromCards,
+  getRelatedsFromSet,
+  InvariantMap,
+  LightCardMap,
+} from '../cardHandling';
 import { invariantToCockProps } from './HCToCockCard';
 import { prettifyXml } from './prettifyXml';
 import { toTitleCase } from '../textHandling';
-import { getSet } from '../setHandling';
+import { getSet, toSetNumber } from '../setHandling';
 
 type RecursiveChild = (Node | RecursiveChild)[];
 
@@ -36,13 +42,17 @@ export const toCockCubeJSON = (
   set?: SetCode,
   idList?: string[]
 ): { cards: CockCardProps[]; tokens: CockCardProps[]; sets: SetCode[] } => {
-  const { cards: HCCards, tokens: HCTokens } =
+  const { cards: HCCardList, tokens: HCTokenList } =
     set && (cardMap.hasSet(set) || set == 'HC5')
       ? getRelatedsFromSet(set, cardMap)
       : idList?.length
       ? getRelatedsFromCards(idList, cardMap)
-      : { cards: cardMap, tokens: new CardMap() };
-  const sets = allSetsList.filter(code => HCCards.hasSetExact(code) || HCTokens.hasSetExact(code));
+      : { cards: cardMap.cards(), tokens: [] };
+  const HCCards = new LightCardMap(HCCardList);
+  const HCTokens = new LightCardMap(HCTokenList);
+  const intSets = HCCards.sets();
+  intSets.push(...HCTokens.sets());
+  const sets = Array.from(new Set(intSets)).sort((a, b) => toSetNumber(a) - toSetNumber(b));
   const invariantCards = new InvariantMap(HCCards.cards());
   const invariantTokens = new InvariantMap(HCTokens.cards());
   const cockCards = new Map(

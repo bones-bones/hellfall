@@ -98,7 +98,7 @@ export const getPreference = (cards: HCCard.Any[], prefer: preferType): HCCard.A
 /**
  * The lightweight version of a class for a map of cards.
  *
- * Only maps ids to their cards and oracle ids to their ids.
+ * Only maps ids to their cards and oracle ids and sets to their ids.
  */
 export class LightCardMap {
   /**
@@ -109,6 +109,10 @@ export class LightCardMap {
    * Maps oracle ids to the card ids they are associated with
    */
   protected oracleMap = new Map<string, Set<string>>();
+  /**
+   * Maps set codes to the card ids they are associated with
+   */
+  protected setMap = new Map<SetCode, Set<string>>();
   /**
    * Creates a new CardMap
    */
@@ -261,6 +265,151 @@ export class LightCardMap {
   }
 
   /**
+   * Returns the ids of the cards exactly in the given set.
+   * @param code the set code to get
+   */
+  getAllIdsInSetExact = (code: SetCode): Set<string> | undefined => this.setMap.get(code);
+
+  /**
+   * Returns the ids of the cards in the given set.
+   * @param code the set code to get
+   */
+  getAllIdsInSet = (code: SetCode): Set<string> | undefined =>
+    combineSets(
+      this.getAllIdsInSetExact(code),
+      ...(getChildSets(code)?.map(this.getAllIdsInSetExact) ?? [])
+    );
+
+  /**
+   * Returns the ids of the cards directly in the given set.
+   * @param code the set code to get
+   */
+  getAllIdsInSetDirect = (code: SetCode): Set<string> | undefined =>
+    combineSets(
+      this.getAllIdsInSetExact(code),
+      ...(getDirectChildSets(code)?.map(this.getAllIdsInSetExact) ?? [])
+    );
+
+  /**
+   * Returns the portion of the CardMap object exactly in the given set as a list.
+   * @param code the set code to get
+   */
+  getAllInSetExact(code: SetCode): HCCard.Any[] {
+    return this.getMultiple(this.getAllIdsInSetExact(code) ?? []);
+  }
+
+  /**
+   * Returns the subset of the CardMap object exactly in the given set as a new CardMap.
+   * @param code the set code to get
+   */
+  getAllInSetExactAsSubmap(code: SetCode): this {
+    return this.getSubset(this.getAllIdsInSetExact(code) ?? []);
+  }
+
+  /**
+   * Returns the portion of the CardMap object in the given set as a list.
+   * @param code the set code to get
+   */
+  getAllInSet(code: SetCode): HCCard.Any[] {
+    return this.getMultiple(this.getAllIdsInSet(code) ?? []);
+  }
+
+  /**
+   * Returns the subset of the CardMap object in the given set as a new CardMap.
+   * @param code the set code to get
+   */
+  getAllInSetAsSubmap(code: SetCode): this {
+    return this.getSubset(this.getAllIdsInSet(code) ?? []);
+  }
+
+  /**
+   * Returns the portion of the CardMap object directly in the given set as a list.
+   * @param code the set code to get
+   * @returns excludes cards with different set types e.g. vetoed cards
+   */
+  getAllInSetDirect(code: SetCode): HCCard.Any[] {
+    return this.getMultiple(this.getAllIdsInSetDirect(code) ?? []);
+  }
+
+  /**
+   * Returns the subset of the CardMap object directly in the given set as a new CardMap.
+   * @param code the set code to get
+   * @returns excludes cards with different set types e.g. vetoed cards
+   */
+  getAllInSetDirectAsSubmap(code: SetCode): this {
+    return this.getSubset(this.getAllIdsInSetDirect(code) ?? []);
+  }
+
+  /**
+   * Returns the ids of the cards exactly in the given sets.
+   * @param codeList the list of set codess to get
+   */
+  getAllIdsInSetListExact = (codeList: SetCode[]): Set<string> | undefined =>
+    combineSets(...codeList.map(this.getAllIdsInSetExact));
+
+  /**
+   * Returns the ids of the cards in the given sets.
+   * @param codeList the list of set codess to get
+   */
+  getAllIdsInSetList = (codeList: SetCode[]): Set<string> | undefined =>
+    combineSets(...codeList.map(this.getAllIdsInSet));
+
+  /**
+   * Returns the ids of the cards directly in the given sets.
+   * @param codeList the list of set codess to get
+   */
+  getAllIdsInSetListDirect = (codeList: SetCode[]): Set<string> | undefined =>
+    combineSets(...codeList.map(this.getAllIdsInSetDirect));
+
+  /**
+   * Returns the portion of the CardMap object exactly in the given sets as a list.
+   * @param codeList the list of set codess to get
+   */
+  getAllInSetListExact(codeList: SetCode[]): HCCard.Any[] {
+    return this.getMultiple(this.getAllIdsInSetListExact(codeList) ?? []);
+  }
+
+  /**
+   * Returns the subset of the CardMap object exactly in the given sets as a new CardMap.
+   * @param codeList the list of set codess to get
+   */
+  getAllInSetListExactAsSubmap(codeList: SetCode[]): this {
+    return this.getSubset(this.getAllIdsInSetListExact(codeList) ?? []);
+  }
+
+  /**
+   * Returns the portion of the CardMap object in the given sets as a list.
+   * @param codeList the list of set codess to get
+   */
+  getAllInSetList(codeList: SetCode[]): HCCard.Any[] {
+    return this.getMultiple(this.getAllIdsInSetList(codeList) ?? []);
+  }
+
+  /**
+   * Returns the subset of the CardMap object in the given sets as a new CardMap.
+   * @param codeList the list of set codess to get
+   */
+  getAllInSetListAsSubmap(codeList: SetCode[]): this {
+    return this.getSubset(this.getAllIdsInSetList(codeList) ?? []);
+  }
+
+  /**
+   * Returns the portion of the CardMap object directly in the given sets as a list.
+   * @param codeList the list of set codess to get
+   */
+  getAllInSetListDirect(codeList: SetCode[]): HCCard.Any[] {
+    return this.getMultiple(this.getAllIdsInSetListDirect(codeList) ?? []);
+  }
+
+  /**
+   * Returns the subset of the CardMap object directly in the given sets as a new CardMap.
+   * @param codeList the list of set codess to get
+   */
+  getAllInSetListDirectAsSubmap(codeList: SetCode[]): this {
+    return this.getSubset(this.getAllIdsInSetListDirect(codeList) ?? []);
+  }
+
+  /**
    * Gets a random id from this CardMap
    * @param oracle_id oracle id to get from, if any
    */
@@ -281,6 +430,7 @@ export class LightCardMap {
   set = (card: HCCard.Any) => {
     this.idMap.set(card.id, card);
     pushToMap(this.oracleMap, card.oracle_id, card.id);
+    pushToMap(this.setMap, card.set, card.id);
   };
 
   /**
@@ -304,6 +454,12 @@ export class LightCardMap {
     if (oracle?.size == 0) {
       this.oracleMap.delete(value.oracle_id);
     }
+    const set = this.setMap.get(value.set);
+    set?.delete(id);
+    if (set?.size == 0) {
+      this.setMap.delete(value.set);
+    }
+    this.idMap.delete(id);
     return true;
   };
 
@@ -316,8 +472,39 @@ export class LightCardMap {
   /**
    * Checks if a card with the specified id exists, and if it is in the specified set, if any.
    * @param id the id to check for
+   * @param set the set to look inside, if any
    */
-  has = (id: string) => this.idMap.has(id);
+  has = (id: string, set?: SetCode) => {
+    if (set) {
+      return Boolean(
+        this.setMap.get(set)?.has(id) ||
+          getChildSets(set)?.some(subSet => this.setMap.get(subSet)?.has(id))
+      );
+    }
+    return this.idMap.has(id);
+  };
+
+  /**
+   * Checks if a card with the specified id exists in the specified exact set.
+   * @param id the id to check for
+   * @param set the exact set to look inside
+   */
+  hasExact = (id: string, set: SetCode) => Boolean(this.setMap.get(set)?.has(id));
+
+  /**
+   * Checks if the specified set exists in this CardMap.
+   * @param set the set to check for
+   */
+  hasSet = (set: SetCode) =>
+    Boolean(
+      this.setMap.get(set)?.size || getChildSets(set)?.some(subSet => this.setMap.get(subSet)?.size)
+    );
+
+  /**
+   * Checks if the specified exact set exists in this CardMap.
+   * @param set the exact set to check for
+   */
+  hasSetExact = (set: SetCode) => Boolean(this.setMap.get(set)?.size);
 
   /**
    * Checks if a card with the specified oracle id exists
@@ -380,6 +567,13 @@ export class LightCardMap {
    */
   oracle_ids(): string[] {
     return Array.from(this.oracleMap.keys());
+  }
+
+  /**
+   * Returns an array of the exact sets in the CardMap.
+   */
+  sets(): SetCode[] {
+    return Array.from(this.setMap.keys());
   }
 
   /**
@@ -594,6 +788,66 @@ export class LightCardMap {
   }
 
   /**
+   * Returns the cards in a set that meet the condition specified in a callback function.
+   * @param set The set to look inside.
+   * @param predicate A function that accepts up to two arguments.
+   * The find method calls the predicate function one time for each card in the set until returning true.
+   */
+  findFromSet(set: SetCode, predicate: (card: HCCard.Any) => any): HCCard.Any | undefined;
+  findFromSet(
+    set: SetCode,
+    predicate: (card: HCCard.Any, id: string) => any
+  ): HCCard.Any | undefined;
+  findFromSet(set: SetCode, predicate: (...args: any[]) => any): HCCard.Any | undefined {
+    for (const card of this.getAllInSet(set)) {
+      switch (predicate.length) {
+        case 2: {
+          if (predicate(card, card.id)) {
+            return card;
+          }
+          break;
+        }
+        default: {
+          if (predicate(card)) {
+            return card;
+          }
+        }
+      }
+    }
+    return undefined;
+  }
+
+  /**
+   * Returns the cards exactly in a set that meet the condition specified in a callback function.
+   * @param set The set to look inside exactly.
+   * @param predicate A function that accepts up to two arguments.
+   * The find method calls the predicate function one time for each card in the set until returning true.
+   */
+  findFromSetExact(set: SetCode, predicate: (card: HCCard.Any) => any): HCCard.Any | undefined;
+  findFromSetExact(
+    set: SetCode,
+    predicate: (card: HCCard.Any, id: string) => any
+  ): HCCard.Any | undefined;
+  findFromSetExact(set: SetCode, predicate: (...args: any[]) => any): HCCard.Any | undefined {
+    for (const card of this.getAllInSetExact(set)) {
+      switch (predicate.length) {
+        case 2: {
+          if (predicate(card, card.id)) {
+            return card;
+          }
+          break;
+        }
+        default: {
+          if (predicate(card)) {
+            return card;
+          }
+        }
+      }
+    }
+    return undefined;
+  }
+
+  /**
    * Returns the cards that meet the condition specified in a callback function as an array.
    *
    * If you're only checking the ids or sets, just use {@linkcode getSubset}
@@ -750,477 +1004,6 @@ export class LightCardMap {
     }
     return subMap;
   }
-
-  /**
-   * Calls the specified callback function for all the cards in a CardMap.
-   * The return value of the callback function is the accumulated result,
-   * and is provided as an argument in the next call to the callback function.
-   * @template U the type of the value that is accumulated
-   * @param callbackfn A function that accepts two arguments.
-   * The reduce method calls the callbackfn function one time for each element in the array.
-   * @param initialValue If initialValue is specified, it is used as the initial value to start
-   * the accumulation. The first call to the callbackfn function provides this value as an argument.
-   */
-  reduce<U>(callbackfn: (previousValue: U, card: HCCard.Any) => U, initialValue: U): U {
-    let accumulator: U = initialValue;
-    for (const card of this.values()) {
-      accumulator = callbackfn(accumulator, card);
-    }
-    return accumulator;
-  }
-}
-
-/**
- * The class for a map of cards.
- */
-export class CardMap extends LightCardMap {
-  /**
-   * Maps set codes to the card ids they are associated with
-   */
-  protected setMap = new Map<SetCode, Set<string>>();
-  /**
-   * Maps names to the card ids they are associated with
-   */
-  protected lookupMap = new CardLookupMap();
-  /**
-   * Creates a new CardMap
-   */
-  constructor();
-  /**
-   * Creates a new CardMap
-   * @param cards The initial cards to set, if any
-   */
-  constructor(cards: HCCard.Any[]);
-  constructor(cards?: HCCard.Any[]) {
-    super();
-    if (!cards) return;
-    cards.forEach(this.set);
-  }
-
-  /**
-   * Returns a specified id from the CardMap object.
-   * If no card has the specified id, the name is returned
-   * @param name the name of the card to get
-   */
-  getIDFromName = (name: string) => this.lookupMap.get(name) ?? name;
-
-  /**
-   * Returns a specified card from the CardMap object.
-   * Any change made to that card will effectively modify it inside the CardMap.
-   * If no card has the specified name, undefined is returned
-   * @param name the name of the card to get
-   */
-  getFromName = (name: string) => this.idMap.get(this.getIDFromName(name));
-
-  /**
-   * Returns a specified card from the CardMap object.
-   * Any change made to that card will effectively modify it inside the CardMap.
-   * If no card has the specified name, undefined is returned
-   * @param name the name of the card to get
-   * @param code the set code to use, if any
-   * @param collector_number the collector number to use, if any
-   */
-  getFromNameSetAndNumber = (name: string, code?: SetCode, collector_number?: string) =>
-    this.idMap.get(
-      this.lookupMap.getBySetAndNumber(
-        fixName(name),
-        fixSetCodeMaybe(code),
-        collector_number && fixName(collector_number)
-      ) ?? fixName(name)
-    );
-  /**
-   * Returns a specified card from the CardMap object.
-   * Any change made to that card will effectively modify it inside the CardMap.
-   * If no card has the specified hcid, undefined is returned
-   * @param hcid the hcid of the card to get
-   */
-  getFromHCID = (hcid: string) => this.idMap.get(this.lookupMap.getFromHCID(hcid) ?? '');
-
-  /**
-   * Returns the correct card for a card name and a number of prints, if any.
-   *
-   * Suitable for use in the deckbuilder.
-   * @param text the name of the card to get
-   */
-  getForDeck = (text: string): { card?: HCCard.Any; count?: number } => {
-    const fixed = fixName(text);
-    const first = fixed.split(' ')[0];
-    const count = parseInt(first);
-    if (isInteger(first) && count > 0 && first.length != fixed.length) {
-      const card = this.getForDeck(fixed.slice(first.length + 1))?.card;
-      if (card) {
-        return { card, count };
-      }
-    }
-    const { name, code, collector_number } = splitCardName(fixed);
-    const isLand = isLandName(name);
-    const id = this.lookupMap.getBySetAndNumber(name, code, collector_number, isLand);
-    if (id) {
-      const card = this.get(id)!;
-      return { card };
-    } else if (isLand) {
-      return { card: this.getRandomCard(landIdMap.get(name)) };
-    }
-    if (isInteger(first) && count > 0) {
-      return { count };
-    }
-    return {};
-  };
-
-  /**
-   * Returns a specified card from the CardMap object.
-   * Any change made to that card will effectively modify it inside the CardMap.
-   * If no card has the specified hcid, undefined is returned
-   * @param part the related card for the card to get
-   */
-  getFromPart = (part: HCRelatedCard) =>
-    this.get(part.id) ??
-    this.getFromHCID(part.hcid) ??
-    this.getFromNameSetAndNumber(part.name, part.set);
-
-  /**
-   * Returns a portion of the CardMap object as a list, based on a provided list of names.
-   * @param nameList the names to use
-   */
-  getCardsByNames = (nameList: stringIterable) => {
-    const cards: HCCard.Any[] = [];
-    for (const name of nameList) {
-      const card = this.get(this.getIDFromName(name));
-      if (card) {
-        cards.push(card);
-      }
-    }
-    return cards;
-  };
-
-  /**
-   * Returns a subset of the CardMap object as a new CardMap, based on a provided list of names.
-   * @param nameList the names to use
-   */
-  getCardsByNamesAsSubset = (nameList: stringIterable) => {
-    const subMap = new (this.constructor as any)() as this;
-    for (const name of nameList) {
-      const card = this.get(this.getIDFromName(name));
-      if (card) {
-        subMap.set(card);
-      }
-    }
-    return subMap;
-  };
-
-  /**
-   * Returns the ids of the cards exactly in the given set.
-   * @param code the set code to get
-   */
-  getAllIdsInSetExact = (code: SetCode): Set<string> | undefined => this.setMap.get(code);
-
-  /**
-   * Returns the ids of the cards in the given set.
-   * @param code the set code to get
-   */
-  getAllIdsInSet = (code: SetCode): Set<string> | undefined =>
-    combineSets(
-      this.getAllIdsInSetExact(code),
-      ...(getChildSets(code)?.map(this.getAllIdsInSetExact) ?? [])
-    );
-
-  /**
-   * Returns the ids of the cards directly in the given set.
-   * @param code the set code to get
-   */
-  getAllIdsInSetDirect = (code: SetCode): Set<string> | undefined =>
-    combineSets(
-      this.getAllIdsInSetExact(code),
-      ...(getDirectChildSets(code)?.map(this.getAllIdsInSetExact) ?? [])
-    );
-
-  /**
-   * Returns the portion of the CardMap object exactly in the given set as a list.
-   * @param code the set code to get
-   */
-  getAllInSetExact(code: SetCode): HCCard.Any[] {
-    return this.getMultiple(this.getAllIdsInSetExact(code) ?? []);
-  }
-
-  /**
-   * Returns the subset of the CardMap object exactly in the given set as a new CardMap.
-   * @param code the set code to get
-   */
-  getAllInSetExactAsSubmap(code: SetCode): this {
-    return this.getSubset(this.getAllIdsInSetExact(code) ?? []);
-  }
-
-  /**
-   * Returns the portion of the CardMap object in the given set as a list.
-   * @param code the set code to get
-   */
-  getAllInSet(code: SetCode): HCCard.Any[] {
-    return this.getMultiple(this.getAllIdsInSet(code) ?? []);
-  }
-
-  /**
-   * Returns the subset of the CardMap object in the given set as a new CardMap.
-   * @param code the set code to get
-   */
-  getAllInSetAsSubmap(code: SetCode): this {
-    return this.getSubset(this.getAllIdsInSet(code) ?? []);
-  }
-
-  /**
-   * Returns the portion of the CardMap object directly in the given set as a list.
-   * @param code the set code to get
-   * @returns excludes cards with different set types e.g. vetoed cards
-   */
-  getAllInSetDirect(code: SetCode): HCCard.Any[] {
-    return this.getMultiple(this.getAllIdsInSetDirect(code) ?? []);
-  }
-
-  /**
-   * Returns the subset of the CardMap object directly in the given set as a new CardMap.
-   * @param code the set code to get
-   * @returns excludes cards with different set types e.g. vetoed cards
-   */
-  getAllInSetDirectAsSubmap(code: SetCode): this {
-    return this.getSubset(this.getAllIdsInSetDirect(code) ?? []);
-  }
-
-  /**
-   * Returns the ids of the cards exactly in the given sets.
-   * @param codeList the list of set codess to get
-   */
-  getAllIdsInSetListExact = (codeList: SetCode[]): Set<string> | undefined =>
-    combineSets(...codeList.map(this.getAllIdsInSetExact));
-
-  /**
-   * Returns the ids of the cards in the given sets.
-   * @param codeList the list of set codess to get
-   */
-  getAllIdsInSetList = (codeList: SetCode[]): Set<string> | undefined =>
-    combineSets(...codeList.map(this.getAllIdsInSet));
-
-  /**
-   * Returns the ids of the cards directly in the given sets.
-   * @param codeList the list of set codess to get
-   */
-  getAllIdsInSetListDirect = (codeList: SetCode[]): Set<string> | undefined =>
-    combineSets(...codeList.map(this.getAllIdsInSetDirect));
-
-  /**
-   * Returns the portion of the CardMap object exactly in the given sets as a list.
-   * @param codeList the list of set codess to get
-   */
-  getAllInSetListExact(codeList: SetCode[]): HCCard.Any[] {
-    return this.getMultiple(this.getAllIdsInSetListExact(codeList) ?? []);
-  }
-
-  /**
-   * Returns the subset of the CardMap object exactly in the given sets as a new CardMap.
-   * @param codeList the list of set codess to get
-   */
-  getAllInSetListExactAsSubmap(codeList: SetCode[]): this {
-    return this.getSubset(this.getAllIdsInSetListExact(codeList) ?? []);
-  }
-
-  /**
-   * Returns the portion of the CardMap object in the given sets as a list.
-   * @param codeList the list of set codess to get
-   */
-  getAllInSetList(codeList: SetCode[]): HCCard.Any[] {
-    return this.getMultiple(this.getAllIdsInSetList(codeList) ?? []);
-  }
-
-  /**
-   * Returns the subset of the CardMap object in the given sets as a new CardMap.
-   * @param codeList the list of set codess to get
-   */
-  getAllInSetListAsSubmap(codeList: SetCode[]): this {
-    return this.getSubset(this.getAllIdsInSetList(codeList) ?? []);
-  }
-
-  /**
-   * Returns the portion of the CardMap object directly in the given sets as a list.
-   * @param codeList the list of set codess to get
-   */
-  getAllInSetListDirect(codeList: SetCode[]): HCCard.Any[] {
-    return this.getMultiple(this.getAllIdsInSetListDirect(codeList) ?? []);
-  }
-
-  /**
-   * Returns the subset of the CardMap object directly in the given sets as a new CardMap.
-   * @param codeList the list of set codess to get
-   */
-  getAllInSetListDirectAsSubmap(codeList: SetCode[]): this {
-    return this.getSubset(this.getAllIdsInSetListDirect(codeList) ?? []);
-  }
-
-  /**
-   * Adds a new card to the CardMap. If a card with the same id already exists, the card will be updated.
-   * @param card card to set
-   */
-  set = (card: HCCard.Any) => {
-    this.idMap.set(card.id, card);
-    pushToMap(this.oracleMap, card.oracle_id, card.id);
-    pushToMap(this.setMap, card.set, card.id);
-    this.lookupMap.set(card);
-  };
-
-  /**
-   * @param id the id to delete
-   * @returns true if an element in the CardMap existed and has been removed, or false if the element does not exist.
-   */
-  delete = (id: string) => {
-    const value = this.idMap.get(id);
-    if (!value) return false;
-    const oracle = this.oracleMap.get(value.oracle_id);
-    oracle?.delete(id);
-    if (oracle?.size == 0) {
-      this.oracleMap.delete(value.oracle_id);
-    }
-    const set = this.setMap.get(value.set);
-    set?.delete(id);
-    if (set?.size == 0) {
-      this.setMap.delete(value.set);
-    }
-    this.idMap.delete(id);
-    this.lookupMap.delete(value);
-    return true;
-  };
-
-  /**
-   * Checks if a card with the specified id exists, and if it is in the specified set, if any.
-   * @param id the id to check for
-   * @param set the set to look inside, if any
-   */
-  has = (id: string, set?: SetCode) => {
-    if (set) {
-      return Boolean(
-        this.setMap.get(set)?.has(id) ||
-          getChildSets(set)?.some(subSet => this.setMap.get(subSet)?.has(id))
-      );
-    }
-    return this.idMap.has(id);
-  };
-
-  /**
-   * Checks if a card with the specified id exists in the specified exact set.
-   * @param id the id to check for
-   * @param set the exact set to look inside
-   */
-  hasExact = (id: string, set: SetCode) => Boolean(this.setMap.get(set)?.has(id));
-
-  /**
-   * Checks if the specified set exists in this CardMap.
-   * @param set the set to check for
-   */
-  hasSet = (set: SetCode) =>
-    Boolean(
-      this.setMap.get(set)?.size || getChildSets(set)?.some(subSet => this.setMap.get(subSet)?.size)
-    );
-
-  /**
-   * Checks if the specified exact set exists in this CardMap.
-   * @param set the exact set to check for
-   */
-  hasSetExact = (set: SetCode) => Boolean(this.setMap.get(set)?.size);
-
-  /**
-   * Checks if a card with the specified hcid exists
-   * @param hcid the hcid to check for
-   */
-  hasHCID = (hcid: string) => this.lookupMap.hasHCID(hcid);
-
-  /**
-   * Checks if a card with the specified name exists
-   * @param name the name to check for
-   */
-  hasName = (name: string) => this.lookupMap.has(name);
-
-  /**
-   * Removes all elements from the CardMap.
-   */
-  clear = () => {
-    this.idMap.clear();
-    this.setMap.clear();
-    this.oracleMap.clear();
-    this.lookupMap.clear();
-  };
-  /**
-   * Removes all elements from the {@linkcode CardLookupMap} and rebuilds it.
-   *
-   * Use this after applying invariants.
-   */
-  rebuildLookupMap = () => {
-    this.lookupMap.clear();
-    this.forEach(card => this.lookupMap.set(card));
-  };
-
-  /**
-   * Returns an array of the sets in the CardMap.
-   */
-  sets(): SetCode[] {
-    return Array.from(this.setMap.keys());
-  }
-
-  /**
-   * Returns the cards in a set that meet the condition specified in a callback function.
-   * @param set The set to look inside.
-   * @param predicate A function that accepts up to two arguments.
-   * The find method calls the predicate function one time for each card in the set until returning true.
-   */
-  findFromSet(set: SetCode, predicate: (card: HCCard.Any) => any): HCCard.Any | undefined;
-  findFromSet(
-    set: SetCode,
-    predicate: (card: HCCard.Any, id: string) => any
-  ): HCCard.Any | undefined;
-  findFromSet(set: SetCode, predicate: (...args: any[]) => any): HCCard.Any | undefined {
-    for (const card of this.getAllInSet(set)) {
-      switch (predicate.length) {
-        case 2: {
-          if (predicate(card, card.id)) {
-            return card;
-          }
-          break;
-        }
-        default: {
-          if (predicate(card)) {
-            return card;
-          }
-        }
-      }
-    }
-    return undefined;
-  }
-
-  /**
-   * Returns the cards exactly in a set that meet the condition specified in a callback function.
-   * @param set The set to look inside exactly.
-   * @param predicate A function that accepts up to two arguments.
-   * The find method calls the predicate function one time for each card in the set until returning true.
-   */
-  findFromSetExact(set: SetCode, predicate: (card: HCCard.Any) => any): HCCard.Any | undefined;
-  findFromSetExact(
-    set: SetCode,
-    predicate: (card: HCCard.Any, id: string) => any
-  ): HCCard.Any | undefined;
-  findFromSetExact(set: SetCode, predicate: (...args: any[]) => any): HCCard.Any | undefined {
-    for (const card of this.getAllInSetExact(set)) {
-      switch (predicate.length) {
-        case 2: {
-          if (predicate(card, card.id)) {
-            return card;
-          }
-          break;
-        }
-        default: {
-          if (predicate(card)) {
-            return card;
-          }
-        }
-      }
-    }
-    return undefined;
-  }
-
   /**
    * Returns the cards that meet the condition specified in a callback function as an array.
    *
@@ -1368,4 +1151,221 @@ export class CardMap extends LightCardMap {
     }
     return subMap;
   }
+
+  /**
+   * Calls the specified callback function for all the cards in a CardMap.
+   * The return value of the callback function is the accumulated result,
+   * and is provided as an argument in the next call to the callback function.
+   * @template U the type of the value that is accumulated
+   * @param callbackfn A function that accepts two arguments.
+   * The reduce method calls the callbackfn function one time for each element in the array.
+   * @param initialValue If initialValue is specified, it is used as the initial value to start
+   * the accumulation. The first call to the callbackfn function provides this value as an argument.
+   */
+  reduce<U>(callbackfn: (previousValue: U, card: HCCard.Any) => U, initialValue: U): U {
+    let accumulator: U = initialValue;
+    for (const card of this.values()) {
+      accumulator = callbackfn(accumulator, card);
+    }
+    return accumulator;
+  }
+}
+
+/**
+ * The class for a map of cards.
+ */
+export class CardMap extends LightCardMap {
+  /**
+   * Maps names to the card ids they are associated with
+   */
+  protected lookupMap = new CardLookupMap();
+  /**
+   * Creates a new CardMap
+   */
+  constructor();
+  /**
+   * Creates a new CardMap
+   * @param cards The initial cards to set, if any
+   */
+  constructor(cards: HCCard.Any[]);
+  constructor(cards?: HCCard.Any[]) {
+    super();
+    if (!cards) return;
+    cards.forEach(this.set);
+  }
+
+  /**
+   * Returns a specified id from the CardMap object.
+   * If no card has the specified id, the name is returned
+   * @param name the name of the card to get
+   */
+  getIDFromName = (name: string) => this.lookupMap.get(name) ?? name;
+
+  /**
+   * Returns a specified card from the CardMap object.
+   * Any change made to that card will effectively modify it inside the CardMap.
+   * If no card has the specified name, undefined is returned
+   * @param name the name of the card to get
+   */
+  getFromName = (name: string) => this.idMap.get(this.getIDFromName(name));
+
+  /**
+   * Returns a specified card from the CardMap object.
+   * Any change made to that card will effectively modify it inside the CardMap.
+   * If no card has the specified name, undefined is returned
+   * @param name the name of the card to get
+   * @param code the set code to use, if any
+   * @param collector_number the collector number to use, if any
+   */
+  getFromNameSetAndNumber = (name: string, code?: SetCode, collector_number?: string) =>
+    this.idMap.get(
+      this.lookupMap.getBySetAndNumber(
+        fixName(name),
+        fixSetCodeMaybe(code),
+        collector_number && fixName(collector_number)
+      ) ?? fixName(name)
+    );
+  /**
+   * Returns a specified card from the CardMap object.
+   * Any change made to that card will effectively modify it inside the CardMap.
+   * If no card has the specified hcid, undefined is returned
+   * @param hcid the hcid of the card to get
+   */
+  getFromHCID = (hcid: string) => this.idMap.get(this.lookupMap.getFromHCID(hcid) ?? '');
+
+  /**
+   * Returns the correct card for a card name and a number of prints, if any.
+   *
+   * Suitable for use in the deckbuilder.
+   * @param text the name of the card to get
+   */
+  getForDeck = (text: string): { card?: HCCard.Any; count?: number } => {
+    const fixed = fixName(text);
+    const first = fixed.split(' ')[0];
+    const count = parseInt(first);
+    if (isInteger(first) && count > 0 && first.length != fixed.length) {
+      const card = this.getForDeck(fixed.slice(first.length + 1))?.card;
+      if (card) {
+        return { card, count };
+      }
+    }
+    const { name, code, collector_number } = splitCardName(fixed);
+    const isLand = isLandName(name);
+    const id = this.lookupMap.getBySetAndNumber(name, code, collector_number, isLand);
+    if (id) {
+      const card = this.get(id)!;
+      return { card };
+    } else if (isLand) {
+      return { card: this.getRandomCard(landIdMap.get(name)) };
+    }
+    if (isInteger(first) && count > 0) {
+      return { count };
+    }
+    return {};
+  };
+
+  /**
+   * Returns a specified card from the CardMap object.
+   * Any change made to that card will effectively modify it inside the CardMap.
+   * If no card has the specified hcid, undefined is returned
+   * @param part the related card for the card to get
+   */
+  getFromPart = (part: HCRelatedCard) =>
+    this.get(part.id) ??
+    this.getFromHCID(part.hcid) ??
+    this.getFromNameSetAndNumber(part.name, part.set);
+
+  /**
+   * Returns a portion of the CardMap object as a list, based on a provided list of names.
+   * @param nameList the names to use
+   */
+  getCardsByNames = (nameList: stringIterable) => {
+    const cards: HCCard.Any[] = [];
+    for (const name of nameList) {
+      const card = this.get(this.getIDFromName(name));
+      if (card) {
+        cards.push(card);
+      }
+    }
+    return cards;
+  };
+
+  /**
+   * Returns a subset of the CardMap object as a new CardMap, based on a provided list of names.
+   * @param nameList the names to use
+   */
+  getCardsByNamesAsSubset = (nameList: stringIterable) => {
+    const subMap = new (this.constructor as any)() as this;
+    for (const name of nameList) {
+      const card = this.get(this.getIDFromName(name));
+      if (card) {
+        subMap.set(card);
+      }
+    }
+    return subMap;
+  };
+
+  /**
+   * Adds a new card to the CardMap. If a card with the same id already exists, the card will be updated.
+   * @param card card to set
+   */
+  set = (card: HCCard.Any) => {
+    this.idMap.set(card.id, card);
+    pushToMap(this.oracleMap, card.oracle_id, card.id);
+    pushToMap(this.setMap, card.set, card.id);
+    this.lookupMap.set(card);
+  };
+
+  /**
+   * @param id the id to delete
+   * @returns true if an element in the CardMap existed and has been removed, or false if the element does not exist.
+   */
+  delete = (id: string) => {
+    const value = this.idMap.get(id);
+    if (!value) return false;
+    const oracle = this.oracleMap.get(value.oracle_id);
+    oracle?.delete(id);
+    if (oracle?.size == 0) {
+      this.oracleMap.delete(value.oracle_id);
+    }
+    const set = this.setMap.get(value.set);
+    set?.delete(id);
+    if (set?.size == 0) {
+      this.setMap.delete(value.set);
+    }
+    this.idMap.delete(id);
+    this.lookupMap.delete(value);
+    return true;
+  };
+
+  /**
+   * Checks if a card with the specified hcid exists
+   * @param hcid the hcid to check for
+   */
+  hasHCID = (hcid: string) => this.lookupMap.hasHCID(hcid);
+
+  /**
+   * Checks if a card with the specified name exists
+   * @param name the name to check for
+   */
+  hasName = (name: string) => this.lookupMap.has(name);
+
+  /**
+   * Removes all elements from the CardMap.
+   */
+  clear = () => {
+    this.idMap.clear();
+    this.setMap.clear();
+    this.oracleMap.clear();
+    this.lookupMap.clear();
+  };
+  /**
+   * Removes all elements from the {@linkcode CardLookupMap} and rebuilds it.
+   *
+   * Use this after applying invariants.
+   */
+  rebuildLookupMap = () => {
+    this.lookupMap.clear();
+    this.forEach(card => this.lookupMap.set(card));
+  };
 }

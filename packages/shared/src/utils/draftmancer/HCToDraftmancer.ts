@@ -29,7 +29,7 @@ export const HCToDraftmancer = (
       ? getRelatedsFromSet(set, cardMap, true)
       : idList?.length
       ? getRelatedsFromCards(idList, cardMap)
-      : { cards: cardMap, tokens: new CardMap() };
+      : { cards: cardMap.cards(), tokens: [] };
   const draftCards = new LightCardMap(HCCards.map(card => compressHCCardFaces(card)));
   const draftTokens = new LightCardMap(HCTokens.map(card => compressHCCardFaces(card)));
 
