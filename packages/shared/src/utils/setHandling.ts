@@ -7,10 +7,10 @@ const sets = setsData.data;
 /**
  * maps set codes to sets
  */
-const setMap = new Map(sets.map(set=>[set.code,set]));
+const setMap = new Map(sets.map(set => [set.code, set]));
 
 /**
- * The list of sets 
+ * The list of sets
  */
 export const colorOrderSetList = sets.filter(set => set.use_color_order).map(set => set.code);
 
@@ -32,8 +32,7 @@ export const displaySetCode = <T extends string>(code: T) =>
  * Fixes valid set code input to actually work
  * @param code input to fix
  */
-export const fixSetCodeMaybe = <T extends string>(code?: T) =>
-  code ? (fixSetCode(code)) : code;
+export const fixSetCodeMaybe = <T extends string>(code?: T) => (code ? fixSetCode(code) : code);
 
 /**
  * The list of sets that should only be included if include:extras is used

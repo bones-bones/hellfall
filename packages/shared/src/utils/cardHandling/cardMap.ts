@@ -13,7 +13,8 @@ import { fixName } from '../textHandling';
 import { isInteger } from '../numHandling';
 import { getRandom, pushToMap, stringIterable } from '../listHandling';
 
-const isNonExtra = (card:HCCard.Any) =>  !extraSetList.includes(card.set) || Object.values(card.legalities).some(l => l == 'legal')
+const isNonExtra = (card: HCCard.Any) =>
+  !extraSetList.includes(card.set) || Object.values(card.legalities).some(l => l == 'legal');
 
 /**
  * The list of names and card ids for basics and thriving lands
@@ -57,7 +58,7 @@ export const preferTypeList = ['newest', 'oldest'] as const;
  * a preference option
  */
 export type preferType = (typeof preferTypeList)[number];
-const combineSets = (...args:(Set<string>|undefined)[]) => {
+const combineSets = (...args: (Set<string> | undefined)[]) => {
   const retSet = new Set<string>();
   for (const set of args) {
     if (set) {
@@ -67,9 +68,9 @@ const combineSets = (...args:(Set<string>|undefined)[]) => {
     }
   }
   if (retSet.size) {
-    return retSet
+    return retSet;
   }
-}
+};
 
 /**
  * Sorts two cards based on their accepted order (can be used as a proxy for date)
@@ -95,18 +96,11 @@ export const getPreference = (cards: HCCard.Any[], prefer: preferType): HCCard.A
   cards.sort(preferToSort[prefer])[0];
 
 /**
- * A map that maps ids to their corresponding number of copies
- * 
- * Only include integers > 1
- */
-export type MultMap = Map<string,number>;
-
-/**
  * The lightweight version of a class for a map of cards.
- * 
+ *
  * Only maps ids to their cards and oracle ids to their ids.
  */
-class LightCardMap {
+export class LightCardMap {
   /**
    * Maps card ids to their cards
    */
@@ -140,23 +134,31 @@ class LightCardMap {
   /**
    * Returns multiple specified cards as a list, based on the provided list of ids.
    * @param idList the list of ids to get
-   * @param multMap a map that maps ids to their corresponding number of copies, if any
    * @returns Returns the cards with the given ids.
    */
-  getMultiple = (idList: stringIterable, multMap?: MultMap): HCCard.Any[] => {
-    const cards:HCCard.Any[] = [];
+  getMultiple = (idList: stringIterable): HCCard.Any[] => {
+    const cards: HCCard.Any[] = [];
     for (const id of idList) {
       const card = this.get(id);
-      const count = multMap?.get(id)
       if (!card) continue;
-      if (count && count >= 2) {
-        cards.push(...Array(count).fill(card))
-      } else {
-        cards.push(card);
-      }
+      cards.push(card);
     }
     return cards;
-  }
+  };
+  /**
+   * Returns the images for multiple specified cards as a list, based on the provided list of ids.
+   * @param idList the list of ids to get images for
+   * @param defaultImage the image to use if the card doesn't exist
+   * @returns Returns the cards with the given ids.
+   */
+  getImages = (idList: stringIterable, defaultImage: string) => {
+    const images: string[] = [];
+    for (const id of idList) {
+      const card = this.get(id);
+      images.push(card?.still_image ?? card?.image ?? defaultImage);
+    }
+    return images;
+  };
 
   /**
    * Returns a subset of the CardMap object as a new CardMap, based on the provided list of ids.
@@ -204,13 +206,13 @@ class LightCardMap {
    * @param prefer the version of the card to prefer, if any
    */
   getCardsByOracleIds(oracleList: stringIterable, prefer: preferType = 'newest'): HCCard.Any[] {
-    const cards:HCCard.Any[]=[];
-    for (const id of oracleList){
+    const cards: HCCard.Any[] = [];
+    for (const id of oracleList) {
       const prints = this.getAllPrints(id);
       if (prints.length) {
         cards.push(getPreference(prints, prefer));
       }
-    };
+    }
     return cards;
   }
 
@@ -221,12 +223,12 @@ class LightCardMap {
    */
   getCardsByOracleIdsAsSubset(oracleList: stringIterable, prefer: preferType = 'newest'): this {
     const subMap = new (this.constructor as any)() as this;
-    for (const id of oracleList){
+    for (const id of oracleList) {
       const prints = this.getAllPrints(id);
       if (prints.length) {
         subMap.set(getPreference(prints, prefer));
       }
-    };
+    }
     return subMap;
   }
   /**
@@ -234,13 +236,13 @@ class LightCardMap {
    * @param prefer the version of the card to prefer
    */
   getPreferred(prefer: preferType): HCCard.Any[] {
-    const cards:HCCard.Any[] = [];
-    for (const id of this.oracle_iter()){
+    const cards: HCCard.Any[] = [];
+    for (const id of this.oracle_iter()) {
       const prints = this.getAllPrints(id);
       if (prints.length) {
         cards.push(getPreference(prints, prefer));
       }
-    };
+    }
     return cards;
   }
   /**
@@ -249,12 +251,12 @@ class LightCardMap {
    */
   getPreferredAsSubset(prefer: preferType): this {
     const subMap = new (this.constructor as any)() as this;
-    for (const id of this.oracle_iter()){
+    for (const id of this.oracle_iter()) {
       const prints = this.getAllPrints(id);
       if (prints.length) {
         subMap.set(getPreference(prints, prefer));
       }
-    };
+    }
     return subMap;
   }
 
@@ -278,7 +280,7 @@ class LightCardMap {
    */
   set = (card: HCCard.Any) => {
     this.idMap.set(card.id, card);
-    pushToMap(this.oracleMap,card.oracle_id,card.id)
+    pushToMap(this.oracleMap, card.oracle_id, card.id);
   };
 
   /**
@@ -316,7 +318,6 @@ class LightCardMap {
    * @param id the id to check for
    */
   has = (id: string) => this.idMap.has(id);
-
 
   /**
    * Checks if a card with the specified oracle id exists
@@ -604,7 +605,7 @@ class LightCardMap {
   filter(predicate: (card: HCCard.Any, id: string) => any): HCCard.Any[];
   filter(predicate: (card: HCCard.Any, id: string, set: SetCode) => any): HCCard.Any[];
   filter(predicate: (...args: any[]) => any): HCCard.Any[] {
-    const cards:HCCard.Any[] = [];
+    const cards: HCCard.Any[] = [];
     for (const [id, card] of this) {
       switch (predicate.length) {
         case 3: {
@@ -677,7 +678,7 @@ class LightCardMap {
   filterOracle(predicate: (card: HCCard.Any, id: string) => any): HCCard.Any[];
   filterOracle(predicate: (card: HCCard.Any, id: string, set: SetCode) => any): HCCard.Any[];
   filterOracle(predicate: (...args: any[]) => any): HCCard.Any[] {
-    const cards:HCCard.Any[] = [];
+    const cards: HCCard.Any[] = [];
     const oracleSet = new Set<string>();
     for (const [id, card] of this) {
       if (oracleSet.has(card.oracle_id)) {
@@ -687,21 +688,21 @@ class LightCardMap {
         case 3: {
           if (predicate(card, id, card.set)) {
             cards.push(card);
-            oracleSet.add(card.oracle_id)
+            oracleSet.add(card.oracle_id);
           }
           break;
         }
         case 2: {
           if (predicate(card, id)) {
             cards.push(card);
-            oracleSet.add(card.oracle_id)
+            oracleSet.add(card.oracle_id);
           }
           break;
         }
         default: {
           if (predicate(card)) {
             cards.push(card);
-            oracleSet.add(card.oracle_id)
+            oracleSet.add(card.oracle_id);
           }
         }
       }
@@ -750,7 +751,6 @@ class LightCardMap {
     return subMap;
   }
 
-
   /**
    * Calls the specified callback function for all the cards in a CardMap.
    * The return value of the callback function is the accumulated result,
@@ -769,7 +769,6 @@ class LightCardMap {
     return accumulator;
   }
 }
-
 
 /**
  * The class for a map of cards.
@@ -862,6 +861,9 @@ export class CardMap extends LightCardMap {
     } else if (isLand) {
       return { card: this.getRandomCard(landIdMap.get(name)) };
     }
+    if (isInteger(first) && count > 0) {
+      return { count };
+    }
     return {};
   };
 
@@ -881,13 +883,13 @@ export class CardMap extends LightCardMap {
    * @param nameList the names to use
    */
   getCardsByNames = (nameList: stringIterable) => {
-    const cards:HCCard.Any[] = [];
-    for (const name of nameList){
-      const card = this.get(this.getIDFromName(name))
+    const cards: HCCard.Any[] = [];
+    for (const name of nameList) {
+      const card = this.get(this.getIDFromName(name));
       if (card) {
         cards.push(card);
       }
-    };
+    }
     return cards;
   };
 
@@ -897,12 +899,12 @@ export class CardMap extends LightCardMap {
    */
   getCardsByNamesAsSubset = (nameList: stringIterable) => {
     const subMap = new (this.constructor as any)() as this;
-    for (const name of nameList){
-      const card = this.get(this.getIDFromName(name))
+    for (const name of nameList) {
+      const card = this.get(this.getIDFromName(name));
       if (card) {
         subMap.set(card);
       }
-    };
+    }
     return subMap;
   };
 
@@ -910,19 +912,27 @@ export class CardMap extends LightCardMap {
    * Returns the ids of the cards exactly in the given set.
    * @param code the set code to get
    */
-  getAllIdsInSetExact = (code: SetCode): Set<string>|undefined => this.setMap.get(code)
+  getAllIdsInSetExact = (code: SetCode): Set<string> | undefined => this.setMap.get(code);
 
   /**
    * Returns the ids of the cards in the given set.
    * @param code the set code to get
    */
-  getAllIdsInSet = (code: SetCode): Set<string>|undefined => combineSets(this.getAllIdsInSetExact(code), ...(getChildSets(code)?.map(this.getAllIdsInSetExact) ?? []));
+  getAllIdsInSet = (code: SetCode): Set<string> | undefined =>
+    combineSets(
+      this.getAllIdsInSetExact(code),
+      ...(getChildSets(code)?.map(this.getAllIdsInSetExact) ?? [])
+    );
 
   /**
    * Returns the ids of the cards directly in the given set.
    * @param code the set code to get
    */
-  getAllIdsInSetDirect =(code: SetCode): Set<string>|undefined =>  combineSets(this.getAllIdsInSetExact(code), ...(getDirectChildSets(code)?.map(this.getAllIdsInSetExact) ?? []));
+  getAllIdsInSetDirect = (code: SetCode): Set<string> | undefined =>
+    combineSets(
+      this.getAllIdsInSetExact(code),
+      ...(getDirectChildSets(code)?.map(this.getAllIdsInSetExact) ?? [])
+    );
 
   /**
    * Returns the portion of the CardMap object exactly in the given set as a list.
@@ -961,7 +971,7 @@ export class CardMap extends LightCardMap {
    * @param code the set code to get
    * @returns excludes cards with different set types e.g. vetoed cards
    */
-  getAllInSetDirect(code: SetCode): HCCard.Any[]  {
+  getAllInSetDirect(code: SetCode): HCCard.Any[] {
     return this.getMultiple(this.getAllIdsInSetDirect(code) ?? []);
   }
 
@@ -978,19 +988,22 @@ export class CardMap extends LightCardMap {
    * Returns the ids of the cards exactly in the given sets.
    * @param codeList the list of set codess to get
    */
-  getAllIdsInSetListExact = (codeList: SetCode[]): Set<string>|undefined => combineSets(...codeList.map(this.getAllIdsInSetExact))
+  getAllIdsInSetListExact = (codeList: SetCode[]): Set<string> | undefined =>
+    combineSets(...codeList.map(this.getAllIdsInSetExact));
 
   /**
    * Returns the ids of the cards in the given sets.
    * @param codeList the list of set codess to get
    */
-  getAllIdsInSetList = (codeList: SetCode[]): Set<string>|undefined => combineSets(...codeList.map(this.getAllIdsInSet))
+  getAllIdsInSetList = (codeList: SetCode[]): Set<string> | undefined =>
+    combineSets(...codeList.map(this.getAllIdsInSet));
 
   /**
    * Returns the ids of the cards directly in the given sets.
    * @param codeList the list of set codess to get
    */
-  getAllIdsInSetListDirect = (codeList: SetCode[]): Set<string>|undefined => combineSets(...codeList.map(this.getAllIdsInSetDirect))
+  getAllIdsInSetListDirect = (codeList: SetCode[]): Set<string> | undefined =>
+    combineSets(...codeList.map(this.getAllIdsInSetDirect));
 
   /**
    * Returns the portion of the CardMap object exactly in the given sets as a list.
@@ -1046,8 +1059,8 @@ export class CardMap extends LightCardMap {
    */
   set = (card: HCCard.Any) => {
     this.idMap.set(card.id, card);
-    pushToMap(this.oracleMap,card.oracle_id,card.id)
-    pushToMap(this.setMap,card.set,card.id)
+    pushToMap(this.oracleMap, card.oracle_id, card.id);
+    pushToMap(this.setMap, card.set, card.id);
     this.lookupMap.set(card);
   };
 
@@ -1217,7 +1230,11 @@ export class CardMap extends LightCardMap {
    * @param excludeExtras whether to exclude extra cards if possible
    * The filter method calls the predicate function one time for each card.
    */
-  filterForSearch(predicate: (card: HCCard.Any) => any, preferMode?:preferType, excludeExtras?:boolean ): HCCard.Any[] {
+  filterForSearch(
+    predicate: (card: HCCard.Any) => any,
+    preferMode?: preferType,
+    excludeExtras?: boolean
+  ): HCCard.Any[] {
     if (!preferMode) {
       const withExtras = this.filter(predicate);
       if (!excludeExtras) {
@@ -1237,9 +1254,8 @@ export class CardMap extends LightCardMap {
     }
     const withoutExtras = withExtras.filterToMap(isNonExtra);
 
-    return (withoutExtras.size ? withoutExtras:withExtras).getPreferred(preferMode);
+    return (withoutExtras.size ? withoutExtras : withExtras).getPreferred(preferMode);
   }
-
 
   /**
    * Returns the cards in a set that meet the condition specified in a callback function as a list.
@@ -1250,7 +1266,7 @@ export class CardMap extends LightCardMap {
   filterFromSet(set: SetCode, predicate: (card: HCCard.Any) => any): HCCard.Any[];
   filterFromSet(set: SetCode, predicate: (card: HCCard.Any, id: string) => any): HCCard.Any[];
   filterFromSet(set: SetCode, predicate: (...args: any[]) => any): HCCard.Any[] {
-    const cards:HCCard.Any[] = [];
+    const cards: HCCard.Any[] = [];
     for (const card of this.getAllInSet(set)) {
       switch (predicate.length) {
         case 2: {
@@ -1306,7 +1322,7 @@ export class CardMap extends LightCardMap {
   filterFromSetExact(set: SetCode, predicate: (card: HCCard.Any) => any): HCCard.Any[];
   filterFromSetExact(set: SetCode, predicate: (card: HCCard.Any, id: string) => any): HCCard.Any[];
   filterFromSetExact(set: SetCode, predicate: (...args: any[]) => any): HCCard.Any[] {
-    const cards:HCCard.Any[] = [];
+    const cards: HCCard.Any[] = [];
     for (const card of this.getAllInSetExact(set)) {
       switch (predicate.length) {
         case 2: {

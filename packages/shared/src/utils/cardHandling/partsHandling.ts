@@ -73,7 +73,7 @@ export const updatePartFromCard = (part: HCRelatedCard, card: HCCard.Any) => {
  * @param card card to update
  * @param relateds `CardMap` containing the card's related cards
  */
-export const updateParts = (card: HCCard.Any,relateds: CardMap) => {
+export const updateParts = (card: HCCard.Any, relateds: CardMap) => {
   if (!card.all_parts) {
     return;
   }

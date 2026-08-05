@@ -19,11 +19,14 @@ import {
   HCBorderColor,
   HCFinish,
   HCFrame,
+  HCRelatedCard,
 } from '@hellfall/shared/types';
 import {
   ensureArray,
   listIncludesValueLower,
   listsShareLower,
+  moveSomeOver,
+  stringIterable,
   textListIncludes,
   textListsShare,
 } from '../listHandling';
@@ -382,17 +385,15 @@ const PLACEHOLDER_CARD: HCCard.Normal = {
 /**
  * Generates the `CardMap` for {@linkcode SetCode | SetCode: HC5}
  */
-export const getHc5 = (): CardMap =>
-  new CardMap(
-    Array.from({ length: 720 }, (_, i) =>
-      addToJSONToCard({
-        ...PLACEHOLDER_CARD,
-        id: `55555555-5555-4${i.toString().padStart(3, '0')}-a555-555555555555`,
-        oracle_id: '55555555-5555-4555-a555-555555555555',
-        hcid: `hc5-placeholder-${i}`,
-        name: `◻︎◻︎◻︎◻︎◻︎◻︎◻︎◻︎◻︎ ${i}`,
-      })
-    )
+export const getHc5 = (): HCCard.Any[] =>
+  Array.from({ length: 720 }, (_, i) =>
+    addToJSONToCard({
+      ...PLACEHOLDER_CARD,
+      id: `55555555-5555-4${i.toString().padStart(3, '0')}-a555-555555555555`,
+      oracle_id: '55555555-5555-4555-a555-555555555555',
+      hcid: `hc5-placeholder-${i}`,
+      name: `◻︎◻︎◻︎◻︎◻︎◻︎◻︎◻︎◻︎ ${i}`,
+    })
   );
 
 /**
@@ -405,8 +406,8 @@ export const getHc5 = (): CardMap =>
  *
  * For a fast version, use {@linkcode getAllRelated}
  */
-export const getAllRelatedPermissive = (card: HCCard.Any, cardMap: CardMap): CardMap =>
-  new CardMap(card.all_parts?.flatMap(part => cardMap.getFromPart(part) ?? []) ?? []);
+export const getAllRelatedPermissive = (card: HCCard.Any, cardMap: CardMap): HCCard.Any[] =>
+  card.all_parts?.flatMap(part => cardMap.getFromPart(part) ?? []) ?? [];
 
 /**
  * Gets all related cards to a given card
@@ -418,8 +419,8 @@ export const getAllRelatedPermissive = (card: HCCard.Any, cardMap: CardMap): Car
  *
  * For an exhaustive version, use {@linkcode getAllRelatedPermissive}
  */
-export const getAllRelated = (card: HCCard.Any, cardMap: CardMap): CardMap =>
-  cardMap.getSubset(card.all_parts?.map(part => part.id) ?? []);
+export const getAllRelated = (card: HCCard.Any, cardMap: CardMap): HCCard.Any[] =>
+  cardMap.getMultiple(card.all_parts?.map(part => part.id) ?? []);
 
 /**
  * Gets the cards and tokens for a list of card ids
@@ -427,18 +428,19 @@ export const getAllRelated = (card: HCCard.Any, cardMap: CardMap): CardMap =>
  * @param cardMap CardMap containing all cards
  */
 export const getRelatedsFromCards = (
-  idList: string[],
+  idList: stringIterable,
   cardMap: CardMap
-): { cards: CardMap; tokens: CardMap } => {
-  const cards: CardMap = cardMap.getSubset(idList);
-  const tokens: CardMap = cardMap.getSubset(
-    cards.flatMap(
-      card =>
-        card.all_parts?.flatMap(part =>
-          !cards.has(part.id) && part.component != 'token_maker' ? part.id : []
-        ) ?? []
-    )
-  );
+): { cards: HCCard.Any[]; tokens: HCCard.Any[] } => {
+  const cards: HCCard.Any[] = cardMap.getMultiple(idList);
+  const idSet: Set<string> = idList instanceof Set ? idList : new Set(idList);
+  const tokenIds = new Set<string>();
+  for (const card of cards) {
+    if (!card.all_parts) continue;
+    card.all_parts
+      .filter(part => part.component != 'token_maker' && !idSet.has(part.id))
+      .forEach(part => tokenIds.add(part.id));
+  }
+  const tokens = cardMap.getMultiple(tokenIds);
   return { cards, tokens };
 };
 
@@ -453,33 +455,31 @@ export const getRelatedsFromSet = (
   set: SetCode,
   cardMap: CardMap,
   moveNonDraftablesToTokens: boolean = false
-): { cards: CardMap; tokens: CardMap } => {
+): { cards: HCCard.Any[]; tokens: HCCard.Any[] } => {
   if (set == 'HC5') {
-    return { cards: getHc5(), tokens: new CardMap() };
+    return { cards: getHc5(), tokens: [] };
   }
+  const shouldUseFronts = set == 'HCJ' && moveNonDraftablesToTokens;
+  const cards: HCCard.Any[] = cardMap.getAllInSetDirect(set);
+  const idSet = cardMap.getAllIdsInSetDirect(set);
+  const tokenIds = new Set<string>();
+  const partIsValid = (part: HCRelatedCard) => {
+    if (part.component == 'token_maker') return;
+    if (shouldUseFronts && part.set == 'FHCJ') return;
+    return !idSet?.has(part.id);
+  };
+  for (const card of cards) {
+    if (!card.all_parts) continue;
+    card.all_parts.filter(partIsValid).forEach(part => tokenIds.add(part.id));
+  }
+  const tokens = cardMap.getMultiple(tokenIds);
   if (set == 'HCJ' && moveNonDraftablesToTokens) {
-    const { cards, tokens } = getRelatedsFromSet(set, cardMap, false);
-    cards.setMultiple(tokens);
-    const fronts = cards.getAllInSetAsSubmap('FHCJ');
-    cards.deleteMultiple(fronts.ids());
+    cards.push(...tokens);
+    const fronts = cardMap.getAllInSet('FHCJ');
     return { cards: fronts, tokens: cards };
   }
-  const cards: CardMap = cardMap.getAllInSetDirectAsSubmap(set);
-  const tokens: CardMap = cardMap.getSubset(
-    cards.flatMap(
-      card =>
-        card.all_parts?.flatMap(part =>
-          !part.set.includes(set) && part.component != 'token_maker' ? part.id : []
-        ) ?? []
-    )
-  );
   if (moveNonDraftablesToTokens) {
-    cards.forEach((card: HCCard.Any, id: string) => {
-      if (card.not_directly_draftable) {
-        tokens.set(card);
-        cards.delete(id);
-      }
-    });
+    moveSomeOver(cards, tokens, card => card.not_directly_draftable);
   }
   return { cards, tokens };
 };

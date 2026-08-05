@@ -300,7 +300,6 @@ export const formatParens = (text: string) => {
     .replaceAll('\\)', ')');
 };
 
-
 /**
  * Preps a name for export to draftmancer/cockatrice
  * @param name name to prep
@@ -469,7 +468,9 @@ export const unescapeText = (text: string, isSet?: boolean) => {
     return text;
   }
   if (isSet) {
-    return text.toUpperCase().replaceAll('.', '_')
+    return text
+      .toUpperCase()
+      .replaceAll('.', '_')
       .replaceAll(/^['"]/g, '')
       .replaceAll(/(?<!\\)['"]/g, '')
       .replaceAll(/\\(['"])/g, '$1');

@@ -31,17 +31,14 @@ const cubeNameForCode = (setCode: SetCode, fallback: string) => getSet(setCode)?
 export const CubeList = () => {
   const { setCode: setCodeParam } = useParams<{ setCode: SetCode }>();
   const setCode = (setCodeParam ?? 'HC8') as SetCode;
-  const cardMap = useAtomValue(cardsAtom).filter(isPlayableCubeCard);
+  const cardMap = useAtomValue(cardsAtom).filterToMap(isPlayableCubeCard);
   const setActiveCard = useSetAtom(activeCardAtom);
 
   const cards = useMemo(() => {
     if (setCode === ('All' as SetCode)) {
-      return cardMap
-        .getAllInSetListDirect([...cubeResourceSetCodes])
-        .mapToArray(card => card)
-        .sort(compareCubeListCards);
+      return cardMap.getAllInSetListDirect([...cubeResourceSetCodes]).sort(compareCubeListCards);
     }
-    return cardMap.getAllInSetDirect(setCode).mapToArray(card => card);
+    return cardMap.getAllInSetDirect(setCode);
   }, [cardMap, setCode]);
 
   const sections = useMemo(() => groupCubeCards(cards), [cards]);

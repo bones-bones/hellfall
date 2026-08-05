@@ -116,7 +116,7 @@ export const HellfallCard = ({
   const windowRef = useRef<HTMLDivElement>(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const cards = useAtomValue(cardsAtom);
-  const otherPrints = cards.getAllPrints(data.oracle_id).cards();
+  const otherPrints = cards.getAllPrints(data.oracle_id);
 
   useEffect(() => {
     if (!windowRef.current) {

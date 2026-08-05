@@ -12,6 +12,15 @@ import { createStyledImg, createStyledTextArea } from '../styling';
 import { CardMap, HCToTTSDeck, unescapeBase64 } from '@hellfall/shared/utils';
 import { loadCardsData } from '@hellfall/shared/data';
 
+// const blankCard = {
+//               image:
+//                 ,
+//               name: 'card not found',
+//             } as unknown as HCCard.Any
+
+const blankImage =
+  'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg';
+
 export const DeckBuilder = () => {
   const ref = useRef(null);
   const location = useLocation();
@@ -27,11 +36,10 @@ export const DeckBuilder = () => {
   useEffect(() => {
     loadCardsData().then(data => setCardMap(new CardMap(data.data)));
   }, []);
-  const [multMap, setMultMap] = useState<Map<string, number>>(new Map());
   // const [cards, setCards] = useState<HCCard.Any[]>([]);
   const [toRender, setToRender] = useState<string[] | undefined>();
   const [deckName, setNameOfDeck] = useState(searchparms.get('name') ?? '');
-  const [renderCards, setRenderCards] = useState<HCCard.Any[]>([]);
+  const [idList, setIdList] = useState<string[]>([]);
   const [playtesting, setPlaytesthing] = useState(false);
   const [showImage, setShowImage] = useState(true);
 
@@ -43,9 +51,8 @@ export const DeckBuilder = () => {
 
   useEffect(() => {
     if (textAreaRef.current) {
-      const cards = textAreaRef.current.value.split('\n');
-      setToRender(cards);
-      updateCards(cards);
+      const names = textAreaRef.current.value.split('\n') ?? [];
+      updateCards(names);
 
       const searchToSet = new URLSearchParams();
       searchToSet.append('name', deckName);
@@ -64,37 +71,29 @@ export const DeckBuilder = () => {
     }
   }, [textAreaValue, deckName, cardMap]);
 
-  const updateCards = (cards: string[]) => {
-    const newMultMap = new Map<string, number>();
-    const images: HCCard.Any[] = (cards || [])
-      .filter(entry => entry != '' && !entry.startsWith('# '))
-      .flatMap(name => {
-        const { card, count } = cardMap.getForDeck(name);
-
-        if (count && card && count > 1) {
-          newMultMap.set(card.id, count);
-        }
-        return Array(count).fill(
-          card ??
-            ({
-              image:
-                'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg',
-              name: name + ' - not found',
-            } as unknown as HCCard.Any)
-        );
-        // }
-      });
-    setMultMap(newMultMap);
-    setRenderCards(images);
+  const updateCards = (names: string[]) => {
+    const newIdList: string[] = [];
+    for (const name of names) {
+      const { card, count } = cardMap.getForDeck(name);
+      const id = card?.id ?? '';
+      if (count) {
+        newIdList.push(...Array(count).fill(id));
+      } else {
+        newIdList.push(id);
+      }
+    }
+    const images = cardMap.getImages(idList, blankImage);
+    setIdList(newIdList.filter(Boolean));
+    setToRender(images);
   };
   // TODO: make this push to history less often? also add url syncing
   return (
     <div style={{ marginLeft: '32px' }}>
       <title>Deck/Cube Builder</title>
       <ImportInstructions />
-      {Boolean(renderCards.length) &&
+      {Boolean(idList.length) &&
         (playtesting ? (
-          <PlaytestArea cards={renderCards} />
+          <PlaytestArea cards={cardMap.getMultiple(idList)} />
         ) : (
           <button
             onClick={() => {
@@ -160,12 +159,7 @@ Cock and Balls to Torture and Abuse
       </button>{' '}
       <button
         onClick={() => {
-          const val = HCToTTSDeck(
-            deckName,
-            renderCards.flatMap(card => card.id ?? []),
-            cardMap,
-            multMap
-          );
+          const val = HCToTTSDeck(deckName, idList, cardMap);
           const url =
             'data:text/plain;base64,' +
             btoa(unescapeBase64(encodeURIComponent(JSON.stringify(val, null, 2))));
@@ -185,25 +179,24 @@ Cock and Balls to Torture and Abuse
           downloadDraftmancer({
             name: deckName,
             set: 'Custom' as SetCode,
-            idList: renderCards.flatMap(card => card.id ?? []),
+            idList,
             cardMap,
-            multMap,
           });
         }}
       >
         Download for Draftmancer
       </button>{' '}
-      Cards in deck {renderCards.length}
+      Cards in deck: {toRender?.length ?? 0}
       <br />
       {showImage && (
         <DeckContainer ref={ref}>
-          {renderCards?.map((entry, i) => {
+          {toRender?.map((image, i) => {
             return (
               <Card
                 width="250px"
-                title={entry.name}
-                key={entry.name + i}
-                src={entry.still_image ?? entry.image}
+                title={`image-${i}`}
+                key={`image-${i}`}
+                src={image}
                 crossOrigin="anonymous"
               />
             );

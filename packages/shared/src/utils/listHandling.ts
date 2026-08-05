@@ -611,7 +611,7 @@ export const wrapArray = <T>(value: T | T[] | undefined): T[] | undefined =>
 export const ensureArray = <T>(value: T | T[] | undefined): T[] =>
   value == undefined ? [] : !Array.isArray(value) ? [value] : value;
 
-export type stringIterable = string[]|Set<string>|IterableIterator<string>
+export type stringIterable = string[] | Set<string> | IterableIterator<string>;
 
 /**
  * Gets a random element from a list
@@ -622,4 +622,18 @@ export const getRandom = (list: any[] | Set<any>) => {
     return list[Math.floor(Math.random() * list.length)];
   }
   return Array.from(list)[Math.floor(Math.random() * list.size)];
+};
+
+/**
+ * Moves those members of list 1 that pass a predicate over to list 2
+ * @param list1 list to move members from
+ * @param list2 list to move members to
+ * @param predicate predicate to use
+ */
+export const moveSomeOver = <T>(list1: T[], list2: T[], predicate: (value: T) => any) => {
+  for (let i = list1.length - 1; i >= 0; i--) {
+    if (predicate(list1[i])) {
+      list2.unshift(...list1.splice(i, 1));
+    }
+  }
 };

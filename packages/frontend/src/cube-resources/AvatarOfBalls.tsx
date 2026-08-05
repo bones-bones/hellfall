@@ -4,7 +4,7 @@ import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import { HCCard } from '@hellfall/shared/types';
 import { HellfallEntry } from '../hellfall/entry/HellfallEntry.tsx';
 import { useAtomValue } from 'jotai';
-import { toFaces } from '@hellfall/shared/utils';
+import { getRandom, toFaces } from '@hellfall/shared/utils';
 
 export const AvatarOfBalls = () => {
   const cards = useAtomValue(cardsAtom);
@@ -41,7 +41,7 @@ export const AvatarOfBalls = () => {
 
           const cardsTo = [];
           for (let i = 0; i < parseInt(numRef.current?.value || '2'); i++) {
-            cardsTo.push(filtered.getRandomCard());
+            cardsTo.push(getRandom(filtered));
           }
 
           setCardsToRender(cardsTo);

@@ -36,7 +36,7 @@ type CubeSetup = {
 };
 
 export const CubeResources = () => {
-  const cardMap = useAtomValue(cardsAtom).filter(e => !e.tags?.includes('offensive'));
+  const cardMap = useAtomValue(cardsAtom).filterToMap(e => !e.tags?.includes('offensive'));
   const cubeSetups: CubeSetup[] = [
     {
       name: 'Hellscube',
@@ -227,7 +227,7 @@ export const CubeResources = () => {
                     onClick={() => {
                       const val = HCToTTSDeck(
                         cubeSetup.name,
-                        cardMap.getAllIdsInSetDirect(cubeSetup.id),
+                        cardMap.getAllIdsInSetDirect(cubeSetup.id) ?? [],
                         cardMap
                       );
                       const url =

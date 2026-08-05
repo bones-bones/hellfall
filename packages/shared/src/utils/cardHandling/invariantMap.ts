@@ -286,7 +286,7 @@ export class InvariantMap {
    * Adds multiple new {@linkcode printInput} objects to the InvariantMap, skipping invalid oracle ids
    * @param inputs the inputs to add
    */
-  setMultiple(inputs: (printInput|HCCard.Any)[]): void;
+  setMultiple(inputs: (printInput | HCCard.Any)[]): void;
   /**
    * Adds all invariants in another InvariantMap to the InvariantMap, skipping invalid oracle ids
    * @param inputs the inputs to add
@@ -297,7 +297,7 @@ export class InvariantMap {
    * @param inputs the inputs to add
    */
   setMultiple(inputs: CardMap): void;
-  setMultiple(inputs: (printInput|HCCard.Any)[] | this|CardMap): void {
+  setMultiple(inputs: (printInput | HCCard.Any)[] | this | CardMap): void {
     (inputs as any).forEach(this.set);
   }
 
@@ -697,7 +697,7 @@ export class InvariantMap {
 /**
  * The class for mapping names and oracle IDs to invariant properties
  * (i.e. those that don't change depending on the card print).
- * 
+ *
  * This one is for use on the backend only.
  */
 export class DefaultInvariantMap extends InvariantMap {
@@ -781,7 +781,6 @@ export class DefaultInvariantMap extends InvariantMap {
     this.nameMap.set(invariant.name.toLowerCase(), invariant.oracle_id);
     this.oracleIdMap.set(invariant.oracle_id, invariant);
   };
-
 
   /**
    * @param input the input to delete (only deletes exact matches)

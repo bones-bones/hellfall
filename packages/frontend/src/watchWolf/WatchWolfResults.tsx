@@ -7,6 +7,7 @@ import { ActiveCardPanel } from '../hellfall/ActiveCardPanel.tsx';
 import { createStyles } from '@workday/canvas-kit-styling';
 import { createStyledDiv, createStyledLink } from '../styling/StyledElements.tsx';
 import { PageContainer, StyleComponent, Subtitle, Title } from './Components.tsx';
+import { cardSetList } from '@hellfall/shared/utils';
 
 interface Standing {
   Id: string;
@@ -16,7 +17,7 @@ interface Standing {
 }
 
 export const Watchwolfresults = () => {
-  const cards = useAtomValue(cardsAtom).filter(e => e.set != 'NRM');
+  const cards = useAtomValue(cardsAtom).getAllInSetListExactAsSubmap(cardSetList);
   const setActiveCardFromAtom = useSetAtom(activeCardAtom);
   const [standings, setStandings] = useState<Standing[]>();
   useEffect(() => {

@@ -1,6 +1,12 @@
 import { HCCardSymbol, HCColors } from '@hellfall/shared/types';
 import { unescapeText } from '../textHandling';
-import { getRandom, listsAreLooselyEqual, listsAreLooselyEqualLower, listsShare, stringIterable } from '../listHandling';
+import {
+  getRandom,
+  listsAreLooselyEqual,
+  listsAreLooselyEqualLower,
+  listsShare,
+  stringIterable,
+} from '../listHandling';
 import { orderColors } from './orderColors';
 
 const fixPip = (text: string) => unescapeText(text, true).replaceAll(' ', '');
@@ -163,7 +169,7 @@ export class PipMap {
       }
     }
     return pips;
-  }
+  };
 
   /**
    * Returns a subset of the PipMap object as a new PipMap, based on the provided list of symbols.
@@ -413,7 +419,7 @@ export class PipMap {
   /**
    * Gets a random pip from this PipMap
    */
-  getRandomPip = (): HCCardSymbol => getRandom(this.pips())
+  getRandomPip = (): HCCardSymbol => getRandom(this.pips());
 
   // #REGEXES
 

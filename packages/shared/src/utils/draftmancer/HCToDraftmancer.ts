@@ -5,6 +5,7 @@ import {
   compressHCCardFaces,
   getRelatedsFromCards,
   getRelatedsFromSet,
+  LightCardMap,
   toFaces,
 } from '../cardHandling';
 import { HCCardToDraftmancerCard, StickerSheetScryfallIds } from './HCToDraftCard';
@@ -29,8 +30,8 @@ export const HCToDraftmancer = (
       : idList?.length
       ? getRelatedsFromCards(idList, cardMap)
       : { cards: cardMap, tokens: new CardMap() };
-  const draftCards = HCCards.mapToMap(card => compressHCCardFaces(card));
-  const draftTokens = HCTokens.mapToMap(card => compressHCCardFaces(card));
+  const draftCards = new LightCardMap(HCCards.map(card => compressHCCardFaces(card)));
+  const draftTokens = new LightCardMap(HCTokens.map(card => compressHCCardFaces(card)));
 
   const getExportNameFromId = (id: string | undefined): string | undefined => {
     if (!id) return;

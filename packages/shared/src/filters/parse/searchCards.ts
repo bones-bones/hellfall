@@ -60,10 +60,12 @@ export const searchCards = (
   const uMode = unique ?? uniqueMode ?? 'cards';
   const pMode = prefer ?? preferMode ?? 'newest';
   const modeToUse = uMode == 'cards' ? pMode : undefined;
-  return  cardMap.filterForSearch(
+  return cardMap.filterForSearch(
     card =>
       evaluateFilter(node, card, cardMap) &&
       (includeList.length ? includeList.some(filter => filter.cardPassesFilter(card)) : true) &&
-      (excludeList.length ? excludeList.some(filter => filter.cardPassesFilter(card)) : true), modeToUse, autoFilterExtras && !usingClusion
+      (excludeList.length ? excludeList.some(filter => filter.cardPassesFilter(card)) : true),
+    modeToUse,
+    autoFilterExtras && !usingClusion
   );
 };

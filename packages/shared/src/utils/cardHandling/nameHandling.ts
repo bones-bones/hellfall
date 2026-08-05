@@ -2,7 +2,6 @@ import { faceType, HCCard } from '@hellfall/shared/types';
 import { fixName } from '../textHandling';
 import { splitSetCode } from '../setHandling';
 
-
 // breaks circular
 const toFaces = (card: HCCard.Any, dropFaces?: boolean): faceType[] => {
   if ('card_faces' in card) {

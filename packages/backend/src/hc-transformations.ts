@@ -304,7 +304,6 @@ const main = async () => {
   colorOrderSetList.forEach(set =>
     newCards
       .getAllInSetDirect(set)
-      .cards()
       .sort(nameSort.filter)
       .sort(colorSort.filter)
       .forEach((card, i) => {
@@ -494,9 +493,7 @@ const main = async () => {
     '../shared/src/data/tokens.json',
     JSON.stringify(
       {
-        data: finalCards
-          .filter(card => ['token', 'scryfall', 'notmagic', 'front'].includes(card.kind))
-          .cards(),
+        data: finalCards.filter(card => card.kind != 'card'),
       },
       null,
       '\t'

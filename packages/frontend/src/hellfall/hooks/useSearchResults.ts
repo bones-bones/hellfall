@@ -30,8 +30,11 @@ export const useSearchResults = (asRandom?: boolean) => {
   });
 
   useEffect(() => {
-    const tempResults =  asRandom && query == '*' ? cards.cards() : searchCards(cards, query, inputUnique /*, user?.defaultPrefer, user?.defaultCludes */);
-    
+    const tempResults =
+      asRandom && query == '*'
+        ? cards.cards()
+        : searchCards(cards, query, inputUnique /*, user?.defaultPrefer, user?.defaultCludes */);
+
     if (asRandom) {
       setResultSet(tempResults);
       return;
