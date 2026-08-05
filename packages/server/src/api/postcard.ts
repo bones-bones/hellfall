@@ -1,11 +1,10 @@
 import { Firestore } from '@google-cloud/firestore';
 import { HCCard, HCKind, HCImageStatus, SetCode } from '@hellfall/shared/types';
 import {
-  baseInvariantMap,
   getDefaultCard,
   isValidV4UUID,
   setDerivedProps,
-  stripMasterpiece,
+  splitMasterpiece,
 } from '@hellfall/shared/utils';
 import { cardToFirestore, cardsCollection, firestoreCard } from '@hellfall/shared/utils/firestore';
 import { withCors, env, requirePostcardAuth, HandlerRequest, HandlerResponse } from './lib';
@@ -170,7 +169,7 @@ async function findByHcid(hcid: string) {
 }
 
 async function findMasterpiece(name: string): Promise<string | undefined> {
-  const snapshot = await cardsCol.where('name', '==', stripMasterpiece(name)).limit(2).get();
+  const snapshot = await cardsCol.where('name', '==', splitMasterpiece(name).name).limit(2).get();
   const doc = snapshot.docs[0];
   if (!doc) return undefined;
   return doc.data().oracle_id;
@@ -250,7 +249,7 @@ async function upsertPostcard(body: PostcardBody) {
 
   if (existing?.exists && previous) {
     const update: firestoreCard = {
-      name: stripMasterpiece(body.name),
+      name: splitMasterpiece(body.name).name,
       image: imageUrl,
       image_status: HCImageStatus.HighRes,
       creators: parseCreators(body.creators),
@@ -261,7 +260,7 @@ async function upsertPostcard(body: PostcardBody) {
     if (oracle_id !== previous.oracle_id) update.oracle_id = oracle_id;
     await existing.ref.update(update);
     scheduleCatalogPublish();
-    const int_oracle_id = baseInvariantMap.getName(oracle_id) ?? oracle_id;
+    const int_oracle_id = cardMap.getAllPrints(oracle_id)[0]?.name ?? oracle_id;
     const oracle_id_to_use = int_oracle_id == body.name.toLowerCase() ? '' : int_oracle_id;
     return {
       docId: existing.id,
