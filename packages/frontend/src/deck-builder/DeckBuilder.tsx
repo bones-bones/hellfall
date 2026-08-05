@@ -82,7 +82,7 @@ export const DeckBuilder = () => {
         newIdList.push(id);
       }
     }
-    const images = cardMap.getImages(idList, blankImage);
+    const images = cardMap.getImages(newIdList, blankImage);
     setIdList(newIdList.filter(Boolean));
     setToRender(images);
   };

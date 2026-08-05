@@ -854,7 +854,7 @@ export class CardMap extends LightCardMap {
     }
     const { name, code, collector_number } = splitCardName(fixed);
     const isLand = isLandName(name);
-    const id = this.lookupMap.getBySetAndNumber(name, code, collector_number, isLandName(name));
+    const id = this.lookupMap.getBySetAndNumber(name, code, collector_number, isLand);
     if (id) {
       const card = this.get(id)!;
       return { card };
