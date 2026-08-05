@@ -12,7 +12,7 @@ import { makeSort, searchCards } from '@hellfall/shared/filters';
 export const useSearchResults = (asRandom?: boolean) => {
   // const { user } = useAuth();
   const [resultSet, setResultSet] = useState<HCCard.Any[]>([]);
-  const cards = useAtomValue(cardsAtom).filter(e => !e.tags?.includes('offensive'));
+  const cards = useAtomValue(cardsAtom).filterToMap(e => !e.tags?.includes('offensive'));
   const query = useAtomValue(queryAtom);
   const sortRules = useAtomValue(sortAtom);
   const [page, setPageAtom] = useAtom(pageAtom);
@@ -30,19 +30,19 @@ export const useSearchResults = (asRandom?: boolean) => {
   });
 
   useEffect(() => {
-    const tempResults = (
+    const tempResults =
       asRandom && query == '*'
-        ? cards
-        : searchCards(cards, query, inputUnique /*, user?.defaultPrefer, user?.defaultCludes */)
-    ).cards();
+        ? cards.cards()
+        : searchCards(cards, query, inputUnique /*, user?.defaultPrefer, user?.defaultCludes */);
+
     if (asRandom) {
       setResultSet(tempResults);
       return;
     }
     const defaultSort = makeSort('name', 'auto');
-    tempResults.sort((a: HCCard.Any, b: HCCard.Any) => defaultSort.filter(a, '=', b));
+    tempResults.sort(defaultSort.filter);
     for (let i = sortRules.length - 1; i >= 0; i--) {
-      tempResults.sort((a: HCCard.Any, b: HCCard.Any) => sortRules[i].filter(a, '=', b));
+      tempResults.sort(sortRules[i].filter);
     }
     setResultSet(tempResults);
 

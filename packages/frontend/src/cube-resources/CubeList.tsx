@@ -1,7 +1,6 @@
-import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { useParams } from 'react-router-dom';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
-import { HellfallCard } from '../hellfall/card';
 import { stringToMana } from '../hellfall/stringToMana.tsx';
 import {
   compareCubeListCards,
@@ -11,7 +10,7 @@ import {
   groupCubeCards,
   isPlayableCubeCard,
 } from '@hellfall/shared/utils';
-import { HCCard, SetCode } from '@hellfall/shared/types';
+import { SetCode } from '@hellfall/shared/types';
 import { useEffect, useMemo } from 'react';
 import { BoxProps } from '@workday/canvas-kit-react';
 import {
@@ -32,17 +31,14 @@ const cubeNameForCode = (setCode: SetCode, fallback: string) => getSet(setCode)?
 export const CubeList = () => {
   const { setCode: setCodeParam } = useParams<{ setCode: SetCode }>();
   const setCode = (setCodeParam ?? 'HC8') as SetCode;
-  const cardMap = useAtomValue(cardsAtom).filter(isPlayableCubeCard);
+  const cardMap = useAtomValue(cardsAtom).filterToMap(isPlayableCubeCard);
   const setActiveCard = useSetAtom(activeCardAtom);
 
   const cards = useMemo(() => {
     if (setCode === ('All' as SetCode)) {
-      return cardMap
-        .getAllInSetListDirect([...cubeResourceSetCodes])
-        .mapToArray(card => card)
-        .sort(compareCubeListCards);
+      return cardMap.getAllInSetListDirect([...cubeResourceSetCodes]).sort(compareCubeListCards);
     }
-    return cardMap.getAllInSetDirect(setCode).mapToArray(card => card);
+    return cardMap.getAllInSetDirect(setCode);
   }, [cardMap, setCode]);
 
   const sections = useMemo(() => groupCubeCards(cards), [cards]);
@@ -106,7 +102,7 @@ export const CubeList = () => {
                   {sectionCards.map(card => (
                     <CardRow key={card.id}>
                       <NameCell
-                        to={`/card/${card.name}`}
+                        to={`/card/${encodeURIComponent(card.hcid)}`}
                         onMouseEnter={() => setActiveCard(card.id)}
                       >
                         {card.name}

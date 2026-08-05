@@ -47,73 +47,75 @@ const evaluateFilter = (
   }
 };
 
-/**
- * Given a query, filters a {@linkcode cardsCollection} to return only the cards that match the query
- *
- * Firestore-backed search; browser code should use {@linkcode searchCards} from `@hellfall/shared/filters`.
- * @param cardsCol Collection of all cards
- * @param query query to use
- * @param uniqueMode the {@linkcode uniqueType} from the input to use, if any
- * @param preferMode the {@linkcode preferType} from the input to use, if any
- * @param defaultCludes The user's list of default inclusions/exclusions, if any
- * @returns a {@linkcode CardMap} containing the search results
- */
-export const searchCardsFromCollection = async (
-  cardsCol: cardsCollection,
-  query: string,
-  uniqueMode?: uniqueType,
-  preferMode?: preferType,
-  defaultCludes?: string[]
-): Promise<CardMap> => {
-  const snapshot = await cardsCol.get();
-  const cardMap = new CardMap(
-    snapshot.docs.map(doc => firestoreToCard(/* doc.id,  */ doc.data() as firestoreCard))
-  );
-  const { node, includeList, excludeList, autoFilterExtras, unique, prefer } = parseSearchQuery(
-    query,
-    cardMap,
-    defaultCludes
-  );
-  const usingClusion = Boolean(includeList.length + excludeList.length);
-  if (
-    includeList.some(
-      include => correctInclude(fixValue(include.value)) == 'drop' && !include.inverted
-    )
-  ) {
-    fixDrop(node);
-  }
-  if (includeList.length) {
-    const defaultInclude = makeIncludeFilter('nonextras', ':');
-    includeList.push(defaultInclude);
-  }
-  const uMode = unique ?? uniqueMode ?? 'cards';
-  const pMode = prefer ?? preferMode ?? 'newest';
-  const newCardsWithExtras = new CardMap();
-  (await cardsCol.get()).forEach(snap => {
-    const card = snap.data();
-    if (
-      evaluateFilter(node, card, cardsCol) &&
-      (includeList.length
-        ? includeList.some(filter => filter.cardPassesFilter(card as unknown as HCCard.Any))
-        : true) &&
-      (excludeList.length
-        ? excludeList.some(filter => filter.cardPassesFilter(card as unknown as HCCard.Any))
-        : true)
-    ) {
-      newCardsWithExtras.set(firestoreToCard(card));
-    }
-  });
-  const excludeExtras = makeIncludeFilter('nonextras', ':');
-  const newCardsWithoutExtras = newCardsWithExtras.filter(card =>
-    excludeExtras.cardPassesFilter(card)
-  );
+// /**
+//  * Given a query, filters a {@linkcode cardsCollection} to return only the cards that match the query
+//  *
+//  * Firestore-backed search; browser code should use {@linkcode searchCards} from `@hellfall/shared/filters`.
+//  * @param cardsCol Collection of all cards
+//  * @param query query to use
+//  * @param uniqueMode the {@linkcode uniqueType} from the input to use, if any
+//  * @param preferMode the {@linkcode preferType} from the input to use, if any
+//  * @param defaultCludes The user's list of default inclusions/exclusions, if any
+//  * @returns a {@linkcode CardMap} containing the search results
+//  */
+// export const searchCardsFromCollection = async (
+//   cardsCol: cardsCollection,
+//   query: string,
+//   uniqueMode?: uniqueType,
+//   preferMode?: preferType,
+//   defaultCludes?: string[]
+// ): Promise<CardMap> => {
+//   const snapshot = await cardsCol.get();
+//   const cardMap = new CardMap(
+//     snapshot.docs.map(doc => firestoreToCard(/* doc.id,  */ doc.data() as firestoreCard))
+//   );
+//   const { node, includeList, excludeList, autoFilterExtras, unique, prefer } = parseSearchQuery(
+//     query,
+//     cardMap,
+//     defaultCludes
+//   );
+//   const usingClusion = Boolean(includeList.length + excludeList.length);
+//   if (
+//     includeList.some(
+//       include => correctInclude(fixValue(include.value)) == 'drop' && !include.inverted
+//     )
+//   ) {
+//     fixDrop(node);
+//   }
+//   if (includeList.length) {
+//     const defaultInclude = makeIncludeFilter('nonextras', ':');
+//     includeList.push(defaultInclude);
+//   }
+//   const uMode = unique ?? uniqueMode ?? 'cards';
+//   const pMode = prefer ?? preferMode ?? 'newest';
+//   const modeToUse = uMode == 'cards' ? pMode : undefined;
 
-  const passed =
-    autoFilterExtras && !usingClusion && newCardsWithoutExtras.size
-      ? newCardsWithoutExtras
-      : newCardsWithExtras;
-  if (uMode == 'cards') {
-    return passed.getPreferred(pMode);
-  }
-  return passed;
-};
+//   const newCardsWithExtras = new CardMap();
+//   (await cardsCol.get()).forEach(snap => {
+//     const card = snap.data();
+//     if (
+//       evaluateFilter(node, card, cardsCol) &&
+//       (includeList.length
+//         ? includeList.some(filter => filter.cardPassesFilter(card as unknown as HCCard.Any))
+//         : true) &&
+//       (excludeList.length
+//         ? excludeList.some(filter => filter.cardPassesFilter(card as unknown as HCCard.Any))
+//         : true)
+//     ) {
+//       newCardsWithExtras.set(firestoreToCard(card));
+//     }
+//   });
+//   const excludeExtras = makeIncludeFilter('nonextras', ':');
+//   const newCardsWithoutExtras = newCardsWithExtras.filter(card =>
+//     excludeExtras.cardPassesFilter(card)
+//   );
+
+//   const passed =
+//     autoFilterExtras && !usingClusion && newCardsWithoutExtras.size
+//       ? newCardsWithoutExtras
+//       : newCardsWithExtras;
+//   if (uMode == 'cards') {
+//     return passed.getPreferred(pMode);
+//   }
+//   return passed;
+// };

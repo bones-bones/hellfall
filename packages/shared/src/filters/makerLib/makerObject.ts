@@ -84,16 +84,15 @@ const parseNote = (text: string): { name: string; note?: boolean | string } => {
  */
 export class SortObject implements sortInterface {
   queryName: 'sort' = 'sort';
-  constructor(public sort: sortType, public dir: dirType) {}
+  constructor(public sort: sortType, public dir: dirType, public useTypes?: boolean) {}
   /**
    * A function that sorts two cards
    * @param value1 the first card to sort
-   * @param operator dummy
    * @param value2 the second card to sort
    * @returns a number for `.sort()`
    */
-  filter = (value1: HCCard.Any, operator: opType, value2: HCCard.Any) =>
-    filterSort(value1, operator, value2, this.sort, this.dir);
+  filter = (value1: HCCard.Any, value2: HCCard.Any) =>
+    filterSort(value1, value2, this.sort, this.dir, this.useTypes);
 }
 
 /**
@@ -464,9 +463,9 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
      */
     toValue: (value: T) => T[] | T | undefined = value => value,
     /**
-     * Whether to keep dashes in text
+     * Whether to treat this as a set filter
      */
-    public keepDashes?: boolean,
+    public isSet?: boolean,
     defaultOp: opType = '=',
     invertOption: invertOptionType = 'flip'
   ) {
@@ -474,14 +473,11 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
       queryName,
       shareFilter,
       summary as summaryFunction<any>,
-      ensureArray(toValue(unescapeText(value, keepDashes) as T)).map(v =>
-        unescapeText(v, keepDashes)
-      ),
+      ensureArray(toValue(unescapeText(value, isSet) as T)).map(v => unescapeText(v, isSet)),
       op,
       card =>
         this.props.flatMap(
-          p =>
-            getValuesFromProp(card, p, this.location, this.dropFaces, this.keepDashes) as string[]
+          p => getValuesFromProp(card, p, this.location, this.dropFaces, this.isSet) as string[]
         ),
       defaultOp,
       invertOption
@@ -510,22 +506,13 @@ export class InFilter extends PropConvertFilter<string> {
      */
     public getAllPrints: allPrintsGetterType,
     /**
-     * Whether to keep dashes in text
+     * Whether this is a set filter
      */
-    keepDashes?: boolean,
+    isSet?: boolean,
     defaultOp: opType = '=',
     invertOption: invertOptionType = 'flip'
   ) {
-    super(
-      'in',
-      inSummary as summaryFunction<any>,
-      value,
-      op,
-      toIn,
-      keepDashes,
-      defaultOp,
-      invertOption
-    );
+    super('in', inSummary as summaryFunction<any>, value, op, toIn, isSet, defaultOp, invertOption);
     this.summaryValue = value;
     ({ props: this.props, location: this.location } = queryNameToValue('in'));
   }

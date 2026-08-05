@@ -24,21 +24,13 @@ export const Deck = () => {
   const cards = useAtomValue(cardsAtom);
   const setActiveCard = useSetAtom(activeCardAtom);
   const resolveCard = (entry: CardEntry): RenderEntry => {
-    if (entry.name[0] == '%') {
-      return {
-        count: entry.count,
-        name: cards.find(e => e.id == entry.name.slice(1))!.id,
-        id: entry.name.slice(1),
-        hcCard: cards.find(e => e.id == entry.name.slice(1)),
-      };
-    } else {
-      return {
-        count: entry.count,
-        name: entry.name,
-        id: cards.find(e => e.name.toLowerCase() == entry.name.toLowerCase())?.id,
-        hcCard: cards.find(e => e.name.toLowerCase() == entry.name.toLowerCase()),
-      };
-    }
+    const { card } = cards.getForDeck(entry.name);
+    return {
+      count: entry.count,
+      name: entry.name,
+      id: card?.id,
+      hcCard: card,
+    };
   };
   const resolvedMainDeck = deck.cards.main.map(resolveCard) as RenderEntry[];
 
@@ -252,7 +244,7 @@ const CategorySection = ({
               <CardLineContainer key={entry.name}>
                 <CardColumn onMouseOver={() => setActive(entry.hcCard)}>
                   {entry.count}{' '}
-                  <BoldSpan to={'/card/' + (entry.hcCard?.hcid || '')}>{entry.name}</BoldSpan>{' '}
+                  <BoldSpan to={`/card/${entry.hcCard?.hcid ?? ''}`}>{entry.name}</BoldSpan>{' '}
                 </CardColumn>{' '}
                 <CostColumn>{stringToMana(entry.hcCard?.mana_cost || '')}</CostColumn>
                 <MoneyColumn key={entry.name + 'cash'}>{getPrice(entry.name)}</MoneyColumn>

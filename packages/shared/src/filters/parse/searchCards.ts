@@ -38,7 +38,7 @@ export const searchCards = (
   uniqueMode?: uniqueType,
   preferMode?: preferType,
   defaultCludes?: string[]
-): CardMap => {
+): HCCard.Any[] => {
   const { node, includeList, excludeList, autoFilterExtras, unique, prefer } = parseSearchQuery(
     query,
     cardMap,
@@ -59,24 +59,13 @@ export const searchCards = (
   }
   const uMode = unique ?? uniqueMode ?? 'cards';
   const pMode = prefer ?? preferMode ?? 'newest';
-  const newCardsWithExtras = cardMap.filter(
+  const modeToUse = uMode == 'cards' ? pMode : undefined;
+  return cardMap.filterForSearch(
     card =>
       evaluateFilter(node, card, cardMap) &&
       (includeList.length ? includeList.some(filter => filter.cardPassesFilter(card)) : true) &&
-      (excludeList.length ? excludeList.some(filter => filter.cardPassesFilter(card)) : true)
+      (excludeList.length ? excludeList.some(filter => filter.cardPassesFilter(card)) : true),
+    modeToUse,
+    autoFilterExtras && !usingClusion
   );
-  // const includeNonExtras = makeIncludeFilter('nonextras', ':');
-  const excludeExtras = makeIncludeFilter('nonextras', ':');
-  const newCardsWithoutExtras = newCardsWithExtras.filter(card =>
-    excludeExtras.cardPassesFilter(card)
-  );
-
-  const passed =
-    autoFilterExtras && !usingClusion && newCardsWithoutExtras.size
-      ? newCardsWithoutExtras
-      : newCardsWithExtras;
-  if (uMode == 'cards') {
-    return passed.getPreferred(pMode);
-  }
-  return passed;
 };

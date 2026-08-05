@@ -87,7 +87,7 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse) {
       stripDoubleSpaces(`Invalid expression "${invalid[0]}" was ignored. ${invalid[1]}`)
     );
 
-    const resultMap = searchCards(cardMap, query ?? '');
+    const results = searchCards(cardMap, query ?? '');
 
     res.setHeader(
       'Content-Disposition',
@@ -104,12 +104,16 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse) {
     res.statusCode = 200;
     if (format == 'xml') {
       res.end(
-        toCockCube({ name: 'Custom', set: 'Custom' as SetCode, cardMap, idList: resultMap.ids() })
+        toCockCube({
+          name: 'Custom',
+          set: 'Custom' as SetCode,
+          cardMap,
+          idList: results.map(card => card.id),
+        })
       );
     } else if (format == 'json') {
-      const results = resultMap.cards();
       for (let i = sortList.length - 1; i >= 0; i--) {
-        results.sort((a: HCCard.Any, b: HCCard.Any) => sortList[i].filter(a, '=', b));
+        results.sort(sortList[i].filter);
       }
       const response: any = {
         object: 'list',
@@ -124,7 +128,17 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse) {
       response.data = results;
       res.end(JSON.stringify(response, null, 2));
     } else {
-      res.end(JSON.stringify(formatSearchResult(resultMap.ids(), cardMap, format), null, 2));
+      res.end(
+        JSON.stringify(
+          formatSearchResult(
+            results.map(card => card.id),
+            cardMap,
+            format
+          ),
+          null,
+          2
+        )
+      );
     }
   } catch (error) {
     console.error('Error serving JSON:', error);

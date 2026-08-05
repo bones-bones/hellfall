@@ -18,7 +18,7 @@ export const SingleCard = () => {
   const summary = useAtomValue(summaryAtom);
   const invalids = useAtomValue(invalidAtom);
   const query = useAtomValue(queryAtom);
-  const entryToRender = cards?.find(e => e.hcid === cardId);
+  const entryToRender = cards?.getFromHCID(cardId ?? '');
 
   const { resultSet } = useSearchResults(true);
 

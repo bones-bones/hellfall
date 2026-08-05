@@ -8,7 +8,6 @@ import {
   rootPropType,
 } from '@hellfall/shared/types';
 import {
-  allPartsChange,
   anyChange,
   cardFacesChange,
   changeType,
@@ -23,8 +22,6 @@ import {
   sortChanges,
 } from './changeTypes';
 import {
-  allPartsChangeIsValid,
-  getPartChangeIndex,
   isFaceChangePropType,
   isFaceChangeValueType,
   isRootChangePropType,
@@ -36,12 +33,10 @@ import { baseIncludesFlag, getBaseDiffs, getChangesFromTag } from './tagHandling
 // can add even if empty
 const rootBlankableProps: Partial<Record<HCKind, rootPropType[]>> = {
   card: ['mana_cost', 'mana_value', 'rulings', 'collector_number'],
-  notmagic: ['mana_cost', 'mana_value'],
 };
 
 const faceBlankableProps: Partial<Record<HCKind, facePropType[]>> = {
   card: ['mana_cost', 'mana_value', 'oracle_text'],
-  notmagic: ['mana_cost', 'mana_value', 'oracle_text'],
 };
 
 // can delete
@@ -54,7 +49,7 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'oracle_id_is_scryfall',
     'flavor_name',
     'export_name',
-    'collector_number',
+    // 'collector_number',
     // 'image',
     // 'rotated_image',
     // 'still_image',
@@ -78,53 +73,7 @@ const rootRemovableProps: Partial<Record<HCKind, rootPropType[]>> = {
     'oracle_id_is_scryfall',
     'flavor_name',
     'export_name',
-    'collector_number',
-    // 'image',
-    // 'rotated_image',
-    // 'still_image',
-    'print_image_status',
-    // 'print_image',
-    // 'rotated_print_image',
-    // 'still_print_image',
-    'not_directly_draftable',
-    'has_draft_partners',
-    'creators',
-    'artists',
-    'artist_notes',
-    'frame_effects',
-    'tags',
-    'tag_notes',
-    'base_tags',
-    'all_parts',
-  ],
-  land: [
-    // 'id_is_scryfall',
-    // 'oracle_id_is_scryfall',
-    'flavor_name',
-    'export_name',
-    'collector_number',
-    // 'image',
-    // 'rotated_image',
-    // 'still_image',
-    'print_image_status',
-    // 'print_image',
-    // 'rotated_print_image',
-    // 'still_print_image',
-    'not_directly_draftable',
-    'has_draft_partners',
-    'creators',
-    'artists',
-    'artist_notes',
-    'frame_effects',
-    'tags',
-    'tag_notes',
-    'base_tags',
-    'all_parts',
-  ],
-  notmagic: [
-    'flavor_name',
-    'export_name',
-    'collector_number',
+    // 'collector_number',
     // 'image',
     // 'rotated_image',
     // 'still_image',
@@ -179,60 +128,19 @@ const faceRemovableProps: Partial<Record<HCKind, facePropType[]>> = {
     'frame',
     'frame_effects',
   ],
-  land: [
-    'flavor_name',
-    'export_name',
-    // 'image',
-    // 'rotated_image',
-    // 'still_image',
-    'supertypes',
-    'types',
-    'subtypes',
-    'flavor_text',
-    'power',
-    'toughness',
-    'loyalty',
-    'defense',
-    'watermark',
-    'frame',
-    'frame_effects',
-  ],
-  notmagic: [
-    'flavor_name',
-    'export_name',
-    // 'image',
-    // 'rotated_image',
-    // 'still_image',
-    'supertypes',
-    'types',
-    'subtypes',
-    'flavor_text',
-    'power',
-    'toughness',
-    'loyalty',
-    'defense',
-    'color_indicator',
-    'watermark',
-    'frame',
-    'frame_effects',
-  ],
 };
 
 const rootIgnoreProps: Record<HCKind, rootPropType[]> = {
   card: ['image_status', 'print_image_status'],
   token: ['mana_cost', 'mana_value', 'colors', 'rulings', 'image_status', 'print_image_status'],
-  land: ['image_status', 'print_image_status'],
   front: ['image_status', 'print_image_status'],
   scryfall: [],
-  notmagic: ['image_status', 'print_image_status'],
 };
 const faceIgnoreProps: Partial<Record<HCKind, facePropType[]>> = {
   // card: ['colors'],
   token: ['mana_cost', 'mana_value', 'subtypes', 'oracle_text', 'colors'],
-  // land: ['colors'],
   // front: ['colors'],
   // scryfall: ['colors'],
-  // notmagic: ['colors'],
 };
 type add = faceChangeablePropType<'add'>;
 
@@ -296,7 +204,7 @@ export const getChangesFromDifferences = (
     });
   });
   // if ('card_faces' in existingCard != 'card_faces' in newCard) {
-  //   throw console.error(
+  //   console.error(
   //     "You really shouldn't try to use this to compare between single cards and multiface cards."
   //   );
   // }
@@ -385,46 +293,46 @@ export const getChangesFromDifferences = (
     });
   }
 
-  const foundIndices: number[] = [];
-  newCard.all_parts?.forEach(newPart => {
-    const change: allPartsChange = {
-      location: 'all_parts',
-      change_type: 'add',
-      related: newPart,
-    };
-    if (pullingFromSheet) {
-      change.no_blank = true;
-    }
-    const index = getPartChangeIndex(existingCard, change);
-    if (index != undefined) {
-      foundIndices.push(index);
-      if (allPartsChangeIsValid(existingCard, change, index)) {
-        changeList.push(change);
-      }
-    } else {
-      changeList.push(change);
-    }
-  });
-  existingCard.all_parts
-    ?.filter((part, i) => !foundIndices.includes(i))
-    .forEach(part => {
-      const change: allPartsChange = {
-        location: 'all_parts',
-        change_type: 'delete',
-      };
-      if (part.id) {
-        change.id = part.id;
-      } else if (part.hcid) {
-        change.id = part.hcid;
-        change.part_prop = 'hcid';
-      } else if (part.name) {
-        change.id = part.name;
-        change.part_prop = 'name';
-      } else {
-        return;
-      }
-      changeList.push(change);
-    });
+  // const foundIndices: number[] = [];
+  // newCard.all_parts?.forEach(newPart => {
+  //   const change: allPartsChange = {
+  //     location: 'all_parts',
+  //     change_type: 'add',
+  //     related: newPart,
+  //   };
+  //   if (pullingFromSheet) {
+  //     change.no_blank = true;
+  //   }
+  //   const index = getPartChangeIndex(existingCard, change);
+  //   if (index != undefined) {
+  //     foundIndices.push(index);
+  //     if (allPartsChangeIsValid(existingCard, change, index)) {
+  //       changeList.push(change);
+  //     }
+  //   } else {
+  //     changeList.push(change);
+  //   }
+  // });
+  // existingCard.all_parts
+  //   ?.filter((part, i) => !foundIndices.includes(i))
+  //   .forEach(part => {
+  //     const change: allPartsChange = {
+  //       location: 'all_parts',
+  //       change_type: 'delete',
+  //     };
+  //     if (part.id) {
+  //       change.id = part.id;
+  //     } else if (part.hcid) {
+  //       change.id = part.hcid;
+  //       change.part_prop = 'hcid';
+  //     } else if (part.name) {
+  //       change.id = part.name;
+  //       change.part_prop = 'name';
+  //     } else {
+  //       return;
+  //     }
+  //     changeList.push(change);
+  //   });
   const { added, deleted } = getBaseDiffs(existingCard.base_tags ?? [], newCard.base_tags ?? []);
   const alsoAddingFaces = changeList.some(
     change => change.location == 'card_faces' && change.change_type == 'add'

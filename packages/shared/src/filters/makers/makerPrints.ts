@@ -12,7 +12,7 @@ export const makeInFilter: printsFilterMaker = (
   op: looseOpType,
   getAllPrints: allPrintsGetterType
 ) => {
-  return new InFilter(value, op, getAllPrints);
+  return new InFilter(value, op, getAllPrints, true);
 };
 
 /**

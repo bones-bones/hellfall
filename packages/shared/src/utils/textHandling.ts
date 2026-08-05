@@ -1,5 +1,3 @@
-import { allSetsList } from '@hellfall/shared/types';
-
 /**
  * Normalize text (remove accents and replace smart quotes with normal quotes)
  * @param text text to normalize
@@ -11,6 +9,12 @@ export const normalizeText = (text: string): string =>
     .replaceAll(/[‘’]/g, "'")
     .replaceAll(/[“”]/g, '"')
     .replaceAll(/ {2,}/g, ' ');
+
+/**
+ * Fixes a name by normalizing it, making it lowercase, and trimming it
+ * @param text text to fix
+ */
+export const fixName = (text: string) => textPrep(text.toLowerCase().trim());
 
 /**
  * Format smart quotes
@@ -297,98 +301,13 @@ export const formatParens = (text: string) => {
 };
 
 /**
- * Gets the non-masterpiece version of a masterpiece name.
- * @param name Name to strip
- * @returns stripped name
- */
-export const stripMasterpiece = (name: string) => {
-  const start = allSetsList.find(set => name.startsWith(`${set}: `));
-  return start ? name.slice(start.length + 2) : name;
-};
-/**
- * Gets the masterpiece set code of a masterpiece name.
- * @param name Name to get masterpiece from
- * @returns masterpiece code
- */
-export const getMasterpiece = (name: string) => {
-  const start = allSetsList.find(set => name.startsWith(`${set}: `));
-  return `${start}: `;
-};
-
-/**
- * Gets the bare version of a name that ends with a set code.
- * @param name Name to strip
- * @returns stripped name
- */
-export const stripSetCode = (name: string) => {
-  const ending = [...allSetsList, 'HC'].find(set => name.endsWith(` (${set})`));
-  return ending ? name.slice(0, -ending.length - 3) : name;
-};
-
-/**
- * Gets the set code from a name that ends with a set code.
- * @param name Name to strip
- * @returns stripped name
- */
-export const getSetCode = (name: string) => {
-  const ending = [...allSetsList, 'HC'].find(set => name.endsWith(` (${set})`));
-  return ending ? ` (${ending})` : undefined;
-};
-
-const hardCardNames: string[] = [
-  'Crypt of u/Em9500',
-  '1d6',
-  'Avatar of BallsJr123',
-  'Sekiro for the PS4',
-  'Avatar of Discord v2',
-  'That One Time in WW1',
-  'Plagiarism by doomclaw9',
-  'Carrion Feeder from MH8',
-];
-
-export const hardTokenIds: string[] = [
-  'Clue© 19861',
-  '+21',
-  '+41',
-  'AKKI-471',
-  'Bolt M41',
-  'Rock 191',
-  "Baldur's Gate 31",
-];
-
-/**
- * Parses the name, count, and base for a related card
- * @param oldName name from the google sheet
- */
-export const parseRelatedReferenceName = (
-  oldName: string
-): { name: string; count?: string; base: string; shouldUseBase: boolean } => {
-  const match = oldName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
-  const name = match?.groups?.name ?? oldName;
-  const count = match?.groups?.count;
-  const base = hardTokenIds.includes(name) ? name.slice(0, -1) : name.replace(/\d+$/, '');
-  const shouldUseBase =
-    hardTokenIds.includes(name) ||
-    (/\d/.test(name.at(-1)!) &&
-      !hardCardNames.includes(name) &&
-      base.length > 0 &&
-      ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!));
-  return { name, count, base, shouldUseBase };
-};
-
-/**
  * Preps a name for export to draftmancer/cockatrice
  * @param name name to prep
  * @returns prepped name
  */
 export const toExportName = (name: string) => {
-  const retName = name
-    .replaceAll(/[[{]/g, '(')
-    .replaceAll(/[\]}]/g, ')')
-    .replaceAll(/\\/g, '')
-    // .replaceAll(/[\\.]/g, '')
-    .replaceAll(/\((\d+)\)/g, '$1');
-  return retName.slice(0, 2) == '  ' ? retName.trimStart() : retName;
+  const retName = name.replaceAll(/[[{]/g, '(').replaceAll(/[\]}]/g, ')').replaceAll(/\\/g, '');
+  return retName.startsWith('  ') ? retName.trimStart() : retName;
 };
 
 /**
@@ -540,14 +459,23 @@ export const isRegexText = (text: string) => regexTest.test(text);
 /**
  * Unescapes and strips text so that it can be used in comparisons
  * @param text text to unescape
- * @param keepDashes whether to keep dashes (for correct handling of text fields)
+ * @param isSet whether this filter is a set filter
  */
-export const unescapeText = (text: string, keepDashes?: boolean) => {
+export const unescapeText = (text: string, isSet?: boolean) => {
   if (isRegexText(text)) {
     return text;
   }
-  const strippedText =
-    textIsQuote(text) || keepDashes ? text.replaceAll('–', '-') : text.replaceAll(/[_\-–]/g, '');
+  if (isSet) {
+    return text
+      .toUpperCase()
+      .replaceAll('.', '_')
+      .replaceAll(/^['"]/g, '')
+      .replaceAll(/(?<!\\)['"]/g, '')
+      .replaceAll(/\\(['"])/g, '$1');
+  }
+  const strippedText = textIsQuote(text)
+    ? text.replaceAll('–', '-')
+    : text.replaceAll(/[_\-–]/g, '');
   return strippedText
     .toLowerCase()
     .replaceAll(/^['"]/g, '')
@@ -601,3 +529,5 @@ export const matchCount = (text: string, regex: RegExp, ...args: (RegExp | undef
   }
   return total;
 };
+export const toTitleCase = (text: string) =>
+  `${text[0]?.toUpperCase() ?? ''}${text.slice(1).toLowerCase()}`;

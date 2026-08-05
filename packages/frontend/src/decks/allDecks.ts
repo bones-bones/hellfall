@@ -7,7 +7,7 @@ export const allDecks: DeckInfo[] = [
     text: 'HC8.0',
     cards: {
       main: [
-        { name: 'Mox Jet (HC)', count: 4 },
+        { name: 'Mox Jet <HC>', count: 4 },
         { name: 'Mox Radium', count: 4 },
         { name: 'Mox Phyrexian', count: 4 },
         { name: 'Ornithopt', count: 4 },
@@ -18,7 +18,7 @@ export const allDecks: DeckInfo[] = [
         { name: 'Union Member of the Third Path', count: 4 },
         { name: 'Memnite // Wastes', count: 4 },
         { name: 'Mechanical Rootwalla', count: 4 },
-        { name: 'Sheoldred, Whispering One (hc)', count: 4 },
+        { name: 'Sheoldred, Whispering One <HC>', count: 4 },
         { name: 'Darksteel Chad', count: 4 },
         { name: 'Pact of Memnite', count: 4 },
         { name: 'Flummox', count: 4 },
@@ -78,7 +78,7 @@ export const allDecks: DeckInfo[] = [
     text: 'HC8.0',
     cards: {
       main: [
-        { name: 'The Prismatic Piper (hc)', count: 2 },
+        { name: 'The Prismatic Piper <HC>', count: 2 },
         { name: 'Wiimote', count: 4 },
         { name: 'Gate', count: 2 },
         { name: 'What the fuck are these', count: 3 },
@@ -121,7 +121,7 @@ export const allDecks: DeckInfo[] = [
     text: 'HC8.0',
     cards: {
       main: [
-        { name: 'The Prismatic Piper (hc)', count: 2 },
+        { name: 'The Prismatic Piper <HC>', count: 2 },
         { name: 'Raccon', count: 4 },
         { name: 'Marie Kondo', count: 4 },
         { name: 'Psychic Log', count: 4 },
@@ -156,7 +156,7 @@ export const allDecks: DeckInfo[] = [
     text: 'HC8.0',
     cards: {
       main: [
-        { name: 'Mox Jet (HC)', count: 4 },
+        { name: 'Mox Jet <HC>', count: 4 },
         { name: 'Mox Radium', count: 4 },
         { name: 'Mox Phyrexian', count: 4 },
         { name: 'Ornithopt', count: 4 },
@@ -167,7 +167,7 @@ export const allDecks: DeckInfo[] = [
         { name: 'Union Member of the Third Path', count: 4 },
         { name: 'Memnite // Wastes', count: 4 },
         { name: 'Mechanical Rootwalla', count: 4 },
-        { name: 'Sheoldred, Whispering One (hc)', count: 4 },
+        { name: 'Sheoldred, Whispering One <HC>', count: 4 },
         { name: 'Darksteel Chad', count: 4 },
         { name: 'Pact of Memnite', count: 4 },
         { name: 'Flummox', count: 4 },
@@ -194,10 +194,10 @@ export const allDecks: DeckInfo[] = [
         { name: 'Cathartic Cathar', count: 2 },
         { name: 'Sire of X Deaths', count: 4 },
         { name: 'Vision of a Doomed Future', count: 3 },
-        { name: 'Three Visits (HC3)', count: 3 },
+        { name: 'Three Visits <HC>', count: 3 },
         { name: 'Scab-Clan Scab', count: 3 },
         { name: 'King K. Gruul', count: 4 },
-        { name: 'The Prismatic Piper (hc)', count: 2 },
+        { name: 'The Prismatic Piper <HC>', count: 2 },
         { name: 'Extremely Large Raccoon', count: 3 },
         { name: 'Khalni Hydra 2: Take the Crown', count: 3 },
         { name: "Fri'iki, Tyrant World", count: 4 },
@@ -226,7 +226,7 @@ export const allDecks: DeckInfo[] = [
     cards: {
       main: [
         { name: 'Ginkhole', count: 3 },
-        { name: 'Three Visits (HC3)', count: 4 },
+        { name: 'Three Visits <HC>', count: 4 },
         { name: "Winter's Bloom", count: 4 },
         { name: 'Illegal Trespassing', count: 4 },
         { name: "Bill and Tifa's Excellent Adventure", count: 2 },
@@ -351,7 +351,7 @@ export const allDecks: DeckInfo[] = [
         { name: 'Wireless Snacker', count: 2 },
         { name: 'Dead on Arrival // Naturalize Magic', count: 4 },
         { name: "Kolaghan's Command Tower // Kolaghan's Command", count: 2 },
-        { name: 'SwAmp (Hellscube)', count: 4 },
+        { name: 'SwAmp <HC>', count: 4 },
         { name: 'Wasteland Oasis', count: 4 },
         { name: 'Forest', count: 4 },
         { name: 'Swamp', count: 4 },
@@ -389,7 +389,7 @@ export const allDecks: DeckInfo[] = [
         { name: 'Land Mine', count: 4 },
         { name: 'Desert of the True', count: 4 },
         { name: 'Plains', count: 10 },
-        { name: 'The Prismatic Piper (hc)', count: 2 },
+        { name: 'The Prismatic Piper <HC>', count: 2 },
       ],
       sideboard: [
         { name: 'totally just a cantrip i swear', count: 1 },
@@ -445,7 +445,7 @@ export const allDecks: DeckInfo[] = [
     cards: {
       main: [
         { count: 2, name: "Ashnod's Waltar" },
-        { count: 3, name: 'Sheoldred, Whispering One (hc)' },
+        { count: 3, name: 'Sheoldred, Whispering One <HC>' },
         { count: 1, name: 'Thinking About Volleyballs' },
         { count: 4, name: 'Flummox' },
         { count: 3, name: 'Inside Job' },
@@ -466,12 +466,12 @@ export const allDecks: DeckInfo[] = [
         { count: 4, name: 'Polluted Δ' },
         { count: 5, name: 'Island' },
         { count: 3, name: 'Swamp' },
-        { count: 2, name: 'Half-Thriving ____ Half-Thriving ____' },
-        { count: 2, name: 'The Prismatic Piper (hc)' },
+        { count: 2, name: 'Half-Thriving ____ Half- // Thriving ____' },
+        { count: 2, name: 'The Prismatic Piper <HC>' },
       ],
       sideboard: [
         { count: 2, name: 'Snapcorpser Mage' },
-        { count: 2, name: 'TL;DR (hc3)' },
+        { count: 2, name: 'TL;DR <HC3>' },
         { count: 3, name: 'Where joke' },
         {
           count: 4,
@@ -505,7 +505,7 @@ export const allDecks: DeckInfo[] = [
         { count: 3, name: 'It That Bears Gifts' },
         { count: 1, name: 'Agent Fblthp' },
         { count: 1, name: 'Siege Rhino EX' },
-        { count: 2, name: 'The Prismatic Piper (hc)' },
+        { count: 2, name: 'The Prismatic Piper <HC>' },
         { count: 3, name: 'Geistshot' },
         { count: 4, name: "Krenko's Remand" },
         { count: 3, name: 'Permeating Pass' },
@@ -529,7 +529,7 @@ export const allDecks: DeckInfo[] = [
       ],
       main: [
         { count: 4, name: 'Errata, the Silencer' },
-        { count: 4, name: 'Sheoldred, Whispering One (hc)' },
+        { count: 4, name: 'Sheoldred, Whispering One <hc>' },
         { count: 4, name: 'Memory Lapse (Not the Homelands One)' },
         { count: 2, name: 'Unflips Your Delver' },
         { count: 4, name: 'See if I Care' },
@@ -538,10 +538,10 @@ export const allDecks: DeckInfo[] = [
         { count: 2, name: 'Trade With Timmy' },
         { count: 4, name: 'Flummox' },
         { count: 2, name: 'Bog' },
-        { count: 3, name: 'Watergate (hc6)' },
+        { count: 3, name: 'Watergate <HC6>' },
 
         { count: 1, name: 'Karzilek, Butcher of Pavement' },
-        { count: 4, name: 'Half-Thriving ____ Half-Thriving ____' },
+        { count: 4, name: 'Half-Thriving ____ Half- // Thriving ____' },
         { count: 4, name: 'Actual Cascade Bluffs' },
         { count: 4, name: 'Coastal Bluffs' },
         { count: 4, name: 'Polluted Δ' },
@@ -556,9 +556,9 @@ export const allDecks: DeckInfo[] = [
     author: 'Frognarch',
     title: '2024 Constructed Tournament - Top 4 - WB Limitless Lasagna',
     text: `Garfield, you fat cat. Why are you so big and fat?
-Swiss Army Mänufactör and a Sac outlet that makes tokens is a notably strong and easily enableable combo in hellscube constructed, the two cards combine for infinite death triggers, infinite artifact leaving the battlefield triggers, and when combined with something like Paul Blartist, Mall Cop, wins the game outright. This combo can be easy to get to, pieces can be as easy to find as the land Harare, or can be tutored for with reliability like Make-A-Wish.
+    Swiss Army Mänufactör and a Sac outlet that makes tokens is a notably strong and easily enableable combo in hellscube constructed, the two cards combine for infinite death triggers, infinite artifact leaving the battlefield triggers, and when combined with something like Paul Blartist, Mall Cop, wins the game outright. This combo can be easy to get to, pieces can be as easy to find as the land Harare, or can be tutored for with reliability like Make-A-Wish.
 This deck benefits from the card Garfield Mystic reducing the price of premier removal spells like Yeast Within and Wizard Spell to allow for cheap and quick responses. It also reduces the price of the Mänufactör, Kambar, and other token payoffs, making the endgame come much faster, and combos for an infinitely large creature with the final combo if a Paul Blartist cannot be easily found.
-If the combo just does not show up, tempo cards with incredibly strong results like Batterie Antoinette come out cheap and quick, and Tolkien, Toking allows for a board with any amount of tokens  to quickly become game winning (Notably making a bunch of 4/3 sharks with Biterblossom)
+If the combo just does not show up, tempo cards with incredibly strong results like Batterie Antoinette come out cheap and quick, and Tolkien, Toking allows for a board with any amount of tokens to quickly become game winning (Notably making a bunch of 4/3 sharks with Biterblossom)
 The reason the deck runs no copies of Prismatic Piper, instead of taking advantage of the free -2 deck size is that I am making a genius meta-play against the dominant mill meta deck. It is not because I did not know about and had never seen Piper before today.`,
     cards: {
       main: [
@@ -575,7 +575,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         { count: 3, name: 'Batterie Antoinette' },
         { count: 4, name: 'Harare' },
         { count: 2, name: 'Indatha Land Kathril Approves Of' },
-        { count: 2, name: 'Marsh Flats (Hellscube)' },
+        { count: 2, name: 'Marsh Flats <HC>' },
         { count: 9, name: 'Plains' },
         { count: 10, name: 'Swamp' },
       ],
@@ -605,7 +605,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
       ],
       main: [
         { count: 3, name: 'Pyramid Schemer' },
-        { count: 4, name: 'Sheoldred, Whispering One (hc)' },
+        { count: 4, name: 'Sheoldred, Whispering One <HC>' },
         { count: 3, name: 'Knight of the Whiter Orchid' },
         { count: 4, name: 'White Counterspell' },
         { count: 4, name: 'Inside Job' },
@@ -615,12 +615,12 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         { count: 3, name: 'Swamp' },
         { count: 6, name: 'Plains' },
         { count: 4, name: 'Hidden Temple of Legends' },
-        { count: 4, name: 'Half-Thriving ____ Half-Thriving ____' },
+        { count: 4, name: 'Half-Thriving ____ Half- // Thriving ____' },
         { count: 2, name: 'The Dream Den' },
         { count: 4, name: 'Indatha Land Kathril Approves Of' },
         { count: 4, name: 'Inquisition of Haktos the Unscarred' },
         { count: 4, name: 'Dis Enchant' },
-        { count: 2, name: 'The Prismatic Piper (hc)' },
+        { count: 2, name: 'The Prismatic Piper <HC>' },
       ],
     },
   },
@@ -637,7 +637,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         { count: 2, name: 'Thirst for Thirst' },
       ],
       main: [
-        { count: 2, name: 'The Prismatic Piper (hc)' },
+        { count: 2, name: 'The Prismatic Piper <HC>' },
         { count: 4, name: 'Shark Ritual' },
         { count: 3, name: 'Spooky Scary Spectre' },
         { count: 3, name: 'Agent Fblthp' },
@@ -645,7 +645,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         { count: 3, name: 'Blue Arm of the Forbidden One' },
         { count: 4, name: 'CMD-Elemental' },
         { count: 4, name: 'Genetic Reshuffle' },
-        { count: 4, name: 'TL;DR (hc3)' },
+        { count: 4, name: 'TL;DR <HC3>' },
         { count: 4, name: 'Flummox' },
         {
           count: 4,
@@ -653,7 +653,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         },
         { count: 3, name: 'Phyrexian Mana Confluence' },
         { count: 4, name: 'Shifting River // Shifting Forest' },
-        { count: 4, name: 'Swamp (hc)' },
+        { count: 4, name: 'Swamp <HC4>' },
         { count: 6, name: 'Island' },
         { count: 2, name: 'Forest' },
         { count: 4, name: 'Evolving Fabled Terramorphic Vista' },
@@ -688,7 +688,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         { count: 3, name: 'Card Leak' },
         { count: 4, name: 'cure the Wastes' },
         { count: 1, name: 'Barbie // Oppenheimer' },
-        { count: 4, name: 'Marsh Flats (Hellscube)' },
+        { count: 4, name: 'Marsh Flats <HC>' },
         { count: 13, name: 'Plains' },
         { count: 4, name: 'Harare' },
       ],
@@ -776,7 +776,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
       main: [
         { count: 4, name: 'Knight of the Whiter Orchid' },
         { count: 1, name: 'Mangara Condor' },
-        { count: 2, name: 'The Prismatic Piper (hc)' },
+        { count: 2, name: 'The Prismatic Piper <HC>' },
         { count: 4, name: 'White Counterspell' },
         { count: 4, name: 'whelming Splendor' },
         { count: 4, name: 'Card Leak' },
@@ -815,7 +815,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         { count: 2, name: 'Mining' },
         { count: 3, name: "Assassin's Participation Trophy" },
         { count: 2, name: 'One with That Thing' },
-        { count: 3, name: 'SwAmp (Hellscube)' },
+        { count: 3, name: 'SwAmp <HC>' },
         { count: 4, name: 'Jund Supermarket' },
         { count: 2, name: 'Wasteland Oasis' },
         { count: 2, name: 'The Haunted Mansion' },
@@ -851,7 +851,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         { count: 4, name: 'Mechanical Rootwalla' },
         { count: 4, name: 'Memnite // Wastes' },
         { count: 4, name: 'Darksteel Chad' },
-        { count: 4, name: 'Sheoldred, Whispering One (hc)' },
+        { count: 4, name: 'Sheoldred, Whispering One <HC>' },
         { count: 4, name: 'Avatar of Flexing' },
         { count: 4, name: 'Thinking About Volleyballs' },
         { count: 4, name: 'Three Three City' },
@@ -883,7 +883,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         { count: 4, name: 'Crazed Designer' },
         { count: 4, name: 'Elvian Spirit Guide' },
         { count: 4, name: 'Ragavan, But We Sent Him To Space' },
-        { count: 4, name: 'Sheoldred, Whispering One (hc)' },
+        { count: 4, name: 'Sheoldred, Whispering One <HC>' },
         { count: 4, name: 'Theoretical physicist Orc' },
         { count: 2, name: 'Black Creature Removal' },
         { count: 4, name: 'Haunted Moon' },
@@ -913,12 +913,12 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         { count: 4, name: 'Wiimote' },
         { count: 3, name: 'Marie Kondo' },
         { count: 2, name: 'Vilefin Inquisitor' },
-        { count: 2, name: 'The Prismatic Piper (hc)' },
+        { count: 2, name: 'The Prismatic Piper <HC>' },
         { count: 4, name: 'Flummox' },
         { count: 4, name: 'Counterspell Balanced for EDH' },
         { count: 4, name: 'enchant' },
         { count: 3, name: "You're Going // Brazil" },
-        { count: 3, name: 'TL;DR (hc3)' },
+        { count: 3, name: 'TL;DR <HC3>' },
         { count: 2, name: 'Crucifact or Crucifixion' },
         { count: 1, name: 'Pay You 100 To Fuck Off' },
         { count: 4, name: 'Polluted Δ' },
@@ -1066,7 +1066,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         { count: 1, name: 'Rerelease' },
         { count: 1, name: 'F*ckerwisp' },
         { count: 1, name: 'Wrath of Salt' },
-        { count: 1, name: 'HC6: Banish to Minimum Wage' },
+        { count: 1, name: 'Banish to Minimum Wage (HC6)' },
         { count: 1, name: 'Luchador' },
         { count: 1, name: 'Depression' },
         { count: 1, name: 'Spell Slang' },
@@ -1143,7 +1143,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
           count: 3,
         },
         {
-          name: 'Reject You Reality // Substitute My Own',
+          name: 'Reject Your Reality // Substitute My Own',
           count: 4,
         },
       ],
@@ -1173,7 +1173,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
       ],
       sideboard: [
         {
-          name: 'The Prismatic Piper (hc)',
+          name: 'The Prismatic Piper <HC>',
           count: 2,
         },
         {
@@ -1202,7 +1202,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
     cards: {
       main: [
         { name: 'Pyramid Schemer', count: 4 },
-        { name: 'Sheoldred, Whispering One (hc)', count: 4 },
+        { name: 'Sheoldred, Whispering One <HC>', count: 4 },
         { name: 'Color Pie Break', count: 3 },
         { name: 'White Counterspell', count: 4 },
         { name: 'Stigmatize', count: 4 },
@@ -1218,7 +1218,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
       ],
       sideboard: [
         {
-          name: 'The Prismatic Piper (hc)',
+          name: 'The Prismatic Piper <HC>',
           count: 2,
         },
         {
@@ -1255,7 +1255,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         { name: 'Into the Royal', count: 4 },
         { name: 'Mana Auction', count: 4 },
         { name: 'Tax Audit', count: 2 },
-        { name: 'Swamp (hc)', count: 4 },
+        { name: 'Swamp <HC4>', count: 4 },
         { name: 'There Is No Bias In Color Balance', count: 4 },
         { name: 'Tranquil Frontier', count: 2 },
         { name: 'Tropical', count: 4 },
@@ -1273,7 +1273,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
           count: 2,
         },
         {
-          name: 'Scapegoat (HC3)',
+          name: 'Scapegoat <HC>',
           count: 1,
         },
         {
@@ -1304,7 +1304,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
       main: [
         { name: 'Marie Kondo', count: 3 },
         { name: 'One Night Strand', count: 4 },
-        { name: 'The Prismatic Piper (hc)', count: 2 },
+        { name: 'The Prismatic Piper <HC>', count: 2 },
         { name: 'Mana Confluence Confluence', count: 4 },
         { name: 'Thriving Changeland', count: 3 },
         { name: 'Postmodernism', count: 2 },
@@ -1340,8 +1340,8 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
     text: 'Affinity',
     cards: {
       main: [
-        { name: 'Mox Jet (HC)', count: 4 },
-        { name: 'Sheoldred, Whispering One (hc)', count: 4 },
+        { name: 'Mox Jet <HC>', count: 4 },
+        { name: 'Sheoldred, Whispering One <HC>', count: 4 },
         { name: 'Mox Charger', count: 4 },
         { name: 'Memnite // Wastes', count: 4 },
         { name: 'Inspection of Thraben', count: 4 },
@@ -1355,7 +1355,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         { name: 'Snarkbound Ravager', count: 1 },
         { name: 'American Truck', count: 4 },
         { name: 'Flummox', count: 4 },
-        { name: 'Blood Crypt (HC)', count: 1 },
+        { name: 'Blood Crypt <HC>', count: 1 },
         { name: 'HOA-Run Neighborhood', count: 3 },
       ],
       sideboard: [
@@ -1373,7 +1373,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
     text: 'Nonsense Colors',
     cards: {
       main: [
-        { name: 'Mox Jet (HC)', count: 4 },
+        { name: 'Mox Jet <HC>', count: 4 },
         { name: 'I Thought I Cut Evolving Wilds', count: 4 },
         { name: 'Plains', count: 4 },
         { name: 'Poopmite', count: 3 },
@@ -1481,7 +1481,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         { name: 'Urza, Saga', count: 2 },
         { name: 'Plains', count: 4 },
         { name: 'Rubber Banding Elemental', count: 4 },
-        { name: 'Prince Imrahil, the Fair (HC)', count: 1 },
+        { name: 'Prince Imrahil, the Fair <HC>', count: 1 },
         { name: 'Island', count: 5 },
         { name: 'Postmodernism', count: 2 },
         { name: 'history, i guess', count: 2 },
@@ -1590,7 +1590,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         { name: 'Island GX', count: 1 },
         { name: 'Instant Creature', count: 4 },
         { name: 'Polluted Δ', count: 4 },
-        { name: 'Watergate (HC6)', count: 4 },
+        { name: 'Watergate <HC6>', count: 4 },
         { name: 'Opt Twice', count: 4 },
         { name: 'Island', count: 8 },
         { name: 'Unflips Your Delver', count: 4 },
@@ -1658,7 +1658,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
       main: [
         { name: 'Ginkhole', count: 4 },
         { name: 'Elephant JumpScare', count: 1 },
-        { name: 'Three Visits (HC)', count: 4 },
+        { name: 'Three Visits <HC>', count: 4 },
         { name: 'Wireless Snacker', count: 1 },
         { name: "Winter's Bloom", count: 2 },
         { name: 'Bear Force One', count: 1 },
@@ -1705,9 +1705,9 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         { name: 'Real Quandrix Command', count: 2 },
         { name: 'Shifting River // Shifting Forest', count: 3 },
         { name: 'Gyroblast', count: 2 },
-        { name: 'Watergate (HC6)', count: 4 },
+        { name: 'Watergate <HC6>', count: 4 },
         { name: 'Fact or Carnage Tyrant', count: 2 },
-        { name: 'Swamp (HC4)', count: 4 },
+        { name: 'Swamp <HC4>', count: 4 },
         { name: 'Flummox', count: 4 },
         { name: "Urza's Bobblehead", count: 1 },
         { name: "An Otter You Can't Refuse", count: 4 },
@@ -1764,7 +1764,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
       sideboard: [
         { name: 'Where joke', count: 3 },
         { name: 'The 🐢', count: 4 },
-        { name: 'TL;DR (HC3)', count: 4 },
+        { name: 'TL;DR <HC3>', count: 4 },
         { name: 'Bojuka Dog', count: 4 },
       ],
     },
@@ -1778,7 +1778,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         { name: 'Just a Normal Cat', count: 3 },
         { name: 'Sex // The City', count: 4 },
         { name: 'Soulmate Diviner', count: 4 },
-        { name: 'Even the Odds (HC)', count: 2 },
+        { name: 'Even the Odds <HC>', count: 2 },
         { name: 'Knight of the Whiter Orchid', count: 4 },
         { name: 'White Removal Spell', count: 2 },
         { name: 'Hellscube users make a good card design challenge (impossible)', count: 1 },
@@ -1917,7 +1917,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         { name: 'Head of the Forbidden One', count: 1 },
         { name: 'Ornithopt', count: 4 },
         { name: 'Cultural Revolution', count: 1 },
-        { name: 'Comet Storm (HC)', count: 1 },
+        { name: 'Comet Storm <HC>', count: 1 },
         { name: 'Tire of Fortune', count: 4 },
         { name: 'Deathstruction Stormscade', count: 4 },
         { name: 'Grapes', count: 4 },
@@ -1947,10 +1947,10 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         { name: 'Jace Learns', count: 4 },
         { name: 'Island GX', count: 1 },
         { name: 'Into the Royal', count: 4 },
-        { name: 'Watergate (HC6)', count: 4 },
+        { name: 'Watergate <HC6>', count: 4 },
         { name: 'BeyONd bELIeF: FAct or fiCtioN', count: 4 },
         { name: 'Legally Distinct Counterspell', count: 3 },
-        { name: 'TL;DR (HC3)', count: 2 },
+        { name: 'TL;DR <HC3>', count: 2 },
         { name: ':urabrask_hit:', count: 4 },
         { name: 'Vizzerdrix and Powercreep TAG TEAM GX', count: 4 },
         { name: 'Wrath of Thassa', count: 3 },

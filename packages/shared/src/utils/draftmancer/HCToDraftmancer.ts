@@ -5,7 +5,7 @@ import {
   compressHCCardFaces,
   getRelatedsFromCards,
   getRelatedsFromSet,
-  hasTokenHCID,
+  LightCardMap,
   toFaces,
 } from '../cardHandling';
 import { HCCardToDraftmancerCard, StickerSheetScryfallIds } from './HCToDraftCard';
@@ -29,18 +29,17 @@ export const HCToDraftmancer = (
       ? getRelatedsFromSet(set, cardMap, true)
       : idList?.length
       ? getRelatedsFromCards(idList, cardMap)
-      : { cards: cardMap, tokens: new CardMap() };
-  const draftCards = HCCards.map(card => compressHCCardFaces(card));
-  const draftTokens = HCTokens.map(card => compressHCCardFaces(card));
+      : { cards: cardMap.cards(), tokens: [] };
+  const draftCards = new LightCardMap(HCCards.map(card => compressHCCardFaces(card)));
+  const draftTokens = new LightCardMap(HCTokens.map(card => compressHCCardFaces(card)));
 
   const getExportNameFromId = (id: string | undefined): string | undefined => {
     if (!id) return;
     const related = draftCards.get(id) ?? draftTokens.get(id);
     if (related) {
-      return stripSingleSlashes(
-        toFaces(related)[0].export_name ??
-          (hasTokenHCID(related) ? related.hcid : toFaces(related)[0].name)
-      );
+      return `${stripSingleSlashes(toFaces(related)[0].export_name ?? toFaces(related)[0].name)} (${
+        related.set
+      }) ${related.collector_number}`;
     }
   };
   const getDraftEffects = (card: HCCard.Any): DraftEffect[] | undefined => {
@@ -48,7 +47,7 @@ export const HCToDraftmancer = (
       card.tags?.includes(effect)
     );
     const draftpartnerNameList = [];
-    if (card.all_parts) {
+    if (card.all_parts && !card.not_directly_draftable) {
       card.all_parts
         .filter(part => part.is_draft_partner)
         .forEach(part => {
@@ -87,7 +86,7 @@ export const HCToDraftmancer = (
     }
   };
 
-  const tokens = draftTokens.mapToArray(card => {
+  const tokens = draftTokens.map(card => {
     const draftCard = HCCardToDraftmancerCard(card);
     const related = getRelatedList(card);
     if (related) {
@@ -100,7 +99,7 @@ export const HCToDraftmancer = (
     return draftCard;
   });
 
-  const cards = draftCards.mapToArray(card => {
+  const cards = draftCards.map(card => {
     const draftCard = HCCardToDraftmancerCard(card);
     const related = getRelatedList(card);
     if (related) {

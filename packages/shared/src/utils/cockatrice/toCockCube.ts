@@ -1,10 +1,18 @@
 // https://github.com/Cockatrice/Cockatrice/wiki/Custom-Cards-&-Sets
 import { DOMParser, XMLSerializer } from 'xmldom';
-import { SetCode } from '@hellfall/shared/types';
+import { allSetsList, HCSet, SetCode } from '@hellfall/shared/types';
 import { CockCardProps } from './cockTypes';
-import { CardMap, getRelatedsFromCards, getRelatedsFromSet } from '../cardHandling';
-import { hcCardToCockProps } from './HCToCockCard';
+import {
+  CardMap,
+  getRelatedsFromCards,
+  getRelatedsFromSet,
+  InvariantMap,
+  LightCardMap,
+} from '../cardHandling';
+import { invariantToCockProps } from './HCToCockCard';
 import { prettifyXml } from './prettifyXml';
+import { toTitleCase } from '../textHandling';
+import { getSet, toSetNumber } from '../setHandling';
 
 type RecursiveChild = (Node | RecursiveChild)[];
 
@@ -33,27 +41,41 @@ export const toCockCubeJSON = (
   cardMap: CardMap,
   set?: SetCode,
   idList?: string[]
-): { cards: CockCardProps[]; tokens: CockCardProps[] } => {
-  const { cards: HCCards, tokens: HCTokens } =
+): { cards: CockCardProps[]; tokens: CockCardProps[]; sets: SetCode[] } => {
+  const { cards: HCCardList, tokens: HCTokenList } =
     set && (cardMap.hasSet(set) || set == 'HC5')
       ? getRelatedsFromSet(set, cardMap)
       : idList?.length
       ? getRelatedsFromCards(idList, cardMap)
-      : { cards: cardMap, tokens: new CardMap() };
-  const cockCards = HCCards.mapToIdMap(card => hcCardToCockProps(card));
-  const cockTokens = HCTokens.mapToIdMap(token => hcCardToCockProps(token));
+      : { cards: cardMap.cards(), tokens: [] };
+  const HCCards = new LightCardMap(HCCardList);
+  const HCTokens = new LightCardMap(HCTokenList);
+  const intSets = HCCards.sets();
+  intSets.push(...HCTokens.sets());
+  const sets = Array.from(new Set(intSets)).sort((a, b) => toSetNumber(a) - toSetNumber(b));
+  const invariantCards = new InvariantMap(HCCards.cards());
+  const invariantTokens = new InvariantMap(HCTokens.cards());
+  const cockCards = new Map(
+    invariantCards.map(invariant => [invariant.oracle_id, invariantToCockProps(invariant, HCCards)])
+  );
+  const cockTokens = new Map(
+    invariantTokens.map(invariant => [
+      invariant.oracle_id,
+      invariantToCockProps(invariant, HCTokens),
+    ])
+  );
   const addRelatedNames = (card: CockCardProps) => {
     card.related?.forEach(relatedCard => {
       relatedCard.name =
-        cockCards.get(relatedCard.id)?.props[0].name ??
-        cockTokens.get(relatedCard.id)?.props[0].name;
+        cockCards.get(relatedCard.oracle_id)?.props[0].name ??
+        cockTokens.get(relatedCard.oracle_id)?.props[0].name;
     });
   };
   cockCards.forEach(card => addRelatedNames(card));
   cockTokens.forEach(token => addRelatedNames(token));
   const cards = Array.from(cockCards.values());
   const tokens = Array.from(cockTokens.values());
-  return { cards, tokens };
+  return { cards, tokens, sets };
 };
 
 /**
@@ -81,25 +103,29 @@ export const toCockCube = ({
   xmlDoc.documentElement.setAttribute('version', '4');
 
   const setsElement = xmlDoc.createElement('sets');
+  /**
+   * Appends a set to the document
+   * @param set set to append
+   */
+  const appendCockSet = (set: HCSet) => {
+    const tempSet = xmlDoc.createElement('set');
 
-  const setElement = xmlDoc.createElement('set');
+    const name = xmlDoc.createElement('name');
+    name.textContent = set.code;
 
-  const nameElement = xmlDoc.createElement('name');
-  nameElement.textContent = set;
+    const longname = xmlDoc.createElement('longname');
+    longname.textContent = set.name;
 
-  const longNameElement = xmlDoc.createElement('longname');
-  longNameElement.textContent = name;
+    const settype = xmlDoc.createElement('settype');
+    settype.textContent = toTitleCase(set.set_type);
 
-  const setTypeElement = xmlDoc.createElement('settype');
-  setTypeElement.textContent = 'Custom';
+    recursiveAdoption(tempSet, [name, longname, settype]);
+    setsElement.appendChild(tempSet);
+  };
 
   const cardsElement = xmlDoc.createElement('cards');
 
-  recursiveAdoption(xmlDoc.documentElement, [
-    setsElement,
-    [setElement, [nameElement, longNameElement, setTypeElement]],
-    cardsElement,
-  ]);
+  recursiveAdoption(xmlDoc.documentElement, [setsElement, cardsElement]);
 
   /**
    * Appends a cockatrice card to the document
@@ -114,16 +140,16 @@ export const toCockCube = ({
 
       const text = xmlDoc.createElement('text');
       text.textContent = face.text;
-
-      const setElement = xmlDoc.createElement('set');
-      setElement.setAttribute('rarity', 'common');
-      setElement.setAttribute('picURL', face.picurl || entry.props[0].picurl || '');
-      setElement.setAttribute('uuid', entry.uuid);
-      setElement.setAttribute('muid', 'hc' + entry.hcid + (i ? 'b' : ''));
-      if (entry.collector_number) {
-        setElement.setAttribute('num', entry.collector_number);
-      }
-      setElement.textContent = entry.set;
+      const printElements = entry.prints.map(print => {
+        const setElement = xmlDoc.createElement('set');
+        setElement.setAttribute('rarity', 'common');
+        setElement.setAttribute('picURL', i ? print.backPicurl ?? print.picurl : print.picurl);
+        setElement.setAttribute('uuid', print.uuid);
+        setElement.setAttribute('muid', `hc${print.hcid}${i ? 'b' : ''}`);
+        setElement.setAttribute('num', print.collector_number);
+        setElement.textContent = print.set;
+        return setElement;
+      });
 
       const prop = xmlDoc.createElement('prop');
 
@@ -247,17 +273,18 @@ export const toCockCube = ({
         face.maintype in mainTypeToTableRow ? mainTypeToTableRow[face.maintype] : 1
       ).toString();
 
-      recursiveAdoption(tempCard, [name, text, setElement, tablerow, prop, ...maybeElements]);
+      recursiveAdoption(tempCard, [name, text, ...printElements, tablerow, prop, ...maybeElements]);
       cardsElement.appendChild(tempCard);
     });
   };
   // const { cards, tokens } =
   // set == 'HC5' ? { cards: getHc5(), tokens: [] } : getSplitSet(allCards, set);
-  const { cards, tokens } = toCockCubeJSON(
+  const { cards, tokens, sets } = toCockCubeJSON(
     cardMap,
     cardMap.hasSet(set as SetCode) || set == 'HC5' ? set : undefined,
     idList
   );
+  sets.forEach(set => appendCockSet(getSet(set)!));
   cards.forEach(card => appendCockCard(card));
   tokens.forEach(token => appendCockCard(token));
 

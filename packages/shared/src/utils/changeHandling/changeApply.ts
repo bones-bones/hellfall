@@ -63,7 +63,7 @@ export const applyRootChange = (
       }
     } else {
       popPropFromRoot(card, change.prop, change.value!);
-      if (change.prop == 'frame_effects' && !card.frame_effects?.length) {
+      if (['frame_effects', 'artists'].includes(change.prop) && !card[change.prop]?.length) {
         deletePropFromRoot(card, change.prop);
       }
     }
@@ -211,12 +211,18 @@ export const applyTagChange = (card: HCCard.Any, change: tagChange) => {
   } else {
     if (card.base_tags) {
       deleteTagFromBase(card.base_tags, change.full_tag);
+      if (card.base_tags.length == 0) {
+        delete card.base_tags;
+      }
     }
     const tag = change.tag ?? change.full_tag;
     if (card.tags && !card.base_tags?.some(fullTag => splitFullTag(fullTag).tag == tag)) {
       const index = card.tags.indexOf(tag);
       if (index != undefined && index != -1) {
         card.tags.splice(index, 1);
+      }
+      if (card.tags.length == 0) {
+        delete card.tags;
       }
     }
     const note = card.tag_notes?.[tag];

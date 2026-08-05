@@ -13,7 +13,7 @@ export const CardRoute = () => {
   useEffect(() => {
     const handleRedirect = async () => {
       if (!IsHCID && cardId) {
-        navigate(`/card/${cardId}`, { replace: true });
+        navigate(`/card/${encodeURIComponent(cardId)}`, { replace: true });
         return;
       }
       setShouldRender(true);

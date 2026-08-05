@@ -8,7 +8,6 @@ import { SuspenseLoadingCube } from './SuspenseLoadingCube';
 const Hellscubes = lazy(() => import('./cube-resources').then(m => ({ default: m.Hellscubes })));
 const DeckBuilder = lazy(() => import('./deck-builder').then(m => ({ default: m.DeckBuilder })));
 const Draft = lazy(() => import('./draft').then(m => ({ default: m.Draft })));
-const LandBox = lazy(() => import('./land-box').then(m => ({ default: m.LandBox })));
 const Decks = lazy(() => import('./decks/Decks').then(m => ({ default: m.Decks })));
 const WatchwolfWar = lazy(() =>
   import('./watchWolf/WatchWolfWar').then(m => ({ default: m.WatchwolfWar }))
@@ -46,7 +45,6 @@ const ApplicationRoutes = () => {
     { path: '/hellscubes/*', element: <Hellscubes /> },
     { path: '/deck-builder/*', element: <DeckBuilder /> },
     { path: '/draft', element: <Draft /> },
-    { path: '/land-box', element: <LandBox /> },
     { path: '/decks/*', element: <Decks /> },
     { path: '/', element: <HellFall /> },
     { path: '/advanced', element: <AdvancedSearch /> },

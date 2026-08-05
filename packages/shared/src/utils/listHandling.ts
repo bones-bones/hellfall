@@ -565,6 +565,36 @@ export const pushToRecord = (record: Record<string, string[]>, key: string, valu
 };
 
 /**
+ * Correctly deals with pushing a value to a `Map<string,Set<string>>` by creating the value of the prop first if necessary
+ * @param map map
+ * @param key key to push to
+ * @param value value to push
+ */
+export const pushToMap = (map: Map<string, Set<string>>, key: string, value: string) => {
+  if (map.has(key)) {
+    map.get(key)?.add(value);
+  } else {
+    map.set(key, new Set([value]));
+  }
+};
+
+/**
+ * Correctly deals with deleting a value from a `Map<string,Set<string>>`.
+ * Returns true only if the last element of the set was deleted.
+ * @param map map
+ * @param key key to delete from
+ * @param value value to delete
+ */
+export const deleteFromMap = (map: Map<string, Set<string>>, key: string, value: string) => {
+  map.get(key)?.delete(value);
+  if (!map.get(key)?.size) {
+    map.delete(key);
+    return true;
+  }
+  return false;
+};
+
+/**
  * Ensures that a value is an array or undefined. If it's not an array or undefined, wraps value in an array before returning it
  * @template T The type of the value
  * @param value the value to ensure is an array
@@ -580,3 +610,30 @@ export const wrapArray = <T>(value: T | T[] | undefined): T[] | undefined =>
  */
 export const ensureArray = <T>(value: T | T[] | undefined): T[] =>
   value == undefined ? [] : !Array.isArray(value) ? [value] : value;
+
+export type stringIterable = string[] | Set<string> | IterableIterator<string>;
+
+/**
+ * Gets a random element from a list
+ * @param list list to get a random from
+ */
+export const getRandom = (list: any[] | Set<any>) => {
+  if (Array.isArray(list)) {
+    return list[Math.floor(Math.random() * list.length)];
+  }
+  return Array.from(list)[Math.floor(Math.random() * list.size)];
+};
+
+/**
+ * Moves those members of list 1 that pass a predicate over to list 2
+ * @param list1 list to move members from
+ * @param list2 list to move members to
+ * @param predicate predicate to use
+ */
+export const moveSomeOver = <T>(list1: T[], list2: T[], predicate: (value: T) => any) => {
+  for (let i = list1.length - 1; i >= 0; i--) {
+    if (predicate(list1[i])) {
+      list2.unshift(...list1.splice(i, 1));
+    }
+  }
+};

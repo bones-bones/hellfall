@@ -1,5 +1,4 @@
 import fs from 'fs';
-import crypto from 'crypto';
 
 import { fetchTokens } from './fetchTokens.ts';
 import { fetchCards } from './fetchCards.ts';
@@ -7,33 +6,36 @@ import { fetchUsernameMappings } from './fetchUsernameMapping.ts';
 import {
   HCCard,
   HCCardFace,
+  HCLegalitiesField,
+  HCLegality,
   HCRelatedCard,
   SetCode,
   allSetsList,
   anyPropType,
   anyValueType,
 } from '@hellfall/shared/types';
-import { fetchNotMagic } from './fetchNotMagic.ts';
 import {
-  stripMasterpiece,
-  textEquals,
   textPrep,
   setDerivedProps,
-  setExportProps,
-  stripSetCode,
   getAllRelatedPermissive,
   CardMap,
-  HCIDMap,
   mergeFromSheet,
   cleanParts,
   updateParts,
   addToJSONToCards,
-  baseInvariantMap,
-  getDirectChildSets,
-  getParentSet,
+  colorOrderSetList,
+  getCollectorOrderSet,
+  getAcceptedOrderSet,
+  InvariantMap,
+  resetFaceExportProps,
+  buildInvariant,
+  landInvariantMap,
+  tokenInvariantMap,
+  textListIsContainedBy,
 } from '@hellfall/shared/utils';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import { fetchHCJFronts } from './fetchHCJFronts.ts';
+import { makeSort } from '@hellfall/shared/filters';
 
 const usingApproved = false;
 const typeSet = new Set<string>();
@@ -55,13 +57,13 @@ const movedIds: Record<string, string> = {
 };
 
 const mergeDatabases = (
-  existingCards: HCIDMap,
-  newCards: HCIDMap,
-  existingTokens: HCIDMap,
-  newTokens: HCIDMap
+  existingCards: CardMap,
+  newCards: CardMap,
+  existingTokens: CardMap,
+  newTokens: CardMap
 ): HCCard.Any[] => {
   // newCards.forEach((newCard: HCCard.Any, id: string) => {});
-  const mergedCards = newCards.map((newCard: HCCard.Any, id: string) => {
+  const mergedCards = newCards.mapToMap((newCard: HCCard.Any, id: string) => {
     const existingCard = existingCards.get(movedIds[id] ?? id);
     if (existingCard) {
       existingCards.delete(existingCard.hcid);
@@ -77,7 +79,7 @@ const mergeDatabases = (
     });
   }
 
-  const mergedTokens = newTokens.map((newCard: HCCard.Any, id: string) => {
+  const mergedTokens = newTokens.mapToMap((newCard: HCCard.Any, id: string) => {
     const existingCard = existingTokens.get(movedIds[id] ?? id);
     if (existingCard) {
       existingTokens.delete(existingCard.hcid);
@@ -97,81 +99,16 @@ const mergeDatabases = (
       mergedTokens.set(card);
     });
   }
-  const collectorNumberAutofillSets: Record<string, number> = {
-    'HCV.2': 0,
-    'HCV.3': 0,
-    'HCV.4': 0,
-    'HCV.6': 0,
-    'HCV.7': 0,
-    'HCV.8': 0,
-    'HCV.9': 0,
-    'HCV.J': 0,
-    'HCV.K': 0,
-    'HCV.L': 0,
-    'HCV.P': 0,
-    'HCV.CDC': 0,
-    'HCV.S': 0,
-    'HCV.H': 0,
-    'HCV.D': 0,
-    NRM: 0,
-    HCJ: 0,
-    NMTG: 0,
-    SFT: 0,
-    HCT: 0,
-  };
   mergedCards.forEach(entry => {
     if (!entry.collector_number) {
-      if (entry.set in collectorNumberAutofillSets) {
-        collectorNumberAutofillSets[entry.set] += 1;
-        entry.collector_number = collectorNumberAutofillSets[entry.set].toString();
-      } else {
-        throw new Error(
-          `Card missing collector_number and set "${entry.set}" is not in collectorNumberAutofillSets (hcid: ${entry.hcid}, name: ${entry.name})`
-        );
-      }
+      throw new Error(`Card missing accepted_order (hcid: ${entry.hcid}, name: ${entry.name})`);
     }
   });
   mergedTokens.forEach(entry => {
     if (!entry.collector_number) {
-      if (entry.set in collectorNumberAutofillSets) {
-        collectorNumberAutofillSets[entry.set] += 1;
-        entry.collector_number = collectorNumberAutofillSets[entry.set].toString();
-      } else {
-        throw new Error(
-          `Token missing collector_number and set "${entry.set}" is not in collectorNumberAutofillSets (hcid: ${entry.hcid}, name: ${entry.name})`
-        );
-      }
+      throw new Error(`Token missing accepted_order (hcid: ${entry.hcid}, name: ${entry.name})`);
     }
   });
-  [mergedCards, mergedTokens].forEach(mergedList =>
-    mergedList.forEach(card => {
-      if (!card.id) {
-        card.id = crypto.randomUUID();
-      }
-      if (!card.oracle_id) {
-        if (card.tags?.includes('masterpiece')) {
-          const originalName = stripMasterpiece(card.name);
-          const original = mergedList.find(c => textEquals(c.name, originalName));
-          if (original?.oracle_id) {
-            card.oracle_id = original.oracle_id;
-            return;
-          }
-          if (baseInvariantMap.hasName(originalName)) {
-            card.oracle_id = baseInvariantMap.getOracleID(originalName)!;
-            return;
-          }
-        } else if (card.tags?.includes('reprint')) {
-          const originalName = stripSetCode(card.name);
-          const original = mergedList.find(c => textEquals(c.name, originalName));
-          if (original?.oracle_id) {
-            card.oracle_id = original.oracle_id;
-            return;
-          }
-        }
-        card.oracle_id = crypto.randomUUID();
-      }
-    })
-  );
 
   return mergedCards
     .cards()
@@ -277,11 +214,9 @@ const dataToCards = <K extends anyPropType>(
 const loadExistingData = () => {
   const databasePath = '../shared/src/data/Hellscube-Database.json';
   const tokensPath = '../shared/src/data/tokens.json';
-  const landsPath = '../shared/src/data/lands.json';
 
   let databaseContent = undefined;
   let tokensContent = undefined;
-  let landsContent = undefined;
 
   try {
     databaseContent = JSON.parse(fs.readFileSync(databasePath, 'utf-8'));
@@ -289,13 +224,8 @@ const loadExistingData = () => {
     console.warn('Could not load cards, proceeding with undefined content:', error);
   }
 
-  const existingCards = new HCIDMap(
-    dataToCards(
-      databaseContent?.data.filter((e: HCCard.Any) => e.kind == 'card') ?? [],
-      'oracle_id',
-      '',
-      'parts'
-    )
+  const existingCards = new CardMap(
+    dataToCards(databaseContent?.data.filter((e: HCCard.Any) => e.kind == 'card') ?? [])
   );
 
   try {
@@ -304,88 +234,136 @@ const loadExistingData = () => {
     console.warn('Could not load tokens, proceeding with undefined content:', error);
   }
 
-  const existingTokens = new HCIDMap(
-    dataToCards(tokensContent?.data ?? [], 'oracle_id', '', 'parts')
-  );
-
-  try {
-    landsContent = JSON.parse(fs.readFileSync(landsPath, 'utf-8'));
-  } catch (error) {
-    console.warn('Could not load lands, proceeding with undefined content:', error);
-  }
-
-  // #jank
-  const existingLands = new HCIDMap(
-    dataToCards(landsContent?.data ?? [], 'oracle_id', '', 'parts')
-  );
-  existingCards.setMultiple(existingLands);
+  const existingTokens = new CardMap(dataToCards(tokensContent?.data ?? []));
 
   return { existingCards, existingTokens };
 };
-const ignoreDuplicateHCIDs: string[] = [
-  '39',
-  '6730',
-  '6731',
-  '6732',
-  '6733',
-  '2101',
-  '2102',
-  '2103',
-  '6791',
-  '6792',
-  '6793',
-  '6794',
-  '6795',
-  '6796',
-  '6797',
-  '6735',
-  '7240',
-  '7241',
-  '7772',
-  '7801',
-];
-const ignoreMissingNums: Partial<Record<SetCode, number[]>> = {
-  'HC2.0': [93, 141, 154, 160, 187, 214, 228],
-  'HC2.1': [58, 93, 103, 104, 138, 190, 201, 206, 307],
-  'HC3.0': [68, 72, 96, 204, 230, 271, 305, 337],
-  'HC3.1': [40, 45, 56, 62, 97, 175, 372],
-  'HC4.0': [76, 93, 129, 263, 311, 364],
-  'HC4.1': [146, 204, 261],
-  'HC8.0': [259],
+const ignoreDuplicateNumbers: Partial<Record<SetCode, string[]>> = {
+  HCV_1_0: ['8b'],
+  HCV_2_1: ['138b'],
+  HC9_0: ['137b', '324b'],
 };
+const ignoreDuplicateOrders: Partial<Record<SetCode, string[]>> = {
+  HLC_0: ['8b', '65b'],
+  HC2_1: ['114b', '114c', '114d', '114e', '138b', '114f', '217b', '217c', '217d', '217e'],
+  HC3_1: ['248b', '346b', '346c', '346d'],
+  HC6_0: ['10b'],
+  HC8_0: ['292b', '292c'],
+  HC8_1: ['31b'],
+  HC9_0: ['137b', '324b'],
+};
+const nontokenTokenNames = [
+  'Force of Will',
+  'Radiation',
+  'Poison Counter',
+  'Indicate',
+  'Manifest',
+  'Undead Servant',
+];
+
+const tokenNames = ['Storm Crow'];
+
+const getLegalitiesFromLandName = (name: string): HCLegalitiesField => {
+  const splitName = name.toLowerCase().split(' ');
+  switch (splitName[0]) {
+    case 'snow-covered':
+      return {
+        standard: HCLegality.NotLegal,
+        '4cb': HCLegality.NotLegal,
+        commander: HCLegality.NotLegal,
+      };
+    case 'thriving':
+      return {
+        standard: HCLegality.NotLegal,
+        '4cb': HCLegality.NotLegal,
+        commander: HCLegality.Legal,
+      };
+    case 'nebula':
+      return {
+        standard: HCLegality.NotLegal,
+        '4cb': HCLegality.Legal,
+        commander: HCLegality.Legal,
+      };
+    default:
+      return {
+        standard: HCLegality.Legal,
+        '4cb': HCLegality.Legal,
+        commander: HCLegality.Legal,
+      };
+  }
+};
+
 const main = async () => {
   const newCards = await fetchCards();
   const usernameMappings = await fetchUsernameMappings();
   const newTokens = await fetchTokens(NO_SCRYFALL);
   newTokens.setMultiple(fetchHCJFronts());
   // newTokens.setMultiple(await fetchNotMagic());
-  const collectorMap = new Map<SetCode, Set<number>>(
-    newCards.sets().map(code => [code, new Set<number>()])
+  const nameSort = makeSort('name', 'asc');
+  const colorSort = makeSort('color', 'asc', true);
+  colorOrderSetList.forEach(set =>
+    newCards
+      .getAllInSetDirect(set)
+      .sort(nameSort.filter)
+      .sort(colorSort.filter)
+      .forEach((card, i) => {
+        card.collector_number = `${i + 1}`;
+      })
   );
-  collectorMap.set('SCL', new Set<number>());
-  getDirectChildSets('SCL')?.forEach(code => collectorMap.delete(code));
+
+  const collectorMap = new Map<SetCode, Set<number>>(
+    newCards.sets().map(code => [getCollectorOrderSet(code), new Set<number>()])
+  );
+  const acceptedMap = new Map<SetCode, Set<number>>(
+    newCards.sets().map(code => [getAcceptedOrderSet(code), new Set<number>()])
+  );
   newCards.forEach(card => {
-    const num = parseInt(card.collector_number);
-    const cSet =
-      collectorMap.get(card.set) ?? collectorMap.get(getParentSet(card.set) ?? ('' as SetCode));
-    if (ignoreDuplicateHCIDs.includes(card.hcid)) {
-      return;
-    }
-    if (cSet?.has(num) || ignoreMissingNums[card.set]?.includes(num)) {
+    const cn = parseInt(card.collector_number);
+    const ao = parseInt(card.accepted_order);
+    const cSet = collectorMap.get(getCollectorOrderSet(card.set));
+    const aSet = acceptedMap.get(getAcceptedOrderSet(card.set));
+    if (
+      cSet?.has(cn) &&
+      !ignoreDuplicateNumbers[getCollectorOrderSet(card.set)]?.includes(card.collector_number)
+    ) {
       console.log(
-        `Set ${card.set} has a duplicate collector number at ${num} (hcid: ${card.hcid})`
+        `Set ${getCollectorOrderSet(card.set)} has a duplicate collector number at ${cn} (hcid: ${
+          card.hcid
+        }, raw: ${card.collector_number})`
       );
-    } else if (num) {
-      cSet?.add(num);
+    } else if (cn) {
+      cSet?.add(cn);
+    }
+    if (
+      aSet?.has(ao) &&
+      !ignoreDuplicateOrders[getAcceptedOrderSet(card.set)]?.includes(card.accepted_order)
+    ) {
+      console.log(
+        `Set ${getAcceptedOrderSet(card.set)} has a duplicate accepted order at ${ao} (hcid: ${
+          card.hcid
+        }, raw: ${card.accepted_order})`
+      );
+    } else if (ao) {
+      aSet?.add(ao);
     }
   });
 
   for (const [code, nums] of collectorMap) {
-    if (code == 'HCV.1' || code.startsWith('HLC')) continue;
+    if (/^HCV_[1-4]_[01]$/.test(code)) continue;
     const max = Math.max(...Array.from(nums));
     for (let i = 1; i < max; i++) {
-      if (!nums.has(i) && !ignoreMissingNums[code]?.includes(i)) {
-        console.log(`Set ${code} has a missing collector number at ${i}`);
+      if (!nums.has(i)) {
+        console.log(`Set ${getCollectorOrderSet(code)} has a missing collector number at ${i}`);
+      }
+    }
+  }
+
+  for (const [code, nums] of acceptedMap) {
+    if (code.startsWith('HCV_1') || code.startsWith('HLC')) continue;
+    const max = Math.max(...Array.from(nums));
+    for (let i = 1; i < max; i++) {
+      if (!nums.has(i)) {
+        console.log(`Set ${getAcceptedOrderSet(code)} has a missing accepted number at ${i}`);
       }
     }
   }
@@ -399,7 +377,7 @@ const main = async () => {
       if (card.layout == 'front') {
         updateParts(
           card,
-          finalCards.filterFromSetExact('HCJ', value => value.tags?.includes(card.tags![0]))
+          finalCards.filterFromSetExactToMap('HCJ', value => value.tags?.includes(card.tags![0]))
         );
       } else {
         updateParts(card, getAllRelatedPermissive(card, finalCards));
@@ -408,8 +386,54 @@ const main = async () => {
   });
   finalCards.forEach(card => cleanParts(card, getAllRelatedPermissive(card, finalCards)));
 
-  const takenNames = namesRawData.data;
-  finalCards.forEach(entry => setExportProps(entry, takenNames));
+  const takenNames = new Set(namesRawData.data);
+
+  const invariantMap = new InvariantMap();
+  landInvariantMap.forEach(invariant => {
+    const newInvariant = structuredClone(invariant);
+    newInvariant.legalities = getLegalitiesFromLandName(newInvariant.name);
+    if (!textListIsContainedBy(['Nebula', 'Galaxy'], newInvariant.name)) {
+      newInvariant.oracle_id_is_scryfall = true;
+      newInvariant.export_name = `${invariant.name}_`;
+    }
+    invariantMap.set(newInvariant);
+  });
+
+  tokenInvariantMap.forEach(invariant => {
+    const newInvariant = structuredClone(invariant);
+    if (nontokenTokenNames.includes(newInvariant.name)) {
+      if (takenNames.has(newInvariant.name.toLowerCase())) {
+        newInvariant.export_name = `${newInvariant.name}_`;
+        takenNames.add(newInvariant.export_name.toLowerCase());
+      } else {
+        takenNames.add(newInvariant.name.toLowerCase());
+      }
+    } else {
+      const splitName = newInvariant.name.split(' ');
+      if (splitName.at(-1)?.length == 1 || splitName.at(-1) == 'Token') {
+        newInvariant.name = splitName[0];
+      }
+      let exportName = `${newInvariant.name} ${
+        tokenNames.includes(newInvariant.name) ? '(Token)' : 'Token'
+      }`;
+      while (takenNames.has(exportName.toLowerCase())) {
+        exportName += '_';
+      }
+      newInvariant.export_name = exportName;
+      takenNames.add(newInvariant.export_name.toLowerCase());
+    }
+    invariantMap.set(newInvariant);
+  });
+
+  finalCards.forEach(card => {
+    resetFaceExportProps(card);
+    if (!invariantMap.has(card.oracle_id)) {
+      invariantMap.set(buildInvariant(card, takenNames));
+    } else {
+      invariantMap.set(card);
+    }
+  });
+  invariantMap.applyAllInvariants(finalCards);
 
   finalCards.forEach(entry => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
@@ -468,17 +492,11 @@ const main = async () => {
     '../shared/src/data/tokens.json',
     JSON.stringify(
       {
-        data: finalCards
-          .filter(card => ['token', 'scryfall', 'notmagic', 'front'].includes(card.kind))
-          .cards(),
+        data: finalCards.filter(card => card.kind != 'card'),
       },
       null,
       '\t'
     )
-  );
-  fs.writeFileSync(
-    '../shared/src/data/lands.json',
-    JSON.stringify({ data: finalCards.filter(card => card.kind == 'land').cards() }, null, '\t')
   );
   fs.writeFileSync(
     '../shared/src/data/keywords.json',

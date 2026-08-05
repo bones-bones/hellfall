@@ -5,72 +5,78 @@ import { SetType } from './values';
  */
 export const allSetsList = [
   'HLC',
-  'HLC.0',
-  'HLC.1',
-  'HLC.2',
-  'HCV.1',
+  'HLC_0',
+  'HCV_1_0',
+  'HLC_1',
+  'HCV_1_1',
+  'HLC_2',
+  'HCV_1',
   'HC2',
-  'HC2.0',
-  'HC2.1',
-  'HCV.2',
+  'HC2_0',
+  'HCV_2_0',
+  'HC2_1',
+  'HCV_2_1',
+  'HCV_2',
   'HC3',
-  'HC3.0',
-  'HC3.1',
-  'HCV.3',
+  'HC3_0',
+  'HCV_3_0',
+  'HC3_1',
+  'HCV_3_1',
+  'HCV_3',
+  'HBB_0',
   'HC4',
-  'HC4.0',
-  'HC4.1',
-  'HCV.4',
+  'HC4_0',
+  'HCV_4_0',
+  'HC4_1',
+  'HCV_4_1',
+  'HBB_4',
+  'HCV_4',
   'HC5',
   'HC6',
-  'HC6.0',
-  'HC6.1',
+  'HC6_0',
+  'HC6_1',
   'HCC',
-  'HCV.6',
+  'HCV_6',
   'HCP',
-  'HCV.P',
+  'HCV_P',
   'HC7',
-  'HC7.0',
-  'HC7.1',
-  'HCV.7',
-  'HCV.CDC',
+  'HC7_0',
+  'HC7_1',
+  'HBB_7',
+  'HCV_7',
+  'HCV_CDC',
   'HCK',
-  'HCV.K',
+  'HCV_K',
   'HC8',
-  'HC8.0',
-  'HC8.1',
-  'HCV.8',
+  'HC8_0',
   'HCJ',
-  'HCV.J',
+  'HCV_J',
+  'HC8_1',
+  'HCV_8',
   'HKL',
-  'HCV.L',
+  'HBB_L',
+  'HCV_L',
   'HC9',
-  'HC9.0',
-  'HCV.9',
+  'HC9_0',
+  'HBB_9',
+  'HCV_9',
   'SCL',
-  'SCL.1',
-  'SCL.2',
-  'SCL.3',
-  'HCV.S',
+  'SCL_1',
+  'SCL_2',
+  'SCL_3',
+  'HCV_S',
   'HDH',
-  'HCV.H',
-  'SCL.4',
-  'SCL.5',
+  'HCV_H',
+  'SCL_4',
+  'HBB_S',
+  'SCL_5',
   'SOH',
-  'HCV.D',
+  'HCV_D',
   'HCV',
   'HCT',
   'HBB',
-  'HBB.0',
-  'HBB.4',
-  'HBB.7',
-  // 'HBB.J',
-  'HBB.L',
-  'HBB.9',
-  'HBB.S',
   'FHCJ',
   'SFT',
-  'NMTG',
   'NRM',
 ] as const;
 
@@ -84,7 +90,8 @@ export type SetCode = (typeof allSetsList)[number];
  * @param value the value to check
  */
 export const isSetCode = (value: any): value is SetCode =>
-  allSetsList.includes(value.toUpperCase());
+  typeof value == 'string' &&
+  allSetsList.includes(value.toUpperCase().replaceAll('.', '_') as SetCode);
 
 /**
  * A stored link.
@@ -159,7 +166,8 @@ export type HCSet = HCObject.Object<HCObject.ObjectType.Set> & {
    */
   parent_set_code?: SetCode;
   /**
-   * The set codes for the daughter sets, if any. These sets will also be fetched when searching for/downloading from this set.
+   * The set codes for the daughter sets, if any. These sets will also be fetched
+   * when searching for/downloading from this set.
    */
   child_set_codes?: SetCode[];
   /**
@@ -168,6 +176,10 @@ export type HCSet = HCObject.Object<HCObject.ObjectType.Set> & {
    * @type Integer
    */
   // card_count: number;
+  /**
+   * Whether to order collector numbers by color (if not, defaults to using AO)
+   */
+  use_color_order?: boolean;
   /**
    * A URI to an SVG file for this set's icon.
    *

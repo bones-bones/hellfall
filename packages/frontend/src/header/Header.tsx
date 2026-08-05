@@ -26,8 +26,7 @@ export const Header = () => {
             <Link to={'https://discord.com/channels/631288872814247966/1237418389480407061'}>
               rules
             </Link>
-            , <Link to={'/land-box'}>land box</Link>, <Link to={'/decks'}>constructed</Link>,{' '}
-            <Link to={'/Watchwolfwar'}>WatchWolfWar</Link>,{' '}
+            ,<Link to={'/decks'}>constructed</Link>, <Link to={'/Watchwolfwar'}>WatchWolfWar</Link>,{' '}
             <Link to={'https://discord.gg/EWFcAnVdkX'}>discord</Link>,{' '}
             <Link to={'https://www.reddit.com/r/HellsCube/'}>reddit</Link>
           </Navigation>

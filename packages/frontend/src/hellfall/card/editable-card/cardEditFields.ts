@@ -42,7 +42,7 @@ export const ROOT_FIELD_CONFIGS: FieldConfig[] = [
   { key: 'flavor_name', label: 'Flavor Name', type: 'string' },
   { key: 'export_name', label: 'Export Name', type: 'string' },
   { key: 'set', label: 'Set', type: 'string' },
-  { key: 'collector_number', label: 'Collector #', type: 'string' },
+  { key: 'accepted_order', label: 'Accepted #', type: 'string' },
   { key: 'rarity', label: 'Rarity', type: 'enum', enumValues: Object.values(HCRarity) },
   { key: 'layout', label: 'Layout', type: 'enum', enumValues: Object.values(HCLayout) },
   { key: 'mana_value', label: 'Mana Value', type: 'number' },

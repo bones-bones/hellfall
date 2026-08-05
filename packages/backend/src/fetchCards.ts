@@ -17,14 +17,15 @@ import {
   addArtist,
   addPropToFace,
   getDefaultCard,
-  HCIDMap,
   frontIsBattle,
   addPropToRoot,
   pushPropToRoot,
   pipMap,
   parseRelatedReferenceName,
   isValidV4UUID,
-  baseCardInvariantMap,
+  landInvariantMap,
+  CardMap,
+  fixSetCode,
 } from '@hellfall/shared/utils';
 
 export const fetchCards = async (usingApproved: boolean = false) => {
@@ -57,6 +58,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
     '0image',
     'artists',
     'tags',
+    'accepted_order',
     '1mana_cost',
     '1supertypes',
     '1types',
@@ -119,7 +121,9 @@ export const fetchCards = async (usingApproved: boolean = false) => {
     '0image',
     'artists',
     'tags',
+    'accepted_order',
     'id',
+    'oracle_id',
   ];
 
   const allCards = rest
@@ -129,18 +133,28 @@ export const fetchCards = async (usingApproved: boolean = false) => {
       const cardIsMulti = entry
         .slice(keys.indexOf('1mana_cost'), keys.indexOf('id'))
         .some(value => value);
-      // #jank
-      const cardIsLand = parseInt(entryAt('hcid')) >= 8065 && parseInt(entryAt('hcid')) <= 8250;
+      const oracle_id =
+        landInvariantMap.getOracleId(entryAt('oracle_id') || entryAt('name')) ??
+        entryAt('oracle_id');
+      if (!oracle_id) {
+        throw new Error(`Missing oracle id on card with hcid: ${entryAt('hcid')}`);
+      }
+      if (!isValidV4UUID(oracle_id)) {
+        throw new Error(`Invalid oracle id: ${oracle_id} on card with hcid: ${entryAt('hcid')}`);
+      }
       const card = getDefaultCard(
-        cardIsLand ? HCKind.Land : HCKind.Card,
+        HCKind.Card,
         cardIsMulti,
         {
           id: entryAt('id'),
+          oracle_id: oracle_id,
           hcid: entryAt('hcid'),
           image: entryAt('image'),
           image_status: HCImageStatus.HighRes,
           creators: entryAt('creators').split(';'),
-          set: entryAt('set') as SetCode,
+          set: fixSetCode(entryAt('set')) as SetCode,
+          collector_number: entryAt('accepted_order'),
+          accepted_order: entryAt('accepted_order'),
           rulings: entryAt('rulings'),
           mana_value:
             entryAt('mana_value') != '∞'
@@ -243,14 +257,14 @@ export const fetchCards = async (usingApproved: boolean = false) => {
               addPropToRoot(card, 'legalities', legalities);
             } else if (keys[i] == 'related') {
               entry[i].split(';').forEach(oldName => {
-                const { name, count, base, shouldUseBase } = parseRelatedReferenceName(oldName);
+                const { name, hcid, count, code } = parseRelatedReferenceName(oldName);
                 const maker: HCRelatedCard = {
                   object: HCObject.ObjectType.RelatedCard,
                   id: '',
                   oracle_id: '',
-                  hcid: shouldUseBase ? name : '',
-                  name: shouldUseBase ? base : name,
-                  set: '' as SetCode,
+                  hcid: hcid,
+                  name: name,
+                  set: code ?? ('' as SetCode),
                   image: '',
                   type_line: '',
                   component: 'token_maker',
@@ -260,11 +274,6 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 }
                 pushPropToRoot(card, 'all_parts', maker);
               });
-            } else if (keys[i] == 'oracle_id') {
-              const oracle_id = baseCardInvariantMap.getOracleID(entry[i]) ?? entry[i];
-              if (oracle_id && isValidV4UUID(oracle_id)) {
-                card.oracle_id = oracle_id;
-              }
             } else {
               addPropToRoot(card, keys[i] as rootPropType, entry[i]);
             }
@@ -288,11 +297,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
         card.artists = Array.from(new Set(card.artists));
       }
       // TODO: move to derived props? or just remove?
-      if (
-        'card_faces' in card &&
-        !entryAt('tags').includes('irregular-face-name') /* && !cardIsLand */
-      ) {
-        // #jank
+      if ('card_faces' in card && !entryAt('tags').includes('irregular-face-name')) {
         card.name.split(' // ').forEach((name, i) => {
           addPropToFace(card, 'name', name, i);
         });
@@ -317,14 +322,8 @@ export const fetchCards = async (usingApproved: boolean = false) => {
           card.not_directly_draftable = true;
         }
       });
-      if (!card.oracle_id) {
-        const oracle_id = baseCardInvariantMap.getOracleID(card.name);
-        if (oracle_id) {
-          card.oracle_id = oracle_id;
-        }
-      }
       return card;
     });
 
-  return new HCIDMap(allCards);
+  return new CardMap(allCards);
 };

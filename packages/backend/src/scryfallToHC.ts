@@ -81,8 +81,8 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
     emblem: HCLayout.Emblem,
     augment: HCLayout.RealCardToken,
     host: HCLayout.RealCardToken,
-    art_series: HCLayout.NotMagic,
-    reversible_card: HCLayout.MultiNotMagic,
+    art_series: HCLayout.Misc,
+    reversible_card: HCLayout.Misc,
   };
   const convertLayout = (layout: ScryfallLayout): HCLayout => {
     return asToken
@@ -165,6 +165,9 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
   );
   if ('card_faces' in entry && 'card_faces' in card) {
     entry.card_faces.forEach((face, i) => {
+      if (face.type_line == undefined) {
+        face.type_line = ''; // Necessary because Undercity // The Initiative is bugged in scryfall
+      }
       getFaceEntries(face as faceMappedType).forEach(([prop, value]) => {
         if (sameKeys.includes(prop)) {
           addPropToFace(card, prop, value, i);
@@ -177,7 +180,7 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
           const supertypes: string[] = [];
           const types: string[] = [];
           const subtypes: string[] = [];
-          const [before, after] = value.split(' — ');
+          const [before, after] = value ? value.split(' — ') : ['Card'];
           before.split(' ').forEach(word => {
             if (supers.includes(word)) {
               supertypes.push(word);

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import {
+  displaySetCode,
   getRelatedsFromSet,
   HCToTTSDeck,
   toCockCube,
@@ -35,7 +36,7 @@ type CubeSetup = {
 };
 
 export const CubeResources = () => {
-  const cardMap = useAtomValue(cardsAtom).filter(e => !e.tags?.includes('offensive'));
+  const cardMap = useAtomValue(cardsAtom).filterToMap(e => !e.tags?.includes('offensive'));
   const cubeSetups: CubeSetup[] = [
     {
       name: 'Hellscube',
@@ -182,7 +183,7 @@ export const CubeResources = () => {
     },
     {
       name: 'Hellscube 9',
-      id: 'HC9.0',
+      id: 'HC9_0',
       description: 'The first 360 cards of the vintage cube with purple.',
     },
     {
@@ -213,7 +214,7 @@ export const CubeResources = () => {
           return (
             <StyledRow key={cubeSetup.id}>
               <StyledTD>{cubeSetup.name}</StyledTD>
-              <StyledTD>{cubeSetup.id}</StyledTD>
+              <StyledTD>{displaySetCode(cubeSetup.id)}</StyledTD>
               <StyledTD>{cubeSetup.description}</StyledTD>
               <StyledTD>
                 {cubeSetup.quickLink}
@@ -226,7 +227,7 @@ export const CubeResources = () => {
                     onClick={() => {
                       const val = HCToTTSDeck(
                         cubeSetup.name,
-                        cardMap.getAllIdsInSetDirect(cubeSetup.id),
+                        cardMap.getAllIdsInSetDirect(cubeSetup.id) ?? [],
                         cardMap
                       );
                       const url =
@@ -334,7 +335,7 @@ export const CubeResources = () => {
                         };
                       });
 
-                      const printableCards = intCards.mapToArray(cardEntry => {
+                      const printableCards = intCards.map(cardEntry => {
                         const matches = cardList.filter(e => e.Cardname == cardEntry.name);
                         if (cardEntry.name.includes('// Elves')) {
                           console.log(cardList, matches);

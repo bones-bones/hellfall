@@ -12,12 +12,14 @@ import {
   addArtist,
   setDerivedProps,
   getDefaultCard,
-  HCIDMap,
   addPropToFace,
   addPropToRoot,
   pushPropToRoot,
   parseRelatedReferenceName,
   hardTokenIds,
+  CardMap,
+  tokenInvariantMap,
+  isValidV4UUID,
 } from '@hellfall/shared/utils';
 
 export const fetchTokens = async (NO_SCRYFALL: boolean) => {
@@ -37,9 +39,10 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     'rulings',
     'creators',
     'tags',
-    'collector_number',
+    'accepted_order',
     'artists',
     'id',
+    'oracle_id',
   ] as const;
 
   type keyType = (typeof keys)[number];
@@ -52,21 +55,41 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
 
   const supers = ['Basic', 'Legendary', 'Snow', 'World', 'Minigame', 'Token', 'EVIL', 'WET'];
   const splitKeys: keyType[] = ['name', 'types', 'power', 'toughness'];
-  const skipKeys: keyType[] = ['image', 'collector_number', 'creators', 'tags', 'artists', 'id'];
+  const skipKeys: keyType[] = [
+    'image',
+    'accepted_order',
+    'creators',
+    'tags',
+    'artists',
+    'id',
+    'oracle_id',
+  ];
 
   const HCTokens = rest.map(entry => {
     const entryAt = (key: keyType) => entry[keys.indexOf(key)];
+    const oracle_id =
+      tokenInvariantMap.getOracleId(entryAt('oracle_id') || entryAt('name')) ??
+      entryAt('oracle_id');
+    if (!oracle_id) {
+      throw new Error(`Missing oracle id on token with hcid: ${entryAt('name')}`);
+    }
+    if (!isValidV4UUID(oracle_id)) {
+      throw new Error(`Invalid oracle id: ${oracle_id} on token with hcid: ${entryAt('name')}`);
+    }
+
     const token = getDefaultCard(
       HCKind.Token,
       splitKeys.some(key => entry[keys.indexOf(key)].includes(' // ')),
       {
         id: entryAt('id'),
+        oracle_id: oracle_id,
         hcid: entryAt('name'),
         set: 'HCT',
         image: entryAt('image'),
         image_status: HCImageStatus.HighRes,
         creators: entryAt('creators').split(';'),
-        collector_number: entryAt('collector_number'),
+        collector_number: entryAt('accepted_order'),
+        accepted_order: entryAt('accepted_order'),
       },
       {}
     );
@@ -102,14 +125,14 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
           });
         } else if (keys[i] == 'token_maker') {
           entry[i].split(';').forEach(oldName => {
-            const { name, count, base, shouldUseBase } = parseRelatedReferenceName(oldName);
+            const { name, hcid, code, count } = parseRelatedReferenceName(oldName);
             const maker: HCRelatedCard = {
               object: HCObject.ObjectType.RelatedCard,
               id: '',
               oracle_id: '',
-              hcid: shouldUseBase ? name : '',
-              name: shouldUseBase ? base : name,
-              set: '' as SetCode,
+              hcid: hcid,
+              name: name,
+              set: code ?? ('' as SetCode),
               image: '',
               type_line: '',
               component: 'token_maker',
@@ -121,6 +144,11 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
           });
         } else if (keys[i] == 'tags' || keys[i] == 'artists') {
           // now handling this at the end
+        } else if (keys[i] == 'oracle_id') {
+          const oracle_id = tokenInvariantMap.getOracleId(entry[i] || token.name) ?? entry[i];
+          if (oracle_id && isValidV4UUID(oracle_id)) {
+            token.oracle_id = oracle_id;
+          }
         } else {
           addPropToRoot(token, keys[i] as rootPropType, entry[i]);
         }
@@ -156,12 +184,15 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
         token.all_parts?.forEach(part => (part.component = 'meld_part'));
       }
     });
+    if (!token.oracle_id) {
+      throw new Error(`Missing oracle id on token: ${JSON.stringify(token)}`);
+    }
     return token;
   });
   if (NO_SCRYFALL) {
-    return new HCIDMap(HCTokens);
+    return new CardMap(HCTokens);
   } else {
     const ScryfallTokens = await fetchScryfallTokens();
-    return new HCIDMap(HCTokens.concat(ScryfallTokens));
+    return new CardMap(HCTokens.concat(ScryfallTokens));
   }
 };

@@ -13,6 +13,7 @@ import {
   toFaces,
   toPlainText,
 } from '../cardHandling';
+import { stringIterable } from '../listHandling';
 
 const cardBackURL =
   'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg';
@@ -27,13 +28,8 @@ const cardBackURL =
  * Gets the tts deck states for a deck
  * @param idList the ids to get
  * @param cardMap the map of all cards
- * @param multMap the ids that have multiple copies and their corresponding number of copies, if any
  */
-const HCToTTSDeckStates = (
-  idList: string[],
-  cardMap: CardMap,
-  multMap?: Map<string, number>
-): ttsDeckState[] => {
+const HCToTTSDeckStates = (idList: stringIterable, cardMap: CardMap): ttsDeckState[] => {
   const { cards, tokens } = getRelatedsFromCards(idList, cardMap);
   const mainDeck: ttsDeckState = {
     Name: 'DeckCustom',
@@ -77,22 +73,20 @@ const HCToTTSDeckStates = (
       NumHeight: 1,
       BackIsHidden: true,
     };
-    for (let i = 0; i < (multMap?.get(card.id) ?? 1); i++) {
-      const mainID = (mainDeck.DeckIDs.at(-1) ?? 0) + 100;
-      const mainCard: ttsCard = {
-        Name: 'Card',
-        CardID: mainID,
-        Nickname: card.name,
-        Transform: CardPosition,
-        Description: plain,
-      };
-      if (compressed[0].rotated_image) {
-        mainCard.SidewaysCard = true;
-      }
-      mainDeck.DeckIDs.push(mainID);
-      mainDeck.CustomDeck[Object.keys(mainDeck.CustomDeck).length + 1] = mainCustom;
-      mainDeck.ContainedObjects.push(mainCard);
+    const mainID = (mainDeck.DeckIDs.at(-1) ?? 0) + 100;
+    const mainCard: ttsCard = {
+      Name: 'Card',
+      CardID: mainID,
+      Nickname: card.name,
+      Transform: CardPosition,
+      Description: plain,
+    };
+    if (compressed[0].rotated_image) {
+      mainCard.SidewaysCard = true;
     }
+    mainDeck.DeckIDs.push(mainID);
+    mainDeck.CustomDeck[Object.keys(mainDeck.CustomDeck).length + 1] = mainCustom;
+    mainDeck.ContainedObjects.push(mainCard);
     if (compressed.length > 1) {
       const dfcCustom: ttsCustomCard = {
         FaceURL: compressed[0].still_image ?? compressed[0].rotated_image ?? compressed[0].image!,
@@ -102,22 +96,20 @@ const HCToTTSDeckStates = (
         BackIsHidden: true,
         UniqueBack: true,
       };
-      for (let i = 0; i < (multMap?.get(card.id) ?? 1); i++) {
-        const dfcID = (dfcDeck.DeckIDs.at(-1) ?? 0) + 100;
-        const dfcCard: ttsCard = {
-          Name: 'Card',
-          CardID: dfcID,
-          Nickname: card.name,
-          Transform: CardPosition,
-          Description: plain,
-        };
-        if (compressed[0].rotated_image) {
-          dfcCard.SidewaysCard = true;
-        }
-        dfcDeck.DeckIDs.push(dfcID);
-        dfcDeck.CustomDeck[Object.keys(dfcDeck.CustomDeck).length + 1] = dfcCustom;
-        dfcDeck.ContainedObjects.push(dfcCard);
+      const dfcID = (dfcDeck.DeckIDs.at(-1) ?? 0) + 100;
+      const dfcCard: ttsCard = {
+        Name: 'Card',
+        CardID: dfcID,
+        Nickname: card.name,
+        Transform: CardPosition,
+        Description: plain,
+      };
+      if (compressed[0].rotated_image) {
+        dfcCard.SidewaysCard = true;
       }
+      dfcDeck.DeckIDs.push(dfcID);
+      dfcDeck.CustomDeck[Object.keys(dfcDeck.CustomDeck).length + 1] = dfcCustom;
+      dfcDeck.ContainedObjects.push(dfcCard);
     }
   });
   tokens.forEach(token => {
@@ -191,17 +183,11 @@ const HCToTTSDeckStates = (
  * @param name the name of the deck
  * @param idList the ids to get
  * @param cardMap the map of all cards
- * @param multMap the ids that have multiple copies and their corresponding number of copies, if any
  */
-export const HCToTTSDeck = (
-  name: string,
-  idList: string[],
-  cardMap: CardMap,
-  multMap?: Map<string, number>
-): ttsDeck => {
+export const HCToTTSDeck = (name: string, idList: stringIterable, cardMap: CardMap): ttsDeck => {
   const deck: ttsDeck = {
     SaveName: name,
-    ObjectStates: HCToTTSDeckStates(idList, cardMap, multMap),
+    ObjectStates: HCToTTSDeckStates(idList, cardMap),
   };
   return deck;
 };

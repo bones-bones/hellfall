@@ -19,10 +19,6 @@ export enum HCLayout {
   Token = 'token',
   /** Multi-faced tokens */
   MultiToken = 'multi_token',
-  /** NotMagic cards */
-  NotMagic = 'not_magic',
-  /** Multi-faced NotMagic cards*/
-  MultiNotMagic = 'multi_not_magic',
   /** Emblem cards */
   Emblem = 'emblem',
   /** Reminder cards */
@@ -120,7 +116,6 @@ export namespace HCLayoutGroup {
     HCLayout.Front,
     HCLayout.MeldResult,
     HCLayout.Token,
-    HCLayout.NotMagic,
     HCLayout.Emblem,
     HCLayout.Reminder,
     HCLayout.Stickers,
@@ -156,7 +151,6 @@ export namespace HCLayoutGroup {
   export const MultiFaced = [
     HCLayout.Multi,
     HCLayout.MultiToken,
-    HCLayout.MultiNotMagic,
     HCLayout.MeldPart,
     HCLayout.MultiReminder,
     HCLayout.RealCardMultiToken,
@@ -254,8 +248,6 @@ export namespace HCLayoutGroup {
     HCLayout.RealCardMultiToken,
     HCLayout.Checklist,
     HCLayout.MeldResult,
-    HCLayout.NotMagic,
-    HCLayout.MultiNotMagic,
     HCLayout.Misc,
   ] as const;
 
@@ -305,7 +297,6 @@ export namespace HCLayoutGroup {
     HCLayout.Vanguard,
     HCLayout.Station,
     HCLayout.Prepare,
-    HCLayout.NotMagic,
     HCLayout.RealCardToken,
     HCLayout.Cube,
   ] as const;

@@ -22,10 +22,22 @@ import {
   listIncludesValueLower,
   listIncludesValueLowerEvery,
   listsShare,
+  textListIncludes,
   textListIsContainedBy,
+  textListsShare,
 } from '../listHandling';
 import { splitParens, textContains, toExportName } from '../textHandling';
-import { CardMap, getAllRelated, hasTokenHCID, toFaces } from '../cardHandling';
+import {
+  CardMap,
+  cardToInvariant,
+  getAllRelated,
+  InvariantMap,
+  printInvariant,
+  toFaces,
+  cleanParts,
+  updateParts,
+  getAllRelatedPermissive,
+} from '../cardHandling';
 import { orderColors, orderHybrid, pipMap } from '../pipsAndColors';
 import { isInteger } from '../numHandling';
 import { getDefaultKindLayout, getDefaultTypeLayout } from './defaults';
@@ -33,7 +45,6 @@ import { baseIncludesFlag, fillSubKeywords, getBaseDiffs, getChangesFromTag } fr
 import { anyChange, createFaceChange, sortChanges } from './changeTypes';
 import { applyChanges, removeDuplicateChanges } from './changeHandling';
 import { getChangesFromDifferences } from './getCardDiff';
-import { cleanParts, updateParts } from './partsHandling';
 
 const ignoreFaceIdentityImageStatus: HCImageStatus[] = [
   HCImageStatus.Dungeon,
@@ -41,23 +52,6 @@ const ignoreFaceIdentityImageStatus: HCImageStatus[] = [
   HCImageStatus.Reminder,
   HCImageStatus.Stickers,
   HCImageStatus.DraftPartner,
-];
-
-export const landNames = [
-  'Plains',
-  'Island',
-  'Swamp',
-  'Mountain',
-  'Forest',
-  'Nebula',
-  'Wastes',
-  'Snow-Covered Plains',
-  'Snow-Covered Island',
-  'Snow-Covered Swamp',
-  'Snow-Covered Mountain',
-  'Snow-Covered Forest',
-  'Snow-Covered Nebula',
-  'Snow-Covered Wastes',
 ];
 
 const getColorIdentityProps = (
@@ -410,6 +404,7 @@ export const setDerivedProps = (
   if (card.kind == 'token') {
     if ('card_faces' in card) {
       card.mana_value = 0;
+      const colors: HCColors = [];
       card.card_faces.forEach((face, i) => {
         if (
           !(
@@ -418,8 +413,15 @@ export const setDerivedProps = (
           !(FrontManaValueFaceLayouts.includes(face.layout) && i)
         ) {
           card.mana_value += face.mana_value;
+          colors.push(
+            ...(face.color_indicator ??
+              (face.mana_cost && !baseIncludesFlag(card, 'generic', i)
+                ? pipMap.getColorsFromText(face.mana_cost)
+                : face.colors))
+          );
         }
       });
+      card.colors = orderColors(colors);
     } else if (card.mana_cost) {
       card.mana_value = pipMap.getMVFromCost(card.mana_cost);
       if (!card.tags?.includes('generic') && !card.keywords.includes('devoid')) {
@@ -428,24 +430,6 @@ export const setDerivedProps = (
     } else if (card.color_indicator) {
       card.colors = card.color_indicator;
     }
-  }
-  if ('card_faces' in card) {
-    const colors: HCColors = [];
-    card.card_faces.forEach((face, i) => {
-      if (NoManaValueFaceLayouts.includes(face.layout) && `multi_${face.layout}` != card.layout) {
-        return;
-      }
-      if (FrontManaValueFaceLayouts.includes(face.layout) && i) {
-        return;
-      }
-      colors.push(
-        ...(face.color_indicator ??
-          (card.kind == 'token' && face.mana_cost && !baseIncludesFlag(card, 'generic', i)
-            ? pipMap.getColorsFromText(face.mana_cost)
-            : face.colors))
-      );
-    });
-    card.colors = orderColors(colors);
   }
   if (card.tags?.includes('italic-typeline')) {
     card.type_line = '*' + card.type_line + '*';
@@ -484,33 +468,31 @@ const alwaysCompressLayouts: HCLayoutGroup.FaceLayoutType[] = [
   HCLayout.Cube,
 ];
 
+// TODO: move compress/drop face props onto invariant instead of card
 /**
- * Sets the export props for a card
+ * Sets a face's compress/drop face props and resets export names
+ *
+ * If `takenNames` is omitted, will only set compress/drop face props
  * @param card card to set the export props of
- * @param takenNames list of names that are already taken (for the purposes of setting `export_name`)
+ * @returns the invariant, or undefined if taken_names is omitted
  */
-export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
+export const resetFaceExportProps = (card: HCCard.Any) => {
+  if (card.set == 'NRM') return;
+  if (card.export_name) {
+    delete card.export_name;
+  }
   if ('card_faces' in card) {
-    const toFinalExportName = (name: string) => {
-      let exportName = toExportName(name);
-      if (['token', 'notmagic', 'scryfall'].includes(card.kind)) {
-        let i = 1;
-        while (takenNames.includes(exportName + i)) {
-          i++;
-        }
-        exportName += i;
+    card.card_faces.forEach(face => {
+      if (face.export_name) {
+        delete face.export_name;
       }
-      if (exportName.startsWith('(') || /^\d/.test(exportName)) {
-        exportName = '_' + exportName;
+      if (face.compress_face) {
+        delete face.compress_face;
       }
-      if (exportName.endsWith(')')) {
-        exportName += '_';
+      if (face.drop_face) {
+        delete face.drop_face;
       }
-      while (takenNames.includes(exportName) || isInteger(exportName)) {
-        exportName += '_';
-      }
-      return exportName;
-    };
+    });
     if (card.layout == HCLayout.Cube) {
       card.card_faces.forEach((face, i) => {
         if (i) {
@@ -521,36 +503,13 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
     }
     // deal with simple flips
     if (card.card_faces.length == 2 && card.layout == 'flip') {
-      const fullName = card.card_faces.map((face, index) => {
-        let name = face.name;
-        if (!face.name) {
-          name = `${index ? 'Bottom' : 'Top'} of ${card.card_faces[1 - index].name}`;
-        } else if (index && face.name == card.card_faces[0].name) {
-          name += ' (Bottom)';
-        }
-
-        const exportName = toFinalExportName(name);
-
-        if (exportName != face.name && exportName != card.name) {
-          face.export_name = exportName;
-        }
-        takenNames.push(exportName);
-        if (index) {
-          face.compress_face = true;
-        }
-        return exportName;
-      });
-      const exportName = toFinalExportName(fullName[0] + ' // ' + fullName[1]);
-      if (exportName != card.name) {
-        card.export_name = exportName;
-      }
-      takenNames.push(exportName);
+      card.card_faces[1].compress_face = true;
       return;
     }
 
     // compress/drop layouts that should always be compressed or should be dropped
     card.card_faces.slice(1).forEach(face => {
-      if (alwaysDropLayouts.includes(face.layout)) {
+      if (alwaysDropLayouts.includes(face.layout) || card.tags?.includes('drop-faces')) {
         face.drop_face = true;
       } else if (conditionalDropLayouts.includes(face.layout)) {
         if (
@@ -581,6 +540,75 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
         }
       });
     }
+  }
+};
+
+const useTokenList = ['Food and Drug', 'EVIL Combat', 'Dawizard'];
+/**
+ * Builds an invariant for a card. Note: should only be used on backend if
+ * {@linkcode resetFaceExportProps} has been called first
+ * @param card card to set the export props of
+ * @param takenNames list of names that are already taken (for the purposes of setting `export_name`)
+ * @returns the invariant
+ */
+export const buildInvariant = (card: HCCard.Any, takenNames: Set<string>): printInvariant => {
+  const invariant = cardToInvariant(card);
+  const toFinalExportName = (name: string, face?: faceType) => {
+    let exportName = toExportName(name);
+    if (['token', 'scryfall'].includes(card.kind) && textListIncludes(face?.supertypes, 'token')) {
+      if (textListsShare(card.tags, ['real-card', 'token-version-of-card'])) {
+        // TODO: better handling for this
+        exportName += ' (Token)';
+      } else if (
+        name.toLowerCase().includes('copy') ||
+        useTokenList.includes(name) ||
+        (face?.subtypes &&
+          textListIncludes([face.subtypes.join(' '), ...face.subtypes], face?.name ?? card.name))
+      ) {
+        exportName += ' Token';
+      }
+    }
+    if (/^[\d/]+ /.test(exportName)) {
+      exportName = '_' + exportName;
+    }
+    if (isInteger(exportName)) {
+      exportName = '_' + exportName;
+    }
+    while (takenNames.has(exportName.toLowerCase())) {
+      exportName += '_';
+    }
+    return exportName;
+  };
+  if ('card_faces' in card) {
+    if (card.layout == HCLayout.Cube) {
+      return invariant;
+    }
+    // deal with simple flips
+    if (card.card_faces.length == 2 && card.layout == 'flip') {
+      const fullName = card.card_faces.map((face, index) => {
+        let name = face.name;
+        if (!face.name) {
+          name = `${index ? 'Bottom' : 'Top'} of ${card.card_faces[1 - index].name}`;
+        } else if (index && face.name == card.card_faces[0].name) {
+          name += ' (Bottom)';
+        }
+
+        const exportName = toFinalExportName(name, face);
+
+        if (exportName != face.name && exportName != card.name) {
+          invariant.card_faces![index].export_name = exportName;
+        }
+        takenNames.add(exportName.toLowerCase());
+        return exportName;
+      });
+      const exportName = toFinalExportName(fullName[0] + ' // ' + fullName[1]);
+      if (exportName != card.name) {
+        invariant.export_name = exportName;
+      }
+      takenNames.add(exportName.toLowerCase());
+      return invariant;
+    }
+
     card.card_faces.forEach((face, index) => {
       if (!face.compress_face && !face.drop_face) {
         let faceName = face.name;
@@ -618,33 +646,31 @@ export const setExportProps = (card: HCCard.Any, takenNames: string[]) => {
         exportName = toFinalExportName(exportName);
 
         if (exportName != face.name && exportName != card.name && exportName != faceName) {
-          face.export_name = exportName;
+          invariant.card_faces![index].export_name = exportName;
         }
-        takenNames.push(exportName);
+        takenNames.add(exportName.toLowerCase());
       }
     });
   } else {
-    let exportName = toExportName(
-      card.kind == 'land' && landNames.includes(card.name)
-        ? `${card.name} (${card.hcid})`
-        : hasTokenHCID(card)
-        ? card.hcid
-        : card.name
-    );
-    if (exportName.startsWith('(') || /^\d/.test(exportName)) {
-      exportName = '_' + exportName;
+    const exportName = toFinalExportName(toExportName(card.name), card);
+    if (exportName != card.name) {
+      invariant.export_name = exportName;
     }
-    if (exportName.endsWith(')')) {
-      exportName += '_';
-    }
-    while (takenNames.includes(exportName) || isInteger(exportName)) {
-      exportName += '_';
-    }
-    if (exportName != (hasTokenHCID(card) ? card.hcid : card.name)) {
-      card.export_name = exportName;
-    }
-    takenNames.push(exportName);
+    takenNames.add(exportName.toLowerCase());
   }
+  return invariant;
+};
+
+/**
+ * Builds the invariant props for all cards in a {@linkcode CardMap} (including export props)
+ * @param cardMap The CardMap to use
+ */
+export const buildInvariantMap = (cardMap: CardMap) => {
+  const invariantMap = new InvariantMap();
+  cardMap.forEach(card => {
+    if (invariantMap.has(card.oracle_id)) {
+    }
+  });
 };
 
 const manaSymbolColorMatching: Record<
@@ -686,20 +712,18 @@ export const mergeFromSheet = (existingCard: HCCard.Any, newCard: HCCard.Any): H
   if (existingCard.kind != newCard.kind) {
     existingCard.kind = newCard.kind;
   }
-  const changeList = getChangesFromDifferences(existingCard, newCard, true);
-  if (newCard.kind != 'scryfall') {
-    applyChanges(existingCard, changeList, true);
-    setDerivedProps(existingCard);
-  } else {
-    newCard.all_parts = existingCard.all_parts;
+
+  if (existingCard.kind == 'scryfall') {
     setDerivedProps(newCard);
     return newCard;
   }
-  // if (newCard.base_tags) {
-  //   existingCard.base_tags = newCard.base_tags;
-  // } else {
-  //   delete existingCard.base_tags;
-  // }
+
+  existingCard.all_parts = newCard.all_parts;
+  // newCard.all_parts = existingCard.all_parts;
+  const changeList = getChangesFromDifferences(existingCard, newCard, true);
+
+  applyChanges(existingCard, changeList, true);
+  setDerivedProps(existingCard);
   return existingCard;
 };
 
@@ -710,9 +734,9 @@ export const mergeFromSheet = (existingCard: HCCard.Any, newCard: HCCard.Any): H
  * @param cardMap the map of cards
  */
 export const applyFromMap = (card: HCCard.Any, changeList: anyChange[], cardMap: CardMap) => {
-  const oldRelateds = getAllRelated(card, cardMap);
+  const oldRelateds = getAllRelatedPermissive(card, cardMap);
   if (!applyChanges(card, changeList)) return;
-  const newRelateds = getAllRelated(card, cardMap);
+  const newRelateds = getAllRelatedPermissive(card, cardMap);
   setDerivedProps(card);
   updateParts(card, newRelateds);
   cleanParts(card, oldRelateds);

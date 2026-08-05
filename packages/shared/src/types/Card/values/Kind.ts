@@ -3,11 +3,9 @@
  */
 export enum HCKind {
   Card = 'card',
-  Land = 'land', // lands from the land box
   Token = 'token',
   Front = 'front', // jumpstart front cards
   Scryfall = 'scryfall', // scryfall tokens
-  NotMagic = 'notmagic',
 }
 /**
  * Checks if a value is a {@linkcode HCKind}

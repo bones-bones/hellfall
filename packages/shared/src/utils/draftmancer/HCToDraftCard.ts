@@ -1,6 +1,6 @@
 import { HCCard, HCCardFace } from '@hellfall/shared/types';
 import { DraftmancerCardFace, DraftmancerCustomCard } from './draftTypes';
-import { canBeACommander, hasTokenHCID } from '../cardHandling';
+import { canBeACommander } from '../cardHandling';
 import { stripSingleSlashes, toExportMana } from '../textHandling';
 import { orderColors } from '../pipsAndColors';
 const validColors = ['W', 'U', 'B', 'R', 'G'];
@@ -12,12 +12,13 @@ const validColors = ['W', 'U', 'B', 'R', 'G'];
 const convertSingleFace = (card: HCCard.AnySingleFaced): DraftmancerCustomCard => {
   const draftCard: DraftmancerCustomCard = {
     id: card.id,
-    name: stripSingleSlashes(card.export_name ?? (hasTokenHCID(card) ? card.hcid : card.name)),
+    name: stripSingleSlashes(card.export_name ?? card.name),
     mana_cost: toExportMana(card.mana_cost, true),
     type: card.type_line,
     image: card.rotated_image || card.image,
     colors: orderColors(card.colors.filter(color => validColors.includes(color))),
     set: card.set,
+    collector_number: card.collector_number,
     oracle_text: toExportMana(card.oracle_text),
   };
   if (card.tags?.includes('rotate-left')) {
@@ -79,12 +80,13 @@ const extractFrontFace = (card: HCCard.AnyMultiFaced): DraftmancerCustomCard => 
   const face = card.card_faces[0];
   const draftCard: DraftmancerCustomCard = {
     id: card.id,
-    name: stripSingleSlashes(face.export_name ?? (hasTokenHCID(card) ? card.hcid : face.name)),
+    name: stripSingleSlashes(face.export_name ?? face.name),
     mana_cost: toExportMana(face.mana_cost, true),
     type: face.type_line,
     image: face.rotated_image || face.image || card.rotated_image || card.image,
     colors: orderColors(face.colors.filter(color => validColors.includes(color))),
     set: card.set,
+    collector_number: card.collector_number,
     oracle_text: toExportMana(face.oracle_text),
   };
   if (card.tags?.includes('rotate-left') || face.layout == 'aftermath') {

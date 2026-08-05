@@ -129,7 +129,6 @@ Write a script to transform the database
 - refactor away from className
 - cut down on boilerplate for stencils if possible (though prioritizing not causing lag)
 - fix card display on deck pages
-- deal with duplicate HCV.1 collector numbers
 - add missing artist credits
 - fix id for plateau
 - prevent use of semicolons in submissions for list fields?
@@ -163,24 +162,21 @@ Write a script to transform the database
 - make daybound/nightbound creatures not have the `transform` keyword
 - add conversions for long set names
 - add produces search
-- sync rulings between prints of a card
 - add examples to syntax page
 - add `include:spell` for devotion searches?
 - strip quotes from artist names like for tags?
 - fix flip display for bulbasaur
-- remove `card-in-scryfall` from nebulas
 - squash dom bugs
 - replace the set selector with a pill version
-- strip masterpiece/reprint names on fetch?
-- add artists.json file
 - allow multiple notes on an artist and/or separate out the `Not on card` notes
 - add readmes to the filter folders
 - add flip buttons to card pages for flip/aftermath cards
 - when adding mse as flag tag, make sure it can apply to individual faces
-- make sure be there // be square's image worked
 - once oracle ids get fully integrated, remove duplicative code in fetchers and tag handling
 - add invariant handling for oracle text, add printed oracle text fields for the text printed on the card, and update all oracle texts
-- remove janky code from this pr (search for #jank)
-- add code that changes masterpiece prefix into a set group search
-- make collector nums fixed
-- sort out why the undercity // the initiative broke its types
+- make sure that removing a base tag with no notes doesn't affect duplicates with notes
+- deal with NRM invariants
+- find a way to allow old names for bold plagiarist?
+- figure out why the split tokens aren't compressing
+- rework related cards/other prints display to look more like scryfall
+- incorporate map getters into filters

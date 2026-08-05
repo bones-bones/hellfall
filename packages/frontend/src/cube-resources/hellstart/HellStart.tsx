@@ -48,7 +48,7 @@ export const HellStart = () => {
       <br />
       <h1 style={{ lineHeight: 0.5 }}>Packs</h1>
       <div>
-        {cards.getAllInSet('FHCJ').mapToArray(entry => (
+        {cards.getAllInSet('FHCJ').map(entry => (
           <HCJPackDisplay key={entry.tags?.[0]} entry={entry} />
         ))}
       </div>

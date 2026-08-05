@@ -28,10 +28,8 @@ import {
   tagChange,
   sortChanges,
 } from './changeTypes';
-import { isValidV4UUID } from '../textHandling';
 import { isInteger } from '../numHandling';
 import { ensureArray, pushProp } from '../listHandling';
-import { baseInvariantMap } from '../cardHandling';
 
 const frameTags: Record<string, HCFrame> = {
   'future-frame': HCFrame.Future,
@@ -149,9 +147,6 @@ export const tagChangesVisibleProps = (fullTag: string): boolean => {
     return true;
   }
   if (tag == 'back-image') {
-    return true;
-  }
-  if (tagIsSetTag(tag)) {
     return true;
   }
   return false;
@@ -368,33 +363,8 @@ const tagCanUseURL = (tag: string): boolean => {
   }
   return false;
 };
-const tagCanUseUUID = (tag: string): boolean => {
-  if (tag == 'card-in-scryfall') {
-    return true;
-  } else if (tag == 'has-other-prints') {
-    return true;
-  }
-  return false;
-};
-const tagIsSetTag = (tag: string, card?: HCCard.Any): boolean => {
-  if (card ? tag.toUpperCase() == card.set : getSet(tag.toUpperCase() as SetCode)) {
-    return true;
-  }
-  if (
-    ['hc1.0', 'hc1.1', 'hc1.2'].includes(tag) &&
-    (!card || card.set?.slice(0, 3) == 'HLC' || card.set == 'HCV.1')
-  ) {
-    return true;
-  }
-  if (tag == 'scl' && (!card || card.set?.slice(0, 3) == 'SCL')) {
-    return true;
-  }
-  return false;
-};
 const tagUsesNoteAsValue = (tag: string, card?: HCCard.Any): boolean => {
   if (tag == 'flavor-name') {
-    return true;
-  } else if (tagIsSetTag(tag, card)) {
     return true;
   } else if (flagTags.includes(tag)) {
     return true;
@@ -425,10 +395,6 @@ type splitTagReturn = {
    * The face to apply the tag's effects to
    */
   face?: number;
-  /**
-   * The uuid to use for the tag's effects
-   */
-  uuid?: string;
   /**
    * The url to use for the tag's effects
    */
@@ -685,7 +651,7 @@ export const fillSubKeywords = (keywords: string[]) => {
 /**
  * Splits a full tag into a tag and its components
  * @param fullTag full tag to split
- * @param card the card that the tag will be applied to; only really necessary if the tag is a uuid tag
+ * @param card the card that the tag will be applied to; only really necessary for faces
  * and is going off of the card name or if the tag note includes an element that specifies the face
  * @param alsoAddingFaces whether this tag is being applied alongside changes that convert the card
  * from a single-faced card to a multifaced card
@@ -706,12 +672,6 @@ export const splitTagComponents = (
     fillSubKeywords(splitTag.keywords);
   }
   if (!splitTag.note) {
-    if (tagCanUseUUID(splitTag.tag)) {
-      const id = baseInvariantMap.getOracleID(card?.name ?? '');
-      if (id) {
-        splitTag.uuid = id;
-      }
-    }
     return splitTag;
   }
   const splitNote = splitTag.note.split('|');
@@ -722,17 +682,6 @@ export const splitTagComponents = (
         pushProp(splitTag, 'keywords', keyword.toLowerCase());
       }
       continue;
-    }
-    if (tagCanUseUUID(splitTag.tag) && !splitTag.uuid) {
-      if (isValidV4UUID(splitNote[i])) {
-        [splitTag.uuid] = splitNote.splice(i, 1);
-        continue;
-      }
-      if (baseInvariantMap.hasName(splitNote[i])) {
-        const [name] = splitNote.splice(i, 1);
-        splitTag.uuid = baseInvariantMap.getOracleID(name);
-        continue;
-      }
     }
     if (
       tagCanUseURL(splitTag.tag) &&
@@ -879,7 +828,7 @@ const changesForFaceTag = <K extends facePropType>(
   const change = createFaceChange(
     change_type,
     prop as faceChangeablePropType<typeof change_type>,
-    resolvedValue,
+    resolvedValue as any, // #temp
     splitTag.face
   );
   if (defaultValue && change_type == 'delete') {
@@ -1130,17 +1079,14 @@ const inputForTag = (
     addPropToInput(input, 'layout');
   } else if (tag == 'foil') {
     addPropToInput(input, 'finish', HCFinish.Foil);
-  } else if (tag == 'card-in-scryfall' || tag == 'has-other-prints') {
-    addPropToInput(input, 'oracle_id', splitTag.uuid);
+  } else if (tag == 'card-in-scryfall') {
+    addPropToInput(input, 'oracle_id_is_scryfall', true);
     location = 'root';
   } else if (tag == 'exact-card-in-scryfall') {
     addPropToInput(input, 'id_is_scryfall', true);
     location = 'root';
   } else if (tag == 'flavor-name') {
     addPropToInput(input, 'flavor_name', splitTag.value);
-  } else if (tagIsSetTag(tag, card)) {
-    addPropToInput(input, 'collector_number', splitTag.value);
-    location = 'root';
   }
   return { input, location };
 };
@@ -1176,20 +1122,6 @@ export const getChangesFromTag = (
       HCImageStatus.HighRes
     );
     changes.push(change);
-  } else if (tag == 'card-in-scryfall') {
-    const change: rootChange<typeof change_type, 'oracle_id_is_scryfall'> = createRootChange(
-      change_type,
-      'oracle_id_is_scryfall',
-      true
-    );
-    changes.push(change);
-    // } else if (tag == 'exact-card-in-scryfall') {
-    //   const change: rootChange<'id_is_scryfall'> = createRootChange(
-    //     change_type,
-    //     'id_is_scryfall',
-    //     true
-    //   );
-    //   changes.push(change);
   }
   return changes.sort(sortChanges);
   // return changes.filter(change=>changeIsValid(card,change))

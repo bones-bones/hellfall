@@ -8,7 +8,7 @@ import { deckAtom, draftAtom } from './draftAtom.ts';
 import { DeckConstruction } from './DeckConstruction.tsx';
 import { CARDS_PER_PACK } from './constants.ts';
 import { keyframes } from '@emotion/react';
-import { canBeACommander, CardMap } from '@hellfall/shared/utils';
+import { canBeACommander, CardMap, moveSomeOver } from '@hellfall/shared/utils';
 import type { Pack, Round, TheDraft } from './types.ts';
 import { HCCard } from '@hellfall/shared/types';
 import { createStyledDiv } from '../styling/StyledElements.tsx';
@@ -42,17 +42,12 @@ export const Draft = () => {
         const nonManders = cardMap
           .getAllInSetDirect('HC6')
           .filter(card => !card.not_directly_draftable);
-        const commanders = new CardMap();
-        nonManders.forEach((card: HCCard.Any, id: string) => {
-          if (canBeACommander(card)) {
-            commanders.set(card);
-            nonManders.delete(id);
-          }
-        });
 
-        // const commanders = filtered.filter(canBeACommander);
-        const shuffledManders = shuffle(commanders.cards());
-        const shuffledNonManders = shuffle(nonManders.cards());
+        const commanders: HCCard.Any[] = [];
+        moveSomeOver(nonManders, commanders, canBeACommander);
+
+        const shuffledManders = shuffle(commanders);
+        const shuffledNonManders = shuffle(nonManders);
 
         for (let i = 0; i < 3; i++) {
           const round = [];
@@ -69,7 +64,7 @@ export const Draft = () => {
         const filtered = cardMap
           .getAllInSetDirect(Set)
           .filter(card => !card.not_directly_draftable);
-        const shuffled = shuffle(filtered.cards());
+        const shuffled = shuffle(filtered);
 
         for (let i = 0; i < 3; i++) {
           const round = [];

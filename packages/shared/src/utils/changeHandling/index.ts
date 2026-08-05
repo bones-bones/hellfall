@@ -7,4 +7,3 @@ export * from './changeApply';
 export * from './derivedProps';
 export * from './defaults';
 export * from './modificationHandling';
-export * from './partsHandling';

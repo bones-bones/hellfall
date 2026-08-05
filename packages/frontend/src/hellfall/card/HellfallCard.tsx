@@ -1,6 +1,6 @@
 import { Box, ButtonColors, Card } from '@workday/canvas-kit-react';
 import { SetLegality } from './visual-components/SetLegality';
-import { toFaces, toPlainText } from '@hellfall/shared/utils';
+import { displaySetCode, toFaces, toPlainText } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
 import { system } from '@workday/canvas-tokens-web';
 
@@ -116,7 +116,7 @@ export const HellfallCard = ({
   const windowRef = useRef<HTMLDivElement>(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const cards = useAtomValue(cardsAtom);
-  const otherPrints = cards.getAllPrints(data.oracle_id).cards();
+  const otherPrints = cards.getAllPrints(data.oracle_id);
 
   useEffect(() => {
     if (!windowRef.current) {
@@ -238,8 +238,13 @@ export const HellfallCard = ({
                 <>
                   <MediumText>
                     Set:{' '}
-                    {(displayCard.set == 'HCV.CDC' ? 'CDC' : displayCard.set) +
-                      (displayCard.collector_number ? ' #' + displayCard.collector_number : '')}
+                    {`${displayCard.set == 'HCV_CDC' ? 'CDC' : displaySetCode(displayCard.set)} #${
+                      displayCard.collector_number
+                    }${
+                      displayCard.collector_number != displayCard.accepted_order
+                        ? ` (AO: ${displayCard.accepted_order})`
+                        : ''
+                    }`}
                   </MediumText>
                   <Separator />
                 </>

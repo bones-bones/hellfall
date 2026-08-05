@@ -126,10 +126,7 @@ export const ensureRelatedPartsResolved = async (
   cardsCol: CollectionReference
 ): Promise<void> => {
   for (const part of card.all_parts ?? []) {
-    const alreadyResolved =
-      relatedMap.get(part.id) ??
-      relatedMap.find(related => textEquals(part.hcid, related.hcid)) ??
-      relatedMap.find(related => textEquals(part.name, related.name));
+    const alreadyResolved = relatedMap.getFromPart(part);
     if (alreadyResolved) {
       continue;
     }

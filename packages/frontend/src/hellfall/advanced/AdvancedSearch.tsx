@@ -21,7 +21,7 @@ import { useEffect, useState } from 'react';
 import { HCSearchColors } from '@hellfall/shared/types';
 import { looseOpList, looseOpType } from '@hellfall/shared/filters';
 import { ControlBar } from '../search-controls/ControlBar.tsx';
-import { extraSetList, normalizeText } from '@hellfall/shared/utils';
+import { displaySetCode, extraSetList, normalizeText } from '@hellfall/shared/utils';
 import { creatorsData, pipsData, tagsData, typesData } from '@hellfall/shared/data';
 import { createStyles } from '@workday/canvas-kit-styling';
 import {
@@ -70,6 +70,10 @@ export const AdvancedSearch = () => {
   const [isCommander, setIsCommander] = useState(false);
   const [legalityOpen, setLegalityOpen] = useState(false);
   const [collectorNumber, setCollectorNumber] = useState<[number | undefined, looseOpType]>([
+    undefined,
+    ':',
+  ]);
+  const [acceptedOrder, setAcceptedOrder] = useState<[number | undefined, looseOpType]>([
     undefined,
     ':',
   ]);
@@ -187,6 +191,9 @@ export const AdvancedSearch = () => {
     if (collectorNumber[0] != undefined) {
       filters.push(`number${collectorNumber[1]}${collectorNumber[0]}`);
     }
+    if (acceptedOrder[0] != undefined) {
+      filters.push(`accepted${acceptedOrder[1]}${acceptedOrder[0]}`);
+    }
     if (manaValue[0] != undefined) {
       filters.push(`manavalue${manaValue[1]}${manaValue[0]}`);
     }
@@ -279,6 +286,7 @@ export const AdvancedSearch = () => {
     fourcbLegality,
     commanderLegality,
     collectorNumber,
+    acceptedOrder,
     manaValue,
     power,
     toughness,
@@ -449,7 +457,7 @@ export const AdvancedSearch = () => {
                   <BoxlessCheckboxGroup
                     value={extraSets}
                     label={'Extra Sets'}
-                    values={extraSetList}
+                    values={extraSetList.map(displaySetCode)}
                     onChange={setExtraSets}
                   />
                 </StyledComponentHolder>
@@ -566,6 +574,11 @@ export const AdvancedSearch = () => {
             label={'Collector number'}
             onChange={setCollectorNumber}
             value={collectorNumber}
+          />
+          <NumberSelector
+            label={'Accepted order'}
+            onChange={setAcceptedOrder}
+            value={acceptedOrder}
           />
           <NumberSelector label={'Mana value'} onChange={setManaValue} value={manaValue} />
           <NumberSelector label={'Power'} onChange={setPower} value={power} />

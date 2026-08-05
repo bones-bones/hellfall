@@ -266,7 +266,7 @@ export const parseSearchQuery = (
   const cludeList: IncludeFilter[] = [];
   let autoFilterExtras = true;
   const getOtherPrints: allPrintsGetterType = (card: HCCard.Any) =>
-    cardMap.getAllPrints(card.oracle_id).cards();
+    cardMap.getAllPrints(card.oracle_id);
 
   const parseTokens = (
     tokens: string[],

@@ -19,21 +19,17 @@ import {
   HCBorderColor,
   HCFinish,
   HCFrame,
+  HCRelatedCard,
 } from '@hellfall/shared/types';
 import {
   ensureArray,
   listIncludesValueLower,
   listsShareLower,
+  moveSomeOver,
+  stringIterable,
   textListIncludes,
   textListsShare,
 } from '../listHandling';
-import {
-  getMasterpiece,
-  getSetCode,
-  stripMasterpiece,
-  stripSetCode,
-  textEquals,
-} from '../textHandling';
 import { CardMap } from './cardMap';
 import { pipMap } from '../pipsAndColors';
 
@@ -339,74 +335,6 @@ export const toPlainText = (card: HCCard.Any) =>
     .join('\n---\n');
 
 /**
- * Gets all names for a card other than its normal name (for accessibility)
- * @param card card to get other names for
- */
-export const getOtherNames = (card: HCCard.Any): string[] | undefined => {
-  const names = [];
-  if (card.tags?.includes('irregular-face-name') && 'card_faces' in card) {
-    names.push(card.card_faces.map(face => face.name).join(' \\ '));
-  }
-  if (card.flavor_name) {
-    names.push(card.flavor_name);
-  }
-  if ('card_faces' in card && card.card_faces.find(face => face.flavor_name)) {
-    names.push(
-      ...(card.card_faces
-        .filter(face => face.flavor_name)
-        .map(face => face.flavor_name) as string[])
-    );
-  }
-  return names.length ? names : undefined;
-};
-
-/**
- * Gets all names for a card that would be an exact match (for filters)
- * @param card card to get all names for
- * @param dropFaces whether to exclude faces with `drop_face: true`
- */
-export const getAllNames = (card: HCCard.Any, dropFaces?: boolean): string[] => {
-  const names = [stripMasterpiece(stripSetCode(card.name))];
-  if (names[0].slice(-5) == ' (HC)') {
-    names.push(card.name);
-    while (names[0].slice(-5) == ' (HC)') {
-      names.unshift(stripSetCode(names[0]));
-    }
-  }
-  if (card.flavor_name) {
-    names.push(card.flavor_name);
-  }
-  const start = getMasterpiece(card.name);
-  const ending = getSetCode(card.name);
-  if ('card_faces' in card) {
-    toFaces(card, dropFaces).forEach((face, i) => {
-      if (face.flavor_name) {
-        names.push(face.flavor_name);
-      }
-      names.push(face.name);
-      let name = face.name;
-      toFaces(card, dropFaces)
-        .slice(i + 1)
-        .forEach(f => {
-          name += ` // ${f.name}`;
-          names.push(name);
-        });
-    });
-  }
-  if (start || ending) {
-    return names.flatMap(name => {
-      return [
-        name,
-        ...(start ? [start + name] : []),
-        ...(ending ? [name + ending] : []),
-        ...(start && ending ? [start + name + ending] : []),
-      ];
-    });
-  }
-  return names;
-};
-
-/**
  * Checks whether a card can be a commander.
  * @param card card to check
  */
@@ -426,6 +354,7 @@ const PLACEHOLDER_CARD: HCCard.Normal = {
   id: '55555555-5555-4555-a555-555555555555',
   oracle_id: '55555555-5555-4555-a555-555555555555',
   collector_number: '555',
+  accepted_order: '555',
   hcid: 'hc5-placeholder',
   kind: HCKind.Card,
   layout: HCLayout.Normal,
@@ -456,17 +385,15 @@ const PLACEHOLDER_CARD: HCCard.Normal = {
 /**
  * Generates the `CardMap` for {@linkcode SetCode | SetCode: HC5}
  */
-export const getHc5 = (): CardMap =>
-  new CardMap(
-    Array.from({ length: 720 }, (_, i) =>
-      addToJSONToCard({
-        ...PLACEHOLDER_CARD,
-        id: `55555555-5555-4${i.toString().padStart(3, '0')}-a555-555555555555`,
-        oracle_id: '55555555-5555-4555-a555-555555555555',
-        hcid: `hc5-placeholder-${i}`,
-        name: `◻︎◻︎◻︎◻︎◻︎◻︎◻︎◻︎◻︎ ${i}`,
-      })
-    )
+export const getHc5 = (): HCCard.Any[] =>
+  Array.from({ length: 720 }, (_, i) =>
+    addToJSONToCard({
+      ...PLACEHOLDER_CARD,
+      id: `55555555-5555-4${i.toString().padStart(3, '0')}-a555-555555555555`,
+      oracle_id: '55555555-5555-4555-a555-555555555555',
+      hcid: `hc5-placeholder-${i}`,
+      name: `◻︎◻︎◻︎◻︎◻︎◻︎◻︎◻︎◻︎ ${i}`,
+    })
   );
 
 /**
@@ -474,21 +401,13 @@ export const getHc5 = (): CardMap =>
  * @param card card to get the related cards to
  * @param cardMap CardMap containing all cards
  *
- * This version will also try to match hcid and name, so it's exhaustive,
- * but it's not suitable for use on the frontend due to its slowness
+ * This version will also try to match hcid and name, so it's exhaustive, and it also builds a CardMap.
+ * Don't use this on the frontend.
  *
  * For a fast version, use {@linkcode getAllRelated}
  */
 export const getAllRelatedPermissive = (card: HCCard.Any, cardMap: CardMap): CardMap =>
-  new CardMap(
-    card.all_parts?.flatMap(
-      part =>
-        cardMap.get(part.id) ??
-        cardMap.find(related => textEquals(part.hcid, related.hcid)) ??
-        cardMap.find(related => textEquals(part.name, related.name)) ??
-        []
-    ) ?? []
-  );
+  new CardMap(card.all_parts?.flatMap(part => cardMap.getFromPart(part) ?? []) ?? []);
 
 /**
  * Gets all related cards to a given card
@@ -500,28 +419,28 @@ export const getAllRelatedPermissive = (card: HCCard.Any, cardMap: CardMap): Car
  *
  * For an exhaustive version, use {@linkcode getAllRelatedPermissive}
  */
-export const getAllRelated = (card: HCCard.Any, cardMap: CardMap): CardMap =>
-  cardMap.getSubset(card.all_parts?.map(part => part.id) ?? []);
+export const getAllRelated = (card: HCCard.Any, cardMap: CardMap): HCCard.Any[] =>
+  cardMap.getMultiple(card.all_parts?.map(part => part.id) ?? []);
 
 /**
  * Gets the cards and tokens for a list of card ids
  * @param idList List of card ids to get
  * @param cardMap CardMap containing all cards
- * @returns
  */
 export const getRelatedsFromCards = (
-  idList: string[],
+  idList: stringIterable,
   cardMap: CardMap
-): { cards: CardMap; tokens: CardMap } => {
-  const cards: CardMap = cardMap.getSubset(idList);
-  const tokens: CardMap = cardMap.getSubset(
-    cards.flatMap(
-      card =>
-        card.all_parts?.flatMap(part =>
-          !cards.has(part.id) && part.component != 'token_maker' ? part.id : []
-        ) ?? []
-    )
-  );
+): { cards: HCCard.Any[]; tokens: HCCard.Any[] } => {
+  const cards: HCCard.Any[] = cardMap.getMultiple(idList);
+  const idSet: Set<string> = idList instanceof Set ? idList : new Set(idList);
+  const tokenIds = new Set<string>();
+  for (const card of cards) {
+    if (!card.all_parts) continue;
+    card.all_parts
+      .filter(part => part.component != 'token_maker' && !idSet.has(part.id))
+      .forEach(part => tokenIds.add(part.id));
+  }
+  const tokens = cardMap.getMultiple(tokenIds);
   return { cards, tokens };
 };
 
@@ -536,33 +455,38 @@ export const getRelatedsFromSet = (
   set: SetCode,
   cardMap: CardMap,
   moveNonDraftablesToTokens: boolean = false
-): { cards: CardMap; tokens: CardMap } => {
+): { cards: HCCard.Any[]; tokens: HCCard.Any[] } => {
   if (set == 'HC5') {
-    return { cards: getHc5(), tokens: new CardMap() };
+    return { cards: getHc5(), tokens: [] };
   }
+  const shouldUseFronts = set == 'HCJ' && moveNonDraftablesToTokens;
+  const cards: HCCard.Any[] = cardMap.getAllInSetDirect(set);
+  const idSet = cardMap.getAllIdsInSetDirect(set);
+  const tokenIds = new Set<string>();
+  const partIsValid = (part: HCRelatedCard) => {
+    if (part.component == 'token_maker') return;
+    if (shouldUseFronts && part.set == 'FHCJ') return;
+    return !idSet?.has(part.id);
+  };
+  for (const card of cards) {
+    if (!card.all_parts) continue;
+    card.all_parts.filter(partIsValid).forEach(part => tokenIds.add(part.id));
+  }
+  const tokens = cardMap.getMultiple(tokenIds);
   if (set == 'HCJ' && moveNonDraftablesToTokens) {
-    const { cards, tokens } = getRelatedsFromSet(set, cardMap, false);
-    cards.setMultiple(tokens);
-    const fronts = cards.getAllInSet('FHCJ');
-    cards.deleteMultiple(fronts.ids());
+    cards.push(...tokens);
+    const fronts = cardMap.getAllInSet('FHCJ');
     return { cards: fronts, tokens: cards };
   }
-  const cards: CardMap = cardMap.getAllInSetDirect(set);
-  const tokens: CardMap = cardMap.getSubset(
-    cards.flatMap(
-      card =>
-        card.all_parts?.flatMap(part =>
-          !part.set.includes(set) && part.component != 'token_maker' ? part.id : []
-        ) ?? []
-    )
-  );
   if (moveNonDraftablesToTokens) {
-    cards.forEach((card: HCCard.Any, id: string) => {
-      if (card.not_directly_draftable) {
-        tokens.set(card);
-        cards.delete(id);
-      }
-    });
+    moveSomeOver(cards, tokens, card => card.not_directly_draftable);
   }
   return { cards, tokens };
 };
+
+/**
+ * Checks whether a card can be in decks
+ * @param card card to check
+ */
+export const canBeInDecks = (card: HCCard.Any) =>
+  ['card'].includes(card.kind) || card.tags?.includes('draftpartner');

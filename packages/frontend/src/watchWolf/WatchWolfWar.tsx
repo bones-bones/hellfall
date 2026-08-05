@@ -13,7 +13,7 @@ import { createStyledDiv } from '../styling/StyledElements.tsx';
 import { createStyles } from '@workday/canvas-kit-styling';
 
 export const WatchwolfWar = () => {
-  const cards = useAtomValue(cardsAtom).getAllInSetListExact(cardSetList);
+  const cards = useAtomValue(cardsAtom).getAllInSetListExactAsSubmap(cardSetList);
   const setActiveCardFromAtom = useSetAtom(activeCardAtom);
 
   const submitting = useRef(false);

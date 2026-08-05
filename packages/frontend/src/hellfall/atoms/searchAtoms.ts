@@ -39,10 +39,8 @@ export const queryPreferAtom = atom<preferType | undefined>(parsedQuery.prefer);
 
 export const pageAtom = atom(parseInt(searchParams.get('page') || '0') || 0);
 
-export const activeCardAtom = atom<string>(searchParams.get('activeCard') || '');
+export const activeCardAtom = atom<string>('');
 
 export const summaryAtom = atom<string>(parsedQuery.summary);
 
 export const invalidAtom = atom<[string, string][]>(parsedQuery.invalids);
-
-// export const shouldPushHistoryAtom = atom(true);
