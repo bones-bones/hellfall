@@ -1398,6 +1398,16 @@
       ]
     },
     {
+      "filename": "mono/effects/Crab.svg",
+      "symbol": "Crab",
+      "english": "one blue mana that can be turned into a Hedron Crab during the draft",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "U"
+      ]
+    },
+    {
       "filename": "mono/effects/Bear.svg",
       "symbol": "Bear",
       "english": "one bear mana (can be spent as mana or to create a 2/2 brown bear as a special action; can be paid for by sacrificing a bear or a 2/2 creature)",
@@ -3408,6 +3418,12 @@
       "filename": "symbols/additional/ReverseT.svg",
       "symbol": "ReverseT",
       "english": "tap this permanent, except the symbol's pointing left",
+      "represents_mana": false
+    },
+    {
+      "filename": "symbols/additional/Goblin.png",
+      "symbol": "Goblin",
+      "english": "one voucher slot",
       "represents_mana": false
     },
     {
