@@ -1,7 +1,7 @@
 import { faceType, HCCard, HCLayout, HCRelatedCard } from '@hellfall/shared/types';
 import { CockCardProps, CockFaceProps, CockPrintProps, CockRelatedProps } from './cockTypes';
 import { orderColors } from '../pipsAndColors';
-import { CardMap, LightCardMap, mergeHCCardFaces, printInvariant, toFaces } from '../cardHandling';
+import { LightCardMap, mergeHCCardFaces, printInvariant, toFaces } from '../cardHandling';
 import { listIncludesValueLower } from '../listHandling';
 import { toTitleCase } from '../textHandling';
 
