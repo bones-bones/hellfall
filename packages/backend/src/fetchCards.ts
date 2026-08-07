@@ -26,6 +26,7 @@ import {
   landInvariantMap,
   CardMap,
   fixSetCode,
+  getParentSetCode,
 } from '@hellfall/shared/utils';
 
 export const fetchCards = async (usingApproved: boolean = false) => {
@@ -229,7 +230,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 standard: formats.includes('Not Legal')
                   ? HCLegality.NotLegal
                   : formats.includes('Banned')
-                  ? card.set?.includes('HCV')
+                  ? (getParentSetCode(card.set) ?? card.set).startsWith('HCV')
                     ? HCLegality.NotLegal
                     : HCLegality.Banned
                   : // : formats.includes('Legal') ?
@@ -238,7 +239,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 '4cb': formats.includes('Not Legal (4CB)')
                   ? HCLegality.NotLegal
                   : formats.includes('Banned (4CB)')
-                  ? card.set?.includes('HCV')
+                  ? (getParentSetCode(card.set) ?? card.set).startsWith('HCV')
                     ? HCLegality.NotLegal
                     : HCLegality.Banned
                   : // : formats.includes('Legal (4CB)') ?
@@ -247,7 +248,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 commander: formats.includes('Not Legal (Commander)')
                   ? HCLegality.NotLegal
                   : formats.includes('Banned (Commander)')
-                  ? card.set?.includes('HCV')
+                  ? (getParentSetCode(card.set) ?? card.set).startsWith('HCV')
                     ? HCLegality.NotLegal
                     : HCLegality.Banned
                   : // : formats.includes('Legal (Commander)') ?
