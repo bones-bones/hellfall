@@ -106,6 +106,7 @@ export const ActiveCardPanel = ({ origin = 'right', maxWidth }: ActiveCardPanelP
       const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
       startXRef.current = clientX;
       startWidthRef.current = panelWidth;
+      document.body.style.cursor = cursorForm;
     },
     [panelWidth]
   );
@@ -121,9 +122,10 @@ export const ActiveCardPanel = ({ origin = 'right', maxWidth }: ActiveCardPanelP
         minPanelWidth,
         Math.min(maxPanelWidth, startWidthRef.current + deltaX)
       );
-      const newCusorForm = getDragCursor(newPanelWidth);
-      if (cursorForm != newCusorForm) {
-        setCursorForm(newCusorForm);
+      const newCursorForm = getDragCursor(newPanelWidth);
+      if (cursorForm != newCursorForm) {
+        setCursorForm(newCursorForm);
+        document.body.style.cursor = newCursorForm
       }
       if (newPanelWidth != panelWidth) {
         setPanelWidth(newPanelWidth);
@@ -133,6 +135,7 @@ export const ActiveCardPanel = ({ origin = 'right', maxWidth }: ActiveCardPanelP
   );
 
   const handleResizeEnd = useCallback(() => {
+    document.body.style.cursor = ''
     setIsDragging(false);
   }, []);
 
