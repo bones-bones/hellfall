@@ -174,10 +174,9 @@ export const Syntax = () => {
         </div>
         <h2>Logic/Conditions</h2>
         <div>
-          Instead of using <code>!</code> before a name to get the exact name, use <code>=</code>{' '}
-          instead. This will match all cards with that exact name (including flavor names and names
-          of faces). This also works for all other text components of cards, as well as for{' '}
-          <code>lore:</code>.
+          Although you can use <code>!</code> before a name to get the exact name, you can also use{' '}
+          <code>name=</code> instead. Using <code>=</code> also works for all other text components
+          of cards, as well as for <code>lore:</code>, which using <code>!</code> doesn't work for.
         </div>
         <br />
         <div>

@@ -238,9 +238,7 @@ export const HellfallCard = ({
                 <>
                   <MediumText>
                     Set:{' '}
-                    {`${displayCard.set == 'HCV_CDC' ? 'CDC' : displaySetCode(displayCard.set)} #${
-                      displayCard.collector_number
-                    }${
+                    {`${displaySetCode(displayCard.set)} #${displayCard.collector_number}${
                       displayCard.collector_number != displayCard.accepted_order
                         ? ` (AO: ${displayCard.accepted_order})`
                         : ''

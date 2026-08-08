@@ -349,7 +349,7 @@ const main = async () => {
   });
 
   for (const [code, nums] of collectorMap) {
-    if (/^HCV_[1-4]_[01]$/.test(code)) continue;
+    if (code.startsWith('HCV')) continue;
     const max = Math.max(...Array.from(nums));
     for (let i = 1; i < max; i++) {
       if (!nums.has(i)) {
@@ -359,7 +359,7 @@ const main = async () => {
   }
 
   for (const [code, nums] of acceptedMap) {
-    if (code.startsWith('HCV_1') || code.startsWith('HLC')) continue;
+    if (code.startsWith('HCV')) continue;
     const max = Math.max(...Array.from(nums));
     for (let i = 1; i < max; i++) {
       if (!nums.has(i)) {

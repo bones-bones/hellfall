@@ -324,6 +324,14 @@
       "parent_set_code": "HCV"
     },
     {
+      "id": "d3c98335-79b3-49fa-b172-87754efeb531",
+      "code": "HWN",
+      "name": "Halloween Event",
+      "description": "Cards from the Halloween event.",
+      "set_type": "veto",
+      "parent_set_code": "HCV"
+    },
+    {
       "id": "144c8845-673b-4273-90e3-b4c90d650e91",
       "code": "HCP",
       "name": "Hells Chase Posse",
@@ -391,8 +399,8 @@
     },
     {
       "id": "00947a38-70c6-4e5d-8f0d-a6f52b9c7015",
-      "code": "HCV_CDC",
-      "name": "Hellscube V(eto).CDC",
+      "code": "CDC",
+      "name": "Christmas Day Cards",
       "description": "Christmas Day seasonal cards.",
       "set_type": "veto",
       "parent_set_code": "HCV"
@@ -520,7 +528,7 @@
       },
       "set_type": "side",
       "child_set_codes": [
-        "HCV_L"
+        "HCV_HKL"
       ],
       "use_color_order": true,
       "filename": "hkl.svg",
@@ -528,7 +536,7 @@
     },
     {
       "id": "f5ca4bb5-7037-46c4-91d2-fff683bf7317",
-      "code": "HCV_L",
+      "code": "HCV_HKL",
       "name": "Hellscube V(eto).L",
       "description": "Cards vetoed or slotsed from HKL.",
       "set_type": "veto",
@@ -578,7 +586,7 @@
       "description": "Like real Secret Lairs, but better in every way.",
       "set_type": "lair",
       "child_set_codes": [
-        "HCV_S",
+        "HCV_SCL",
         "SCL_1",
         "SCL_2",
         "SCL_3",
@@ -613,7 +621,7 @@
     },
     {
       "id": "d43fde19-1d17-468a-b252-70629b93dd97",
-      "code": "HCV_S",
+      "code": "HCV_SCL",
       "name": "Hellscube V(eto).S",
       "description": "Cards from SCL that didn't make it into the top 5 but got enough upvotes.",
       "set_type": "veto",
@@ -626,13 +634,13 @@
       "description": "Hellmander Precons",
       "set_type": "side",
       "child_set_codes": [
-        "HCV_H"
+        "HCV_HDH"
       ],
       "filename": "hdh.svg"
     },
     {
       "id": "05a4c3b8-d4c0-43e4-a1db-f0a7cfb0bf92",
-      "code": "HCV_H",
+      "code": "HCV_HDH",
       "name": "Hellscube V(eto).H",
       "description": "Cards vetoed or slotsed from HDH.",
       "set_type": "veto",
@@ -661,13 +669,13 @@
       "description": "Desert cube",
       "set_type": "side",
       "child_set_codes": [
-        "HCV_D"
+        "HCV_SOH"
       ],
       "filename": "soh.svg"
     },
     {
       "id": "e4a504f7-14b0-49b4-a3ba-26d8d72213a4",
-      "code": "HCV_D",
+      "code": "HCV_SOH",
       "name": "Hellscube V(eto).D",
       "description": "Cards vetoed or slotsed from SOH.",
       "set_type": "veto",
@@ -685,17 +693,18 @@
         "HCV_3",
         "HCV_4",
         "HCV_6",
+        "HWN",
         "HCV_P",
         "HCV_7",
-        "HCV_CDC",
+        "CDC",
         "HCV_K",
         "HCV_8",
         "HCV_J",
-        "HCV_L",
+        "HCV_HKL",
         "HCV_9",
-        "HCV_S",
-        "HCV_H",
-        "HCV_D"
+        "HCV_SCL",
+        "HCV_HDH",
+        "HCV_SOH"
       ]
     },
     {

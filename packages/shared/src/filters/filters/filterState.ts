@@ -22,6 +22,7 @@ import {
   cardIsPermanent,
   cardIsHistoric,
   pipMap,
+  eventSetList,
 } from '@hellfall/shared/utils';
 import { regexListFilter } from './filterBase';
 
@@ -45,6 +46,7 @@ const stateList = [
   'partner',
   'masterpiece',
   'reprint',
+  'event',
   'rebalanced',
   'bounceland',
   'dual',
@@ -130,6 +132,7 @@ const stateResolutions: Record<
   manland: (value: HCCard.Any) => value.tags?.includes('manland'),
   masterpiece: (value: HCCard.Any) => value.tags?.includes('masterpiece'),
   reprint: (value: HCCard.Any) => value.tags?.includes('reprint'),
+  event: (value: HCCard.Any) => eventSetList.includes(value.set),
   rebalanced: (value: HCCard.Any) => value.tags?.includes('alchemy-rebalance'),
   bounceland: (value: HCCard.Any) => value.tags?.includes('bounceland'),
   dual: (value: HCCard.Any) => value.tags?.includes('og-dual'),
@@ -165,6 +168,7 @@ const stateSummaries: Record<stateType, (operator: opType) => string> = {
   partner: (operator: opType) => `the cards ${opToDont(operator)} have multi-commander mechanics`,
   masterpiece: (operator: opType) => `the cards are${opToNt(operator)} masterpieces`,
   reprint: (operator: opType) => `the cards are${opToNt(operator)} reprints`,
+  event: (operator: opType) => `the cards are${opToNt(operator)} from event sets`,
   rebalanced: (operator: opType) => `the cards are${opToNt(operator)} rebalanced Alchemy cards`,
   dual: (operator: opType) => `the cards are${opToNt(operator)} dual lands`,
   bounceland: (operator: opType) => `the cards are${opToNt(operator)} land-bouncing duals`,

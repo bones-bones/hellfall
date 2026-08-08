@@ -489,4 +489,6 @@ export const getRelatedsFromSet = (
  * @param card card to check
  */
 export const canBeInDecks = (card: HCCard.Any) =>
-  ['card'].includes(card.kind) || card.tags?.includes('draftpartner');
+  ['card'].includes(card.kind) ||
+  card.tags?.includes('draftpartner') ||
+  card.tags?.includes('can-be-in-decks');

@@ -99,5 +99,8 @@ export const parseFilter = (
   if (term) {
     return makeInvalidKeywordFilter(keyword, ':');
   }
+  if (text.startsWith('!') && text.length > 1) {
+    return correctOp(makeNameFilter(text.slice(1), '='));
+  }
   return correctOp(makeNameFilter(text, ':'));
 };

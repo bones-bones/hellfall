@@ -180,3 +180,5 @@ Write a script to transform the database
 - figure out why the split tokens aren't compressing
 - rework related cards/other prints display to look more like scryfall
 - incorporate map getters into filters
+- add prop for printed_artists; use `incorrect source` and `not on card` to distinguish them
+- for touhou, figure out how to drop all reminder faces except first one
