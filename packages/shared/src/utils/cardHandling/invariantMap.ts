@@ -115,8 +115,8 @@ const mergeInvariants = (oldInvariant: printInvariant, newInvariant: printInvari
     oldInvariant.token_makers = newInvariant.token_makers;
   } else if (newInvariant.token_makers?.length) {
     newInvariant.token_makers.forEach(part => {
-      if (!(part.id && oldInvariant.token_makers?.some(other=> other.id == part.id))) {
-        oldInvariant.token_makers?.push(part)
+      if (!(part.id && oldInvariant.token_makers?.some(other => other.id == part.id))) {
+        oldInvariant.token_makers?.push(part);
       }
     });
   }
@@ -124,8 +124,8 @@ const mergeInvariants = (oldInvariant: printInvariant, newInvariant: printInvari
     oldInvariant.meld_results = newInvariant.meld_results;
   } else if (newInvariant.meld_results?.length) {
     newInvariant.meld_results.forEach(part => {
-      if (!(part.id && oldInvariant.meld_results?.some(other=> other.id == part.id))) {
-        oldInvariant.meld_results?.push(part)
+      if (!(part.id && oldInvariant.meld_results?.some(other => other.id == part.id))) {
+        oldInvariant.meld_results?.push(part);
       }
     });
   }

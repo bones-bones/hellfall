@@ -48,7 +48,7 @@ export const cardSetList = sets
   .filter(set => ['main', 'side', 'veto', 'lair'].includes(set.set_type))
   .map(set => set.code);
 
-export const eventSetList:SetCode[] = ['CDC','HWN']
+export const eventSetList: SetCode[] = ['CDC', 'HWN'];
 
 /**
  * The list of all sets except normalcube
