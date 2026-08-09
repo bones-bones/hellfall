@@ -682,6 +682,14 @@
       "parent_set_code": "HCV"
     },
     {
+      "id": "f3913747-9c4a-4ef7-9346-57b34d75708c",
+      "code": "SCL_6",
+      "name": "Scube Lair Drop: Pro Tour: Hellscube 8",
+      "description": "Cards from nobroam's Pro Tour: Hellscube 8 winning decklist.",
+      "set_type": "lair",
+      "parent_set_code": "SCL"
+    },
+    {
       "id": "b65627ea-38e8-4b8a-85cf-7a1997f8322b",
       "code": "HCV",
       "name": "Hellscube V(eto)",
