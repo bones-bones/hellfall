@@ -21,9 +21,11 @@ import {
   exportHellscubeHandler,
   meHandler,
 } from './api';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { gzipSync } from 'node:zlib';
 import { loadCardsHandler } from './api/loadCards.ts';
-import { cardsData } from '@hellfall/shared/data';
-import { seedCatalogCache, warmCatalogCache } from './lib/catalogCache.ts';
+import { warmCatalogCache, seedCatalogCacheGzip } from './lib/catalogCache.ts';
 import { postcardHandler } from './api/postcard.ts';
 import { replaceImageHandler } from './api/replaceImage.ts';
 
@@ -210,7 +212,9 @@ createServer(async (incoming: IncomingMessage, res: ServerResponse) => {
     }
   }
 }).listen(PORT, () => {
-  seedCatalogCache(cardsData.data);
+  const dataDir = process.env.DATA_DIR?.trim() || join(process.cwd(), 'packages/shared/src/data');
+  const bundledPath = join(dataDir, 'Hellscube-Database.json');
+  seedCatalogCacheGzip(gzipSync(readFileSync(bundledPath, 'utf-8')));
   warmCatalogCache();
   console.log(`Server at http://localhost:${PORT}`);
 });

@@ -18,6 +18,21 @@ import { Heading } from '@workday/canvas-kit-react';
 
 type CatalogManifest = { version?: string; cardCount?: number };
 
+type CatalogSyncJobResponse = {
+  status?: string;
+  error?: string;
+  result?: {
+    cardCount?: number;
+    version?: string;
+    durationMs?: number;
+    gcs?: boolean;
+  };
+};
+
+const SYNC_POLL_INTERVAL_MS = 3000;
+const SYNC_RECOVERY_TIMEOUT_MS = 3 * 60 * 1000;
+const SYNC_RUN_TIMEOUT_MS = 15 * 60 * 1000;
+
 async function fetchCatalogManifest(): Promise<CatalogManifest | null> {
   const url = getCatalogManifestUrl();
   if (!url) return null;
@@ -30,12 +45,46 @@ async function fetchCatalogManifest(): Promise<CatalogManifest | null> {
   }
 }
 
-/** Poll GCS manifest until version changes (or timeout). Survives HTTP disconnects. */
+/** Poll job status when the long /run request drops. Works without GCS access. */
+async function waitForSyncJob(
+  baseUrl: string,
+  jobId: string,
+  onTick: (elapsedSec: number) => void,
+  timeoutMs = SYNC_RECOVERY_TIMEOUT_MS
+): Promise<CatalogSyncJobResponse['result'] | 'unknown' | null> {
+  const started = Date.now();
+  while (Date.now() - started < timeoutMs) {
+    onTick(Math.floor((Date.now() - started) / 1000));
+    try {
+      const res = await fetch(`${baseUrl}/api/admin/catalog/sync/${jobId}`, {
+        credentials: 'include',
+      });
+      if (res.status === 404) return 'unknown';
+      if (!res.ok) {
+        await new Promise(r => setTimeout(r, SYNC_POLL_INTERVAL_MS));
+        continue;
+      }
+      const job = (await res.json()) as CatalogSyncJobResponse;
+      if (job.status === 'completed') return job.result ?? {};
+      if (job.status === 'failed') {
+        throw new Error(job.error || 'Catalog sync failed on server');
+      }
+    } catch (e) {
+      if (e instanceof Error && e.message.includes('failed on server')) throw e;
+    }
+    await new Promise(r => setTimeout(r, SYNC_POLL_INTERVAL_MS));
+  }
+  return null;
+}
+
+/** Poll GCS manifest until version changes (or timeout). Secondary fallback only. */
 async function waitForManifestUpdate(
   previousVersion: string | undefined,
   onTick: (elapsedSec: number) => void,
-  timeoutMs = 10 * 60 * 1000
+  timeoutMs = SYNC_RECOVERY_TIMEOUT_MS
 ): Promise<CatalogManifest | null> {
+  if (!getCatalogManifestUrl()) return null;
+
   const started = Date.now();
   while (Date.now() - started < timeoutMs) {
     onTick(Math.floor((Date.now() - started) / 1000));
@@ -43,7 +92,7 @@ async function waitForManifestUpdate(
     if (manifest?.version && manifest.version !== previousVersion) {
       return manifest;
     }
-    await new Promise(r => setTimeout(r, 3000));
+    await new Promise(r => setTimeout(r, SYNC_POLL_INTERVAL_MS));
   }
   return null;
 }
@@ -201,6 +250,7 @@ export const ReviewPage = () => {
     }, 1000);
 
     const before = await fetchCatalogManifest();
+    let jobId: string | undefined;
 
     try {
       const acceptRes = await fetch(`${baseUrl}/api/admin/catalog/sync`, {
@@ -213,6 +263,7 @@ export const ReviewPage = () => {
       if (!acceptRes.ok || !accept.jobId) {
         throw new Error(accept.message || accept.reason || `${acceptRes.status}`);
       }
+      jobId = accept.jobId;
 
       setSyncMessage(`Sync accepted (${accept.jobId.slice(0, 8)}…). Publishing…`);
 
@@ -222,6 +273,7 @@ export const ReviewPage = () => {
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: '{}',
+        signal: AbortSignal.timeout(SYNC_RUN_TIMEOUT_MS),
       });
       const data = await runRes.json().catch(() => ({}));
       if (!runRes.ok) {
@@ -236,7 +288,32 @@ export const ReviewPage = () => {
       );
     } catch (e) {
       const msg = e instanceof Error ? e.message : 'Sync failed';
-      setSyncMessage(`Request ended (${msg}). Checking whether GCS catalog updated…`);
+      setSyncMessage(`Request ended (${msg}). Checking server job status…`);
+
+      let recovered: CatalogSyncJobResponse['result'] | 'unknown' | null = null;
+      if (jobId) {
+        try {
+          recovered = await waitForSyncJob(baseUrl, jobId, sec => setSyncElapsedSec(sec));
+        } catch (jobErr) {
+          const jobMsg = jobErr instanceof Error ? jobErr.message : 'Sync failed on server';
+          setSyncMessage(null);
+          setSyncError(`${msg}. ${jobMsg}`);
+          return;
+        }
+      }
+
+      if (recovered && recovered !== 'unknown') {
+        const gcsNote = recovered.gcs ? ` (GCS v${recovered.version})` : '';
+        setSyncError(null);
+        setSyncMessage(
+          `Synced ${recovered.cardCount?.toLocaleString() ?? '?'} cards in ${Math.round(
+            (recovered.durationMs ?? Date.now() - syncStarted) / 1000
+          )}s${gcsNote}. HTTP response was dropped, but publish succeeded.`
+        );
+        return;
+      }
+
+      setSyncMessage(`Job still running or status unknown. Checking GCS manifest…`);
       const updated = await waitForManifestUpdate(before?.version, sec => setSyncElapsedSec(sec));
       if (updated) {
         setSyncError(null);
@@ -248,7 +325,7 @@ export const ReviewPage = () => {
       } else {
         setSyncMessage(null);
         setSyncError(
-          `${msg}. GCS manifest did not change — sync likely failed (check Cloud Run logs).`
+          `${msg}. Server job and GCS manifest did not confirm success — check Cloud Run logs.`
         );
       }
     } finally {

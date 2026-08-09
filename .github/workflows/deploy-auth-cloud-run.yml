@@ -38,7 +38,7 @@ jobs:
 
       - name: Deploy auth server to Cloud Run
         run: |
-          # Longer request timeout only (no memory/CPU bump). Catalog sync is async:
+          # Longer request timeout only. Catalog sync is async:
           # POST /sync → 202, then POST /sync/:id/run holds the request while publishing.
           gcloud run deploy "$AUTH_CLOUD_RUN_SERVICE_NAME" \
             --source "$CLOUD_RUN_SOURCE_DIR" \

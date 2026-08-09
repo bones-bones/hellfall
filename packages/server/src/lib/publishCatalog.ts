@@ -1,8 +1,7 @@
-import { gzipSync } from 'node:zlib';
 import { env } from '../api/lib/env.ts';
-import { seedCatalogCacheBody } from './catalogCache.ts';
-import { isCatalogGcsConfigured, uploadCatalogToGcs } from './catalogGcs.ts';
-import { loadHellscubeCatalogCards } from '@hellfall/shared/utils/firestore';
+import { releaseCatalogCache, seedCatalogCacheGzip } from './catalogCache.ts';
+import { isCatalogGcsConfigured, uploadCatalogGzipToGcs } from './catalogGcs.ts';
+import { buildCatalogGzipFromFirestore } from './catalogStreamExport.ts';
 
 let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 let pendingPublish = false;
@@ -26,40 +25,41 @@ export async function publishCatalogSnapshot(): Promise<CatalogPublishResult> {
   const t0 = Date.now();
   console.log(`[catalog/publish] start ${heapMb()}`);
 
-  let data = await loadHellscubeCatalogCards({
-    databaseId: env.FIRESTORE_DATABASE_ID,
-    collectionName: env.FIRESTORE_CARDS_COLLECTION,
-  });
-  const cardCount = data.length;
-  console.log(`[catalog/publish] loaded cards=${cardCount} ${heapMb()}`);
+  releaseCatalogCache();
+  console.log(`[catalog/publish] cache released ${heapMb()}`);
 
-  const body = JSON.stringify({ data });
-  // Drop the card array so GC can reclaim it before gzip/upload (body holds the copy).
-  data = [];
-  const gzipBody = gzipSync(body);
-  seedCatalogCacheBody(body, gzipBody);
+  const { gzipBody, cardCount } = await buildCatalogGzipFromFirestore(
+    {
+      databaseId: env.FIRESTORE_DATABASE_ID,
+      collectionName: env.FIRESTORE_CARDS_COLLECTION,
+    },
+    count => console.log(`[catalog/publish] streaming cards=${count} ${heapMb()}`)
+  );
   console.log(
-    `[catalog/publish] serialized bytes=${body.length} gzip=${gzipBody.length} ${heapMb()}`
+    `[catalog/publish] serialized cards=${cardCount} gzip=${gzipBody.length} ${heapMb()}`
   );
 
   let version: string | undefined;
   const gcs = isCatalogGcsConfigured();
   if (gcs) {
-    const manifest = await uploadCatalogToGcs(body, cardCount, gzipBody);
+    const manifest = await uploadCatalogGzipToGcs(gzipBody, cardCount);
     version = manifest.version;
     console.log(
-      `[catalog/publish] gcs version=${manifest.version} cards=${manifest.cardCount} bytes=${body.length}`
+      `[catalog/publish] gcs version=${manifest.version} cards=${manifest.cardCount} gzip=${gzipBody.length}`
     );
   }
 
+  seedCatalogCacheGzip(gzipBody);
+  console.log(`[catalog/publish] cache seeded ${heapMb()}`);
+
   const durationMs = Date.now() - t0;
   console.log(
-    `[catalog/publish] complete cards=${cardCount} gcs=${gcs} total=${durationMs}ms bytes=${
-      body.length
+    `[catalog/publish] complete cards=${cardCount} gcs=${gcs} total=${durationMs}ms gzip=${
+      gzipBody.length
     } ${heapMb()}`
   );
 
-  return { cardCount, gcs, version, bytes: body.length, durationMs };
+  return { cardCount, gcs, version, bytes: gzipBody.length, durationMs };
 }
 
 async function flushCatalogPublish(): Promise<void> {
