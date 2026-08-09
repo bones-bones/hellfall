@@ -159,6 +159,20 @@ export const createStyledTableCell = (styles: string, displayName: string = 'Sty
   (Component as any).displayName = displayName;
   return Component;
 };
+export const createStenciledTableCell = <T extends React.ComponentProps<'td'>>(
+  stencil: Stencil<any>,
+  displayName: string = 'StenciledTableCell'
+) => {
+  const Component = ({ children, ...props }: T) => (
+    <Table.Cell
+      {...handleCsProp(props, (stencil as (props: Record<string, unknown>) => any)(props))}
+    >
+      {children}
+    </Table.Cell>
+  );
+  (Component as any).displayName = displayName;
+  return Component;
+};
 export const createStyledInput = (styles: string, displayName: string = 'StyledInput') => {
   const Component = ({ children, ...props }: React.ComponentProps<'input'>) => (
     <input {...handleCsProp(props, styles)}>{children}</input>

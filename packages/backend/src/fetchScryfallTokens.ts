@@ -59,7 +59,8 @@ export const fetchScryfallTokens = async () => {
         if (entry[i] && !skipKeys.includes(keys[i])) {
           if (keys[i] == 'token_maker') {
             token.all_parts = entry[i].split(';').map(oldName => {
-              const { name, hcid, code, count } = parseRelatedReferenceName(oldName);
+              const { name, hcid, code, collector_number, count } =
+                parseRelatedReferenceName(oldName);
               const maker: HCRelatedCard = {
                 object: HCObject.ObjectType.RelatedCard,
                 id: '',
@@ -67,6 +68,7 @@ export const fetchScryfallTokens = async () => {
                 hcid: hcid,
                 name: name,
                 set: code ?? ('' as SetCode),
+                collector_number: collector_number ?? '',
                 image: '',
                 type_line: '',
                 component: 'token_maker',

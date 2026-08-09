@@ -182,3 +182,4 @@ Write a script to transform the database
 - incorporate map getters into filters
 - add prop for printed_artists; use `incorrect source` and `not on card` to distinguish them
 - for touhou, figure out how to drop all reminder faces except first one
+- add dynamic width-based collapses (prints, related cards, control bar)

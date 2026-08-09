@@ -3,20 +3,11 @@ import { useKeyPress } from '../hooks';
 import { useAtom, useAtomValue } from 'jotai';
 import { activeCardAtom } from './atoms/searchAtoms';
 import { cardsAtom } from './atoms/cardsAtom';
-import {
-  Card,
-  ToolbarIconButton,
-  SidePanel,
-  useSidePanelModel,
-} from '@workday/canvas-kit-react';
+import { Card, ToolbarIconButton, SidePanel, useSidePanelModel } from '@workday/canvas-kit-react';
 import { externalLinkIcon, xIcon } from '@workday/canvas-system-icons-web';
 import { HellfallCard } from './card/HellfallCard';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
-import {
-  createStenciledButtonDiv,
-  createStyledDiv,
-  StenciledButtonDivProps,
-} from '../styling';
+import { createStenciledButtonDiv, createStyledDiv, StenciledButtonDivProps } from '../styling';
 
 type dragCursor = 'w-resize' | 'ew-resize' | 'e-resize';
 interface ActiveCardPanelProps {
@@ -125,7 +116,7 @@ export const ActiveCardPanel = ({ origin = 'right', maxWidth }: ActiveCardPanelP
       const newCursorForm = getDragCursor(newPanelWidth);
       if (cursorForm != newCursorForm) {
         setCursorForm(newCursorForm);
-        document.body.style.cursor = newCursorForm
+        document.body.style.cursor = newCursorForm;
       }
       if (newPanelWidth != panelWidth) {
         setPanelWidth(newPanelWidth);
@@ -135,7 +126,7 @@ export const ActiveCardPanel = ({ origin = 'right', maxWidth }: ActiveCardPanelP
   );
 
   const handleResizeEnd = useCallback(() => {
-    document.body.style.cursor = ''
+    document.body.style.cursor = '';
     setIsDragging(false);
   }, []);
 

@@ -258,7 +258,8 @@ export const fetchCards = async (usingApproved: boolean = false) => {
               addPropToRoot(card, 'legalities', legalities);
             } else if (keys[i] == 'related') {
               entry[i].split(';').forEach(oldName => {
-                const { name, hcid, count, code } = parseRelatedReferenceName(oldName);
+                const { name, hcid, code, collector_number, count } =
+                  parseRelatedReferenceName(oldName);
                 const maker: HCRelatedCard = {
                   object: HCObject.ObjectType.RelatedCard,
                   id: '',
@@ -266,6 +267,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                   hcid: hcid,
                   name: name,
                   set: code ?? ('' as SetCode),
+                  collector_number: collector_number ?? '',
                   image: '',
                   type_line: '',
                   component: 'token_maker',

@@ -32,6 +32,7 @@ import {
   landInvariantMap,
   tokenInvariantMap,
   textListIsContainedBy,
+  cardToRelatedCard,
 } from '@hellfall/shared/utils';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import { fetchHCJFronts } from './fetchHCJFronts.ts';
@@ -434,6 +435,15 @@ const main = async () => {
     }
   });
   invariantMap.applyAllInvariants(finalCards);
+  finalCards.forEach(entry => {
+    if (entry.all_parts) {
+      if (!entry.all_parts.length) {
+        delete entry.all_parts;
+      } else if (entry.all_parts.every(part => part.id != entry.id)) {
+        entry.all_parts.push(cardToRelatedCard(entry, 'self'));
+      }
+    }
+  });
 
   finalCards.forEach(entry => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {

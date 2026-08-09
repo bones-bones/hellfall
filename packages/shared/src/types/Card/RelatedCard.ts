@@ -7,6 +7,7 @@ export const relatedComponentList = [
   'token_maker',
   'meld_part',
   'meld_result',
+  'self',
   // 'combo_piece',
 ] as const;
 /**
@@ -48,6 +49,10 @@ export type HCRelatedCard = HCObject.Object<HCObject.ObjectType.RelatedCard> & {
    * A string with the set for this card.
    */
   set: SetCode;
+  /**
+   * A string with the collector number for this card.
+   */
+  collector_number: string;
   /**
    * A string with the image for this card.
    */

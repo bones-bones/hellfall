@@ -309,8 +309,8 @@ export const hardTokenIds: string[] = [
  */
 export const parseRelatedReferenceName = (
   oldName: string
-): { name: string; hcid: string; code?: SetCode; count?: string } => {
-  const { name: intName, code } = splitCardName(oldName);
+): { name: string; hcid: string; code?: SetCode; collector_number?: string; count?: string } => {
+  const { name: intName, code, collector_number } = splitCardName(oldName);
   const groups = intName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
   const match = groups?.groups?.name ?? intName;
   const count = groups?.groups?.count ?? ('' as SetCode);
@@ -323,5 +323,5 @@ export const parseRelatedReferenceName = (
       ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!));
   const name = shouldUseBase ? base : match;
   const hcid = shouldUseBase ? match : '';
-  return { name, hcid, code, count };
+  return { name, hcid, code, collector_number, count };
 };

@@ -1,4 +1,4 @@
-import { HellfallEntry } from '../hellfall/entry/HellfallEntry.tsx';
+import { GridEntry } from '../hellfall/display/GridEntry.tsx';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import { useRef, useState, useEffect } from 'react';
@@ -52,7 +52,7 @@ export const WatchwolfWar = () => {
         <Subtitle>Brought to you by goldcrackle, with odes of help from llllll.</Subtitle>
       </StyleComponent>
       <CardContainer>
-        <HellfallEntry
+        <GridEntry
           id={TwoCardState.LeftCard.hcid}
           name={TwoCardState.LeftCard.name}
           url={TwoCardState.LeftCard.image!}
@@ -74,7 +74,7 @@ export const WatchwolfWar = () => {
             }
           }}
         />
-        <HellfallEntry
+        <GridEntry
           id={TwoCardState.RightCard.hcid}
           name={TwoCardState.RightCard.name}
           url={TwoCardState.RightCard.image!}

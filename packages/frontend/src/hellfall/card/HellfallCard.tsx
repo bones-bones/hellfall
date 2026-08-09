@@ -116,7 +116,7 @@ export const HellfallCard = ({
   const windowRef = useRef<HTMLDivElement>(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const cards = useAtomValue(cardsAtom);
-  const otherPrints = cards.getAllPrints(data.oracle_id);
+  const allPrints = cards.getAllPrints(data.oracle_id);
 
   useEffect(() => {
     if (!windowRef.current) {
@@ -222,7 +222,7 @@ export const HellfallCard = ({
       <Container key={displayCard.id} editing={editing} sideBySide={sideBySide}>
         <PreviewSection sideBySide={sideBySide}>
           {imageSection}
-          <Card style={{ width: '100%' }}>
+          <Card cs={cardStyles}>
             <Card.Body cs={cardBodyStyles}>
               {/* {'card_faces' in displayCard && <StyledHeading size="large" style={{whiteSpace: 'pre-wrap'}}>{displayCard.name}</StyledHeading>} */}
               {toFaces(displayCard).map((face, i) => (
@@ -317,16 +317,16 @@ export const HellfallCard = ({
                     onEditStart={() => setEditingState(true)}
                   />
                   <TagSection displayCard={displayCard} tagControls={tagControls} />
-                  <RelatedCards
-                    relatedCards={displayCard.all_parts ?? []}
-                    sourceCardId={displayCard.id}
-                    otherPrints={otherPrints ?? []}
-                    onSinglePage={onSinglePage}
-                  />
                 </>
               )}
             </Card.Body>
           </Card>
+          <RelatedCards
+            relatedCards={displayCard.all_parts ?? []}
+            sourceCardId={displayCard.id}
+            allPrints={allPrints ?? []}
+            onSinglePage={onSinglePage}
+          />
           {!editing && (
             <ButtonGroup>
               <br />

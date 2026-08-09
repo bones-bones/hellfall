@@ -34,7 +34,8 @@ export const isRelatedCard = (value: any): value is HCRelatedCard => {
           return typeof value == 'string' && (isInteger(value) || value == 'x');
       }
       return (
-        ['id', 'oracle_id', 'hcid', 'name', 'type_line'].includes(prop) && typeof value == 'string'
+        ['id', 'oracle_id', 'hcid', 'name', 'collector_number', 'type_line'].includes(prop) &&
+        typeof value == 'string'
       );
     })
   ) {
@@ -48,6 +49,7 @@ export const isRelatedCard = (value: any): value is HCRelatedCard => {
     'image',
     'name',
     'set',
+    'collector_number',
     'type_line',
     'component',
   ].every(prop => part[prop as partPropType] != undefined);

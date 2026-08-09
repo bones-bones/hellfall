@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo, useRef } from 'react';
-import { HellfallEntry } from './entry/HellfallEntry.tsx';
+import { GridEntry } from './display/GridEntry.tsx';
 
 import { BoxProps, Card } from '@workday/canvas-kit-react';
 
@@ -25,7 +25,7 @@ import { HellfallCard } from './card/HellfallCard.tsx';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import { createStenciledDiv, createStyledDiv, createStyledHR } from '../styling';
 import { PaginationBar } from './search-controls/PaginationBar.tsx';
-import { Checklist } from './Checklist.tsx';
+import { Checklist } from './display/Checklist.tsx';
 import { CardFaceContainer } from './card/hellfall-card-components/CardFace.tsx';
 
 export const HellFall = () => {
@@ -160,7 +160,7 @@ export const HellFall = () => {
             <Container>
               <CardsGrid maxWidth={`${maxWidth}px`}>
                 {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
-                  <HellfallEntry
+                  <GridEntry
                     onClick={(event: React.MouseEvent<HTMLImageElement>) => {
                       if (event.button === 1 || event.metaKey || event.ctrlKey) {
                         window.open(`/card/${encodeURIComponent(entry.hcid)}`, '_blank');

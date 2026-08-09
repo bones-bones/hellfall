@@ -1,105 +1,187 @@
 import { HCCard, HCRelatedCard } from '@hellfall/shared/types';
-import { Divider, Separator } from '../visual-components/Divider';
-import { StyledHeadingLink } from '../visual-components/StyledHeading';
-import { HellfallRelatedEntry } from '../../entry/HellfallRelatedEntry';
-import { createStyles } from '@workday/canvas-kit-styling';
-import { createStyledDiv } from '../../../styling';
+import { createStencil, createStyles } from '@workday/canvas-kit-styling';
+import {
+  createStenciledTableCell,
+  createStyledLink,
+  createStyledTable,
+  createStyledTableBody,
+  createStyledTableHead,
+  createStyledTableHeader,
+  createStyledTableRow,
+} from '../../../styling';
+import { system } from '@workday/canvas-tokens-web';
+import { useCallback } from 'react';
+import { getCollectorOrderSet, getSet } from '@hellfall/shared/utils';
 
 export const RelatedCards = ({
   relatedCards,
   sourceCardId,
   onSinglePage,
-  otherPrints,
+  allPrints,
 }: {
   relatedCards: HCRelatedCard[];
   sourceCardId: string;
   onSinglePage?: boolean;
-  otherPrints: HCCard.Any[];
+  allPrints: HCCard.Any[];
 }) => {
-  if (!relatedCards.length && otherPrints.every(print => print.id == sourceCardId)) {
+  const getDisplayName = useCallback(
+    (entry: HCRelatedCard | HCCard.Any): string => {
+      const setToUse = getCollectorOrderSet(entry.set);
+      if (entry.object == 'related_card') {
+        return `${entry.name}${
+          getSet(entry.set)?.set_type == 'token' &&
+          entry.type_line.toLowerCase().startsWith('Token')
+            ? ' Token'
+            : ''
+        }, ${setToUse} #${entry.collector_number}`;
+      } else {
+        const shouldUseNum = allPrints.some(
+          print => print.id != entry.id && getCollectorOrderSet(print.set) == setToUse
+        );
+        return `${getSet(setToUse)?.name!}${shouldUseNum ? ` #${entry.collector_number}` : ''}`;
+      }
+    },
+    [relatedCards, allPrints, sourceCardId]
+  );
+
+  if (!relatedCards.length && allPrints.every(print => print.id == sourceCardId)) {
     return null;
   }
   return (
     <>
-      <Divider />
-      <div>
-        {relatedCards.length > 0 && (
-          <>
-            <StyledHeadingLink
-              size="small"
-              to={`/?q=${encodeURIComponent(
-                `~oracleid:${otherPrints[0].oracle_id} include:extras`
-              )}`}
-            >
-              Related Cards & Tokens
-            </StyledHeadingLink>
-            <RelatedGrid>
-              {relatedCards
-                .filter(e => e.id != sourceCardId)
-                .map((entry, i) => (
-                  <HellfallRelatedEntry
-                    onClick={(event: React.MouseEvent<HTMLImageElement>) => {
-                      if (event.button === 1 || event.metaKey || event.ctrlKey || !onSinglePage) {
+      {relatedCards.length > 0 && (
+        <RelatedGrid>
+          <RelatedHead>
+            <RelatedRow>
+              <RelatedHeader>
+                <HeaderLink
+                  to={`/?q=${encodeURIComponent(
+                    `~oracleid:${allPrints[0].oracle_id} include:extras`
+                  )}`}
+                >
+                  Related Cards & Tokens
+                </HeaderLink>
+              </RelatedHeader>
+            </RelatedRow>
+          </RelatedHead>
+          <RelatedBody>
+            {relatedCards.map(entry => (
+              <RelatedRow key={entry.id}>
+                <NameCell isSourceCard={entry.id == sourceCardId}>
+                  <CellLink
+                    onClick={e => {
+                      if (onSinglePage) {
+                        e.preventDefault();
                         window.open(`/card/${encodeURIComponent(entry.hcid)}`, '_blank');
-                      } else {
-                        window.location.href = `/card/${encodeURIComponent(entry.hcid)}`;
                       }
                     }}
-                    key={entry.id}
-                    id={entry.hcid}
-                    name={entry.name}
-                    url={entry.image!}
-                  />
-                ))}
-            </RelatedGrid>
-          </>
-        )}
-        {relatedCards.length > 0 && otherPrints.some(card => card.id != sourceCardId) && (
-          <Separator />
-        )}
-        {otherPrints.some(card => card.id != sourceCardId) && (
-          <>
-            <StyledHeadingLink
-              size="small"
-              to={`/?q=${encodeURIComponent(
-                `oracleid:${otherPrints[0].oracle_id} include:extras`
-              )}`}
-            >
-              Other Prints
-            </StyledHeadingLink>
-            <RelatedGrid>
-              {otherPrints
-                .filter(e => e.id != sourceCardId)
-                .map((entry, i) => (
-                  <HellfallRelatedEntry
-                    onClick={(event: React.MouseEvent<HTMLImageElement>) => {
-                      if (event.button === 1 || event.metaKey || event.ctrlKey || !onSinglePage) {
-                        window.open(`/card/${encodeURIComponent(entry.hcid)}`, '_blank');
-                      } else {
-                        window.location.href = `/card/${encodeURIComponent(entry.hcid)}`;
-                      }
-                    }}
-                    key={entry.id}
-                    id={entry.hcid}
-                    name={entry.name}
-                    url={entry.image!}
-                  />
-                ))}
-            </RelatedGrid>
-          </>
-        )}
-      </div>
+                    to={`/card/${encodeURIComponent(entry.hcid)}`}
+                  >
+                    {getDisplayName(entry)}
+                  </CellLink>
+                </NameCell>
+              </RelatedRow>
+            ))}
+          </RelatedBody>
+        </RelatedGrid>
+      )}
+      <RelatedGrid>
+        <RelatedHead>
+          <RelatedRow>
+            <RelatedHeader>
+              <HeaderLink
+                to={`/?q=${encodeURIComponent(
+                  `oracleid:${allPrints[0].oracle_id} include:extras unique:prints`
+                )}`}
+              >
+                Prints
+              </HeaderLink>
+            </RelatedHeader>
+          </RelatedRow>
+        </RelatedHead>
+        <RelatedBody>
+          {allPrints.map(entry => (
+            <RelatedRow key={entry.id}>
+              <NameCell isSourceCard={entry.id == sourceCardId}>
+                <CellLink
+                  onClick={e => {
+                    if (onSinglePage) {
+                      e.preventDefault();
+                      window.open(`/card/${encodeURIComponent(entry.hcid)}`, '_blank');
+                    }
+                  }}
+                  to={`/card/${encodeURIComponent(entry.hcid)}`}
+                >
+                  {getDisplayName(entry)}
+                </CellLink>
+              </NameCell>
+            </RelatedRow>
+          ))}
+        </RelatedBody>
+      </RelatedGrid>
     </>
   );
 };
 
 const relatedGridStyles = createStyles({
-  display: 'flex',
-  flexWrap: 'wrap',
-  justifyContent: 'center',
-  alignItems: 'center',
+  tableLayout: 'fixed',
   width: '100%',
-  gap: '0px',
-  margin: '0 auto',
+  borderRadius: '4px',
+  borderBottom: '3px solid black',
+  marginTop: '8px',
 });
-const RelatedGrid = createStyledDiv(relatedGridStyles, 'RelatedGrid');
+const RelatedGrid = createStyledTable(relatedGridStyles, 'RelatedGrid');
+const relatedHeadStyles = createStyles({
+  // backgroundColor: system.color.accent.contrast
+  minHeight: '31px',
+});
+const RelatedHead = createStyledTableHead(relatedHeadStyles, 'RelatedHead');
+const relatedHeaderStyles = createStyles({
+  minHeight: 'inherit',
+  padding: '0 10px',
+  backgroundColor: system.color.accent.contrast,
+});
+const RelatedHeader = createStyledTableHeader(relatedHeaderStyles, 'RelatedHeader');
+const headerLinkStyles = createStyles({
+  color: '#FFFFFF',
+  textTransform: 'uppercase',
+  fontSize: '14px',
+  textDecoration: 'none',
+});
+const HeaderLink = createStyledLink(headerLinkStyles, 'HeaderLink');
+const relatedRowStyles = createStyles({
+  gridTemplateColumns: '1fr',
+});
+const RelatedRow = createStyledTableRow(relatedRowStyles, 'RelatedRow');
+const relatedBodyStyles = createStyles({});
+const RelatedBody = createStyledTableBody(relatedBodyStyles, 'RelatedBody');
+const nameCellStencil = createStencil({
+  vars: {},
+  base: {
+    backgroundColor: 'inherit',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    minHeight: '30px',
+    maxHeight: '30px',
+    padding: '5px 6px 5px 6px',
+    display: 'block',
+    whiteSpace: 'nowrap',
+    ':hover': { backgroundColor: system.color.brand.surface.primary.strong },
+  },
+  modifiers: {
+    isSourceCard: {
+      true: {
+        backgroundColor: system.color.brand.surface.primary.strong,
+      },
+    },
+  },
+});
+type NameCellProps = React.ComponentProps<'td'> & { isSourceCard: boolean };
+const NameCell = createStenciledTableCell<NameCellProps>(nameCellStencil, 'NameCell');
+const cellLinkStyles = createStyles({
+  fontWeight: 600,
+  color: 'black',
+  textDecoration: 'none',
+  ':visited': { color: '#444' },
+});
+const CellLink = createStyledLink(cellLinkStyles, 'CellLink');

@@ -313,7 +313,8 @@
       "code": "HCC",
       "name": "HC Constructed",
       "description": "Commanders cut from HC6 due to slots.",
-      "set_type": "side"
+      "set_type": "side",
+      "filename": "hcc.svg"
     },
     {
       "id": "e38f8294-0f9b-4ce9-bdb3-2d67db56e317",
@@ -713,7 +714,8 @@
         "HCV_SCL",
         "HCV_HDH",
         "HCV_SOH"
-      ]
+      ],
+      "filename": ""
     },
     {
       "id": "533707e0-22f6-4889-8ef8-9b2e9a753e72",

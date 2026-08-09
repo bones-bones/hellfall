@@ -163,6 +163,7 @@ const partPropRecord = {
   hcid: 'hcid',
   name: 'name',
   set: 'set',
+  collector_number: 'collector_number',
   image: 'image',
   type_line: 'type_line',
   component: 'component',
