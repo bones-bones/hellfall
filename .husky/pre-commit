@@ -5,4 +5,6 @@
 export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
 
 yarn pretty
+yarn lint
 git add -u
+yarn typecheck
