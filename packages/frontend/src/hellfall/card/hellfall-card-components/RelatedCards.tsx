@@ -23,7 +23,7 @@ const nameCellStencil = createStencil({
     textOverflow: 'ellipsis',
     minHeight: '30px',
     maxHeight: '30px',
-    padding: '5px 6px 5px 6px',
+    padding: '5px 10px',
     display: 'block',
     whiteSpace: 'nowrap',
     ':hover': { backgroundColor: system.color.brand.surface.primary.strong },
@@ -39,7 +39,6 @@ const nameCellStencil = createStencil({
 type NameCellProps = React.ComponentProps<'td'> & { isSourceCard: boolean };
 const NameCell = createStenciledTableCell<NameCellProps>(nameCellStencil, 'NameCell');
 const cellLinkStyles = createStyles({
-  fontWeight: 600,
   color: 'black',
   textDecoration: 'none',
   ':visited': { color: '#444' },
@@ -186,19 +185,14 @@ export const RelatedCards = ({
         <RelatedBody>
           {allPrints.map(entry => (
             <RelatedRow key={entry.id}>
-              <NameCell isSourceCard={entry.id == sourceCardId}>
-                <CellLink
-                  onClick={e => {
-                    if (onSinglePage) {
-                      e.preventDefault();
-                      window.open(`/card/${encodeURIComponent(entry.hcid)}`, '_blank');
-                    }
-                  }}
-                  to={`/card/${encodeURIComponent(entry.hcid)}`}
-                >
-                  {getDisplayName(entry)}
-                </CellLink>
-              </NameCell>
+              <CardCell
+                name={getDisplayName(entry)}
+                entry={entry}
+                isSourceCard={entry.id == sourceCardId}
+                onSinglePage={onSinglePage}
+                handleMouseMove={handleMouseMove}
+                handleMouseExit={handleMouseExit}
+              />
             </RelatedRow>
           ))}
         </RelatedBody>

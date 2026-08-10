@@ -368,7 +368,8 @@ export const Syntax = () => {
           <code>unique:</code>, <code>display:</code>, and <code>prefer:</code> are implemented now,
           but they're a bit basic for now. <code>prefer:</code> currently only takes{' '}
           <code>oldest</code> and <code>newest</code>, while <code>unique:</code> can't do unique
-          arts yet, and <code>display:full</code> is not that good right now.
+          arts yet, and <code>display:full</code> is ok, but could be improved, especially on
+          desktop.
         </div>
         <br />
         <div>
