@@ -212,7 +212,7 @@ export const addToJSONToCard = (card: HCCard.Any): HCCard.Any => {
   }
   const ignoreLeftovers = ['toJSON'];
   Object.defineProperty(card, 'toJSON', {
-    value: function (this: Record<string, any>) {
+    value(this: Record<string, any>) {
       const ordered: Record<string, any> = {};
       anyPropOrder.forEach(prop => {
         if (prop in this) {

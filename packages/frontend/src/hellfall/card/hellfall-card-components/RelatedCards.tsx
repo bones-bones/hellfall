@@ -10,8 +10,76 @@ import {
   createStyledTableRow,
 } from '../../../styling';
 import { system } from '@workday/canvas-tokens-web';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { getCollectorOrderSet, getSet } from '@hellfall/shared/utils';
+import { useAtom } from 'jotai';
+import { mouseXAtom, mouseYAtom, tooltipSrcAtom } from '../../atoms/tooltipAtom';
+
+const nameCellStencil = createStencil({
+  vars: {},
+  base: {
+    backgroundColor: 'inherit',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    minHeight: '30px',
+    maxHeight: '30px',
+    padding: '5px 6px 5px 6px',
+    display: 'block',
+    whiteSpace: 'nowrap',
+    ':hover': { backgroundColor: system.color.brand.surface.primary.strong },
+  },
+  modifiers: {
+    isSourceCard: {
+      true: {
+        backgroundColor: system.color.brand.surface.primary.strong,
+      },
+    },
+  },
+});
+type NameCellProps = React.ComponentProps<'td'> & { isSourceCard: boolean };
+const NameCell = createStenciledTableCell<NameCellProps>(nameCellStencil, 'NameCell');
+const cellLinkStyles = createStyles({
+  fontWeight: 600,
+  color: 'black',
+  textDecoration: 'none',
+  ':visited': { color: '#444' },
+});
+const CellLink = createStyledLink(cellLinkStyles, 'CellLink');
+const CardCell = ({
+  name,
+  entry,
+  isSourceCard,
+  onSinglePage,
+  handleMouseMove,
+  handleMouseExit,
+}: {
+  name: string;
+  entry: HCCard.Any | HCRelatedCard;
+  isSourceCard: boolean;
+  onSinglePage?: boolean;
+  handleMouseMove: (e: React.MouseEvent<any, MouseEvent>, src: string) => void;
+  handleMouseExit: (src: string) => void;
+}) => {
+  return (
+    <NameCell
+      isSourceCard={isSourceCard}
+      onMouseMove={e => handleMouseMove(e, entry.image ?? '')}
+      onMouseLeave={() => handleMouseExit(entry.image ?? '')}
+    >
+      <CellLink
+        onClick={e => {
+          if (onSinglePage) {
+            e.preventDefault();
+            window.open(`/card/${encodeURIComponent(entry.hcid)}`, '_blank');
+          }
+        }}
+        to={`/card/${encodeURIComponent(entry.hcid)}`}
+      >
+        {name}
+      </CellLink>
+    </NameCell>
+  );
+};
 
 export const RelatedCards = ({
   relatedCards,
@@ -43,6 +111,27 @@ export const RelatedCards = ({
     },
     [relatedCards, allPrints, sourceCardId]
   );
+  const [tooltipSrc, setTooltipSrc] = useAtom(tooltipSrcAtom);
+  const [mouseX, setMouseX] = useAtom(mouseXAtom);
+  const [mouseY, setMouseY] = useAtom(mouseYAtom);
+  const handleMouseMove = (e: React.MouseEvent<any, MouseEvent>, src: string) => {
+    const newMouseX = e.clientX;
+    if (newMouseX != mouseX) {
+      setMouseX(newMouseX);
+    }
+    const newMouseY = e.clientY;
+    if (newMouseY != mouseY) {
+      setMouseY(newMouseY);
+    }
+    if (src != tooltipSrc && !tooltipSrc) {
+      setTooltipSrc(src);
+    }
+  };
+  const handleMouseExit = (src: string) => {
+    if (tooltipSrc == src) {
+      setTooltipSrc(undefined);
+    }
+  };
 
   if (!relatedCards.length && allPrints.every(print => print.id == sourceCardId)) {
     return null;
@@ -67,19 +156,14 @@ export const RelatedCards = ({
           <RelatedBody>
             {relatedCards.map(entry => (
               <RelatedRow key={entry.id}>
-                <NameCell isSourceCard={entry.id == sourceCardId}>
-                  <CellLink
-                    onClick={e => {
-                      if (onSinglePage) {
-                        e.preventDefault();
-                        window.open(`/card/${encodeURIComponent(entry.hcid)}`, '_blank');
-                      }
-                    }}
-                    to={`/card/${encodeURIComponent(entry.hcid)}`}
-                  >
-                    {getDisplayName(entry)}
-                  </CellLink>
-                </NameCell>
+                <CardCell
+                  name={getDisplayName(entry)}
+                  entry={entry}
+                  isSourceCard={entry.id == sourceCardId}
+                  onSinglePage={onSinglePage}
+                  handleMouseMove={handleMouseMove}
+                  handleMouseExit={handleMouseExit}
+                />
               </RelatedRow>
             ))}
           </RelatedBody>
@@ -155,33 +239,3 @@ const relatedRowStyles = createStyles({
 const RelatedRow = createStyledTableRow(relatedRowStyles, 'RelatedRow');
 const relatedBodyStyles = createStyles({});
 const RelatedBody = createStyledTableBody(relatedBodyStyles, 'RelatedBody');
-const nameCellStencil = createStencil({
-  vars: {},
-  base: {
-    backgroundColor: 'inherit',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    minHeight: '30px',
-    maxHeight: '30px',
-    padding: '5px 6px 5px 6px',
-    display: 'block',
-    whiteSpace: 'nowrap',
-    ':hover': { backgroundColor: system.color.brand.surface.primary.strong },
-  },
-  modifiers: {
-    isSourceCard: {
-      true: {
-        backgroundColor: system.color.brand.surface.primary.strong,
-      },
-    },
-  },
-});
-type NameCellProps = React.ComponentProps<'td'> & { isSourceCard: boolean };
-const NameCell = createStenciledTableCell<NameCellProps>(nameCellStencil, 'NameCell');
-const cellLinkStyles = createStyles({
-  fontWeight: 600,
-  color: 'black',
-  textDecoration: 'none',
-  ':visited': { color: '#444' },
-});
-const CellLink = createStyledLink(cellLinkStyles, 'CellLink');

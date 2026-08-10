@@ -269,7 +269,7 @@ const dragBarStencil = createStencil({
   base: ({ cursor }) => ({
     width: `${dragField * 2}px`,
     height: '100%',
-    cursor: cursor,
+    cursor,
     position: 'absolute',
     border: 0,
     opacity: 0,

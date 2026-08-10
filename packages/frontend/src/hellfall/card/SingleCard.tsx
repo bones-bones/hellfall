@@ -10,6 +10,7 @@ import { invalidAtom, queryAtom, summaryAtom } from '../atoms/searchAtoms.ts';
 import { SearchBar } from '../search-controls/SearchBar.tsx';
 import { createStyles } from '@workday/canvas-kit-styling';
 import { createStyledDiv, createStyledHR } from '../../styling';
+import { Tooltip } from '../Tooltip.tsx';
 
 export const SingleCard = () => {
   const cards = useAtomValue(cardsAtom);
@@ -39,6 +40,7 @@ export const SingleCard = () => {
         <h2>Nothing was found...</h2>
       ) : (
         <div style={{ display: 'block', justifyContent: 'center' }}>
+          <Tooltip />
           <br />
           <SearchBar />
           <Separator />

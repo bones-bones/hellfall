@@ -27,6 +27,7 @@ import { createStenciledDiv, createStyledDiv, createStyledHR } from '../styling'
 import { PaginationBar } from './search-controls/PaginationBar.tsx';
 import { Checklist } from './display/Checklist.tsx';
 import { CardFaceContainer } from './card/hellfall-card-components/CardFace.tsx';
+import { Tooltip } from './Tooltip.tsx';
 
 export const HellFall = () => {
   const summary = useAtomValue(summaryAtom);
@@ -75,6 +76,7 @@ export const HellFall = () => {
 
   return (
     <div>
+      <Tooltip renderToLeft={display == 'grid'} />
       <ActiveCardPanel />
       <br />
       <SearchBar alreadyOnSearch={true} />
@@ -234,7 +236,7 @@ const cardsGridStencil = createStencil({
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
-    maxWidth: maxWidth, // Maximum row width: 5 cards at average width (243px * 5 = 1215px)
+    maxWidth, // Maximum row width: 5 cards at average width (243px * 5 = 1215px)
     width: '100%',
     gap: '0px',
     margin: '0 auto',

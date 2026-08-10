@@ -11,6 +11,7 @@ import { cardSetList, toPlainText } from '@hellfall/shared/utils';
 import { PageContainer, StyleComponent, Subtitle, Title } from './Components.tsx';
 import { createStyledDiv } from '../styling/StyledElements.tsx';
 import { createStyles } from '@workday/canvas-kit-styling';
+import { Tooltip } from '../hellfall/Tooltip.tsx';
 
 export const WatchwolfWar = () => {
   const cards = useAtomValue(cardsAtom).getAllInSetListExactAsSubmap(cardSetList);
@@ -42,6 +43,7 @@ export const WatchwolfWar = () => {
   return (
     <PageContainer>
       <title>WatchWolfWar | Hellfall</title>
+      <Tooltip renderToLeft={origin == 'right'} />
       <ActiveCardPanel origin={origin} />
       <StyleComponent>
         <Title>

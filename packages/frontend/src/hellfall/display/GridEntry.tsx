@@ -189,12 +189,6 @@ const imageStencil = createStencil({
     cursor: 'pointer',
   },
   modifiers: {
-    isRelated: {
-      true: {
-        maxHeight: '450px',
-        maxWidth: '320px',
-      },
-    },
     hideImage: {
       true: {
         visibility: 'hidden',
@@ -207,7 +201,6 @@ const imageStencil = createStencil({
   },
 });
 interface ImageProps extends React.ComponentPropsWithoutRef<'img'> {
-  isRelated?: boolean;
   hideImage?: boolean;
 }
 const StyledImage = createStenciledImg<ImageProps>(imageStencil, 'StyledImage');

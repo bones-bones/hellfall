@@ -8,7 +8,6 @@ module.exports = {
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
-    'prettier',
   ],
   globals: {
     Atomics: 'readonly',
@@ -34,6 +33,7 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 0,
     '@typescript-eslint/no-non-null-assertion': 0,
     '@typescript-eslint/no-non-null-asserted-optional-chain': 0, // Look i know what i'm doing, honest
+    'object-shorthand': 'warn',
     // 'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/ban-ts-comment': [
       'error',
