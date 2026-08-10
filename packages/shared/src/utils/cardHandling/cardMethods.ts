@@ -434,11 +434,14 @@ export const getRelatedsFromCards = (
   const cards: HCCard.Any[] = cardMap.getMultiple(idList);
   const idSet: Set<string> = idList instanceof Set ? idList : new Set(idList);
   const tokenIds = new Set<string>();
+  const partIsValid = (part: HCRelatedCard) => {
+    if (part.component == 'token_maker') return;
+    if (part.component == 'self') return;
+    return !idSet?.has(part.id);
+  };
   for (const card of cards) {
     if (!card.all_parts) continue;
-    card.all_parts
-      .filter(part => part.component != 'token_maker' && !idSet.has(part.id))
-      .forEach(part => tokenIds.add(part.id));
+    card.all_parts.filter(partIsValid).forEach(part => tokenIds.add(part.id));
   }
   const tokens = cardMap.getMultiple(tokenIds);
   return { cards, tokens };
@@ -465,6 +468,7 @@ export const getRelatedsFromSet = (
   const tokenIds = new Set<string>();
   const partIsValid = (part: HCRelatedCard) => {
     if (part.component == 'token_maker') return;
+    if (part.component == 'self') return;
     if (shouldUseFronts && part.set == 'FHCJ') return;
     return !idSet?.has(part.id);
   };

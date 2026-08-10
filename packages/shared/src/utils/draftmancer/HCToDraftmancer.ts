@@ -80,7 +80,9 @@ export const HCToDraftmancer = (
   };
 
   const getRelatedList = (card: HCCard.Any): string[] | undefined => {
-    const relatedList = card.all_parts?.flatMap(part => getExportNameFromId(part.id) ?? []);
+    const relatedList = card.all_parts?.flatMap(part =>
+      part.component == 'self' ? [] : getExportNameFromId(part.id) ?? []
+    );
     if (relatedList && relatedList.length) {
       return relatedList;
     }
