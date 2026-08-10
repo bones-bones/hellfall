@@ -133,7 +133,7 @@ const stateResolutions: Record<
     ),
   manland: (value: HCCard.Any) => value.tags?.includes('manland'),
   masterpiece: (value: HCCard.Any) => value.tags?.includes('masterpiece'),
-  reprint: (value: HCCard.Any) => value.tags?.includes('reprint'),
+  reprint: (value: HCCard.Any) => value.tags?.includes('reprint') || value.tags?.includes('masterpiece'),
   event: (value: HCCard.Any) => eventSetList.includes(value.set),
   rebalanced: (value: HCCard.Any) => value.tags?.includes('alchemy-rebalance'),
   bounceland: (value: HCCard.Any) => value.tags?.includes('bounceland'),

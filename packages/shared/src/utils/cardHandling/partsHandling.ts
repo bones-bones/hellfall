@@ -4,6 +4,16 @@ import { pushProp } from '../listHandling';
 import { CardMap } from './cardMap';
 import { toFaces } from './cardMethods';
 
+const hcjAOToCN: Record<string, number> = {
+  1: 196,
+  2: 260,
+  3: 132,
+
+};
+
+// repurpose draftmancer export code to get ordered names, sets, cns, and counts
+
+
 /**
  * Checks whether a card has any related card with a given component
  * @param card card to check

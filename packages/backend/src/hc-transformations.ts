@@ -249,6 +249,7 @@ const ignoreDuplicateOrders: Partial<Record<SetCode, string[]>> = {
   HC2_1: ['114b', '114c', '114d', '114e', '138b', '114f', '217b', '217c', '217d', '217e'],
   HC3_1: ['248b', '346b', '346c', '346d'],
   HC6_0: ['10b'],
+  HCJ: ['15b', '444b','444c'],
   HC8_0: ['292b', '292c'],
   HC8_1: ['31b'],
   HC9_0: ['137b', '324b'],
@@ -299,11 +300,15 @@ const main = async () => {
   const usernameMappings = await fetchUsernameMappings();
   const newTokens = await fetchTokens(NO_SCRYFALL);
   newTokens.setMultiple(fetchHCJFronts());
-  // newTokens.setMultiple(await fetchNotMagic());
+
+  console.log('Running in update mode - merging with existing data...');
+  const { existingCards, existingTokens } = loadExistingData();
+  const merged = mergeDatabases(existingCards, newCards, existingTokens, newTokens);
+  const finalCards = new CardMap(addToJSONToCards(merged));
   const nameSort = makeSort('name', 'asc');
   const colorSort = makeSort('color', 'asc', true);
   colorOrderSetList.forEach(set =>
-    newCards
+    finalCards
       .getAllInSetDirect(set)
       .sort(nameSort.filter)
       .sort(colorSort.filter)
@@ -313,12 +318,12 @@ const main = async () => {
   );
 
   const collectorMap = new Map<SetCode, Set<number>>(
-    newCards.sets().map(code => [getCollectorOrderSet(code), new Set<number>()])
+    finalCards.sets().map(code => [getCollectorOrderSet(code), new Set<number>()])
   );
   const acceptedMap = new Map<SetCode, Set<number>>(
-    newCards.sets().map(code => [getAcceptedOrderSet(code), new Set<number>()])
+    finalCards.sets().map(code => [getAcceptedOrderSet(code), new Set<number>()])
   );
-  newCards.forEach(card => {
+  finalCards.forEach(card => {
     const cn = parseInt(card.collector_number);
     const ao = parseInt(card.accepted_order);
     const cSet = collectorMap.get(getCollectorOrderSet(card.set));
@@ -367,12 +372,7 @@ const main = async () => {
         console.log(`Set ${getAcceptedOrderSet(code)} has a missing accepted number at ${i}`);
       }
     }
-  }
-
-  console.log('Running in update mode - merging with existing data...');
-  const { existingCards, existingTokens } = loadExistingData();
-  const merged = mergeDatabases(existingCards, newCards, existingTokens, newTokens);
-  const finalCards = new CardMap(addToJSONToCards(merged));
+  } 
   finalCards.forEach(card => {
     if (card.all_parts) {
       if (card.layout == 'front') {
