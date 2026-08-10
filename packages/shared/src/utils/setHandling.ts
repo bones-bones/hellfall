@@ -102,14 +102,23 @@ export const getParentSet = (code: SetCode): HCSet | undefined =>
  * @param code Set code to get the children of
  */
 export const getChildSets = (code: SetCode): SetCode[] | undefined =>
-  wrapArray(getSet(code)?.child_set_codes);
+  getSet(code)?.child_set_codes?.flatMap(child =>
+    getSet(child)?.child_set_codes ? [child, ...(getChildSets(child) ?? [])] : child
+  );
 
 /**
  * Gets the sets that are the direct children of another set (i.e. are its children and have the same set type)
  * @param code Set code to get the direct children of
  */
 export const getDirectChildSets = (code: SetCode): SetCode[] | undefined =>
-  getSet(code)?.child_set_codes?.filter(child => getSet(child)?.set_type == getSet(code)?.set_type);
+  getChildSets(code)?.filter(child => getSet(child)?.set_type == getSet(code)?.set_type);
+
+/**
+ * Gets the result of {@linkcode getChildSets} except including the set itself
+ * @param code Set code to get the direct children of
+ */
+export const getSetAndChildSets = (code: SetCode): SetCode[] =>
+  isSetCode(code) ? [fixSetCode(code), ...(getChildSets(code) ?? [])] : [];
 
 /**
  * Gets the result of {@linkcode getDirectChildSets} except including the set itself
@@ -124,15 +133,13 @@ export const getSetAndDirectChildSets = (code: SetCode): SetCode[] =>
  */
 export const getBlockSets = (code: SetCode): SetCode[] => [
   fixSetCode(code),
-  ...(getSet(code)?.child_set_codes?.filter(
-    child => getSet(child)?.set_type == getSet(code)?.set_type
-  ) ?? []),
+  ...(getDirectChildSets(code) ?? []),
   ...sets
     .filter(
       set =>
-        set.child_set_codes?.includes(fixSetCode(code)) && set.set_type == getSet(code)?.set_type
+        getChildSets(set.code)?.includes(fixSetCode(code)) && set.set_type == getSet(code)?.set_type
     )
-    .flatMap(set => [set.code, ...(set.child_set_codes ?? [])]),
+    .flatMap(set => getSetAndDirectChildSets(set.code)),
 ];
 
 /**
@@ -178,10 +185,10 @@ export const getAcceptedOrderSet = (code: SetCode): SetCode => {
  */
 export const getGroupSets = (code: SetCode): SetCode[] => [
   fixSetCode(code),
-  ...(getSet(code)?.child_set_codes ?? []),
+  ...(getChildSets(code) ?? []),
   ...sets
-    .filter(set => set.child_set_codes?.includes(fixSetCode(code)))
-    .flatMap(set => [set.code, ...(set.child_set_codes ?? [])]),
+    .filter(set => getChildSets(set.code)?.includes(fixSetCode(code)))
+    .flatMap(set => getSetAndChildSets(set.code)),
 ];
 
 /**

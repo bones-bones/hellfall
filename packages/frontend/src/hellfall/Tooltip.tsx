@@ -47,7 +47,7 @@ export const Tooltip = ({ renderToLeft }: { renderToLeft?: boolean }) => {
     (renderToLeft ? leftPos : rightPos);
   const top =
     getPreferredRenderPos(topPos, bottomPos, imageHeight, window.innerHeight) ?? bottomPos;
-    
+
   useEffect(() => {
     setImageLoaded(false);
     setImageErrored(false);
