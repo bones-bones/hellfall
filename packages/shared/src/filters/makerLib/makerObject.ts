@@ -64,6 +64,8 @@ import {
   isRegexText,
   pipMap,
   getCostsFromPermanentFaces,
+  setAsFix,
+  dashAsFix,
 } from '@hellfall/shared/utils';
 const parseNote = (text: string): { name: string; note?: boolean | string } => {
   if (text.endsWith('<')) {
@@ -388,7 +390,13 @@ export class PropFilter extends FilterObject<string[], string> {
       card =>
         this.props.flatMap(
           p =>
-            getValuesFromProp(card, p, this.location, this.dropFaces, !this.dropDashes) as string[]
+            getValuesFromProp(
+              card,
+              p,
+              this.location,
+              this.dropFaces,
+              dashAsFix(!this.dropDashes)
+            ) as string[]
         ),
       defaultOp,
       invertOption
@@ -410,7 +418,7 @@ export class PropFilter extends FilterObject<string[], string> {
         : this.filter(
             this.getValueToCompare(card),
             this.getOp(),
-            fixValue(this.value),
+            fixValue(this.value, dashAsFix(!this.dropDashes)),
             this.dropFaces
           ),
       this.inverted
@@ -473,11 +481,18 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
       queryName,
       shareFilter,
       summary as summaryFunction<any>,
-      ensureArray(toValue(unescapeText(value, isSet) as T)).map(v => unescapeText(v, isSet)),
+      fixValue(ensureArray(toValue(fixValue(value, setAsFix(isSet)) as T)), setAsFix(isSet)),
       op,
       card =>
         this.props.flatMap(
-          p => getValuesFromProp(card, p, this.location, this.dropFaces, this.isSet) as string[]
+          p =>
+            getValuesFromProp(
+              card,
+              p,
+              this.location,
+              this.dropFaces,
+              setAsFix(this.isSet)
+            ) as string[]
         ),
       defaultOp,
       invertOption
@@ -487,7 +502,14 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
     ({ props: this.props, location: this.location } = queryNameToValue(queryName));
   }
   cardPassesFilter = (card: HCCard.Any) =>
-    xor(this.filter(this.getValueToCompare(card), this.getOp(), this.value), this.inverted);
+    xor(
+      this.filter(
+        this.getValueToCompare(card),
+        this.getOp(),
+        fixValue(this.value, setAsFix(this.isSet))
+      ),
+      this.inverted
+    );
   /**
    * @returns the result of `this.summary(this.getOp(), this.summaryValue, this.inverted)`
    */
@@ -518,7 +540,10 @@ export class InFilter extends PropConvertFilter<string> {
   }
   getValueToCompare = (card: HCCard.Any): string[] =>
     this.getAllPrints(card).flatMap(c =>
-      this.props.flatMap(p => getValuesFromProp(c, p, this.location) as string[])
+      this.props.flatMap(
+        p =>
+          getValuesFromProp(c, p, this.location, this.dropFaces, setAsFix(this.isSet)) as string[]
+      )
     );
 }
 
