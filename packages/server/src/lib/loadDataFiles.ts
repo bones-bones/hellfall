@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-function resolveDataDir(): string {
+export function resolveDataDir(): string {
   const fromEnv = process.env.DATA_DIR?.trim();
   if (fromEnv) return fromEnv;
 

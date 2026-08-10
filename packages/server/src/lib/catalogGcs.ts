@@ -26,25 +26,30 @@ export function getCatalogPublicUrl(): string | undefined {
   return `https://storage.googleapis.com/${bucketName}/${env.CATALOG_GCS_OBJECT}`;
 }
 
-/** Download cached catalog JSON from GCS. Returns null when bucket is not configured. */
-export async function downloadCatalogBodyFromGcs(): Promise<string | null> {
+/** Download gzip-compressed catalog from GCS. Returns null when bucket is not configured. */
+export async function downloadCatalogGzipFromGcs(): Promise<Buffer | null> {
   const bucketName = env.CATALOG_GCS_BUCKET;
   if (!bucketName) return null;
 
   const file = getStorage().bucket(bucketName).file(env.CATALOG_GCS_OBJECT);
   const [[contents], [meta]] = await Promise.all([file.download(), file.getMetadata()]);
   if (meta.contentEncoding === 'gzip') {
-    return gunzipSync(contents).toString('utf-8');
+    return contents;
   }
-  return contents.toString('utf-8');
+  return gzipSync(contents);
+}
+
+/** Download cached catalog JSON from GCS. Returns null when bucket is not configured. */
+export async function downloadCatalogBodyFromGcs(): Promise<string | null> {
+  const gzipBody = await downloadCatalogGzipFromGcs();
+  if (!gzipBody) return null;
+  return gunzipSync(gzipBody).toString('utf-8');
 }
 
 /** Upload gzip-compressed catalog JSON and manifest after a publish. Requires CATALOG_GCS_BUCKET. */
-export async function uploadCatalogToGcs(
-  body: string,
-  cardCount: number,
-  /** Reuse a gzip buffer already built for the in-memory cache (avoids a second gzip of ~14MB). */
-  gzipBody?: Buffer
+export async function uploadCatalogGzipToGcs(
+  gzipBody: Buffer,
+  cardCount: number
 ): Promise<CatalogManifest> {
   const bucketName = env.CATALOG_GCS_BUCKET;
   if (!bucketName) {
@@ -55,20 +60,42 @@ export async function uploadCatalogToGcs(
     version: new Date().toISOString(),
     cardCount,
   };
-  const compressed = gzipBody ?? gzipSync(body);
+  const compressed = gzipBody;
   const bucket = getStorage().bucket(bucketName);
-  await bucket.file(env.CATALOG_GCS_OBJECT).save(compressed, {
+  const catalogObject = env.CATALOG_GCS_OBJECT;
+  const manifestObject = env.CATALOG_GCS_MANIFEST_OBJECT;
+
+  console.log(
+    `[catalog/gcs] uploading catalog gs://${bucketName}/${catalogObject} (${compressed.length} bytes gzip)`
+  );
+  await bucket.file(catalogObject).save(compressed, {
     contentType: 'application/json',
     metadata: {
       contentEncoding: 'gzip',
       cacheControl: 'public, max-age=259200',
     },
   });
-  await bucket.file(env.CATALOG_GCS_MANIFEST_OBJECT).save(JSON.stringify(manifest), {
+  console.log(
+    `[catalog/gcs] catalog upload done, writing manifest gs://${bucketName}/${manifestObject}`
+  );
+  await bucket.file(manifestObject).save(JSON.stringify(manifest), {
     contentType: 'application/json',
     metadata: {
       cacheControl: 'public, max-age=300',
     },
   });
+  console.log(
+    `[catalog/gcs] manifest upload done version=${manifest.version} cards=${manifest.cardCount}`
+  );
   return manifest;
+}
+
+/** Upload gzip-compressed catalog JSON and manifest after a publish. Requires CATALOG_GCS_BUCKET. */
+export async function uploadCatalogToGcs(
+  body: string,
+  cardCount: number,
+  /** Reuse a gzip buffer already built for the in-memory cache (avoids a second gzip of ~14MB). */
+  gzipBody?: Buffer
+): Promise<CatalogManifest> {
+  return uploadCatalogGzipToGcs(gzipBody ?? gzipSync(body), cardCount);
 }
