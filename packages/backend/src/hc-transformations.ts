@@ -102,11 +102,17 @@ const mergeDatabases = (
   }
   mergedCards.forEach(entry => {
     if (!entry.collector_number) {
+      throw new Error(`Card missing collector_number (hcid: ${entry.hcid}, name: ${entry.name})`);
+    }
+    if (!entry.accepted_order) {
       throw new Error(`Card missing accepted_order (hcid: ${entry.hcid}, name: ${entry.name})`);
     }
   });
   mergedTokens.forEach(entry => {
     if (!entry.collector_number) {
+      throw new Error(`Token missing collector_number (hcid: ${entry.hcid}, name: ${entry.name})`);
+    }
+    if (!entry.accepted_order) {
       throw new Error(`Token missing accepted_order (hcid: ${entry.hcid}, name: ${entry.name})`);
     }
   });

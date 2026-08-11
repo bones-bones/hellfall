@@ -690,6 +690,14 @@
       "parent_set_code": "SCL"
     },
     {
+      "id": "2e8202c5-2c80-46b0-9033-87f5eb081bdb",
+      "code": "SCL_7",
+      "name": "Scube Lair Drop: Hellscube 3 All-Stars",
+      "description": "Hellscube 3 All-Stars",
+      "set_type": "lair",
+      "parent_set_code": "SCL"
+    },
+    {
       "id": "b65627ea-38e8-4b8a-85cf-7a1997f8322b",
       "code": "HCV",
       "name": "Hellscube V(eto)",

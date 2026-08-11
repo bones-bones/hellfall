@@ -28,6 +28,7 @@ import {
   fixSetCode,
   getParentSetCode,
 } from '@hellfall/shared/utils';
+import { hcjAoToCNMap } from './hcjCNMap.ts';
 
 export const fetchCards = async (usingApproved: boolean = false) => {
   const url = usingApproved
@@ -154,7 +155,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
           image_status: HCImageStatus.HighRes,
           creators: entryAt('creators').split(';'),
           set: fixSetCode(entryAt('set')) as SetCode,
-          collector_number: entryAt('accepted_order'),
+          collector_number: fixSetCode(entryAt('set')) == 'HCJ' ? hcjAoToCNMap.get(entryAt('accepted_order')):entryAt('accepted_order'),
           accepted_order: entryAt('accepted_order'),
           rulings: entryAt('rulings'),
           mana_value:

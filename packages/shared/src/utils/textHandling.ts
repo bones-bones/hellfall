@@ -286,7 +286,7 @@ export const splitParens = (text: string) => {
 export const formatParens = (text: string) => {
   return splitParens(formatQuotes(text))
     .map(parenText => {
-      if (parenText.at(0) != '(' && parenText.at(-1) != ')') {
+      if (parenText.at(0) != '(' || parenText.at(-1) != ')') {
         return parenText;
       } else {
         return parenText

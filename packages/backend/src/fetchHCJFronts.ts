@@ -45,6 +45,7 @@ export const fetchHCJFronts = (): CardMap =>
     hcjFrontCards.map((pack, i) => {
       const front = packInfoToCard(pack);
       front.collector_number = `${i + 1}`;
+      front.accepted_order = `${i + 1}`;
       front.all_parts = pack.lands.map(land => {
         const part: HCRelatedCard = {
           object: HCObject.ObjectType.RelatedCard,
