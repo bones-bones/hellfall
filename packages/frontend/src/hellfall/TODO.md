@@ -184,4 +184,3 @@ Write a script to transform the database
 - for touhou, figure out how to drop all reminder faces except first one
 - add dynamic width-based collapses (prints, related cards, control bar)
 - make page reset on sort change
-- fix handling of lone parens (e.g. on mork is kill)

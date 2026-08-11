@@ -65,16 +65,14 @@ export const getSet = (code: SetCode): HCSet | undefined => setMap.get(fixSetCod
  * Gets the src of a set symbol image
  * @param set the set to get the symbol image for
  */
-export const setToSrc = (set?: HCSet) => {
-  if (!set) return undefined;
+export const setToSrc = (set?: HCSet):undefined|string => {
+  if (!set) return;
   if (set.filename) {
     return `/sets/${set.filename}`;
   }
-  const parent = sets.find(s => s.code == set.parent_set_code);
-  if (parent?.filename) {
-    return `/sets/${parent.filename}`;
+  else if (set.parent_set_code) {
+    return setToSrc(getSet(set.parent_set_code))
   }
-  return undefined;
 };
 
 /**
@@ -84,18 +82,41 @@ export const setToSrc = (set?: HCSet) => {
 export const getSetSrc = (code: SetCode) => setToSrc(getSet(code));
 
 /**
- * Gets the set code that is the parent of another set
+ * Gets the set code that is the direct parent of another set
  * @param code Set code to get the parent of
  */
-export const getParentSetCode = (code: SetCode): SetCode | undefined =>
+export const getDirectParentSetCode = (code: SetCode): SetCode | undefined =>
   getSet(code)?.parent_set_code;
+
+/**
+ * Gets the set that is the direct parent of another set
+ * @param code Set code to get the parent of
+ */
+export const getDirectParentSet = (code: SetCode): HCSet | undefined =>
+  getSet(getDirectParentSetCode(code) ?? ('' as SetCode));
 
 /**
  * Gets the set that is the parent of another set
  * @param code Set code to get the parent of
  */
-export const getParentSet = (code: SetCode): HCSet | undefined =>
-  getSet(getParentSetCode(code) ?? ('' as SetCode));
+export const getParentSet = (code: SetCode): HCSet | undefined => {
+  let set = getSet(code);
+  if (!set) return;
+  while (set.parent_set_code) {
+    set = getSet(set.parent_set_code)
+    if (!set) return;
+  }
+  if (set.code == fixSetCode(code)) return;
+  return set;
+}
+
+/**
+ * Gets the set code that is the parent of another set
+ * @param code Set code to get the parent of
+ */
+export const getParentSetCode = (code: SetCode): SetCode | undefined =>
+  getParentSet(code)?.code;
+
 
 /**
  * Gets the sets that are the children of another set

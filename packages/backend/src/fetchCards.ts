@@ -231,7 +231,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 standard: formats.includes('Not Legal')
                   ? HCLegality.NotLegal
                   : formats.includes('Banned')
-                  ? (getParentSetCode(card.set) ?? card.set).startsWith('HCV')
+                  ? getParentSetCode(card.set) == 'HCV'
                     ? HCLegality.NotLegal
                     : HCLegality.Banned
                   : // : formats.includes('Legal') ?
@@ -240,7 +240,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 '4cb': formats.includes('Not Legal (4CB)')
                   ? HCLegality.NotLegal
                   : formats.includes('Banned (4CB)')
-                  ? (getParentSetCode(card.set) ?? card.set).startsWith('HCV')
+                  ? getParentSetCode(card.set) == 'HCV'
                     ? HCLegality.NotLegal
                     : HCLegality.Banned
                   : // : formats.includes('Legal (4CB)') ?
@@ -249,7 +249,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 commander: formats.includes('Not Legal (Commander)')
                   ? HCLegality.NotLegal
                   : formats.includes('Banned (Commander)')
-                  ? (getParentSetCode(card.set) ?? card.set).startsWith('HCV')
+                  ? getParentSetCode(card.set) == 'HCV'
                     ? HCLegality.NotLegal
                     : HCLegality.Banned
                   : // : formats.includes('Legal (Commander)') ?
