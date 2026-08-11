@@ -63,8 +63,8 @@ export const App = () => {
   return (
     <BrowserRouter>
       <RedirectBase />
-      <Header />
       <Suspense fallback={<SuspenseLoadingCube />}>
+        <Header />
         <ApplicationRoutes />
       </Suspense>
     </BrowserRouter>

@@ -68,3 +68,16 @@ body {
   font-style: normal;
   src: url('./resources/fonts/enoch.ttf');
 } */
+
+@keyframes hellfall-loading-cube-pulse {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  16.66% {
+    opacity: 0.38;
+  }
+  33.33% {
+    opacity: 0;
+  }
+}

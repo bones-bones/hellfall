@@ -1,20 +1,9 @@
-import { keyframes } from '@emotion/react';
-import { createStencil, createStyles } from '@workday/canvas-kit-styling';
-import { createStenciledSVG, createStyledDiv, createStyledSVG } from './styling';
+import { createStyles } from '@workday/canvas-kit-styling';
+import { createStyledDiv, createStyledSVG } from './styling';
 
 const BASE_COLORS = ['#ececec', '#c8c8c8', '#a8a8a8'] as const;
 
-const overlayPulse = keyframes`
-  0%, 100% {
-    opacity: 0;
-  }
-  16.66% {
-    opacity: 0.38;
-  }
-  33.33% {
-    opacity: 0;
-  }
-`;
+const OVERLAY_ANIMATION = 'hellfall-loading-cube-pulse 2.4s ease-in-out infinite';
 
 const containerStyles = createStyles({
   display: 'flex',
@@ -37,27 +26,37 @@ const cubeFaceStyles = createStyles({
 });
 const CubeFace = createStyledSVG('polygon', cubeFaceStyles, 'CubeFace');
 
-const faceOverlayStencil = createStencil({
-  vars: {
-    delay: '0',
-  },
-  base: ({ delay }) => ({
-    fill: '#000',
-    stroke: 'none',
-    pointerEvents: 'none',
-    opacity: 0,
-    animation: `${overlayPulse} 2.4s ease-in-out infinite`,
-    animationDelay: delay,
-  }),
+const faceOverlay0Styles = createStyles({
+  fill: '#000',
+  stroke: 'none',
+  pointerEvents: 'none',
+  opacity: 0,
+  animation: OVERLAY_ANIMATION,
+  animationDelay: '0s',
 });
-interface FaceOverlayProps extends React.ComponentPropsWithoutRef<'svg'> {
-  delay: string;
-}
-const FaceOverlay = createStenciledSVG<FaceOverlayProps>(
-  'polygon',
-  faceOverlayStencil,
-  'FaceOverlay'
-);
+const FaceOverlay0 = createStyledSVG('polygon', faceOverlay0Styles, 'FaceOverlay0');
+
+const faceOverlay1Styles = createStyles({
+  fill: '#000',
+  stroke: 'none',
+  pointerEvents: 'none',
+  opacity: 0,
+  animation: OVERLAY_ANIMATION,
+  animationDelay: '0.8s',
+});
+const FaceOverlay1 = createStyledSVG('polygon', faceOverlay1Styles, 'FaceOverlay1');
+
+const faceOverlay2Styles = createStyles({
+  fill: '#000',
+  stroke: 'none',
+  pointerEvents: 'none',
+  opacity: 0,
+  animation: OVERLAY_ANIMATION,
+  animationDelay: '1.6s',
+});
+const FaceOverlay2 = createStyledSVG('polygon', faceOverlay2Styles, 'FaceOverlay2');
+
+const FACE_OVERLAYS = [FaceOverlay0, FaceOverlay1, FaceOverlay2] as const;
 
 const FACES = [
   '50,12 78,28 50,44 22,28',
@@ -71,9 +70,10 @@ export const SuspenseLoadingCube = () => (
       {FACES.map((points, index) => (
         <CubeFace key={points} points={points} fill={BASE_COLORS[index]} />
       ))}
-      {FACES.map((points, index) => (
-        <FaceOverlay key={`overlay-${points}`} points={points} delay={`${index * 0.8}s`} />
-      ))}
+      {FACES.map((points, index) => {
+        const FaceOverlay = FACE_OVERLAYS[index];
+        return <FaceOverlay key={`overlay-${points}`} points={points} />;
+      })}
     </CubeSvg>
   </Container>
 );
