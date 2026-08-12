@@ -56,7 +56,7 @@ export const getValuesFromProp = <T extends queryPropType>(
   prop: T,
   location: 'any' | 'face' | 'root' = 'any',
   dropFaces?: boolean,
-  keepDashes?: boolean
+  option: 'fix' | 'keep' | 'set' = 'fix'
 ): numSearch[] => {
   const values: numSearch[] = [];
   if (earlyProps.includes(prop)) {
@@ -78,7 +78,7 @@ export const getValuesFromProp = <T extends queryPropType>(
         );
         break;
     }
-    return fixValue(values, keepDashes ? 'keep' : 'fix');
+    return fixValue(values, option);
   }
   if (isFacePropType(prop) && location != 'root') {
     switch (prop) {
@@ -112,7 +112,7 @@ export const getValuesFromProp = <T extends queryPropType>(
       values.push(...ensureArray<numSearch>(card[prop] as numSearch | numSearch[]));
     }
   }
-  return fixValue(values, keepDashes ? 'keep' : 'fix');
+  return fixValue(values, option);
 };
 type queryValueType = { props: queryPropType[]; location: 'any' | 'face' | 'root' };
 const queryNamePropRecord: Record<string, queryPropType | queryPropType[]> = {

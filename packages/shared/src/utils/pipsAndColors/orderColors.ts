@@ -1,4 +1,10 @@
-import { HCColors, HCCoreColors, HCMiscColors } from '@hellfall/shared/types';
+import {
+  HCColor,
+  HCColors,
+  HCCoreColors,
+  HCMiscColors,
+  HCRelatedCard,
+} from '@hellfall/shared/types';
 import {
   listsAreLooselyEqual,
   listsOrValuesShare,
@@ -242,4 +248,47 @@ export const orderHybrid = (hybridColors: HCColors[]): HCColors[] => {
   const newHybrid: HCColors[] = [];
   colorNums.forEach(i => newHybrid.push(...orderColorGroups(colorNumberRecord[i], i)));
   return newHybrid;
+};
+
+const landToColor: Record<string, HCColor> = {
+  plains: HCColor.White,
+  island: HCColor.Blue,
+  swamp: HCColor.Black,
+  mountain: HCColor.Red,
+  forest: HCColor.Green,
+  nebula: HCColor.Purple,
+  'thriving heath': HCColor.White,
+  'thriving isle': HCColor.Blue,
+  'thriving moor': HCColor.Black,
+  'thriving bluff': HCColor.Red,
+  'thriving grove': HCColor.Green,
+  'thriving galaxy': HCColor.Purple,
+};
+const getColor = (card: HCRelatedCard): HCColor | undefined => landToColor[card.name.toLowerCase()];
+/**
+ * Sorts a list of related cards that are basic lands or thriving lands for hcj, also returning the list
+ * @param cards cards to sort
+ */
+export const orderRelatedLands = (cards: HCRelatedCard[]) => {
+  if (cards.length < 2) return cards;
+  const landColors: HCColor[] = cards.map(getColor).filter(color => color != undefined);
+  const order = orderColors(landColors);
+  return cards.sort((a, b) => {
+    if (a.collector_number && b.collector_number) {
+      return parseInt(a.collector_number) - parseInt(b.collector_number);
+    }
+    const aColor = getColor(a);
+    const bColor = getColor(b);
+    if (!aColor || !bColor) {
+      if (aColor == bColor) return 0;
+      return aColor ? -1 : 1;
+    }
+    const aIndex = order.indexOf(aColor);
+    const bIndex = order.indexOf(bColor);
+    if (aIndex != bIndex) {
+      return aIndex - bIndex;
+    }
+    if (!a.collector_number && !b.collector_number) return 0;
+    return a.collector_number ? -1 : 1;
+  });
 };

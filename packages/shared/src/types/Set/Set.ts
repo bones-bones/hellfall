@@ -73,6 +73,8 @@ export const allSetsList = [
   'SCL_5',
   'SOH',
   'HCV_SOH',
+  'SCL_6',
+  'SCL_7',
   'HCV',
   'HCT',
   'HBB',

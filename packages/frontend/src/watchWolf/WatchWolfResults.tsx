@@ -8,6 +8,7 @@ import { createStyles } from '@workday/canvas-kit-styling';
 import { createStyledDiv, createStyledLink } from '../styling/StyledElements.tsx';
 import { PageContainer, StyleComponent, Subtitle, Title } from './Components.tsx';
 import { cardSetList } from '@hellfall/shared/utils';
+import { Tooltip } from '../hellfall/Tooltip.tsx';
 
 interface Standing {
   Id: string;
@@ -59,6 +60,7 @@ export const Watchwolfresults = () => {
   return (
     <PageContainer>
       <title>WatchWolfWar Results | Hellfall</title>
+      <Tooltip renderToLeft />
       <ActiveCardPanel />
       <StyleComponent>
         <Title>

@@ -286,7 +286,7 @@ export const splitParens = (text: string) => {
 export const formatParens = (text: string) => {
   return splitParens(formatQuotes(text))
     .map(parenText => {
-      if (parenText.at(0) != '(' && parenText.at(-1) != ')') {
+      if (parenText.at(0) != '(' || parenText.at(-1) != ')') {
         return parenText;
       } else {
         return parenText
@@ -311,15 +311,16 @@ export const toExportName = (name: string) => {
 };
 
 /**
- * Strips single slashes from text (for the purposes of exporting to draftmancer
- * so that it imports correctly into cockatrice)
- * @param text text to strip single slashes from
+ * Fixes an export name to make it pasteable into cockatrice
+ * @param text text to get the export name from
  */
-export const stripSingleSlashes = (text: string) => {
+export const toPasteableExportName = (text: string) => {
   return text
     .replaceAll(/([^/])\/([^/])/g, '$1$2')
+    .replaceAll(/\((\d+)\)/g, '$1')
     .replaceAll('|', '')
-    .trim();
+    .replace(/( <HC>){2,}/,' <HC>') // TODO: Replace this with something less hacky
+    .trim().replace(/^([(:#])/,'_$1');
 };
 /**
  * Converts mana from import from scryfall (switches notation for phyrexian mana)
@@ -456,12 +457,14 @@ const regexTest = /^\/.*\/$/;
  * @param text test to check
  */
 export const isRegexText = (text: string) => regexTest.test(text);
+
 /**
  * Unescapes and strips text so that it can be used in comparisons
  * @param text text to unescape
  * @param isSet whether this filter is a set filter
+ * @param keepDashes whether to keep dashes (for correct handling of text fields)
  */
-export const unescapeText = (text: string, isSet?: boolean) => {
+export const unescapeText = (text: string, isSet?: boolean, keepDashes?: boolean) => {
   if (isRegexText(text)) {
     return text;
   }
@@ -473,15 +476,19 @@ export const unescapeText = (text: string, isSet?: boolean) => {
       .replaceAll(/(?<!\\)['"]/g, '')
       .replaceAll(/\\(['"])/g, '$1');
   }
-  const strippedText = textIsQuote(text)
-    ? text.replaceAll('–', '-')
-    : text.replaceAll(/[_\-–]/g, '');
+  const strippedText =
+    textIsQuote(text) || keepDashes ? text.replaceAll('–', '-') : text.replaceAll(/[_\-–]/g, '');
   return strippedText
     .toLowerCase()
     .replaceAll(/^['"]/g, '')
     .replaceAll(/(?<!\\)['"]/g, '')
     .replaceAll(/\\(['"])/g, '$1');
 };
+
+export const dashAsFix = (keepDashes?: boolean) => (keepDashes ? 'keep' : 'fix');
+export const setAsFix = (isSet?: boolean) => (isSet ? 'set' : 'fix');
+export const bothAsFix = (keepDashes?: boolean, isSet?: boolean) =>
+  keepDashes ? 'keep' : isSet ? 'set' : 'fix';
 
 /**
  * Fixes a value by unescaping all text; can go inside arrays, but not other objects
@@ -490,12 +497,17 @@ export const unescapeText = (text: string, isSet?: boolean) => {
  * @param option how to fix the text; fix does unescape; keep keeps dashes;
  * others just do the corresponding text transformation
  */
-export const fixValue = <T>(value: T, option: 'upper' | 'lower' | 'fix' | 'keep' = 'fix'): T => {
+export const fixValue = <T>(
+  value: T,
+  option: 'upper' | 'lower' | 'fix' | 'keep' | 'set' = 'fix'
+): T => {
   if (typeof value == 'string') {
     switch (option) {
       case 'fix':
         return unescapeText(value) as T;
       case 'keep':
+        return unescapeText(value, undefined, true) as T;
+      case 'set':
         return unescapeText(value, true) as T;
       case 'upper':
         return value.toUpperCase() as T;

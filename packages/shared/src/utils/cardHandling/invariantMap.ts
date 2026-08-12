@@ -25,6 +25,35 @@ export type printInvariant = {
   'keywords' | 'rulings' | 'oracle_id_is_scryfall' | 'legalities' | 'export_name' | 'kind'
 >;
 
+const mergeParts = (
+  invariant: printInvariant,
+  newParts?: HCRelatedCard[],
+  option: 'token_makers' | 'meld_results' = 'token_makers'
+) => {
+  if (!newParts?.length) return;
+  if (!invariant[option]) {
+    invariant[option] = [];
+  }
+  const parts = invariant[option];
+  newParts.forEach(part => {
+    if (!part.id) {
+      parts.push(part);
+      return;
+    }
+    const existing = parts.find(other => other.oracle_id == part.oracle_id);
+    if (!existing) {
+      parts.push(part);
+      return;
+    }
+    if (part.count) {
+      existing.count = part.count;
+    }
+    if (part.persistent) {
+      existing.persistent = part.persistent;
+    }
+  });
+};
+
 /**
  * Converts a {@linkcode HCCard.Any} to {@linkcode printInvariant}
  * @param card card to convert
@@ -54,24 +83,19 @@ export const cardToInvariant = (card: HCCard.Any) => {
     });
   }
   if (card.all_parts) {
-    const token_makers = card.all_parts
-      .filter(part => part.component == 'token_maker')
-      .map(part => {
-        const newPart = structuredClone(part);
-        return newPart;
-      });
-    if (token_makers.length) {
-      invariant.token_makers = token_makers;
-    }
-    const meld_results = card.all_parts
-      .filter(part => part.component == 'meld_result')
-      .map(part => {
-        const newPart = structuredClone(part);
-        return newPart;
-      });
-    if (meld_results.length) {
-      invariant.meld_results = meld_results;
-    }
+    mergeParts(
+      invariant,
+      card.all_parts
+        .filter(part => part.component == 'token_maker')
+        .map(part => structuredClone(part))
+    );
+    mergeParts(
+      invariant,
+      card.all_parts
+        .filter(part => part.component == 'meld_result')
+        .map(part => structuredClone(part)),
+      'meld_results'
+    );
   }
   return invariant;
 };
@@ -111,24 +135,8 @@ const mergeInvariants = (oldInvariant: printInvariant, newInvariant: printInvari
       .filter(keyword => !oldInvariant.keywords?.includes(keyword))
       .forEach(keyword => oldInvariant.keywords?.push(keyword));
   }
-  if (!oldInvariant.token_makers?.length && newInvariant.token_makers?.length) {
-    oldInvariant.token_makers = newInvariant.token_makers;
-  } else if (newInvariant.token_makers?.length) {
-    newInvariant.token_makers.forEach(part => {
-      if (!(part.id && oldInvariant.token_makers?.some(other => other.id == part.id))) {
-        oldInvariant.token_makers?.push(part);
-      }
-    });
-  }
-  if (!oldInvariant.meld_results?.length && newInvariant.meld_results?.length) {
-    oldInvariant.meld_results = newInvariant.meld_results;
-  } else if (newInvariant.meld_results?.length) {
-    newInvariant.meld_results.forEach(part => {
-      if (!(part.id && oldInvariant.meld_results?.some(other => other.id == part.id))) {
-        oldInvariant.meld_results?.push(part);
-      }
-    });
-  }
+  mergeParts(oldInvariant, newInvariant.token_makers);
+  mergeParts(oldInvariant, newInvariant.meld_results, 'meld_results');
   if (newInvariant.card_faces) {
     if (oldInvariant.card_faces) {
       if (newInvariant.card_faces.length != oldInvariant.card_faces.length) {
@@ -173,7 +181,7 @@ const mergeInvariants = (oldInvariant: printInvariant, newInvariant: printInvari
  * @param invariant invariant to use
  * @param cardMap CardMap to use
  */
-const mergeParts = (invariant: printInvariant, cardMap: CardMap) => {
+const updatePartsFromInvariant = (invariant: printInvariant, cardMap: CardMap) => {
   const tokensToUpdate = cardMap.getAllPrints(invariant.oracle_id);
   const newParts = invariant.token_makers;
   if (!newParts) {
@@ -696,7 +704,7 @@ export class InvariantMap {
       if (invariant.legalities) {
         card.legalities = invariant.legalities;
       }
-      mergeParts(invariant, cardMap);
+      updatePartsFromInvariant(invariant, cardMap);
     });
   };
   /**

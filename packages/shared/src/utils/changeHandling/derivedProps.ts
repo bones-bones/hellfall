@@ -30,7 +30,6 @@ import { splitParens, textContains, toExportName } from '../textHandling';
 import {
   CardMap,
   cardToInvariant,
-  getAllRelated,
   InvariantMap,
   printInvariant,
   toFaces,
@@ -568,6 +567,9 @@ export const buildInvariant = (card: HCCard.Any, takenNames: Set<string>): print
         exportName += ' Token';
       }
     }
+    // if (exportName.startsWith('(')) {
+    //   exportName = '_' + exportName;
+    // }
     if (/^[\d/]+ /.test(exportName)) {
       exportName = '_' + exportName;
     }

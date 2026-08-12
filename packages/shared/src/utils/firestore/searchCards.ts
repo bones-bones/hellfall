@@ -87,7 +87,7 @@ const evaluateFilter = (
 //     includeList.push(defaultInclude);
 //   }
 //   const uMode = unique ?? uniqueMode ?? 'cards';
-//   const pMode = prefer ?? preferMode ?? 'newest';
+//   const pMode = prefer ?? preferMode ?? 'oldest';
 //   const modeToUse = uMode == 'cards' ? pMode : undefined;
 
 //   const newCardsWithExtras = new CardMap();

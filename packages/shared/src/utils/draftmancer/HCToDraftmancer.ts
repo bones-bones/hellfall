@@ -9,7 +9,7 @@ import {
   toFaces,
 } from '../cardHandling';
 import { HCCardToDraftmancerCard, StickerSheetScryfallIds } from './HCToDraftCard';
-import { stripSingleSlashes } from '../textHandling';
+import { toPasteableExportName } from '../textHandling';
 
 /**
  * Gets a draftmancer cube JSON
@@ -37,7 +37,7 @@ export const HCToDraftmancer = (
     if (!id) return;
     const related = draftCards.get(id) ?? draftTokens.get(id);
     if (related) {
-      return `${stripSingleSlashes(toFaces(related)[0].export_name ?? toFaces(related)[0].name)} (${
+      return `${toPasteableExportName(toFaces(related)[0].export_name ?? toFaces(related)[0].name)} (${
         related.set
       }) ${related.collector_number}`;
     }
@@ -80,7 +80,9 @@ export const HCToDraftmancer = (
   };
 
   const getRelatedList = (card: HCCard.Any): string[] | undefined => {
-    const relatedList = card.all_parts?.flatMap(part => getExportNameFromId(part.id) ?? []);
+    const relatedList = card.all_parts?.flatMap(part =>
+      part.component == 'self' ? [] : getExportNameFromId(part.id) ?? []
+    );
     if (relatedList && relatedList.length) {
       return relatedList;
     }

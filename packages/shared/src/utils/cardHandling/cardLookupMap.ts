@@ -124,7 +124,7 @@ class CardLookupObject {
 }
 
 /**
- * A version of a `Map<string,string>()` that alows direct deletion of values.
+ * A version of a `Map<string,string>()` that alows direct deletion of and access to values.
  */
 class DoubleMap {
   protected forwardMap = new Map<string, string>();

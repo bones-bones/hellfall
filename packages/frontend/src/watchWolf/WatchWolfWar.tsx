@@ -1,4 +1,4 @@
-import { HellfallEntry } from '../hellfall/entry/HellfallEntry.tsx';
+import { GridEntry } from '../hellfall/display/GridEntry.tsx';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import { useRef, useState, useEffect } from 'react';
@@ -11,6 +11,7 @@ import { cardSetList, toPlainText } from '@hellfall/shared/utils';
 import { PageContainer, StyleComponent, Subtitle, Title } from './Components.tsx';
 import { createStyledDiv } from '../styling/StyledElements.tsx';
 import { createStyles } from '@workday/canvas-kit-styling';
+import { Tooltip } from '../hellfall/Tooltip.tsx';
 
 export const WatchwolfWar = () => {
   const cards = useAtomValue(cardsAtom).getAllInSetListExactAsSubmap(cardSetList);
@@ -42,6 +43,7 @@ export const WatchwolfWar = () => {
   return (
     <PageContainer>
       <title>WatchWolfWar | Hellfall</title>
+      <Tooltip renderToLeft={origin == 'right'} />
       <ActiveCardPanel origin={origin} />
       <StyleComponent>
         <Title>
@@ -52,7 +54,7 @@ export const WatchwolfWar = () => {
         <Subtitle>Brought to you by goldcrackle, with odes of help from llllll.</Subtitle>
       </StyleComponent>
       <CardContainer>
-        <HellfallEntry
+        <GridEntry
           id={TwoCardState.LeftCard.hcid}
           name={TwoCardState.LeftCard.name}
           url={TwoCardState.LeftCard.image!}
@@ -74,7 +76,7 @@ export const WatchwolfWar = () => {
             }
           }}
         />
-        <HellfallEntry
+        <GridEntry
           id={TwoCardState.RightCard.hcid}
           name={TwoCardState.RightCard.name}
           url={TwoCardState.RightCard.image!}

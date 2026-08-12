@@ -28,6 +28,7 @@ import {
   fixSetCode,
   getParentSetCode,
 } from '@hellfall/shared/utils';
+import { hcjAoToCNMap } from './hcjCNMap.ts';
 
 export const fetchCards = async (usingApproved: boolean = false) => {
   const url = usingApproved
@@ -148,13 +149,16 @@ export const fetchCards = async (usingApproved: boolean = false) => {
         cardIsMulti,
         {
           id: entryAt('id'),
-          oracle_id: oracle_id,
+          oracle_id,
           hcid: entryAt('hcid'),
           image: entryAt('image'),
           image_status: HCImageStatus.HighRes,
           creators: entryAt('creators').split(';'),
           set: fixSetCode(entryAt('set')) as SetCode,
-          collector_number: entryAt('accepted_order'),
+          collector_number:
+            fixSetCode(entryAt('set')) == 'HCJ'
+              ? hcjAoToCNMap.get(entryAt('accepted_order'))
+              : entryAt('accepted_order'),
           accepted_order: entryAt('accepted_order'),
           rulings: entryAt('rulings'),
           mana_value:
@@ -230,7 +234,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 standard: formats.includes('Not Legal')
                   ? HCLegality.NotLegal
                   : formats.includes('Banned')
-                  ? (getParentSetCode(card.set) ?? card.set).startsWith('HCV')
+                  ? getParentSetCode(card.set) == 'HCV'
                     ? HCLegality.NotLegal
                     : HCLegality.Banned
                   : // : formats.includes('Legal') ?
@@ -239,7 +243,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 '4cb': formats.includes('Not Legal (4CB)')
                   ? HCLegality.NotLegal
                   : formats.includes('Banned (4CB)')
-                  ? (getParentSetCode(card.set) ?? card.set).startsWith('HCV')
+                  ? getParentSetCode(card.set) == 'HCV'
                     ? HCLegality.NotLegal
                     : HCLegality.Banned
                   : // : formats.includes('Legal (4CB)') ?
@@ -248,7 +252,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 commander: formats.includes('Not Legal (Commander)')
                   ? HCLegality.NotLegal
                   : formats.includes('Banned (Commander)')
-                  ? (getParentSetCode(card.set) ?? card.set).startsWith('HCV')
+                  ? getParentSetCode(card.set) == 'HCV'
                     ? HCLegality.NotLegal
                     : HCLegality.Banned
                   : // : formats.includes('Legal (Commander)') ?
@@ -258,14 +262,16 @@ export const fetchCards = async (usingApproved: boolean = false) => {
               addPropToRoot(card, 'legalities', legalities);
             } else if (keys[i] == 'related') {
               entry[i].split(';').forEach(oldName => {
-                const { name, hcid, count, code } = parseRelatedReferenceName(oldName);
+                const { name, hcid, code, collector_number, count } =
+                  parseRelatedReferenceName(oldName);
                 const maker: HCRelatedCard = {
                   object: HCObject.ObjectType.RelatedCard,
                   id: '',
                   oracle_id: '',
-                  hcid: hcid,
-                  name: name,
+                  hcid,
+                  name,
                   set: code ?? ('' as SetCode),
+                  collector_number: collector_number ?? '',
                   image: '',
                   type_line: '',
                   component: 'token_maker',

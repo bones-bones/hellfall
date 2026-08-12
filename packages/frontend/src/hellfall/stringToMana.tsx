@@ -51,7 +51,7 @@ const pipSymbol = createStencil({
     height: '18px',
   },
   base: ({ height }) => ({
-    height: height,
+    height,
   }),
 });
 
