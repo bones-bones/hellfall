@@ -94,7 +94,7 @@
         "HCV_2_1"
       ],
       "use_color_order": true,
-      "filename": ""
+      "filename": "hc2.svg"
     },
     {
       "id": "47cbd43e-79d4-4c23-9240-dd45a6552f32",
@@ -151,7 +151,7 @@
         "HCV_3_1"
       ],
       "use_color_order": true,
-      "filename": ""
+      "filename": "hc3.svg"
     },
     {
       "id": "5b39a804-5422-4990-8bec-08caca243b97",
@@ -216,7 +216,7 @@
         "HCV_4_1"
       ],
       "use_color_order": true,
-      "filename": "",
+      "filename": "hc4.svg",
       "includeLands": true
     },
     {
@@ -270,7 +270,7 @@
       "name": "Hellscube 5",
       "description": "L̵̨̡̧͎̩̘͓̩̬̂̈́́͒͌̔̽̈̌͗̏̈́͘͠͝Ợ̷̛̼̐͆͌̈́̑͗̆͑́̈́̓̀̚͠͝S̸̺̲͕̺̫͉̣̿̈ͅT̸̘̖͇͍͍̫̝̑͑̇̀͋̉̎̑͊͝ͅ",
       "set_type": "main",
-      "filename": ""
+      "filename": "hc5.svg"
     },
     {
       "id": "cddf3259-f4f3-45fb-ab4d-207bc7118be8",
@@ -289,7 +289,7 @@
         "HCV_6"
       ],
       "use_color_order": true,
-      "filename": "",
+      "filename": "hc6.svg",
       "includeLands": true
     },
     {
@@ -313,7 +313,8 @@
       "code": "HCC",
       "name": "HC Constructed",
       "description": "Commanders cut from HC6 due to slots.",
-      "set_type": "side"
+      "set_type": "side",
+      "filename": "hcc.svg"
     },
     {
       "id": "e38f8294-0f9b-4ce9-bdb3-2d67db56e317",
@@ -349,7 +350,7 @@
         "HCV_P"
       ],
       "use_color_order": true,
-      "filename": ""
+      "filename": "hcp.svg"
     },
     {
       "id": "12cec91a-bb1d-4f7d-99fd-b0c679d880c5",
@@ -411,7 +412,7 @@
       "name": "Normal Cube",
       "description": "How did that get in there?",
       "set_type": "unfunny",
-      "filename": ""
+      "filename": "nrm.svg"
     },
     {
       "id": "05d34fc8-181f-4bf2-91ed-992c8a38f00d",
@@ -427,7 +428,7 @@
         "HCV_K"
       ],
       "use_color_order": true,
-      "filename": "",
+      "filename": "hck.svg",
       "includeLands": true
     },
     {
@@ -498,7 +499,6 @@
         "FHCJ",
         "HCV_J"
       ],
-      "use_color_order": true,
       "filename": "hcj.png"
     },
     {
@@ -593,7 +593,8 @@
         "SCL_4",
         "SCL_5",
         "SCL_6"
-      ]
+      ],
+      "filename": "scl.svg"
     },
     {
       "id": "18dc5033-3f45-4be7-ae04-ced7362b01d0",
@@ -682,6 +683,22 @@
       "parent_set_code": "HCV"
     },
     {
+      "id": "f3913747-9c4a-4ef7-9346-57b34d75708c",
+      "code": "SCL_6",
+      "name": "Scube Lair Drop: Pro Tour: Hellscube 8",
+      "description": "Cards from nobroam's Pro Tour: Hellscube 8 winning decklist.",
+      "set_type": "lair",
+      "parent_set_code": "SCL"
+    },
+    {
+      "id": "2e8202c5-2c80-46b0-9033-87f5eb081bdb",
+      "code": "SCL_7",
+      "name": "Scube Lair Drop: Hellscube 3 All-Stars",
+      "description": "Hellscube 3 All-Stars",
+      "set_type": "lair",
+      "parent_set_code": "SCL"
+    },
+    {
       "id": "b65627ea-38e8-4b8a-85cf-7a1997f8322b",
       "code": "HCV",
       "name": "Hellscube V(eto)",
@@ -705,7 +722,8 @@
         "HCV_SCL",
         "HCV_HDH",
         "HCV_SOH"
-      ]
+      ],
+      "filename": "hcv.svg"
     },
     {
       "id": "533707e0-22f6-4889-8ef8-9b2e9a753e72",
@@ -713,7 +731,7 @@
       "name": "Tokens",
       "description": "Custom tokens for Hellscube cards.",
       "set_type": "token",
-      "filename": ""
+      "filename": "hct.svg"
     },
     {
       "id": "767d38f1-e424-42c6-a84f-0d815bcb4fa4",
@@ -728,7 +746,7 @@
         "HBB_L",
         "HBB_9"
       ],
-      "filename": ""
+      "filename": "hbb.svg"
     },
     {
       "id": "47510fe8-4462-4a0a-8da4-6f5efc31b44a",
@@ -784,7 +802,7 @@
       "name": "Scryfall Tokens",
       "description": "Tokens from Scryfall for cards that need tokens but haven't had custom tokens made yet.",
       "set_type": "token",
-      "filename": ""
+      "filename": "sft.svg"
     }
   ]
 }

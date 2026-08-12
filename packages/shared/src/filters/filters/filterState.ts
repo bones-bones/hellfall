@@ -44,6 +44,7 @@ const stateList = [
   'bear',
   'manland',
   'partner',
+  'draftable',
   'masterpiece',
   'reprint',
   'event',
@@ -120,6 +121,7 @@ const stateResolutions: Record<
     ]),
   partner: (value: HCCard.Any) =>
     textListsShare(value.tags, ['partner-mechanic', 'unprinted-partner']),
+  draftable: (value: HCCard.Any) => value.kind == 'card' && !value.not_directly_draftable,
   modal: (value: HCCard.Any, dropFaces?: boolean) =>
     value.tags?.includes('modal') ||
     textListIncludesEvery(getFromFaces(value, 'oracle_text', dropFaces), ['•', 'choose']),
@@ -131,7 +133,8 @@ const stateResolutions: Record<
     ),
   manland: (value: HCCard.Any) => value.tags?.includes('manland'),
   masterpiece: (value: HCCard.Any) => value.tags?.includes('masterpiece'),
-  reprint: (value: HCCard.Any) => value.tags?.includes('reprint'),
+  reprint: (value: HCCard.Any) =>
+    value.tags?.includes('reprint') || value.tags?.includes('masterpiece'),
   event: (value: HCCard.Any) => eventSetList.includes(value.set),
   rebalanced: (value: HCCard.Any) => value.tags?.includes('alchemy-rebalance'),
   bounceland: (value: HCCard.Any) => value.tags?.includes('bounceland'),
@@ -166,6 +169,7 @@ const stateSummaries: Record<stateType, (operator: opType) => string> = {
   bear: (operator: opType) => `the cards are${opToNt(operator)} 2/2/2 bears`,
   manland: (operator: opType) => `the cards are${opToNt(operator)} lands that become creatures`,
   partner: (operator: opType) => `the cards ${opToDont(operator)} have multi-commander mechanics`,
+  draftable: (operator: opType) => `the cards are${opToNt(operator)} directly draftable`,
   masterpiece: (operator: opType) => `the cards are${opToNt(operator)} masterpieces`,
   reprint: (operator: opType) => `the cards are${opToNt(operator)} reprints`,
   event: (operator: opType) => `the cards are${opToNt(operator)} from event sets`,

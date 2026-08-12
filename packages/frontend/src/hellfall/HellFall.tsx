@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo, useRef } from 'react';
-import { HellfallEntry } from './entry/HellfallEntry.tsx';
+import { GridEntry } from './display/GridEntry.tsx';
 
 import { BoxProps, Card } from '@workday/canvas-kit-react';
 
@@ -25,8 +25,9 @@ import { HellfallCard } from './card/HellfallCard.tsx';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import { createStenciledDiv, createStyledDiv, createStyledHR } from '../styling';
 import { PaginationBar } from './search-controls/PaginationBar.tsx';
-import { Checklist } from './Checklist.tsx';
+import { Checklist } from './display/Checklist.tsx';
 import { CardFaceContainer } from './card/hellfall-card-components/CardFace.tsx';
+import { Tooltip } from './Tooltip.tsx';
 
 export const HellFall = () => {
   const summary = useAtomValue(summaryAtom);
@@ -75,6 +76,7 @@ export const HellFall = () => {
 
   return (
     <div>
+      <Tooltip renderToLeft={display == 'grid'} />
       <ActiveCardPanel />
       <br />
       <SearchBar alreadyOnSearch={true} />
@@ -160,7 +162,7 @@ export const HellFall = () => {
             <Container>
               <CardsGrid maxWidth={`${maxWidth}px`}>
                 {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
-                  <HellfallEntry
+                  <GridEntry
                     onClick={(event: React.MouseEvent<HTMLImageElement>) => {
                       if (event.button === 1 || event.metaKey || event.ctrlKey) {
                         window.open(`/card/${encodeURIComponent(entry.hcid)}`, '_blank');
@@ -234,7 +236,7 @@ const cardsGridStencil = createStencil({
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
-    maxWidth: maxWidth, // Maximum row width: 5 cards at average width (243px * 5 = 1215px)
+    maxWidth, // Maximum row width: 5 cards at average width (243px * 5 = 1215px)
     width: '100%',
     gap: '0px',
     margin: '0 auto',

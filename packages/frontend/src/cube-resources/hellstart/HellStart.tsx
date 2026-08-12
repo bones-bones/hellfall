@@ -1,7 +1,7 @@
 import { useAtomValue, useSetAtom } from 'jotai';
 import { cardsAtom } from '../../hellfall/atoms/cardsAtom.ts';
 import { HCCard } from '@hellfall/shared/types';
-import { HellfallEntry } from '../../hellfall/entry/HellfallEntry.tsx';
+import { GridEntry } from '../../hellfall/display/GridEntry.tsx';
 import { ActiveCardPanel } from '../../hellfall/ActiveCardPanel.tsx';
 import { activeCardAtom } from '../../hellfall/atoms/searchAtoms.ts';
 import { createStyles } from '@workday/canvas-kit-styling';
@@ -14,7 +14,7 @@ export const HellStart = () => {
   const HCJPackDisplay = ({ entry }: { entry: HCCard.Any }) => {
     return (
       <span>
-        <HellfallEntry
+        <GridEntry
           url={entry.image!}
           id={entry.id}
           name={entry.name.split(' - ')[0]}

@@ -109,7 +109,7 @@ const createRules = (invertedItalics: boolean = false): Record<string, Rule> => 
         let content = capture[0];
         content = content.replace(/\\([*_~])/g, '$1');
         return {
-          content: content,
+          content,
         };
       },
       react: (node: ParsedNode, _output: OutputFunction, state?: ParserState): React.ReactNode => {

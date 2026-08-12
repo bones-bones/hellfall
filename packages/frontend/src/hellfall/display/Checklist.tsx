@@ -1,4 +1,9 @@
-import { formatTypeLine, getFromFaces, listsAreExactlyEqual } from '@hellfall/shared/utils';
+import {
+  displaySetCode,
+  formatTypeLine,
+  getFromFaces,
+  listsAreExactlyEqual,
+} from '@hellfall/shared/utils';
 import { createStencil, createStyles, handleCsProp } from '@workday/canvas-kit-styling';
 import {
   createStyledLink,
@@ -8,10 +13,10 @@ import {
   createStyledTableHead,
   createStyledTableHeader,
   createStyledTableRow,
-} from '../styling';
+} from '../../styling';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { activeCardAtom, inputSortAtom, sortAtom } from './atoms/searchAtoms';
-import { stringToMana } from './stringToMana';
+import { activeCardAtom, inputSortAtom, sortAtom } from '../atoms/searchAtoms';
+import { stringToMana } from '../stringToMana';
 import { system } from '@workday/canvas-tokens-web';
 import { Table } from '@workday/canvas-kit-react';
 import { dirType, sortType } from '@hellfall/shared/filters';
@@ -160,7 +165,7 @@ export const Checklist = ({ cards }: { cards: HCCard.Any[] }) => {
       <GridBody>
         {cards.map(card => (
           <CardRow key={card.id}>
-            <SetCell key={`${card.id}-set`}>{card.set}</SetCell>
+            <SetCell key={`${card.id}-set`}>{displaySetCode(card.set)}</SetCell>
             <NumCell key={`${card.id}-num`}>{card.collector_number}</NumCell>
             <NameCell key={`${card.id}-name`}>
               <NameCellLink
@@ -197,6 +202,7 @@ const gridStyles = createStyles({
   // scrollMarginTop: '12px',
   'tbody tr:nth-child(even)': {
     backgroundColor: '#f5f0ff',
+    ':hover': { backgroundColor: system.color.brand.surface.primary.strong },
   },
   overflowX: 'scroll',
   borderRadius: 0,

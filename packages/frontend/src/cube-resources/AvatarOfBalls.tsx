@@ -2,7 +2,7 @@ import { FormField, PrimaryButton, TextInput } from '@workday/canvas-kit-react';
 import { useRef, useState } from 'react';
 import { cardsAtom } from '../hellfall/atoms/cardsAtom.ts';
 import { HCCard } from '@hellfall/shared/types';
-import { HellfallEntry } from '../hellfall/entry/HellfallEntry.tsx';
+import { GridEntry } from '../hellfall/display/GridEntry.tsx';
 import { useAtomValue } from 'jotai';
 import { getRandom, toFaces } from '@hellfall/shared/utils';
 
@@ -54,7 +54,7 @@ export const AvatarOfBalls = () => {
       <div>
         {cardsToRender.map((e, i) =>
           e !== undefined ? (
-            <HellfallEntry
+            <GridEntry
               key={e.name + i}
               id={e.id}
               name={e.name}

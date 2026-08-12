@@ -15,6 +15,7 @@ import {
 } from '../styling';
 import { Box, BoxProps } from '@workday/canvas-kit-react';
 import { useEffect } from 'react';
+import { Tooltip } from '../hellfall/Tooltip.tsx';
 
 const activeCardAtom = atom<HCCard.Any | undefined>(undefined);
 
@@ -104,6 +105,7 @@ export const Deck = () => {
 
   return (
     <BiggestContainer>
+      <Tooltip renderToLeft />
       <BigContainer showGutter={window.innerWidth > 800}>
         <h2>{deck.title}</h2>
         <h3>By: {deck.author}</h3>

@@ -65,16 +65,13 @@ export const getSet = (code: SetCode): HCSet | undefined => setMap.get(fixSetCod
  * Gets the src of a set symbol image
  * @param set the set to get the symbol image for
  */
-export const setToSrc = (set?: HCSet) => {
-  if (!set) return undefined;
+export const setToSrc = (set?: HCSet): undefined | string => {
+  if (!set) return;
   if (set.filename) {
     return `/sets/${set.filename}`;
+  } else if (set.parent_set_code) {
+    return setToSrc(getSet(set.parent_set_code));
   }
-  const parent = sets.find(s => s.code == set.parent_set_code);
-  if (parent?.filename) {
-    return `/sets/${parent.filename}`;
-  }
-  return undefined;
 };
 
 /**
@@ -84,32 +81,62 @@ export const setToSrc = (set?: HCSet) => {
 export const getSetSrc = (code: SetCode) => setToSrc(getSet(code));
 
 /**
- * Gets the set code that is the parent of another set
+ * Gets the set code that is the direct parent of another set
  * @param code Set code to get the parent of
  */
-export const getParentSetCode = (code: SetCode): SetCode | undefined =>
+export const getDirectParentSetCode = (code: SetCode): SetCode | undefined =>
   getSet(code)?.parent_set_code;
+
+/**
+ * Gets the set that is the direct parent of another set
+ * @param code Set code to get the parent of
+ */
+export const getDirectParentSet = (code: SetCode): HCSet | undefined =>
+  getSet(getDirectParentSetCode(code) ?? ('' as SetCode));
 
 /**
  * Gets the set that is the parent of another set
  * @param code Set code to get the parent of
  */
-export const getParentSet = (code: SetCode): HCSet | undefined =>
-  getSet(getParentSetCode(code) ?? ('' as SetCode));
+export const getParentSet = (code: SetCode): HCSet | undefined => {
+  let set = getSet(code);
+  if (!set) return;
+  while (set.parent_set_code) {
+    set = getSet(set.parent_set_code);
+    if (!set) return;
+  }
+  if (set.code == fixSetCode(code)) return;
+  return set;
+};
+
+/**
+ * Gets the set code that is the parent of another set
+ * @param code Set code to get the parent of
+ */
+export const getParentSetCode = (code: SetCode): SetCode | undefined => getParentSet(code)?.code;
 
 /**
  * Gets the sets that are the children of another set
  * @param code Set code to get the children of
  */
 export const getChildSets = (code: SetCode): SetCode[] | undefined =>
-  wrapArray(getSet(code)?.child_set_codes);
+  getSet(code)?.child_set_codes?.flatMap(child =>
+    getSet(child)?.child_set_codes ? [child, ...(getChildSets(child) ?? [])] : child
+  );
 
 /**
  * Gets the sets that are the direct children of another set (i.e. are its children and have the same set type)
  * @param code Set code to get the direct children of
  */
 export const getDirectChildSets = (code: SetCode): SetCode[] | undefined =>
-  getSet(code)?.child_set_codes?.filter(child => getSet(child)?.set_type == getSet(code)?.set_type);
+  getChildSets(code)?.filter(child => getSet(child)?.set_type == getSet(code)?.set_type);
+
+/**
+ * Gets the result of {@linkcode getChildSets} except including the set itself
+ * @param code Set code to get the direct children of
+ */
+export const getSetAndChildSets = (code: SetCode): SetCode[] =>
+  isSetCode(code) ? [fixSetCode(code), ...(getChildSets(code) ?? [])] : [];
 
 /**
  * Gets the result of {@linkcode getDirectChildSets} except including the set itself
@@ -124,15 +151,13 @@ export const getSetAndDirectChildSets = (code: SetCode): SetCode[] =>
  */
 export const getBlockSets = (code: SetCode): SetCode[] => [
   fixSetCode(code),
-  ...(getSet(code)?.child_set_codes?.filter(
-    child => getSet(child)?.set_type == getSet(code)?.set_type
-  ) ?? []),
+  ...(getDirectChildSets(code) ?? []),
   ...sets
     .filter(
       set =>
-        set.child_set_codes?.includes(fixSetCode(code)) && set.set_type == getSet(code)?.set_type
+        getChildSets(set.code)?.includes(fixSetCode(code)) && set.set_type == getSet(code)?.set_type
     )
-    .flatMap(set => [set.code, ...(set.child_set_codes ?? [])]),
+    .flatMap(set => getSetAndDirectChildSets(set.code)),
 ];
 
 /**
@@ -160,7 +185,7 @@ export const getCollectorOrderSet = (code: SetCode): SetCode => {
  * @param code Set code to get the accepted order set for
  */
 export const getAcceptedOrderSet = (code: SetCode): SetCode => {
-  const parent = getParentSet(code);
+  const parent = getDirectParentSet(code);
   if (parent?.code == 'SCL') {
     return parent.code;
   }
@@ -178,10 +203,10 @@ export const getAcceptedOrderSet = (code: SetCode): SetCode => {
  */
 export const getGroupSets = (code: SetCode): SetCode[] => [
   fixSetCode(code),
-  ...(getSet(code)?.child_set_codes ?? []),
+  ...(getChildSets(code) ?? []),
   ...sets
-    .filter(set => set.child_set_codes?.includes(fixSetCode(code)))
-    .flatMap(set => [set.code, ...(set.child_set_codes ?? [])]),
+    .filter(set => getChildSets(set.code)?.includes(fixSetCode(code)))
+    .flatMap(set => getSetAndChildSets(set.code)),
 ];
 
 /**
@@ -309,8 +334,8 @@ export const hardTokenIds: string[] = [
  */
 export const parseRelatedReferenceName = (
   oldName: string
-): { name: string; hcid: string; code?: SetCode; count?: string } => {
-  const { name: intName, code } = splitCardName(oldName);
+): { name: string; hcid: string; code?: SetCode; collector_number?: string; count?: string } => {
+  const { name: intName, code, collector_number } = splitCardName(oldName);
   const groups = intName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
   const match = groups?.groups?.name ?? intName;
   const count = groups?.groups?.count ?? ('' as SetCode);
@@ -323,5 +348,5 @@ export const parseRelatedReferenceName = (
       ![' ', '-', '^', '.', '/', '+', ',', "'"].includes(base.at(-1)!));
   const name = shouldUseBase ? base : match;
   const hcid = shouldUseBase ? match : '';
-  return { name, hcid, code, count };
+  return { name, hcid, code, collector_number, count };
 };

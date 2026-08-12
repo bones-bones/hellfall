@@ -3,6 +3,7 @@ import { textEquals } from '../textHandling';
 import { pushProp } from '../listHandling';
 import { CardMap } from './cardMap';
 import { toFaces } from './cardMethods';
+import { orderRelatedLands } from '../pipsAndColors';
 
 /**
  * Checks whether a card has any related card with a given component
@@ -19,6 +20,13 @@ export const findMatchingPartIndex = (card: HCCard.Any, part: HCRelatedCard) => 
   if (idIndex != -1) return idIndex;
   const hcidIndex = allParts.findIndex(e => e.hcid == part.hcid);
   if (hcidIndex != -1) return hcidIndex;
+  const numIndex = allParts.findIndex(
+    e =>
+      textEquals(e.name, part.name) &&
+      e.set == part.set &&
+      e.collector_number == part.collector_number
+  );
+  if (numIndex != -1) return numIndex;
   const setIndex = allParts.findIndex(e => textEquals(e.name, part.name) && e.set == part.set);
   if (setIndex != -1) return setIndex;
   const nameIndex = allParts.findIndex(e => textEquals(e.name, part.name));
@@ -43,6 +51,7 @@ export const cardToRelatedCard = (
     hcid: card.hcid,
     name: card.name,
     set: card.set,
+    collector_number: card.collector_number,
     image: card.image,
     type_line: card.type_line,
     component,
@@ -64,8 +73,13 @@ export const updatePartFromCard = (part: HCRelatedCard, card: HCCard.Any) => {
   part.hcid = card.hcid;
   part.name = card.name;
   part.set = card.set;
+  part.collector_number = card.collector_number;
   part.image = card.image;
   part.type_line = card.type_line;
+};
+
+const numSort = (a: HCRelatedCard, b: HCRelatedCard) => {
+  return parseInt(a.collector_number) - parseInt(b.collector_number);
 };
 
 /**
@@ -126,7 +140,14 @@ export const updateParts = (card: HCCard.Any, relateds: CardMap) => {
           basics.push(part);
         }
       });
-    card.all_parts = [...headliners, ...others, ...nonbasics, ...thriving, ...basics];
+
+    card.all_parts = [
+      ...headliners.sort(numSort),
+      ...others.sort(numSort),
+      ...orderRelatedLands(thriving),
+      ...orderRelatedLands(basics),
+      ...nonbasics.sort(numSort),
+    ];
     return;
   }
   card.all_parts

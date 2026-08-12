@@ -82,7 +82,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
       splitKeys.some(key => entry[keys.indexOf(key)].includes(' // ')),
       {
         id: entryAt('id'),
-        oracle_id: oracle_id,
+        oracle_id,
         hcid: entryAt('name'),
         set: 'HCT',
         image: entryAt('image'),
@@ -125,14 +125,16 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
           });
         } else if (keys[i] == 'token_maker') {
           entry[i].split(';').forEach(oldName => {
-            const { name, hcid, code, count } = parseRelatedReferenceName(oldName);
+            const { name, hcid, code, collector_number, count } =
+              parseRelatedReferenceName(oldName);
             const maker: HCRelatedCard = {
               object: HCObject.ObjectType.RelatedCard,
               id: '',
               oracle_id: '',
-              hcid: hcid,
-              name: name,
+              hcid,
+              name,
               set: code ?? ('' as SetCode),
+              collector_number: collector_number ?? '',
               image: '',
               type_line: '',
               component: 'token_maker',

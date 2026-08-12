@@ -1,7 +1,7 @@
 import { HCCard, HCCardFace } from '@hellfall/shared/types';
 import { DraftmancerCardFace, DraftmancerCustomCard } from './draftTypes';
 import { canBeACommander } from '../cardHandling';
-import { stripSingleSlashes, toExportMana } from '../textHandling';
+import { toPasteableExportName, toExportMana } from '../textHandling';
 import { orderColors } from '../pipsAndColors';
 const validColors = ['W', 'U', 'B', 'R', 'G'];
 
@@ -12,7 +12,7 @@ const validColors = ['W', 'U', 'B', 'R', 'G'];
 const convertSingleFace = (card: HCCard.AnySingleFaced): DraftmancerCustomCard => {
   const draftCard: DraftmancerCustomCard = {
     id: card.id,
-    name: stripSingleSlashes(card.export_name ?? card.name),
+    name: toPasteableExportName(card.export_name ?? card.name),
     mana_cost: toExportMana(card.mana_cost, true),
     type: card.type_line,
     image: card.rotated_image || card.image,
@@ -47,7 +47,7 @@ const convertSingleFace = (card: HCCard.AnySingleFaced): DraftmancerCustomCard =
  */
 const HCFaceToDraftFace = (face: HCCardFace.MultiFaced): DraftmancerCardFace => {
   const draftFace: DraftmancerCardFace = {
-    name: stripSingleSlashes(face.export_name || face.name),
+    name: toPasteableExportName(face.export_name || face.name),
     mana_cost: toExportMana(face.mana_cost, true),
     type: face.type_line,
     image: face.rotated_image || face.image,
@@ -80,7 +80,7 @@ const extractFrontFace = (card: HCCard.AnyMultiFaced): DraftmancerCustomCard => 
   const face = card.card_faces[0];
   const draftCard: DraftmancerCustomCard = {
     id: card.id,
-    name: stripSingleSlashes(face.export_name ?? face.name),
+    name: toPasteableExportName(face.export_name ?? face.name),
     mana_cost: toExportMana(face.mana_cost, true),
     type: face.type_line,
     image: face.rotated_image || face.image || card.rotated_image || card.image,
