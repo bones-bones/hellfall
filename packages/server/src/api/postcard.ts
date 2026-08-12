@@ -123,27 +123,23 @@ function resolvePostcardCardId(
   }
   return newCardId();
 }
-// function resolveOracleId(docId: string, data: firestoreCard, oracleId?: string): string {
-//   const fromDoc = data?.oracle_id?.trim();
-//   if (fromDoc && isValidV4UUID(fromDoc)) return fromDoc;
-//   if (isValidV4UUID(oracleId ?? '')) return oracleId!;
-//   return newCardId();
-// }
 
 function buildStubCard(
   body: Required<Pick<PostcardBody, 'name' | 'image' | 'creators'>> & PostcardBody
 ): HCCard.Any {
   const kind = body.kind === 'token' ? HCKind.Token : HCKind.Card;
-  const setId = (kind === HCKind.Token ? 'HCT' : body.set) as SetCode;
+  const set = (kind === HCKind.Token ? 'HCT' : body.set) as SetCode;
   const hcid = body.hcid?.trim() || body.name;
+
+  const { name } = splitMasterpiece(body.name);
 
   const card = getDefaultCard(
     kind,
     false,
     {
       hcid,
-      name: body.name,
-      set: setId,
+      name,
+      set,
       image: body.image,
       image_status: HCImageStatus.HighRes,
       creators: parseCreators(body.creators),
@@ -168,11 +164,25 @@ async function findByHcid(hcid: string) {
   return matches.docs[0] ?? null;
 }
 
-async function findMasterpiece(name: string): Promise<string | undefined> {
-  const snapshot = await cardsCol.where('name', '==', splitMasterpiece(name).name).limit(2).get();
+/** Look up an existing print's oracle_id by name (strips "HC8: " / lair prefixes). */
+async function findMasterpieceOracleId(name: string): Promise<string | undefined> {
+  const fromCatalog = cardMap.getFromName(name)?.oracle_id?.trim();
+  if (fromCatalog && isValidV4UUID(fromCatalog)) return fromCatalog;
+
+  const stripped = splitMasterpiece(name).name;
+  const snapshot = await cardsCol.where('name', '==', stripped).limit(2).get();
   const doc = snapshot.docs[0];
   if (!doc) return undefined;
-  return doc.data().oracle_id;
+  const fromFirestore = doc.data().oracle_id?.trim();
+  return fromFirestore && isValidV4UUID(fromFirestore) ? fromFirestore : undefined;
+}
+
+/** Reuse previous / catalog / Firestore oracle_id; mint only when truly new. */
+async function resolvePostcardOracleId(
+  name: string,
+  previous: firestoreCard | null
+): Promise<string> {
+  return newUnlessValid(previous?.oracle_id ?? (await findMasterpieceOracleId(name)));
 }
 
 // async function findByNameAndSet(name: string, setId: string) {
@@ -242,7 +252,7 @@ async function upsertPostcard(body: PostcardBody) {
   const existing = await findByHcid(body.hcid.trim());
   const previous: firestoreCard | null = existing?.data() ?? null;
   const cardId = resolvePostcardCardId(body, existing, previous);
-  const oracle_id = newUnlessValid(previous?.oracle_id ?? (await findMasterpiece(body.name)));
+  const oracle_id = await resolvePostcardOracleId(body.name, previous);
 
   const imageUrl = await resolveImageUrl(body, cardId);
   const bodyWithImage = { ...body, image: imageUrl };
@@ -260,12 +270,10 @@ async function upsertPostcard(body: PostcardBody) {
     if (oracle_id !== previous.oracle_id) update.oracle_id = oracle_id;
     await existing.ref.update(update);
     scheduleCatalogPublish();
-    const int_oracle_id = cardMap.getAllPrints(oracle_id)[0]?.name ?? oracle_id;
-    const oracle_id_to_use = int_oracle_id == body.name.toLowerCase() ? '' : int_oracle_id;
     return {
       docId: existing.id,
       id: cardId,
-      oracle_id: oracle_id_to_use,
+      oracle_id,
       wasCreate: false,
       previous,
       imageUrl,
@@ -274,6 +282,7 @@ async function upsertPostcard(body: PostcardBody) {
 
   const stub = buildStubCard({ ...bodyWithImage, kind, set: setId });
   stub.id = cardId;
+  stub.oracle_id = oracle_id;
   const fireDoc = cardToFirestore(stub);
   if (!isValidV4UUID(fireDoc.id ?? '')) {
     throw new Error('failed_to_generate_card_id');
@@ -283,7 +292,7 @@ async function upsertPostcard(body: PostcardBody) {
   return {
     docId: stub.id,
     id: stub.id,
-    oracle_id: stub.oracle_id,
+    oracle_id,
     wasCreate: true,
     previous: null,
     imageUrl,
