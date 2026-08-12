@@ -19,7 +19,7 @@ interface Standing {
 
 export const Watchwolfresults = () => {
   const cards = useAtomValue(cardsAtom).getAllInSetListExactAsSubmap(cardSetList);
-  const setActiveCardFromAtom = useSetAtom(activeCardAtom);
+  const setActiveCard = useSetAtom(activeCardAtom);
   const [standings, setStandings] = useState<Standing[]>();
   useEffect(() => {
     GetCardVotes().then(setStandings);
@@ -96,7 +96,7 @@ export const Watchwolfresults = () => {
                     window.open(`/card/${encodeURIComponent(card.hcid)}`, '_blank');
                   } else {
                     event.preventDefault();
-                    setActiveCardFromAtom(card.id);
+                    setActiveCard(card.id);
                   }
                 }}
               >

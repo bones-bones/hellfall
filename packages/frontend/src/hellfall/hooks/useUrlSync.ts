@@ -31,6 +31,7 @@ import { cardsAtom } from '../atoms/cardsAtom.ts';
 // import { useAuth } from '../../auth/AuthContext.tsx';
 // @circular-ignore Used only for links
 import { ControlBar } from '../search-controls/ControlBar'; // used for link
+import { tooltipSrcAtom } from '../atoms/tooltipAtom.ts';
 
 const sortsEqual: equalityFunction<SortObject> = (mem1: SortObject, mem2: SortObject) =>
   mem1.sort == mem2.sort && mem1.dir == mem2.dir;
@@ -59,6 +60,7 @@ export const useUrlSync = () => {
   const [sortRules, setSortRules] = useAtom(sortAtom);
   const [page, setPage] = useAtom(pageAtom);
   const setActiveCard = useSetAtom(activeCardAtom);
+  const setTooltipSrc = useSetAtom(tooltipSrcAtom);
   const [summary, setSummary] = useAtom(summaryAtom);
   const [invalids, setInvalids] = useAtom(invalidAtom);
   const cards = useAtomValue(cardsAtom);
@@ -117,6 +119,7 @@ export const useUrlSync = () => {
       setPage(parseInt(params.get('page') || '0'));
     }
     setActiveCard('');
+    setTooltipSrc(undefined);
   }, [location.search, location.pathname /*, user */]); // This triggers on back/forward navigation
 };
 

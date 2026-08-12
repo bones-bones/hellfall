@@ -3,7 +3,7 @@ import { cardsAtom } from '../atoms/cardsAtom.ts';
 import { HellfallCard } from './HellfallCard.tsx';
 
 import { useEffect } from 'react';
-import { useAtomValue } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { useUpdateURL } from '../hooks/useUrlSync.ts';
 import { useSearchResults } from '../hooks/useSearchResults.ts';
 import { invalidAtom, queryAtom, summaryAtom } from '../atoms/searchAtoms.ts';
@@ -11,6 +11,8 @@ import { SearchBar } from '../search-controls/SearchBar.tsx';
 import { createStyles } from '@workday/canvas-kit-styling';
 import { createStyledDiv, createStyledHR } from '../../styling';
 import { Tooltip } from '../Tooltip.tsx';
+import { useKeyPress } from '../../hooks/useKeyPress.ts';
+import { tooltipSrcAtom } from '../atoms/tooltipAtom.ts';
 
 export const SingleCard = () => {
   const cards = useAtomValue(cardsAtom);
@@ -31,6 +33,14 @@ export const SingleCard = () => {
       document.title = `${entryToRender.name} | Hellfall`;
     }
   }, [entryToRender]);
+
+  const escape = useKeyPress('Escape');
+  const setTooltipSrc = useSetAtom(tooltipSrcAtom);
+  useEffect(() => {
+    if (escape) {
+      setTooltipSrc(undefined);
+    }
+  }, [escape]);
 
   return (
     <div>

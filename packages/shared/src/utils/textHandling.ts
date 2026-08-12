@@ -319,8 +319,9 @@ export const toPasteableExportName = (text: string) => {
     .replaceAll(/([^/])\/([^/])/g, '$1$2')
     .replaceAll(/\((\d+)\)/g, '$1')
     .replaceAll('|', '')
-    .replace(/( <HC>){2,}/,' <HC>') // TODO: Replace this with something less hacky
-    .trim().replace(/^([(:#])/,'_$1');
+    .replace(/( <HC>){2,}/, ' <HC>') // TODO: Replace this with something less hacky
+    .trim()
+    .replace(/^([(:#])/, '_$1');
 };
 /**
  * Converts mana from import from scryfall (switches notation for phyrexian mana)
