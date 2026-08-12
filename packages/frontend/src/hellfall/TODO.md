@@ -184,3 +184,4 @@ Write a script to transform the database
 - for touhou, figure out how to drop all reminder faces except first one
 - add dynamic width-based collapses (prints, related cards, control bar)
 - make page reset on sort change
+- deduplicate the tokens page (remove duplicate related names)

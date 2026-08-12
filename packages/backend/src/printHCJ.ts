@@ -1,9 +1,11 @@
 import { HCCard, HCLayout, HCRelatedCard } from '@hellfall/shared/types';
-import { CardMap } from '@hellfall/shared/utils';
+import { CardMap, toPasteableExportName } from '@hellfall/shared/utils';
 
 const printCard = (name: string, count?: string, collector_number?: string) =>
   console.log(
-    `${count ? `${count} ` : ''}${name}${collector_number ? ` (HCJ) ${collector_number}` : ''}`
+    `${count ? `${count} ` : ''}${toPasteableExportName(
+      `${name}${collector_number ? ` (HCJ) ${collector_number}` : ''}`
+    )}`
   );
 
 /**

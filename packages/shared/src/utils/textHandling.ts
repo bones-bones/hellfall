@@ -311,15 +311,16 @@ export const toExportName = (name: string) => {
 };
 
 /**
- * Strips single slashes from text (for the purposes of exporting to draftmancer
- * so that it imports correctly into cockatrice)
- * @param text text to strip single slashes from
+ * Fixes an export name to make it pasteable into cockatrice
+ * @param text text to get the export name from
  */
-export const stripSingleSlashes = (text: string) => {
+export const toPasteableExportName = (text: string) => {
   return text
     .replaceAll(/([^/])\/([^/])/g, '$1$2')
+    .replaceAll(/\((\d+)\)/g, '$1')
     .replaceAll('|', '')
-    .trim();
+    .replace(/( <HC>){2,}/,' <HC>') // TODO: Replace this with something less hacky
+    .trim().replace(/^([(:#])/,'_$1');
 };
 /**
  * Converts mana from import from scryfall (switches notation for phyrexian mana)
