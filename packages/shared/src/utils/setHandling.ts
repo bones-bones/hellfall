@@ -65,13 +65,12 @@ export const getSet = (code: SetCode): HCSet | undefined => setMap.get(fixSetCod
  * Gets the src of a set symbol image
  * @param set the set to get the symbol image for
  */
-export const setToSrc = (set?: HCSet):undefined|string => {
+export const setToSrc = (set?: HCSet): undefined | string => {
   if (!set) return;
   if (set.filename) {
     return `/sets/${set.filename}`;
-  }
-  else if (set.parent_set_code) {
-    return setToSrc(getSet(set.parent_set_code))
+  } else if (set.parent_set_code) {
+    return setToSrc(getSet(set.parent_set_code));
   }
 };
 
@@ -103,20 +102,18 @@ export const getParentSet = (code: SetCode): HCSet | undefined => {
   let set = getSet(code);
   if (!set) return;
   while (set.parent_set_code) {
-    set = getSet(set.parent_set_code)
+    set = getSet(set.parent_set_code);
     if (!set) return;
   }
   if (set.code == fixSetCode(code)) return;
   return set;
-}
+};
 
 /**
  * Gets the set code that is the parent of another set
  * @param code Set code to get the parent of
  */
-export const getParentSetCode = (code: SetCode): SetCode | undefined =>
-  getParentSet(code)?.code;
-
+export const getParentSetCode = (code: SetCode): SetCode | undefined => getParentSet(code)?.code;
 
 /**
  * Gets the sets that are the children of another set
@@ -188,7 +185,7 @@ export const getCollectorOrderSet = (code: SetCode): SetCode => {
  * @param code Set code to get the accepted order set for
  */
 export const getAcceptedOrderSet = (code: SetCode): SetCode => {
-  const parent = getParentSet(code);
+  const parent = getDirectParentSet(code);
   if (parent?.code == 'SCL') {
     return parent.code;
   }

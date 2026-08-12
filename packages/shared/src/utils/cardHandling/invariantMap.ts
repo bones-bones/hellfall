@@ -111,11 +111,18 @@ const mergeInvariants = (oldInvariant: printInvariant, newInvariant: printInvari
       .filter(keyword => !oldInvariant.keywords?.includes(keyword))
       .forEach(keyword => oldInvariant.keywords?.push(keyword));
   }
-  if (!oldInvariant.token_makers?.length && newInvariant.token_makers?.length) {
-    oldInvariant.token_makers = newInvariant.token_makers;
-  } else if (newInvariant.token_makers?.length) {
+  if (newInvariant.token_makers?.length) {
+    if (!oldInvariant.token_makers?.length) {
+      oldInvariant.token_makers = [];
+    }
     newInvariant.token_makers.forEach(part => {
+      if (!part.id) {
+        oldInvariant.token_makers?.push(part);
+      }
+      const existing = oldInvariant.token_makers?.find(other => other.oracle_id == part.oracle_id) ?? 
+
       if (!(part.id && oldInvariant.token_makers?.some(other => other.id == part.id))) {
+        
         oldInvariant.token_makers?.push(part);
       }
     });

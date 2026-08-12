@@ -37,6 +37,7 @@ import {
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import { fetchHCJFronts } from './fetchHCJFronts.ts';
 import { makeSort } from '@hellfall/shared/filters';
+import { printHCJ } from './printHCJ.ts';
 
 const usingApproved = false;
 const typeSet = new Set<string>();
@@ -45,6 +46,7 @@ const creatorSet = new Set<string>();
 const artistSet = new Set<string>();
 const tagSet = new Set<string>();
 const NO_SCRYFALL = process.argv.includes('--noscryfall');
+const PRINT_HCJ = process.argv.includes('--printhcj');
 const movedIds: Record<string, string> = {
   '219': '6727',
   '219b': '6728',
@@ -255,7 +257,7 @@ const ignoreDuplicateOrders: Partial<Record<SetCode, string[]>> = {
   HC2_1: ['114b', '114c', '114d', '114e', '138b', '114f', '217b', '217c', '217d', '217e'],
   HC3_1: ['248b', '346b', '346c', '346d'],
   HC6_0: ['10b'],
-  HCJ: ['15b', '444b','444c'],
+  HCJ: ['15b', '444b', '444c'],
   HC8_0: ['292b', '292c'],
   HC8_1: ['31b'],
   HC9_0: ['137b', '324b'],
@@ -378,19 +380,23 @@ const main = async () => {
         console.log(`Set ${getAcceptedOrderSet(code)} has a missing accepted number at ${i}`);
       }
     }
-  } 
+  }
   finalCards.forEach(card => {
     if (card.all_parts) {
       if (card.layout == 'front') {
-        updateParts(
-          card,
-          finalCards.filterFromSetExactToMap('HCJ', value => value.tags?.includes(card.tags![0]))
+        const relateds = finalCards.filterFromSetExactToMap('HCJ', value =>
+          value.tags?.includes(card.tags![0])
         );
+        updateParts(card, relateds);
+        if (PRINT_HCJ) {
+          printHCJ(card, relateds);
+        }
       } else {
         updateParts(card, getAllRelatedPermissive(card, finalCards));
       }
     }
   });
+
   finalCards.forEach(card => cleanParts(card, getAllRelatedPermissive(card, finalCards)));
 
   const takenNames = new Set(namesRawData.data);

@@ -3,10 +3,7 @@ import { textEquals } from '../textHandling';
 import { pushProp } from '../listHandling';
 import { CardMap } from './cardMap';
 import { toFaces } from './cardMethods';
-
-
-// repurpose draftmancer export code to get ordered names, sets, cns, and counts
-
+import { orderRelatedLands } from '../pipsAndColors';
 
 /**
  * Checks whether a card has any related card with a given component
@@ -81,6 +78,10 @@ export const updatePartFromCard = (part: HCRelatedCard, card: HCCard.Any) => {
   part.type_line = card.type_line;
 };
 
+const numSort = (a: HCRelatedCard, b: HCRelatedCard) => {
+  return parseInt(a.collector_number) - parseInt(b.collector_number);
+};
+
 /**
  * Updates a card and its related cards
  * @param card card to update
@@ -139,7 +140,14 @@ export const updateParts = (card: HCCard.Any, relateds: CardMap) => {
           basics.push(part);
         }
       });
-    card.all_parts = [...headliners, ...others, ...nonbasics, ...thriving, ...basics];
+
+    card.all_parts = [
+      ...headliners.sort(numSort),
+      ...others.sort(numSort),
+      ...orderRelatedLands(thriving),
+      ...orderRelatedLands(basics),
+      ...nonbasics.sort(numSort),
+    ];
     return;
   }
   card.all_parts

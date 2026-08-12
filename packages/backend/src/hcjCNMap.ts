@@ -530,6 +530,6 @@ const hcjAOToCNList = [
   450, // richard
   458, // northernlion
   465, // red bull
-]
-export const hcjAoToCNMap = new Map<string,string>();
-hcjAOToCNList.forEach((num,i) => hcjAoToCNMap.set(`${num}`,`${i+1}`));
+];
+export const hcjAoToCNMap = new Map<string, string>();
+hcjAOToCNList.forEach((num, i) => hcjAoToCNMap.set(`${num}`, `${i + 1}`));

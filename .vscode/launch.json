@@ -32,6 +32,16 @@
       "internalConsoleOptions": "neverOpen"
     },
     {
+      "name": "Debug transform-hc (with -noscryfall and -printhcj)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["transform-hc", "--noscryfall", "--printhcj"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
       "name": "Debug migrate-hellscube-db",
       "type": "node",
       "request": "launch",

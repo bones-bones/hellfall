@@ -30,7 +30,6 @@ import { splitParens, textContains, toExportName } from '../textHandling';
 import {
   CardMap,
   cardToInvariant,
-  getAllRelated,
   InvariantMap,
   printInvariant,
   toFaces,
