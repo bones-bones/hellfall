@@ -1408,6 +1408,16 @@
       ]
     },
     {
+      "filename": "mono/effects/Shrimp.svg",
+      "symbol": "Shrimp",
+      "english": "a 1/1 red Shrimp mana creature that costs one red mana with haste that can't block and doesn't empty as steps or phases end",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "R"
+      ]
+    },
+    {
       "filename": "mono/effects/Bear.svg",
       "symbol": "Bear",
       "english": "one bear mana (can be spent as mana or to create a 2/2 brown bear as a special action; can be paid for by sacrificing a bear or a 2/2 creature)",
@@ -2644,6 +2654,17 @@
       "colors": [
         "R",
         "C"
+      ],
+      "hybrid": true
+    },
+    {
+      "filename": "hybrid/two/misc/RRShrimp.svg",
+      "symbol": "RR/Shrimp",
+      "english": "two red mana or one shrimp mana",
+      "represents_mana": true,
+      "mana_value": 2,
+      "colors": [
+        "R"
       ],
       "hybrid": true
     },

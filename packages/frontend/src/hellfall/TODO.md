@@ -185,3 +185,5 @@ Write a script to transform the database
 - add dynamic width-based collapses (prints, related cards, control bar)
 - make page reset on sort change
 - deduplicate the tokens page (remove duplicate related names)
+- make sure otag:scales-with-multiple and sandcaster supreme worked
+- make sure invasion of north dakota got defense, not loyalty
