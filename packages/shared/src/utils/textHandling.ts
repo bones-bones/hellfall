@@ -382,6 +382,7 @@ const costSubstitutes: [RegExp | string, string][] = [
   [/^Chris|Lois|Stewie|Meg|Peter$/, '0'],
   ['Blood', '0'],
   ['Discard your hand/RR', 'R}{R'],
+  ['RR/Shrimp', 'R}{R'],
   [/^2\/(?![WUBRG]$)\w+$/, '2'],
   [/^[3458]\/([WUBRGC])$/, '$1'],
   [/^([0134])\/\w+$/, '$1'],
