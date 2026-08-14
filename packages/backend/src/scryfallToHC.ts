@@ -165,9 +165,6 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
   );
   if ('card_faces' in entry && 'card_faces' in card) {
     entry.card_faces.forEach((face, i) => {
-      if (face.type_line == undefined) {
-        face.type_line = ''; // Necessary because Undercity // The Initiative is bugged in scryfall
-      }
       getFaceEntries(face as faceMappedType).forEach(([prop, value]) => {
         if (sameKeys.includes(prop)) {
           addPropToFace(card, prop, value, i);
