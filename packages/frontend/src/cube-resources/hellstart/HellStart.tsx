@@ -9,7 +9,7 @@ import { createStyledDiv } from '../../styling';
 
 export const HellStart = () => {
   const cards = useAtomValue(cardsAtom);
-  const setActiveCardFromAtom = useSetAtom(activeCardAtom);
+  const setActiveCard = useSetAtom(activeCardAtom);
 
   const HCJPackDisplay = ({ entry }: { entry: HCCard.Any }) => {
     return (
@@ -27,7 +27,7 @@ export const HellStart = () => {
             if (event.button === 1 || event.metaKey || event.ctrlKey) {
               window.open(`/card/${encodeURIComponent(entry.id)}`, '_blank');
             } else {
-              setActiveCardFromAtom(entry.id);
+              setActiveCard(entry.id);
             }
           }}
         />

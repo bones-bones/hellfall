@@ -37,9 +37,9 @@ export const HCToDraftmancer = (
     if (!id) return;
     const related = draftCards.get(id) ?? draftTokens.get(id);
     if (related) {
-      return `${toPasteableExportName(toFaces(related)[0].export_name ?? toFaces(related)[0].name)} (${
-        related.set
-      }) ${related.collector_number}`;
+      return `${toPasteableExportName(
+        toFaces(related)[0].export_name ?? toFaces(related)[0].name
+      )} (${related.set}) ${related.collector_number}`;
     }
   };
   const getDraftEffects = (card: HCCard.Any): DraftEffect[] | undefined => {

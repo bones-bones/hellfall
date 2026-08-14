@@ -36,7 +36,7 @@ export const HellFall = () => {
 
   useUpdateURL();
 
-  const setActiveCardFromAtom = useSetAtom(activeCardAtom);
+  const setActiveCard = useSetAtom(activeCardAtom);
 
   const page = useAtomValue(pageAtom);
 
@@ -167,7 +167,7 @@ export const HellFall = () => {
                       if (event.button === 1 || event.metaKey || event.ctrlKey) {
                         window.open(`/card/${encodeURIComponent(entry.hcid)}`, '_blank');
                       } else {
-                        setActiveCardFromAtom(entry.id);
+                        setActiveCard(entry.id);
                       }
                     }}
                     key={`${entry.id}-${i}`}

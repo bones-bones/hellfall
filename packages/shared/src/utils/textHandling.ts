@@ -319,8 +319,9 @@ export const toPasteableExportName = (text: string) => {
     .replaceAll(/([^/])\/([^/])/g, '$1$2')
     .replaceAll(/\((\d+)\)/g, '$1')
     .replaceAll('|', '')
-    .replace(/( <HC>){2,}/,' <HC>') // TODO: Replace this with something less hacky
-    .trim().replace(/^([(:#])/,'_$1');
+    .replace(/( <HC>){2,}/, ' <HC>') // TODO: Replace this with something less hacky
+    .trim()
+    .replace(/^([(:#])/, '_$1');
 };
 /**
  * Converts mana from import from scryfall (switches notation for phyrexian mana)
@@ -381,6 +382,7 @@ const costSubstitutes: [RegExp | string, string][] = [
   [/^Chris|Lois|Stewie|Meg|Peter$/, '0'],
   ['Blood', '0'],
   ['Discard your hand/RR', 'R}{R'],
+  ['RR/Shrimp', 'R}{R'],
   [/^2\/(?![WUBRG]$)\w+$/, '2'],
   [/^[3458]\/([WUBRGC])$/, '$1'],
   [/^([0134])\/\w+$/, '$1'],

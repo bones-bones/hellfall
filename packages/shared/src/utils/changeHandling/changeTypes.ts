@@ -27,6 +27,7 @@ export const isChangeLocation = (value: any): value is changeLocation =>
   changeLocationList.includes(value);
 
 const rootAddProps = [
+  'hcid',
   'id_is_scryfall',
   'oracle_id',
   'oracle_id_is_scryfall',

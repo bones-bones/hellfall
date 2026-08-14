@@ -16,6 +16,7 @@ import {
 import { Box, BoxProps } from '@workday/canvas-kit-react';
 import { useEffect } from 'react';
 import { Tooltip } from '../hellfall/Tooltip.tsx';
+import { tooltipSrcAtom } from '../hellfall/atoms/tooltipAtom.ts';
 
 const activeCardAtom = atom<HCCard.Any | undefined>(undefined);
 
@@ -23,7 +24,10 @@ export const Deck = () => {
   const { '*': deckName } = useParams();
   const deck = allDecks.find(e => e.title == deckName)!;
   const cards = useAtomValue(cardsAtom);
-  const setActiveCard = useSetAtom(activeCardAtom);
+  const [activeCard, setActiveCard] = useAtom(activeCardAtom);
+  const setTooltipSrc = useSetAtom(tooltipSrcAtom);
+
+  useEffect(() => setTooltipSrc(undefined), [activeCard]);
   const resolveCard = (entry: CardEntry): RenderEntry => {
     const { card } = cards.getForDeck(entry.name);
     return {

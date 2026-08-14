@@ -12,10 +12,12 @@ import { PageContainer, StyleComponent, Subtitle, Title } from './Components.tsx
 import { createStyledDiv } from '../styling/StyledElements.tsx';
 import { createStyles } from '@workday/canvas-kit-styling';
 import { Tooltip } from '../hellfall/Tooltip.tsx';
+import { tooltipSrcAtom } from '../hellfall/atoms/tooltipAtom.ts';
 
 export const WatchwolfWar = () => {
   const cards = useAtomValue(cardsAtom).getAllInSetListExactAsSubmap(cardSetList);
-  const setActiveCardFromAtom = useSetAtom(activeCardAtom);
+  const setActiveCard = useSetAtom(activeCardAtom);
+  const setTooltipSrc = useSetAtom(tooltipSrcAtom);
 
   const submitting = useRef(false);
   const [TwoCardState, SetTwoCardState] = useState<{
@@ -64,14 +66,15 @@ export const WatchwolfWar = () => {
               window.open(`/card/${encodeURIComponent(TwoCardState.LeftCard.hcid)}`, '_blank');
             } else {
               updateStandings(TwoCardState.LeftCard.id, TwoCardState.RightCard.id);
-              setActiveCardFromAtom('');
+              setActiveCard('');
+              setTooltipSrc(undefined);
             }
           }}
           onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey) {
               window.open(`/card/${encodeURIComponent(TwoCardState.LeftCard.hcid)}`, '_blank');
             } else {
-              setActiveCardFromAtom(TwoCardState.LeftCard.id);
+              setActiveCard(TwoCardState.LeftCard.id);
               setOrigin('left');
             }
           }}
@@ -86,14 +89,15 @@ export const WatchwolfWar = () => {
               window.open(`/card/${encodeURIComponent(TwoCardState.RightCard.hcid)}`, '_blank');
             } else {
               updateStandings(TwoCardState.RightCard.id, TwoCardState.LeftCard.id);
-              setActiveCardFromAtom('');
+              setActiveCard('');
+              setTooltipSrc(undefined);
             }
           }}
           onClickTitle={(event: React.MouseEvent<HTMLImageElement>) => {
             if (event.button === 1 || event.metaKey || event.ctrlKey) {
               window.open(`/card/${encodeURIComponent(TwoCardState.RightCard.hcid)}`, '_blank');
             } else {
-              setActiveCardFromAtom(TwoCardState.RightCard.id);
+              setActiveCard(TwoCardState.RightCard.id);
               setOrigin('right');
             }
           }}

@@ -87,7 +87,6 @@ export const HellfallCard = ({
   const {
     displayCard,
     persistEnabled,
-
     addTag,
     deleteTag,
     loading: tagsLoading,

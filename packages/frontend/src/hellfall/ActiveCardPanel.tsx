@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useKeyPress } from '../hooks';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { activeCardAtom } from './atoms/searchAtoms';
 import { cardsAtom } from './atoms/cardsAtom';
 import { Card, ToolbarIconButton, SidePanel, useSidePanelModel } from '@workday/canvas-kit-react';
@@ -8,6 +8,7 @@ import { externalLinkIcon, xIcon } from '@workday/canvas-system-icons-web';
 import { HellfallCard } from './card/HellfallCard';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import { createStenciledButtonDiv, createStyledDiv, StenciledButtonDivProps } from '../styling';
+import { tooltipSrcAtom } from './atoms/tooltipAtom';
 
 type dragCursor = 'w-resize' | 'ew-resize' | 'e-resize';
 interface ActiveCardPanelProps {
@@ -24,12 +25,14 @@ export const ActiveCardPanel = ({ origin = 'right', maxWidth }: ActiveCardPanelP
   const cards = useAtomValue(cardsAtom);
   const escape = useKeyPress('Escape');
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
+  const setTooltipSrc = useSetAtom(tooltipSrcAtom);
   const activeCard = cards.get(activeCardFromAtom);
   const initialTransitionState = activeCard ? 'expanded' : 'collapsed';
   const model = useSidePanelModel({ initialTransitionState });
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    setTooltipSrc(undefined);
     if (activeCard) {
       model.events.expand();
     } else {
@@ -181,7 +184,10 @@ export const ActiveCardPanel = ({ origin = 'right', maxWidth }: ActiveCardPanelP
             <ToolbarIconButton
               icon={xIcon}
               cs={toolbarIconStyles}
-              onClick={() => setActiveCardFromAtom('')}
+              onClick={() => {
+                setActiveCardFromAtom('');
+                setTooltipSrc(undefined);
+              }}
             />
             {activeCard && (
               <ToolbarIconButton
