@@ -34,7 +34,7 @@ class CardLookupObject {
    * @param collector_number the collector number to use, if any
    * @param noDefault whether to return undefined if the set isn't specified (used for random land handling)
    */
-  get = (code?: SetCode, collector_number?: string, noDefault?: boolean): string | undefined => {
+  get(code?: SetCode, collector_number?: string, noDefault?: boolean): string | undefined {
     if (!code) {
       return noDefault ? undefined : this.defaultId;
     }
@@ -62,13 +62,13 @@ class CardLookupObject {
       return Array.from(ids.values())[0];
     }
     return noDefault ? undefined : this.defaultId;
-  };
+  }
 
   /**
    * Adds a new card to the CardLookupObject.
    * @param card {@linkcode HCCard.Any} to set
    */
-  set = (card: HCCard.Any) => {
+  set(card: HCCard.Any) {
     getCollectorNumSets(card.set).forEach(code => {
       const oldMap = this.setNumMap.get(code);
       if (oldMap) {
@@ -89,12 +89,12 @@ class CardLookupObject {
         this.setMap.set(code, set);
       }
     });
-  };
+  }
   /**
    * @param id the id to delete
    * @returns true if the last version of this card has been deleted
    */
-  delete = (id: string) => {
+  delete(id: string) {
     this.setMap.forEach((set, code) => {
       if (set.has(id)) {
         set.delete(id);
@@ -120,7 +120,7 @@ class CardLookupObject {
       }
     });
     return false;
-  };
+  }
 }
 
 /**
