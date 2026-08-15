@@ -47,17 +47,6 @@ const artistSet = new Set<string>();
 const tagSet = new Set<string>();
 const NO_SCRYFALL = process.argv.includes('--noscryfall');
 const PRINT_HCJ = process.argv.includes('--printhcj');
-const movedIds: Record<string, string> = {
-  '219': '6727',
-  '219b': '6728',
-  '1121': '6729',
-  '1121b': '6730',
-  '1121c': '6731',
-  '1121d': '6732',
-  '1121e': '6733',
-  '2035': '6734',
-  '2035b': '6735',
-};
 
 const mergeDatabases = (
   existingCards: CardMap,
@@ -67,32 +56,34 @@ const mergeDatabases = (
 ): HCCard.Any[] => {
   // newCards.forEach((newCard: HCCard.Any, id: string) => {});
   const mergedCards = newCards.mapToMap((newCard: HCCard.Any, id: string) => {
-    const existingCard = existingCards.get(movedIds[id] ?? id);
+    const existingCard = existingCards.get(id);
     if (existingCard) {
-      existingCards.delete(existingCard.hcid);
       return mergeFromSheet(existingCard, newCard);
     }
     // setDerivedProps(newCard);
     return newCard;
   });
   if (usingApproved) {
-    existingCards.forEach(card => {
+    existingCards.filter(card=>!mergedCards.has(card.id)).forEach(card => {
       setDerivedProps(card);
       mergedCards.set(card);
     });
   }
 
   const mergedTokens = newTokens.mapToMap((newCard: HCCard.Any, id: string) => {
-    const existingCard = existingTokens.get(movedIds[id] ?? id);
+    const existingCard = existingTokens.get(id);
     if (existingCard) {
-      existingTokens.delete(existingCard.hcid);
       return mergeFromSheet(existingCard, newCard);
+    } else if (newCard.kind == 'token' && existingTokens.hasOracleId(newCard.oracle_id)) {
+      const cardCopy = structuredClone(existingTokens.getPreferredByOracleId(newCard.oracle_id))!;
+      cardCopy.id = newCard.id;
+      return mergeFromSheet(cardCopy, newCard);
     }
     // setDerivedProps(newCard);
     return newCard;
   });
   if (usingApproved) {
-    existingTokens.forEach(card => {
+    existingTokens.filter(card=>!mergedTokens.has(card.id)).forEach(card => {
       setDerivedProps(card);
       mergedTokens.set(card);
     });
