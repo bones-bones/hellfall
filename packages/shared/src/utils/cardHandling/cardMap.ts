@@ -209,7 +209,7 @@ export class LightCardMap {
    * @param oracle_id the oracle id to use
    * @param prefer the version of the card to prefer, if any
    */
-  getPreferredByOracleId(oracle_id: string, prefer: preferType = 'newest'): HCCard.Any|undefined {
+  getPreferredByOracleId(oracle_id: string, prefer: preferType = 'newest'): HCCard.Any | undefined {
     const prints = this.getAllPrints(oracle_id);
     if (prints.length) {
       return getPreference(prints, prefer);

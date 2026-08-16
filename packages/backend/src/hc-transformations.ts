@@ -64,10 +64,12 @@ const mergeDatabases = (
     return newCard;
   });
   if (usingApproved) {
-    existingCards.filter(card=>!mergedCards.has(card.id)).forEach(card => {
-      setDerivedProps(card);
-      mergedCards.set(card);
-    });
+    existingCards
+      .filter(card => !mergedCards.has(card.id))
+      .forEach(card => {
+        setDerivedProps(card);
+        mergedCards.set(card);
+      });
   }
 
   const mergedTokens = newTokens.mapToMap((newCard: HCCard.Any, id: string) => {
@@ -83,10 +85,12 @@ const mergeDatabases = (
     return newCard;
   });
   if (usingApproved) {
-    existingTokens.filter(card=>!mergedTokens.has(card.id)).forEach(card => {
-      setDerivedProps(card);
-      mergedTokens.set(card);
-    });
+    existingTokens
+      .filter(card => !mergedTokens.has(card.id))
+      .forEach(card => {
+        setDerivedProps(card);
+        mergedTokens.set(card);
+      });
   } else if (NO_SCRYFALL) {
     existingTokens.getAllInSet('SFT').forEach(card => {
       setDerivedProps(card);

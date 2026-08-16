@@ -9,14 +9,22 @@ const playAreaStyles = createStyles({ border: '1px solid black' });
 const PlayArea = createStyledDiv(playAreaStyles, 'PlayArea');
 // make sure images work properly
 
+function shuffle<T>(array: T[]): T[] {
+  const result = [...array];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+const toRep = (cards: HCCard.Any[]) => cards.map((entry, i) => ({ card: entry, id: i }));
+
 type Props = { cards: HCCard.Any[] };
 export const PlaytestArea = ({ cards }: Props) => {
-  const { hand, drawCards, ready, playCard, play } = useCardState(cards);
+  const { hand, drawCards, playCard, play, resetCards } = useCardState(cards);
   const [life, setLife] = useState(20);
 
-  useEffect(() => {
-    drawCards(7);
-  }, [ready]);
   console.log(play);
 
   return (
@@ -78,33 +86,34 @@ export const PlaytestArea = ({ cards }: Props) => {
       >
         draw a card
       </button>
+      <button
+        onClick={() => {
+          resetCards();
+          setLife(20);
+        }}
+      >
+        restart the playtest
+      </button>
     </>
   );
 };
 
 type CardRepresentation = { card: HCCard.Any; id: number };
-
 const useCardState = (cards: HCCard.Any[]) => {
-  const [deck, setDeck] = useState<CardRepresentation[]>(
-    cards.map((entry, i) => ({ card: entry, id: i })).sort(() => Math.random() - Math.random())
-  );
+  const [deck, setDeck] = useState<CardRepresentation[]>(shuffle(toRep(cards)));
 
   const [hand, setHand] = useState<CardRepresentation[]>([]);
 
   const [play, setPlay] = useState<CardRepresentation[]>([]);
 
-  const [ready, setReady] = useState(false);
+  useEffect(() => resetCards(), [cards]);
 
-  // useEffect(() => {
-  //   if (cards.length > 0) {
-  //     const playObjects = cards
-  //       .map((entry, i) => ({ card: entry, id: i }))
-  //       .sort(() => Math.random() - Math.random());
-
-  //     setDeck(playObjects);
-  //     setReady(true);
-  //   }
-  // }, [cards]);
+  const resetCards = () => {
+    setDeck(shuffle(toRep(cards)));
+    setHand([]);
+    setPlay([]);
+    drawCards(7);
+  };
 
   const drawCards = (amount: number) => {
     const cardsToDraw = Math.min(deck.length, amount);
@@ -132,5 +141,5 @@ const useCardState = (cards: HCCard.Any[]) => {
     setHand(hand.filter(entry => entry.id !== id));
   };
 
-  return { deck, hand, play, drawCards, playCard, ready };
+  return { deck, hand, play, drawCards, playCard, resetCards };
 };

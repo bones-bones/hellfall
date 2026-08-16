@@ -222,6 +222,7 @@ export const setDerivedProps = (
       if (
         ((listIncludesValueLower(face.supertypes, 'legendary') &&
           !listIncludesValueLower(face.types, 'planeswalker') &&
+          !listIncludesValueLower(face.types, 'universewalker') &&
           !listIncludesValueLower(face.types, 'player') &&
           !baseIncludesFlag(card, 'missing-legend-frame', i)) ||
           baseIncludesFlag(card, 'legend-frame', i)) &&
@@ -253,6 +254,7 @@ export const setDerivedProps = (
     } else if (
       ((listIncludesValueLower(face.supertypes, 'legendary') &&
         !listIncludesValueLower(face.types, 'planeswalker') &&
+        !listIncludesValueLower(face.types, 'universewalker') &&
         !listIncludesValueLower(face.types, 'player') &&
         baseIncludesFlag(card, 'hearthstone-frame', i) &&
         !baseIncludesFlag(card, 'missing-legend-frame', i)) ||

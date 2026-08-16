@@ -89,6 +89,7 @@ export const anyFrameEffectTags: Record<string, HCFrameEffect> = {
   'spree-frame': HCFrameEffect.Spree,
   'slab-frame': HCFrameEffect.Slab,
   'arena-frame': HCFrameEffect.Arena,
+  'mtgo-frame': HCFrameEffect.MTGO,
   'universes-beyond-frame': HCFrameEffect.UniversesBeyond,
 };
 export const faceFrameEffectTags: Record<string, HCFrameEffect> = {
@@ -611,6 +612,7 @@ const subKeywords: Record<string, string | string[]> = {
   'started engine': 'start your engines',
   'manifest dreadmaw': 'manifest dread',
   sunlink: 'link',
+  'art rampage': 'rampage',
 };
 
 const keywordTags = [

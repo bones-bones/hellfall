@@ -186,3 +186,5 @@ Write a script to transform the database
 - make page reset on sort change
 - deduplicate the tokens page (remove duplicate related names)
 - remove #temp
+- fix vanguard stuff
+- fix color indicators on NRM dfcs

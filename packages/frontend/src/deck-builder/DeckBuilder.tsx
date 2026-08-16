@@ -40,7 +40,7 @@ export const DeckBuilder = () => {
   const [toRender, setToRender] = useState<string[] | undefined>();
   const [deckName, setNameOfDeck] = useState(searchparms.get('name') ?? '');
   const [idList, setIdList] = useState<string[]>([]);
-  const [playtesting, setPlaytesthing] = useState(false);
+  const [playtesting, setPlaytesting] = useState(false);
   const [showImage, setShowImage] = useState(true);
 
   // useEffect(() => {
@@ -93,15 +93,12 @@ export const DeckBuilder = () => {
       <ImportInstructions />
       {Boolean(idList.length) &&
         (playtesting ? (
-          <PlaytestArea cards={cardMap.getMultiple(idList)} />
+          <>
+            <PlaytestArea cards={cardMap.getMultiple(idList)} />
+            <button onClick={() => setPlaytesting(false)}>Close playtest</button>
+          </>
         ) : (
-          <button
-            onClick={() => {
-              setPlaytesthing(true);
-            }}
-          >
-            Click here to playtest
-          </button>
+          <button onClick={() => setPlaytesting(true)}>Click here to playtest</button>
         ))}
       <FormField>
         <FormField.Label>Deck Name</FormField.Label>
