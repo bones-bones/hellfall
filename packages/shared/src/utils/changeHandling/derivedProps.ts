@@ -478,7 +478,6 @@ const alwaysCompressLayouts: HCLayoutGroup.FaceLayoutType[] = [
  * @returns the invariant, or undefined if taken_names is omitted
  */
 export const resetFaceExportProps = (card: HCCard.Any) => {
-  if (card.set == 'NRM') return;
   if (card.export_name) {
     delete card.export_name;
   }

@@ -830,7 +830,7 @@ const changesForFaceTag = <K extends facePropType>(
   const change = createFaceChange(
     change_type,
     prop as faceChangeablePropType<typeof change_type>,
-    resolvedValue as any, // #temp
+    resolvedValue,
     splitTag.face
   );
   if (defaultValue && change_type == 'delete') {
