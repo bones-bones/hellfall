@@ -1763,7 +1763,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         { name: 'Swamp', count: 4 },
         { name: "Vesuvain't", count: 4 },
         { name: 'Candy Karn', count: 4 },
-        { name: 'Be Gay // Do Crime', count: 4 },        
+        { name: 'Be Gay // Do Crime', count: 4 },
       ],
       sideboard: [
         { name: 'HOA-Run Neighborhood', count: 2 },
@@ -1925,7 +1925,7 @@ The reason the deck runs no copies of Prismatic Piper, instead of taking advanta
         { name: 'Pithing Beeble', count: 1 },
         { name: ':urabrask_hit:', count: 4 },
         { name: 'Plains', count: 2 },
-        { name: 'Island', count: 1 },        
+        { name: 'Island', count: 1 },
         { name: 'Blood Tomb', count: 1 },
         { name: 'Path to the Gift Shop', count: 3 },
       ],

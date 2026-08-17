@@ -106,13 +106,22 @@ const useCardState = (cards: HCCard.Any[]) => {
 
   const [play, setPlay] = useState<CardRepresentation[]>([]);
 
+  const [ready, setReady] = useState(false);
+
   useEffect(() => resetCards(), [cards]);
+
+  useEffect(() => {
+    if (ready) {
+      setReady(false);
+      drawCards(7);
+    }
+  }, [ready]);
 
   const resetCards = () => {
     setDeck(shuffle(toRep(cards)));
     setHand([]);
     setPlay([]);
-    drawCards(7);
+    setReady(true);
   };
 
   const drawCards = (amount: number) => {
