@@ -644,7 +644,6 @@ export class InvariantMap {
   applyInvariant = (oracle_id: string, cardMap: CardMap) => {
     const invariant = this.get(oracle_id);
     cardMap.getAllPrints(oracle_id).forEach(card => {
-      if (card.set == 'NRM') return;
       if (!invariant) return;
       if (invariant.card_faces) {
         if ('card_faces' in card) {

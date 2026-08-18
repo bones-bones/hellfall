@@ -197,7 +197,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
         }
       );
       const costColors = pipMap.getColorsFromText(entryAt('mana_cost'));
-      if (!costColors.length && card.colors.length && !cardIsMulti && card.set != 'NRM') {
+      if (!costColors.length && card.colors.length && !cardIsMulti) {
         addPropToFace(card, 'color_indicator', card.colors);
       }
       for (let i = 0; i < keys.length; i++) {

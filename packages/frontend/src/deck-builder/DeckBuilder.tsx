@@ -1,15 +1,19 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { downloadElementAsImage } from './download-image';
 import { HCCard, SetCode } from '@hellfall/shared/types';
-// import { toDeck } from './toDeck.ts';
-import { TextInput, Box, FormField } from '@workday/canvas-kit-react';
+import { TextInput, Box, FormField, BoxProps } from '@workday/canvas-kit-react';
 import { ImportInstructions } from './ImportInstructions.tsx';
 import { PlaytestArea } from './playtest/PlaytestArea.tsx';
 import { downloadDraftmancer } from '../cube-resources/downloadDraftmancer.ts';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { createStyles } from '@workday/canvas-kit-styling';
-import { createStyledImg, createStyledTextArea } from '../styling';
-import { CardMap, HCToTTSDeck, unescapeBase64 } from '@hellfall/shared/utils';
+import { createStencil, createStyles } from '@workday/canvas-kit-styling';
+import { createStenciledDiv, createStyledImg, createStyledTextArea } from '../styling';
+import {
+  CardMap,
+  checkStandardLegality,
+  HCToTTSDeck,
+  unescapeBase64,
+} from '@hellfall/shared/utils';
 import { loadCardsData } from '@hellfall/shared/data';
 
 // const blankCard = {
@@ -20,6 +24,43 @@ import { loadCardsData } from '@hellfall/shared/data';
 
 const blankImage =
   'https://ist8-2.filesor.com/pimpandhost.com/2/6/5/8/265896/i/F/z/D/iFzDJ/00_Back_l.jpg';
+
+const RenderLegality = ({ deck }: { deck: HCCard.Any[] }) => {
+  const errors = checkStandardLegality(deck);
+  return (
+    <>
+      <LegalityText isInvalid={errors.length > 0}>
+        {!errors?.length ? (
+          'Deck is valid.'
+        ) : (
+          <>
+            Deck is invalid:
+            <ul>
+              {errors.map((error, i) => (
+                <li key={`error-${i}`}>{error}</li>
+              ))}
+            </ul>
+          </>
+        )}
+      </LegalityText>
+      {!errors?.length && <br />}
+    </>
+  );
+};
+
+const legalityTextStencil = createStencil({
+  vars: {},
+  base: {},
+  modifiers: {
+    isInvalid: {
+      true: {
+        color: '#c00',
+      },
+    },
+  },
+});
+type LegalityProps = BoxProps & { isInvalid: boolean };
+const LegalityText = createStenciledDiv<LegalityProps>(legalityTextStencil, 'LegalityText');
 
 export const DeckBuilder = () => {
   const ref = useRef(null);
@@ -40,8 +81,9 @@ export const DeckBuilder = () => {
   const [toRender, setToRender] = useState<string[] | undefined>();
   const [deckName, setNameOfDeck] = useState(searchparms.get('name') ?? '');
   const [idList, setIdList] = useState<string[]>([]);
-  const [playtesting, setPlaytesthing] = useState(false);
+  const [playtesting, setPlaytesting] = useState(false);
   const [showImage, setShowImage] = useState(true);
+  const [checkLegality, setCheckLegality] = useState(false);
 
   // useEffect(() => {
   //   import('@hellfall/shared/data/Hellscube-Database.json').then(({ data }: any) => {
@@ -93,15 +135,12 @@ export const DeckBuilder = () => {
       <ImportInstructions />
       {Boolean(idList.length) &&
         (playtesting ? (
-          <PlaytestArea cards={cardMap.getMultiple(idList)} />
+          <>
+            <PlaytestArea cards={cardMap.getMultiple(idList)} />
+            <button onClick={() => setPlaytesting(false)}>Close playtest</button>
+          </>
         ) : (
-          <button
-            onClick={() => {
-              setPlaytesthing(true);
-            }}
-          >
-            Click here to playtest
-          </button>
+          <button onClick={() => setPlaytesting(true)}>Click here to playtest</button>
         ))}
       <FormField>
         <FormField.Label>Deck Name</FormField.Label>
@@ -175,19 +214,24 @@ Cock and Balls to Torture and Abuse
         Download for TTS
       </button>{' '}
       <button
-        onClick={() => {
+        onClick={() =>
           downloadDraftmancer({
             name: deckName,
             set: 'Custom' as SetCode,
             idList,
             cardMap,
-          });
-        }}
+          })
+        }
       >
         Download for Draftmancer
       </button>{' '}
+      <button onClick={() => setCheckLegality(!checkLegality)}>
+        {checkLegality ? 'Hide Constructed Legality' : 'Check Constructed Legality'}
+      </button>{' '}
       Cards in deck: {toRender?.length ?? 0}
       <br />
+      <br />
+      {checkLegality && <RenderLegality deck={cardMap.getMultiple(idList)} />}
       {showImage && (
         <DeckContainer ref={ref}>
           {toRender?.map((image, i) => {

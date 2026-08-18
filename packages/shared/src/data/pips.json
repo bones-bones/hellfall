@@ -649,6 +649,17 @@
       ]
     },
     {
+      "filename": "mono/alternate/House.svg",
+      "symbol": "House",
+      "english": "one house (white) mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "W"
+      ],
+      "no_shadow": true
+    },
+    {
       "filename": "mono/misc/Yellow.svg",
       "symbol": "Yellow",
       "english": "one yellow mana",

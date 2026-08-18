@@ -175,7 +175,6 @@ Write a script to transform the database
 - once oracle ids get fully integrated, remove duplicative code in fetchers and tag handling
 - add invariant handling for oracle text, add printed oracle text fields for the text printed on the card, and update all oracle texts
 - make sure that removing a base tag with no notes doesn't affect duplicates with notes
-- deal with NRM invariants
 - find a way to allow old names for bold plagiarist?
 - figure out why the split tokens aren't compressing
 - rework related cards/other prints display to look more like scryfall
@@ -185,4 +184,9 @@ Write a script to transform the database
 - add dynamic width-based collapses (prints, related cards, control bar)
 - make page reset on sort change
 - deduplicate the tokens page (remove duplicate related names)
-- make sure sandcaster supreme worked (see if second run fixes it?)
+- remove #temp
+- fix vanguard stuff
+- fix color indicators on NRM dfcs
+- fix mork name fetch (have mork request card names from the server?)
+- add dark mode to hellfall
+- have deckbuilder interpret blank lines the same way as commented out lines? or just ignore them for legality check?

@@ -496,3 +496,39 @@ export const canBeInDecks = (card: HCCard.Any) =>
   ['card'].includes(card.kind) ||
   card.tags?.includes('draftpartner') ||
   card.tags?.includes('can-be-in-decks');
+
+export const checkStandardLegality = (deck: HCCard.Any[]): string[] => {
+  const errors: string[] = [];
+  if (deck.length < 60) {
+    errors.push(`Deck contains ${deck.length} card${deck.length != 1 ? 's' : ''}, which is < 60.`);
+  }
+  // maps an oracle id to the number of prints
+  const idCounts = new Map<string, number>();
+  // maps an invalid oracle id to the associated card name
+  const invalidNames = new Map<string, string>();
+  // maps an illegal oracle id to the associated card name
+  const illegalNames = new Map<string, string>();
+  deck.forEach(card => {
+    idCounts.set(card.oracle_id, (idCounts.get(card.oracle_id) ?? 0) + 1);
+    if (
+      idCounts.get(card.oracle_id)! > 5 &&
+      !listIncludesValueLower(toFaces(card)[0].supertypes, 'basic')
+    ) {
+      if (!invalidNames.has(card.oracle_id)) {
+        invalidNames.set(card.oracle_id, card.name);
+      }
+    }
+    if (card.legalities.standard != 'legal') {
+      if (!illegalNames.has(card.oracle_id)) {
+        illegalNames.set(card.oracle_id, card.name);
+      }
+    }
+  });
+  for (const [id, name] of invalidNames) {
+    errors.push(`${name} has ${idCounts.get(id)} prints, which is > 4.`);
+  }
+  for (const name of illegalNames.values()) {
+    errors.push(`${name} is not legal in constructed.`);
+  }
+  return errors;
+};

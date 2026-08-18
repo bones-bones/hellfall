@@ -70,6 +70,8 @@ export enum HCFrameEffect {
   Slab = 'slab',
   /** The card has an arena frame */
   Arena = 'arena',
+  /** The card has a mtgo frame */
+  MTGO = 'mtgo',
   /** The waxing and waning crescent moon transform marks */
   WaxingAndWaningMoonDfc = 'waxingandwaningmoondfc',
   /** The cards have More Than Meets the Eye™ marks */

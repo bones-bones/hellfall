@@ -280,6 +280,7 @@ export const toFrameEffectRecord: Record<string, HCFrameEffect | HCFrameEffect[]
   slab: HCFrameEffect.Slab,
   slabbed: HCFrameEffect.Slab,
   arena: HCFrameEffect.Arena,
+  mtgo: HCFrameEffect.MTGO,
   ub: HCFrameEffect.UniversesBeyond,
   beyond: HCFrameEffect.UniversesBeyond,
   universebeyond: HCFrameEffect.UniversesBeyond,
@@ -353,6 +354,7 @@ export const frameEffectNames: [HCFrameEffect[], string][] = [
   [[HCFrameEffect.Etched], 'an etched foil treatment'],
   [[HCFrameEffect.Slab], 'a slabbed frame'],
   [[HCFrameEffect.Arena], 'an Arena frame'],
+  [[HCFrameEffect.MTGO], 'a MTGO frame'],
   [[HCFrameEffect.UniversesBeyond], 'a Universes Beyond frame'],
 ];
 

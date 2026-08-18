@@ -33,7 +33,7 @@ const rootAddProps = [
   'oracle_id_is_scryfall',
   'name',
   'flavor_name',
-  // 'export_name', #temp
+  'export_name',
   'set',
   'collector_number',
   'accepted_order',
@@ -70,7 +70,7 @@ const rootDeleteProps = [
   'id_is_scryfall',
   'oracle_id_is_scryfall',
   'flavor_name',
-  // 'export_name', #temp
+  'export_name',
   'rarity',
   'rotated_image',
   'still_image',
@@ -202,7 +202,7 @@ const faceAddProps = [
   'name',
   'layout',
   'flavor_name',
-  // 'export_name', #temp
+  'export_name',
   'image_status',
   'image',
   'rotated_image',
@@ -228,13 +228,13 @@ const faceAddProps = [
   'watermark',
   'border_color',
   'frame',
-  // 'compress_face', #temp
-  // 'drop_face', #temp
+  'compress_face',
+  'drop_face',
   'frame_effects',
 ] as const satisfies facePropType[];
 const faceDeleteProps = [
   'flavor_name',
-  // 'export_name', #temp
+  'export_name',
   'image',
   'rotated_image',
   'still_image',
@@ -252,8 +252,8 @@ const faceDeleteProps = [
   'color_indicator',
   'watermark',
   'frame',
-  // 'compress_face', #temp
-  // 'drop_face', #temp
+  'compress_face',
+  'drop_face',
   'frame_effects',
 ] as const satisfies facePropType[];
 

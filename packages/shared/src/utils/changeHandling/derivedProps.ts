@@ -222,6 +222,7 @@ export const setDerivedProps = (
       if (
         ((listIncludesValueLower(face.supertypes, 'legendary') &&
           !listIncludesValueLower(face.types, 'planeswalker') &&
+          !listIncludesValueLower(face.types, 'universewalker') &&
           !listIncludesValueLower(face.types, 'player') &&
           !baseIncludesFlag(card, 'missing-legend-frame', i)) ||
           baseIncludesFlag(card, 'legend-frame', i)) &&
@@ -253,6 +254,7 @@ export const setDerivedProps = (
     } else if (
       ((listIncludesValueLower(face.supertypes, 'legendary') &&
         !listIncludesValueLower(face.types, 'planeswalker') &&
+        !listIncludesValueLower(face.types, 'universewalker') &&
         !listIncludesValueLower(face.types, 'player') &&
         baseIncludesFlag(card, 'hearthstone-frame', i) &&
         !baseIncludesFlag(card, 'missing-legend-frame', i)) ||
@@ -476,7 +478,6 @@ const alwaysCompressLayouts: HCLayoutGroup.FaceLayoutType[] = [
  * @returns the invariant, or undefined if taken_names is omitted
  */
 export const resetFaceExportProps = (card: HCCard.Any) => {
-  if (card.set == 'NRM') return;
   if (card.export_name) {
     delete card.export_name;
   }

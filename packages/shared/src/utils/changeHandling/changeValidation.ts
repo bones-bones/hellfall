@@ -301,9 +301,9 @@ export const faceValueErrorMessage = <T extends changeType, K extends faceChange
       return isColors(value)
         ? undefined
         : `invalid change: ${JSON.stringify(value)} is not a valid list of colors`;
-    // case 'compress_face': #temp
-    // case 'drop_face': #temp
-    //   return value === true ? undefined : `invalid change for prop == '${prop}': ${value} !== true`; #temp
+    case 'compress_face':
+    case 'drop_face':
+      return value === true ? undefined : `invalid change for prop == '${prop}': ${value} !== true`;
     case 'image':
     case 'rotated_image':
     case 'still_image':
