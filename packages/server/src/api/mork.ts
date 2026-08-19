@@ -92,33 +92,6 @@ export async function morkHandler(req: HandlerRequest, res: HandlerResponse) {
       res.statusCode = 200;
       res.end(JSON.stringify(cardToUse));
       return;
-      // if (rawCommands.includes(body.command)) {
-      // }
-      // const response: any = {
-      //   ok: true,
-      //   uuid: cardToUse.id,
-      //   hcid: cardToUse.hcid,
-      //   oracle_id: cardToUse.oracle_id,
-      // };
-      // switch (body.command) {
-      //   case 'creator':
-      //     response.name = cardToUse.name;
-      //     response.creators = cardToUse.creators;
-      //     break;
-      //   case 'rulings':
-      //     response.name = cardToUse.name;
-      //     response.rulings = cardToUse.rulings;
-      //     break;
-      //   case 'info':
-      //     response.info = getInfo(cardToUse);
-      //     break;
-      //   case 'errata_data':
-      //     response.name = cardToUse.name;
-      //     response.creators = cardToUse.creators;
-      //     response.image = cardToUse.image;
-      //     break;
-      // }
-      // res.end(JSON.stringify(response));
     }
   } catch (error) {
     console.error('Error processing command:', error);
