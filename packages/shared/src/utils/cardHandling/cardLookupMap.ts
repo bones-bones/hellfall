@@ -255,7 +255,7 @@ export class CardLookupMap {
    * Returns the correct id for a card name, going with the best possible match if nothing is an exact match.
    * @param text the name of the card to get
    */
-  getRough = (text: string) => {
+  getFuzzy = (text: string) => {
     const fixed = fixName(text);
     const { name, code, collector_number } = splitCardName(fixed);
     const exact = this.getBySetAndNumber(name, code, collector_number);

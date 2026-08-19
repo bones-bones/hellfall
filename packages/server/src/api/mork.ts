@@ -7,7 +7,7 @@ import {
   firestoreDocRefToCard,
 } from '@hellfall/shared/utils/firestore';
 
-export const commands = ['exact', 'exist', 'rough', 'multiple_rough'] as const;
+export const commands = ['exact', 'exist', 'fuzzy', 'multiple_fuzzy'] as const;
 export type commandType = (typeof commands)[number];
 export const isCommand = (value: any): value is commandType => commands.includes(value);
 
@@ -33,9 +33,9 @@ const jsonHeaders = (req: HandlerRequest): Record<string, string> => {
   return withCors({ 'Content-Type': 'application/json' }, req);
 };
 
-const nameRequiredCommands: commandType[] = ['exact', 'rough'];
+const nameRequiredCommands: commandType[] = ['exact', 'fuzzy'];
 const exactCommands: commandType[] = ['exact', 'exist'];
-const nameListRequiredCommands: commandType[] = ['exist', 'multiple_rough'];
+const nameListRequiredCommands: commandType[] = ['exist', 'multiple_fuzzy'];
 
 export async function morkHandler(req: HandlerRequest, res: HandlerResponse) {
   const headers = jsonHeaders(req);
@@ -56,7 +56,7 @@ export async function morkHandler(req: HandlerRequest, res: HandlerResponse) {
     }
     const getCard = exactCommands.includes(body.command)
       ? cardMap.getFromName
-      : cardMap.getFromRoughName;
+      : cardMap.getFromFuzzyName;
     if (nameListRequiredCommands.includes(body.command)) {
       if (!body.card_names) {
         res.statusCode = 400;
