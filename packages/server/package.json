@@ -8,7 +8,8 @@
     "build:prod": "esbuild src/server.ts --bundle --platform=node --target=node20 --format=esm --outfile=dist/server.mjs --external:@google-cloud/firestore --external:@google-cloud/storage --external:dotenv --external:xmldom",
     "dev": "tsx watch src/server.ts",
     "start": "tsx src/server.ts",
-    "start:prod": "node dist/server.js"
+    "start:prod": "node dist/server.js",
+    "test": "tsx --test src/lib/imageGcs.test.ts"
   },
   "dependencies": {
     "@google-cloud/firestore": "^7.1.0",
