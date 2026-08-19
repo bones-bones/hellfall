@@ -21,6 +21,8 @@ type PostcardBody = {
   name?: string;
   image?: string;
   imageBase64?: string;
+  /** From mork; used with imageBase64 so GCS objects are not always `.png`. */
+  imageMimeType?: string;
   creators?: string;
   set?: string;
   hcid?: string;
@@ -58,6 +60,7 @@ function postcardBodyContext(
     set: postcard.set,
     hasImageUrl: Boolean(postcard.image?.trim()),
     hasImageBase64: Boolean(postcard.imageBase64?.trim()),
+    imageMimeType: postcard.imageMimeType,
   };
 }
 
@@ -222,7 +225,7 @@ async function resolveImageUrl(body: PostcardBody, cardId: string): Promise<stri
   if (typeof body.imageBase64 === 'string' && body.imageBase64.trim()) {
     const name = body.name?.trim() || 'image';
     try {
-      return await uploadImageBase64ToGcs(body.imageBase64, cardId, name);
+      return await uploadImageBase64ToGcs(body.imageBase64, cardId, name, body.imageMimeType);
     } catch (err) {
       console.error(
         '[postcard] gcs image upload failed',

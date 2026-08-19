@@ -14,35 +14,81 @@ type ParsedImage = {
   extension: string;
 };
 
-function contentTypeToExtension(contentType: string): string {
+const IMAGE_MIME_TO_EXT: Record<string, string> = {
+  'image/png': '.png',
+  'image/jpeg': '.jpg',
+  'image/jpg': '.jpg',
+  'image/webp': '.webp',
+  'image/gif': '.gif',
+};
+
+function normalizeImageMime(contentType: string | undefined): string | undefined {
+  if (!contentType) return undefined;
   const normalized = contentType.split(';')[0].trim().toLowerCase();
-  switch (normalized) {
-    case 'image/jpeg':
-      return '.jpg';
-    case 'image/webp':
-      return '.webp';
-    case 'image/gif':
-      return '.gif';
-    default:
-      return '.png';
-  }
+  if (normalized === 'image/jpg') return 'image/jpeg';
+  if (normalized in IMAGE_MIME_TO_EXT) return normalized;
+  return undefined;
 }
 
-function parseImageBase64(imageBase64: string): ParsedImage {
+function contentTypeToExtension(contentType: string): string {
+  const normalized = normalizeImageMime(contentType) ?? contentType;
+  return IMAGE_MIME_TO_EXT[normalized] ?? '.png';
+}
+
+function sniffImageMime(buffer: Buffer): string | undefined {
+  if (buffer.length >= 4 && buffer.subarray(0, 4).toString('ascii') === 'GIF8') {
+    return 'image/gif';
+  }
+  if (
+    buffer.length >= 8 &&
+    buffer[0] === 0x89 &&
+    buffer[1] === 0x50 &&
+    buffer[2] === 0x4e &&
+    buffer[3] === 0x47 &&
+    buffer[4] === 0x0d &&
+    buffer[5] === 0x0a &&
+    buffer[6] === 0x1a &&
+    buffer[7] === 0x0a
+  ) {
+    return 'image/png';
+  }
+  if (buffer.length >= 3 && buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff) {
+    return 'image/jpeg';
+  }
+  if (
+    buffer.length >= 12 &&
+    buffer.subarray(0, 4).toString('ascii') === 'RIFF' &&
+    buffer.subarray(8, 12).toString('ascii') === 'WEBP'
+  ) {
+    return 'image/webp';
+  }
+  return undefined;
+}
+
+/** Decode postcard/replace-image base64. Magic bytes win over mime / data-URL type. */
+export function parseImageBase64(imageBase64: string, imageMimeType?: string): ParsedImage {
   const trimmed = imageBase64.trim();
   const dataUrlMatch = trimmed.match(/^data:([^;]+);base64,(.+)$/s);
+  let buffer: Buffer;
+  let dataUrlMime: string | undefined;
   if (dataUrlMatch) {
-    const contentType = dataUrlMatch[1].trim();
-    const buffer = Buffer.from(dataUrlMatch[2], 'base64');
-    return {
-      buffer,
-      contentType,
-      extension: contentTypeToExtension(contentType),
-    };
+    dataUrlMime = dataUrlMatch[1].trim();
+    buffer = Buffer.from(dataUrlMatch[2], 'base64');
+  } else {
+    buffer = Buffer.from(trimmed, 'base64');
   }
 
-  const buffer = Buffer.from(trimmed, 'base64');
-  return { buffer, contentType: 'image/png', extension: '.png' };
+  const contentType =
+    sniffImageMime(buffer) ||
+    normalizeImageMime(imageMimeType) ||
+    normalizeImageMime(dataUrlMime) ||
+    'image/png';
+
+  return {
+    buffer,
+    contentType,
+    extension: contentTypeToExtension(contentType),
+  };
 }
 
 function slugCardName(name: string): string {
@@ -102,13 +148,14 @@ export function parseGcsPublicUrl(
 export async function replaceImageBase64AtGcsUrl(
   imageBase64: string,
   existingUrl: string,
-  bucketName = env.IMAGE_GCS_CARD_IMAGE_BUCKET
+  bucketName = env.IMAGE_GCS_CARD_IMAGE_BUCKET,
+  imageMimeType?: string
 ): Promise<string> {
   const parsed = parseGcsPublicUrl(existingUrl, bucketName);
   if (!parsed) {
     throw new Error('not_gcs_url');
   }
-  const { buffer, contentType } = parseImageBase64(imageBase64);
+  const { buffer, contentType } = parseImageBase64(imageBase64, imageMimeType);
   const bucket = getStorage().bucket(parsed.bucket);
   await bucket.file(parsed.objectKey).save(buffer, {
     contentType,
@@ -123,10 +170,11 @@ export async function replaceImageBase64AtGcsUrl(
 export async function uploadImageBase64ToGcs(
   imageBase64: string,
   cardId: string,
-  cardName: string
+  cardName: string,
+  imageMimeType?: string
 ): Promise<string> {
   const bucketName = env.IMAGE_GCS_CARD_IMAGE_BUCKET;
-  const { buffer, contentType, extension } = parseImageBase64(imageBase64);
+  const { buffer, contentType, extension } = parseImageBase64(imageBase64, imageMimeType);
   const objectKey = cardImageObjectKey(cardId, cardName, extension);
 
   const bucket = getStorage().bucket(bucketName);
