@@ -190,3 +190,5 @@ Write a script to transform the database
 - fix mork name fetch (have mork request card names from the server?)
 - add dark mode to hellfall
 - have deckbuilder interpret blank lines the same way as commented out lines? or just ignore them for legality check?
+- have the search results pull from the live db?
+- make rulings into an array

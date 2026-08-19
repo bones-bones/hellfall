@@ -1,5 +1,6 @@
 import { Storage } from '@google-cloud/storage';
 import { env } from '../api/lib/env.ts';
+import { semiSplit } from '@hellfall/shared/utils';
 
 let storage: Storage | null = null;
 
@@ -15,7 +16,7 @@ type ParsedImage = {
 };
 
 function contentTypeToExtension(contentType: string): string {
-  const normalized = contentType.split(';')[0].trim().toLowerCase();
+  const normalized = semiSplit(contentType)[0].toLowerCase();
   switch (normalized) {
     case 'image/jpeg':
       return '.jpg';

@@ -1,8 +1,9 @@
 import { HCCard, SetCode } from '@hellfall/shared/types';
 import { getCollectorNumSets, getGroupSets, splitCardName } from '../setHandling';
 import { fixName } from '../textHandling';
-import { getAllNames } from './nameHandling';
+import { getAllNames, getClosestName } from './nameHandling';
 import { deleteFromMap, pushToMap } from '../listHandling';
+import { isInteger } from '../numHandling';
 
 /**
  * Maps a card's names to the ids that it should use. Only for use in CardMap.
@@ -192,6 +193,11 @@ class DoubleMap {
     this.forwardMap.clear();
     this.reverseMap.clear();
   };
+  *keys(): IterableIterator<string> {
+    for (const key of this.forwardMap.keys()) {
+      yield key;
+    }
+  }
 }
 
 /**
@@ -243,6 +249,19 @@ export class CardLookupMap {
   get = (text: string) => {
     const { name, code, collector_number } = splitCardName(fixName(text));
     return this.getBySetAndNumber(name, code, collector_number);
+  };
+
+  /**
+   * Returns the correct id for a card name, going with the best possible match if nothing is an exact match.
+   * @param text the name of the card to get
+   */
+  getRough = (text: string) => {
+    const fixed = fixName(text);
+    const { name, code, collector_number } = splitCardName(fixed);
+    const exact = this.getBySetAndNumber(name, code, collector_number);
+    if (exact) return exact;
+    const closest = getClosestName(this.names(), fixed);
+    return this.getBySetAndNumber(closest, code, collector_number);
   };
 
   /**
@@ -312,4 +331,17 @@ export class CardLookupMap {
     this.aliasMap.clear();
     this.hcidMap.clear();
   };
+  *names(): IterableIterator<string> {
+    for (const name of this.nameMap.keys()) {
+      yield name;
+    }
+    for (const name of this.aliasMap.keys()) {
+      yield name;
+    }
+    for (const name of this.hcidMap.keys()) {
+      if (!isInteger(name)) {
+        yield name;
+      }
+    }
+  }
 }

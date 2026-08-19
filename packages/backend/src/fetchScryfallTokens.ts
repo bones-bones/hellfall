@@ -2,7 +2,12 @@ import { sheetsKey } from './env.ts';
 import { HCRelatedCard, HCObject, SetCode, rootPropType } from '@hellfall/shared/types';
 import pLimit from 'p-limit';
 import { fixedScryfall, ScryfallToHC } from './scryfallToHC.ts';
-import { addPropToRoot, parseRelatedReferenceName, setDerivedProps } from '@hellfall/shared/utils';
+import {
+  addPropToRoot,
+  parseRelatedReferenceName,
+  semiSplit,
+  setDerivedProps,
+} from '@hellfall/shared/utils';
 
 const REQUEST_DELAY_MS = 125;
 const limiter = pLimit(1);
@@ -58,7 +63,7 @@ export const fetchScryfallTokens = async () => {
       for (let i = 0; i < keys.length; i++) {
         if (entry[i] && !skipKeys.includes(keys[i])) {
           if (keys[i] == 'token_maker') {
-            token.all_parts = entry[i].split(';').map(oldName => {
+            token.all_parts = semiSplit(entry[i]).map(oldName => {
               const { name, hcid, code, collector_number, count } =
                 parseRelatedReferenceName(oldName);
               const maker: HCRelatedCard = {

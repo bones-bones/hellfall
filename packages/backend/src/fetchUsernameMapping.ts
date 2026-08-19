@@ -1,3 +1,4 @@
+import { semiSplit } from '../../shared/src/utils/textHandling.ts';
 import { sheetsKey } from './env.ts';
 
 export const fetchUsernameMappings = async () => {
@@ -10,7 +11,7 @@ export const fetchUsernameMappings = async () => {
 
   const mappings: Record<string, string> = {};
   rest.forEach(entry => {
-    entry[1].split(';').forEach(alt => {
+    semiSplit(entry[1]).forEach(alt => {
       mappings[alt] = entry[0];
     });
   });

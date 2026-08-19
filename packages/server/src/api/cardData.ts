@@ -1,7 +1,24 @@
-import { HandlerRequest, HandlerResponse, withCors } from './lib';
+import { env, HandlerRequest, HandlerResponse, withCors } from './lib';
 import { isValidV4UUID, toPlainText } from '@hellfall/shared/utils';
 import { cardMap } from './cardMap.ts';
+import { Firestore } from '@google-cloud/firestore';
+import {
+  cardsCollection,
+  firestoreDocRefToCard,
+  firestoreDocToCard,
+} from '@hellfall/shared/utils/firestore';
 // import { getCardById } from './cardsStore.ts';
+
+const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
+const cardsCol: cardsCollection = db.collection(env.FIRESTORE_CARDS_COLLECTION);
+
+export const getCardById = async (cardId: string) => {
+  if (!isValidV4UUID(cardId)) {
+    return;
+  }
+  const docRef = cardsCol.doc(cardId);
+  return await firestoreDocRefToCard(docRef);
+};
 
 export const cardJsonHandler = async (
   req: HandlerRequest,

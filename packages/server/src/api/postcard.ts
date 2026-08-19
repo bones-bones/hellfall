@@ -3,6 +3,7 @@ import { HCCard, HCKind, HCImageStatus, SetCode } from '@hellfall/shared/types';
 import {
   getDefaultCard,
   isValidV4UUID,
+  semiSplit,
   setDerivedProps,
   splitMasterpiece,
 } from '@hellfall/shared/utils';
@@ -84,26 +85,8 @@ async function readJsonBody(req: HandlerRequest): Promise<unknown> {
   }
 }
 
-function parseCreators(creators: string): string[] {
-  if (!creators.trim()) return [];
-  if (creators.includes(';')) {
-    return creators
-      .split(';')
-      .map(part => part.trim())
-      .filter(Boolean);
-  }
-  return [creators.trim()];
-}
-
-function newCardId(): string {
-  return crypto.randomUUID();
-}
+const newCardId = () => crypto.randomUUID();
 const newUnlessValid = (id?: string) => (id && isValidV4UUID(id) ? id : newCardId());
-
-function catalogIdForHcid(hcid: string): string | undefined {
-  const id = cardMap.getFromHCID(hcid)?.id?.trim();
-  return id && isValidV4UUID(id) ? id : undefined;
-}
 
 /** Resolve print UUID for GCS image keys — never use hcid as the object key. */
 function resolvePostcardCardId(
@@ -111,15 +94,11 @@ function resolvePostcardCardId(
   existing: { id: string; data: () => firestoreCard | undefined } | null,
   previous: firestoreCard | null
 ): string {
-  const fromBody = body.id?.trim();
-  if (fromBody && isValidV4UUID(fromBody)) return fromBody;
-  const fromData = previous?.id?.trim();
-  if (fromData && isValidV4UUID(fromData)) return fromData;
-  if (existing && isValidV4UUID(existing.id)) return existing.id;
-  const hcid = body.hcid?.trim();
-  if (hcid) {
-    const fromCatalog = catalogIdForHcid(hcid);
-    if (fromCatalog) return fromCatalog;
+  if (previous?.id) {
+    return newUnlessValid(previous.id);
+  }
+  if (body.hcid) {
+    return newUnlessValid(cardMap.getFromHCID(body.hcid)?.id);
   }
   return newCardId();
 }
@@ -142,7 +121,7 @@ function buildStubCard(
       set,
       image: body.image,
       image_status: HCImageStatus.HighRes,
-      creators: parseCreators(body.creators),
+      creators: semiSplit(body.creators),
     },
     kind === HCKind.Token ? {} : { oracle_text: '' }
   );
@@ -164,42 +143,17 @@ async function findByHcid(hcid: string) {
   return matches.docs[0] ?? null;
 }
 
-/** Look up an existing print's oracle_id by name (strips "HC8: " / lair prefixes). */
-async function findMasterpieceOracleId(name: string): Promise<string | undefined> {
-  const fromCatalog = cardMap.getFromName(name)?.oracle_id?.trim();
-  if (fromCatalog && isValidV4UUID(fromCatalog)) return fromCatalog;
-
-  const stripped = splitMasterpiece(name).name;
-  const snapshot = await cardsCol.where('name', '==', stripped).limit(2).get();
-  const doc = snapshot.docs[0];
-  if (!doc) return undefined;
-  const fromFirestore = doc.data().oracle_id?.trim();
-  return fromFirestore && isValidV4UUID(fromFirestore) ? fromFirestore : undefined;
-}
-
 /** Reuse previous / catalog / Firestore oracle_id; mint only when truly new. */
-async function resolvePostcardOracleId(
-  name: string,
-  previous: firestoreCard | null
-): Promise<string> {
-  return newUnlessValid(previous?.oracle_id ?? (await findMasterpieceOracleId(name)));
+function resolvePostcardOracleId(body: PostcardBody, previous: firestoreCard | null): string {
+  if (previous?.oracle_id) {
+    return newUnlessValid(previous.oracle_id);
+  }
+  const { name, code } = splitMasterpiece(body.name ?? '');
+  if (!body.set?.startsWith('SCL') && !code) {
+    return newCardId();
+  }
+  return newUnlessValid(cardMap.getOracleIDFromName(name));
 }
-
-// async function findByNameAndSet(name: string, setId: string) {
-//   const matches = await cardsCol.where('name', '==', name).where('set', '==', setId).limit(2).get();
-//   if (matches.size > 1) {
-//     throw new Error(`multiple Firestore cards share name=${name} set=${setId}`);
-//   }
-//   return matches.docs[0] ?? null;
-// }
-
-// async function lookupDoc(hcid: string | undefined, name: string, setId: string) {
-//   if (hcid) {
-//     const byHcid = await findByHcid(hcid);
-//     if (byHcid) return byHcid;
-//   }
-//   return findByNameAndSet(name, setId);
-// }
 
 function validatePostcardBody(
   body: PostcardBody
@@ -252,7 +206,7 @@ async function upsertPostcard(body: PostcardBody) {
   const existing = await findByHcid(body.hcid.trim());
   const previous: firestoreCard | null = existing?.data() ?? null;
   const cardId = resolvePostcardCardId(body, existing, previous);
-  const oracle_id = await resolvePostcardOracleId(body.name, previous);
+  const oracle_id = resolvePostcardOracleId(body, previous);
 
   const imageUrl = await resolveImageUrl(body, cardId);
   const bodyWithImage = { ...body, image: imageUrl };
@@ -262,7 +216,7 @@ async function upsertPostcard(body: PostcardBody) {
       name: splitMasterpiece(body.name).name,
       image: imageUrl,
       image_status: HCImageStatus.HighRes,
-      creators: parseCreators(body.creators),
+      creators: semiSplit(body.creators),
       set: setId as SetCode,
     };
     if (body.hcid?.trim()) update.hcid = body.hcid.trim();

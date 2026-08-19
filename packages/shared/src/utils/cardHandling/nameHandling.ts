@@ -1,6 +1,8 @@
 import { faceType, HCCard } from '@hellfall/shared/types';
 import { fixName } from '../textHandling';
 import { splitSetCode } from '../setHandling';
+import { SequenceMatcher } from 'difflib-ts';
+import { stringIterable } from '../listHandling';
 
 // breaks circular
 const toFaces = (card: HCCard.Any, dropFaces?: boolean): faceType[] => {
@@ -107,4 +109,76 @@ export const getAllNames = (card: HCCard.Any, dropFaces?: boolean): string[] => 
     });
   }
   return Array.from(nameSet);
+};
+
+/**
+ * Score how well request words match name words in order (prefix ok).
+ * @param nameWords words from the name
+ * @param reqWords words from the request
+ */
+const wordPrefixScore = (nameWords: string[], reqWords: string[]): number => {
+  if (!reqWords.length) return 0;
+  let score = 0;
+  for (const reqWord of reqWords) {
+    let found = false;
+    for (let i = 0; i < nameWords.length && !found; i++) {
+      const nameWord = nameWords[i];
+      if (nameWord.includes(reqWord) || reqWord.includes(nameWord)) {
+        const overlap =
+          nameWord == reqWord
+            ? 1
+            : Math.min(reqWord.length, nameWord.length) / Math.max(reqWord.length, nameWord.length);
+        const mult =
+          overlap == 1 ? 3 : nameWord.startsWith(reqWord) || reqWord.startsWith(nameWord) ? 2 : 1;
+        score += mult * overlap;
+        found = true;
+      }
+    }
+    if (!found) {
+      score--;
+    }
+  }
+  return score / reqWords.length;
+};
+const similarity = (name: string, request: string): number => {
+  const ratio = new SequenceMatcher(undefined, request, name).ratio();
+  let score = ratio * 1000;
+  if (name.startsWith(request)) {
+    score += 500 * (request.length / name.length);
+  } else if (request.startsWith(name)) {
+    score += 300 * (name.length / request.length);
+  }
+  if (request.includes(name)) {
+    score += 400 * (request.length / name.length);
+  } else if (name.includes(request)) {
+    score += 300 * (name.length / request.length);
+  }
+  score += wordPrefixScore(name.split(' '), request.split(' ')) * 200;
+
+  score *= Math.min(request.length, name.length) / Math.max(request.length, name.length) ** 0.3;
+
+  return score;
+};
+
+/**
+ * Gets the closest card name to a requested card name. Only use this if there are no exact matches.
+ * The code for this is based on the mork code.
+ * @param names all card names
+ * @param requestName the requested name
+ */
+
+export const getClosestName = (names: stringIterable, requestName: string) => {
+  let maxWeight = -1;
+  let maxWeightName = '';
+  for (const name of names) {
+    const currentWeight = similarity(name, requestName);
+    if (
+      currentWeight > maxWeight ||
+      (currentWeight == maxWeight && name.length < maxWeightName.length)
+    ) {
+      maxWeight = currentWeight;
+      maxWeightName = name;
+    }
+  }
+  return maxWeightName;
 };

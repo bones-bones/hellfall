@@ -545,3 +545,10 @@ export const matchCount = (text: string, regex: RegExp, ...args: (RegExp | undef
 };
 export const toTitleCase = (text: string) =>
   `${text[0]?.toUpperCase() ?? ''}${text.slice(1).toLowerCase()}`;
+
+/**
+ * splits semicolon-separated text correctly (returning `[]` on `''`, trimming, etc.)
+ * @param text text to split
+ */
+export const semiSplit = (text: string): string[] =>
+  text.trim() ? text.split(';').flatMap(t => t.trim() || []) : [];

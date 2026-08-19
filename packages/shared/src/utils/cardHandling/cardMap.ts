@@ -1222,6 +1222,27 @@ export class CardMap extends LightCardMap {
   getFromName = (name: string) => this.idMap.get(this.getIDFromName(name));
 
   /**
+   * Returns a specified oracle id from the CardMap object.
+   * @param name the name of the card to get
+   */
+  getOracleIDFromName = (name: string) => this.getFromName(name)?.oracle_id;
+
+  /**
+   * Returns a specified id from the CardMap object.
+   * If no card has the specified id, the name is returned
+   * @param name the rough name of the card to get
+   */
+  getIDFromRoughName = (name: string) => this.lookupMap.getRough(name) ?? name;
+
+  /**
+   * Returns a specified card from the CardMap object.
+   * Any change made to that card will effectively modify it inside the CardMap.
+   * If no card has the specified name, undefined is returned
+   * @param name the rough name of the card to get
+   */
+  getFromRoughName = (name: string) => this.idMap.get(this.getIDFromRoughName(name));
+
+  /**
    * Returns a specified card from the CardMap object.
    * Any change made to that card will effectively modify it inside the CardMap.
    * If no card has the specified name, undefined is returned
