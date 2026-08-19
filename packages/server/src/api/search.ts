@@ -45,7 +45,7 @@ const stripDoubleSpaces = (text: string): string =>
 const formatSearchResult = (
   idList: string[],
   cardMap: CardMap,
-  format: 'draftmancer' | 'cockatrice' | 'tabletopsimulator' | 'mork'
+  format: 'draftmancer' | 'cockatrice' | 'tabletopsimulator'
 ) => {
   switch (format) {
     case 'draftmancer': {
@@ -135,15 +135,6 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse, i
         response.warnings = invalidList;
       }
       response.data = results;
-      if (format == 'json') {
-      } else {
-        if (response.total_cards > 100) {
-          res.statusCode = 413;
-        }
-        response.data = results.map(
-          card => `${card.name} (${displaySetCode(card.set)}) ${card.collector_number}`
-        );
-      }
       res.end(JSON.stringify(response, null, 2));
     } else {
       res.end(
