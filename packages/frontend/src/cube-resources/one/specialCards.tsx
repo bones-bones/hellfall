@@ -1,30 +1,24 @@
 import { JSX } from 'react';
 import { ScryCard } from './HellsCard.tsx';
-import {
-  ObscureCommand,
-  ABlueCard,
-  WildMagic,
-  DruidicVow,
-  CurveTopper,
-} from './cards';
+import { ObscureCommand, ABlueCard, WildMagic, DruidicVow, CurveTopper } from './cards';
 import { CardMap, getRandom } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
 import { searchCards } from '@hellfall/shared/filters';
 
 type ScryCardParams = { path: string; name: string; component: JSX.Element };
 
-type HellsCardParams = {path: string; name: string; cardGetter: (cardMap:CardMap) => HCCard.Any}
+type HellsCardParams = { path: string; name: string; cardGetter: (cardMap: CardMap) => HCCard.Any };
 
-const getterForQuery = (query?:string):((cardMap:CardMap) => HCCard.Any) => {
-  const getter = (cardMap:CardMap):HCCard.Any => {
+const getterForQuery = (query?: string): ((cardMap: CardMap) => HCCard.Any) => {
+  const getter = (cardMap: CardMap): HCCard.Any => {
     const resultSet = query ? searchCards(cardMap, query) : undefined;
     const card = resultSet ? getRandom(resultSet) : cardMap.getRandomCard();
     return card;
-  }
-  return getter
-}
+  };
+  return getter;
+};
 
-export const specialCards: (ScryCardParams|HellsCardParams)[] = [
+export const specialCards: (ScryCardParams | HellsCardParams)[] = [
   {
     path: '/hugh-man',
     name: 'Hugh Man, Human',
@@ -94,7 +88,11 @@ export const specialCards: (ScryCardParams|HellsCardParams)[] = [
       </div>
     ),
   },
-  { path: '/storm-storm', name: 'Stormstorm', cardGetter:getterForQuery('~stormstorm unique:cards include:extras') },
+  {
+    path: '/storm-storm',
+    name: 'Stormstorm',
+    cardGetter: getterForQuery('~stormstorm unique:cards include:extras'),
+  },
   {
     path: '/ultimate-ultimatum',
     name: 'Ultimate Ultimatum',
@@ -108,7 +106,7 @@ export const specialCards: (ScryCardParams|HellsCardParams)[] = [
   {
     path: '/plumber-umbra',
     name: 'Plumber Umbra',
-    cardGetter:getterForQuery('~"plumber umbra" unique:cards include:extras')
+    cardGetter: getterForQuery('~"plumber umbra" unique:cards include:extras'),
   },
   { path: '/blue-card', name: 'A Blue Card', component: <ABlueCard /> },
   {

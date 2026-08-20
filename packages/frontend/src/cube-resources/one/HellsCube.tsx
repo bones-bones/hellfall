@@ -10,8 +10,7 @@ import { HellsCard } from './HellsCard.tsx';
 export const HellsCubeOne = () => {
   const val = useLocation();
   const cards = useAtomValue(cardsAtom);
-  
-  
+
   interface SpecialCardPageProps {
     name: string;
     component: React.ReactNode;
@@ -66,7 +65,7 @@ export const HellsCubeOne = () => {
               />
             );
           } else {
-            const component = (<HellsCard cardGetter={entry.cardGetter} cardMap={cards}/>)
+            const component = <HellsCard cardGetter={entry.cardGetter} cardMap={cards} />;
             return (
               <Route
                 key={entry.path}

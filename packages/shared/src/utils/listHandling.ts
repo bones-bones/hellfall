@@ -637,3 +637,13 @@ export const moveSomeOver = <T>(list1: T[], list2: T[], predicate: (value: T) =>
     }
   }
 };
+
+export const filterSet = <T>(set: Set<T>, predicate: (item: T) => any): Set<T> => {
+  const ret = new Set<T>();
+  for (const item of set) {
+    if (predicate(item)) {
+      ret.add(item);
+    }
+  }
+  return ret;
+};

@@ -1,6 +1,5 @@
 import { setsData } from '@hellfall/shared/data';
 import { allSetsList, HCSet, isSetCode, SetCode } from '../types';
-import { wrapArray } from './listHandling';
 
 const sets = setsData.data;
 
@@ -124,12 +123,19 @@ export const getChildSets = (code: SetCode): SetCode[] | undefined =>
     getSet(child)?.child_set_codes ? [child, ...(getChildSets(child) ?? [])] : child
   );
 
+const setTypesAreSame = (code1: SetCode, code2: SetCode) =>
+  getSet(code1)?.set_type == getSet(code2)?.set_type;
+
 /**
  * Gets the sets that are the direct children of another set (i.e. are its children and have the same set type)
  * @param code Set code to get the direct children of
  */
 export const getDirectChildSets = (code: SetCode): SetCode[] | undefined =>
-  getChildSets(code)?.filter(child => getSet(child)?.set_type == getSet(code)?.set_type);
+  getSet(code)
+    ?.child_set_codes?.filter(child => setTypesAreSame(code, child))
+    .flatMap(child =>
+      getSet(child)?.child_set_codes ? [child, ...(getDirectChildSets(child) ?? [])] : child
+    );
 
 /**
  * Gets the result of {@linkcode getChildSets} except including the set itself
@@ -158,6 +164,17 @@ export const getBlockSets = (code: SetCode): SetCode[] => [
         getChildSets(set.code)?.includes(fixSetCode(code)) && set.set_type == getSet(code)?.set_type
     )
     .flatMap(set => getSetAndDirectChildSets(set.code)),
+];
+/**
+ * Gets the sets that are in the same group as another set (i.e. are its children or its parent)
+ * @param code Set code to get the group sets of
+ */
+export const getGroupSets = (code: SetCode): SetCode[] => [
+  fixSetCode(code),
+  ...(getChildSets(code) ?? []),
+  ...sets
+    .filter(set => getChildSets(set.code)?.includes(fixSetCode(code)))
+    .flatMap(set => getSetAndChildSets(set.code)),
 ];
 
 /**
@@ -198,18 +215,6 @@ export const getAcceptedOrderSet = (code: SetCode): SetCode => {
 };
 
 /**
- * Gets the sets that are in the same group as another set (i.e. are its children or its parent)
- * @param code Set code to get the group sets of
- */
-export const getGroupSets = (code: SetCode): SetCode[] => [
-  fixSetCode(code),
-  ...(getChildSets(code) ?? []),
-  ...sets
-    .filter(set => getChildSets(set.code)?.includes(fixSetCode(code)))
-    .flatMap(set => getSetAndChildSets(set.code)),
-];
-
-/**
  * Checks if one set is included in another set's direct children
  * @param value1 the set to look for
  * @param value2 the set in whose direct children to look
@@ -241,43 +246,102 @@ export const inSetBlock = (value1: SetCode, value2: SetCode) =>
 export const inSetGroup = (value1: SetCode, value2: SetCode) =>
   getGroupSets(value2).some(code => code == fixSetCode(value1));
 
-const fixMaster = (t: string[]) =>
-  t.length > 1 && typeof t[1] == 'string' ? [t[0].toUpperCase(), t[1]] : t;
-/**
- * Splits a name that starts with a masterpiece code into the name and the set code.
- * Can handle lowercase set codes.
- * @param text text to split
- */
-export const splitMasterpiece = (text: string): { name: string; code?: SetCode } => {
-  const [code, name] = fixMaster(text.match(/^([^:]+): (.*)$/)?.slice(1) ?? ['', text]);
-  if (!code) {
-    return { name };
-  }
-  if (isSetCode(code)) {
-    return { name, code };
-  }
-  return { name: text };
-};
-const fixCode = (t: string[]) =>
-  t.length > 1 && typeof t[1] == 'string' ? [t[0], fixSetCode(t[1])] : t;
+const collNumRegex = /^\d+[A-Za-z]?$/;
+const isCollectorNum = (text?: string) => text && collNumRegex.test(text);
+
+const angleSetCodeRegex = /^(.*) <([^>]+)>$/;
 /**
  * Splits a name that ends with a set code into the name and the set code.
  * Can handle lowercase set codes.
+ * Only for use with `<HCX>` type notation for dealing with card names
  * @param text text to split
  */
-export const splitSetCode = (text: string): { name: string; code?: string } => {
-  const [name, code] = fixCode(text.match(/^(.*) <([^>]+)>$/)?.slice(1) ?? [text]);
-  if (!code) {
-    return { name };
-  }
-  if (code == 'HC' || isSetCode(code)) {
-    return { name, code };
+export const splitAngleSetCode = (text: string): { name: string; code?: string } => {
+  const match = text.match(angleSetCodeRegex)?.slice(1);
+  if (match) {
+    const [name, _code] = match.map(t => t.trim());
+    if (_code == 'HC' || isSetCode(_code)) {
+      const code = fixSetCode(_code);
+      return { name, code };
+    }
   }
   return { name: text };
 };
 
-const stripParens = (text: string) =>
-  text.startsWith('(') && text.endsWith(')') ? text.slice(1, -1) : text;
+const masterpieceNumRegex = /^([^:]+):(.*)\|\s*(\d+[A-Za-z]?)$/;
+const masterpieceRegex = /^([^:]+):(.*)$/;
+/**
+ * Splits a name that starts with a masterpiece code into the name, the set code, and the collector number.
+ * Can handle lowercase set codes.
+ * @param text text to split
+ * @param noCollector whether to skip looking for a collector number
+ */
+const splitMasterpiece = (
+  text: string,
+  noCollector?: boolean
+): { name: string; code: SetCode; collector_number?: string } | undefined => {
+  if (!noCollector) {
+    const numMatch = text.match(masterpieceNumRegex)?.slice(1);
+    if (numMatch) {
+      const [_code, name, _collector_number] = numMatch.map(t => t.trim());
+      if (isCollectorNum(_collector_number) && isSetCode(_code)) {
+        const code = fixSetCode(_code);
+        const collector_number = _collector_number.toLowerCase();
+        return { name, code, collector_number };
+      }
+    }
+  }
+  const match = text.match(masterpieceRegex)?.slice(1);
+  if (match) {
+    const [_code, name] = match.map(t => t.trim());
+    if (isSetCode(_code)) {
+      const code = fixSetCode(_code);
+      return { name, code };
+    }
+  }
+};
+
+/**
+ * Splits a name that starts with a masterpiece code into the name, the set code, and the collector number.
+ * Can handle lowercase set codes.
+ * @param text text to split
+ */
+export const splitMasterpiecePostcard = (text: string): { name: string; code?: string } =>
+  splitMasterpiece(text, true) ?? { name: text };
+
+const setCodeNumRegex = /^(.*)(?:\|\s*\(|[(|])\s*([^\s)|]+)\s*(?:\)\s*\||[\s)|])\s*(\d+[A-Za-z]?)$/;
+const setCodeRegex = /^(.*)(?:\|\s*\(|[(|])\s*([^\s)|]+)\s*[)|]?$/;
+/**
+ * Splits a name that ends with a set code into the name and the set code.
+ * Can handle lowercase set codes.
+ * Only for use with `(HCX)` or pipe-separated type notation for dealing with fetching
+ * @param text text to split
+ * @param noCollector whether to skip looking for a collector number
+ */
+const splitSetCode = (
+  text: string,
+  noCollector?: boolean
+): { name: string; code: SetCode; collector_number?: string } | undefined => {
+  if (!noCollector) {
+    const numMatch = text.match(setCodeNumRegex)?.slice(1);
+    if (numMatch) {
+      const [name, _code, _collector_number] = numMatch.map(t => t.trim());
+      if (isCollectorNum(_collector_number) && isSetCode(_code)) {
+        const code = fixSetCode(_code);
+        const collector_number = _collector_number.toLowerCase();
+        return { name, code, collector_number };
+      }
+    }
+  }
+  const match = text.match(setCodeRegex)?.slice(1);
+  if (match) {
+    const [name, _code] = match.map(t => t.trim());
+    if (isSetCode(_code)) {
+      const code = fixSetCode(_code);
+      return { name, code };
+    }
+  }
+};
 
 /**
  * Splits a name of a card from input into the card's name, set (if any), and collector num (if any)
@@ -286,23 +350,10 @@ const stripParens = (text: string) =>
 export const splitCardName = (
   text: string
 ): { name: string; code?: SetCode; collector_number?: string } => {
-  const { name, code } = splitMasterpiece(text);
-  if (code) {
-    return { name, code };
-  }
-  const splitText = text.split(' ');
-  if (splitText.length > 2 && isSetCode(stripParens(splitText.at(-2)!))) {
-    return {
-      name: splitText.slice(0, -2).join(' '),
-      code: fixSetCode(stripParens(splitText.at(-2)!) as SetCode),
-      collector_number: splitText.at(-1)?.toLowerCase(),
-    };
-  }
-  if (splitText.length > 1 && isSetCode(stripParens(splitText.at(-1)!))) {
-    return {
-      name: splitText.slice(0, -1).join(' '),
-      code: fixSetCode(stripParens(splitText.at(-1)!) as SetCode),
-    };
+  const match = splitMasterpiece(text) ??
+    splitSetCode(text);
+  if (match) {
+    return match;
   }
   return { name: text };
 };
@@ -328,6 +379,7 @@ export const hardTokenIds: string[] = [
   "Baldur's Gate 31",
 ];
 
+const refRegex = /(?<name>.*)(?<count>\*(?:\d+|x))$/;
 /**
  * Parses the parameters for a related card
  * @param oldName name from the google sheet
@@ -336,7 +388,7 @@ export const parseRelatedReferenceName = (
   oldName: string
 ): { name: string; hcid: string; code?: SetCode; collector_number?: string; count?: string } => {
   const { name: intName, code, collector_number } = splitCardName(oldName);
-  const groups = intName.match(/(?<name>.*)(?<count>\*(?:\d+|x))$/);
+  const groups = intName.match(refRegex);
   const match = groups?.groups?.name ?? intName;
   const count = groups?.groups?.count ?? ('' as SetCode);
   const base = hardTokenIds.includes(match) ? match.slice(0, -1) : match.replace(/\d+$/, '');

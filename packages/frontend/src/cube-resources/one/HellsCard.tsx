@@ -12,7 +12,9 @@ export const ScryCard = ({ queryString }: { queryString: string }) => {
     let ignore = false;
     (async () => {
       console.log('oi', card);
-      const url = `https://api.scryfall.com/cards/random?q=${encodeURIComponent(queryString)} game:paper`;
+      const url = `https://api.scryfall.com/cards/random?q=${encodeURIComponent(
+        queryString
+      )} game:paper`;
 
       const resp = await fetch(url, {
         headers: {
@@ -40,7 +42,13 @@ export const ScryCard = ({ queryString }: { queryString: string }) => {
   return <StyledImage src={card} />;
 };
 
-export const HellsCard = ({ cardGetter, cardMap }: { cardGetter: (cardMap:CardMap) => HCCard.Any, cardMap:CardMap }) => {
+export const HellsCard = ({
+  cardGetter,
+  cardMap,
+}: {
+  cardGetter: (cardMap: CardMap) => HCCard.Any;
+  cardMap: CardMap;
+}) => {
   const card = cardGetter(cardMap);
   return <StyledImage src={card.image} />;
 };

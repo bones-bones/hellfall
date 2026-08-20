@@ -1,6 +1,6 @@
 import { faceType, HCCard } from '@hellfall/shared/types';
 import { fixName } from '../textHandling';
-import { splitSetCode } from '../setHandling';
+import { splitAngleSetCode } from '../setHandling';
 import { SequenceMatcher } from 'difflib-ts';
 import { stringIterable } from '../listHandling';
 
@@ -65,12 +65,12 @@ const combineFaceNames = (faceNames: string[][]): string[] => {
 export const getAllNames = (card: HCCard.Any, dropFaces?: boolean): string[] => {
   const fixed = fixName(card.name);
   const names: string[] = [fixed];
-  const { name, code } = splitSetCode(fixed);
+  const { name, code } = splitAngleSetCode(fixed);
   if (name != fixed) {
     names.push(name);
   }
   while (names.at(-1)?.endsWith(' <hc>')) {
-    names.push(splitSetCode(names.at(-1)!).name);
+    names.push(splitAngleSetCode(names.at(-1)!).name);
   }
   if (card.flavor_name) {
     names.push(fixName(card.flavor_name));

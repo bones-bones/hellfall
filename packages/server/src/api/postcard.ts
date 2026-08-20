@@ -5,7 +5,7 @@ import {
   isValidV4UUID,
   semiSplit,
   setDerivedProps,
-  splitMasterpiece,
+  splitMasterpiecePostcard,
 } from '@hellfall/shared/utils';
 import { cardToFirestore, cardsCollection, firestoreCard } from '@hellfall/shared/utils/firestore';
 import { withCors, env, requirePostcardAuth, HandlerRequest, HandlerResponse } from './lib';
@@ -113,7 +113,7 @@ function buildStubCard(
   const set = (kind === HCKind.Token ? 'HCT' : body.set) as SetCode;
   const hcid = body.hcid?.trim() || body.name;
 
-  const { name } = splitMasterpiece(body.name);
+  const { name } = splitMasterpiecePostcard(body.name);
 
   const card = getDefaultCard(
     kind,
@@ -151,7 +151,7 @@ function resolvePostcardOracleId(body: PostcardBody, previous: firestoreCard | n
   if (previous?.oracle_id) {
     return newUnlessValid(previous.oracle_id);
   }
-  const { name, code } = splitMasterpiece(body.name ?? '');
+  const { name, code } = splitMasterpiecePostcard(body.name ?? '');
   if (!body.set?.startsWith('SCL') && !code) {
     return newCardId();
   }
@@ -216,7 +216,7 @@ async function upsertPostcard(body: PostcardBody) {
 
   if (existing?.exists && previous) {
     const update: firestoreCard = {
-      name: splitMasterpiece(body.name).name,
+      name: splitMasterpiecePostcard(body.name).name,
       image: imageUrl,
       image_status: HCImageStatus.HighRes,
       creators: semiSplit(body.creators),

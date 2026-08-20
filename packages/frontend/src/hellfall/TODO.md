@@ -193,3 +193,4 @@ Write a script to transform the database
 - have the search results pull from the live db?
 - make rulings into an array
 - make hcj reprints of hcv cards override legality
+- add order for pip and set props
