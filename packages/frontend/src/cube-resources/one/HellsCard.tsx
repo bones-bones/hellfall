@@ -2,15 +2,17 @@ import { keyframes } from '@emotion/react';
 import { createStyles } from '@workday/canvas-kit-styling';
 import { useState, useEffect } from 'react';
 import { createStyledDiv, createStyledImg } from '../../styling';
+import { HCCard } from '@hellfall/shared/types';
+import { CardMap } from '@hellfall/shared/utils';
 
-export const HellsCard = ({ queryString }: { queryString: string }) => {
+export const ScryCard = ({ queryString }: { queryString: string }) => {
   const [card, setCard] = useState(undefined);
 
   useEffect(() => {
     let ignore = false;
     (async () => {
       console.log('oi', card);
-      const url = `https://api.scryfall.com/cards/random?q=${queryString} game:paper`;
+      const url = `https://api.scryfall.com/cards/random?q=${encodeURIComponent(queryString)} game:paper`;
 
       const resp = await fetch(url, {
         headers: {
@@ -36,6 +38,11 @@ export const HellsCard = ({ queryString }: { queryString: string }) => {
   }
 
   return <StyledImage src={card} />;
+};
+
+export const HellsCard = ({ cardGetter, cardMap }: { cardGetter: (cardMap:CardMap) => HCCard.Any, cardMap:CardMap }) => {
+  const card = cardGetter(cardMap);
+  return <StyledImage src={card.image} />;
 };
 
 const imageStyles = createStyles({ maxWidth: '300px', display: 'inline-block' });

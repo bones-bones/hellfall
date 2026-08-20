@@ -1,11 +1,17 @@
-import { Link, Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { specialCards } from './specialCards.tsx';
 import { useEffect } from 'react';
 import { createStyles } from '@workday/canvas-kit-styling';
 import { createStyledLink, createStyledListItem } from '../../styling';
+import { useAtomValue } from 'jotai';
+import { cardsAtom } from '../../hellfall/atoms/cardsAtom.ts';
+import { HellsCard } from './HellsCard.tsx';
 
 export const HellsCubeOne = () => {
   const val = useLocation();
+  const cards = useAtomValue(cardsAtom);
+  
+  
   interface SpecialCardPageProps {
     name: string;
     component: React.ReactNode;
@@ -33,7 +39,7 @@ export const HellsCubeOne = () => {
               Devotion to Dreadmaw:
               <ul>
                 <li>6 CMC</li>
-                <li>The art</li>
+                <li>The art (only in HLC draft, not constructed)</li>
                 <li>Dinosaur</li>
                 <li>Trample</li>
                 <li>6 Power</li>
@@ -51,13 +57,24 @@ export const HellsCubeOne = () => {
           }
         />
         {specialCards.map(entry => {
-          return (
-            <Route
-              key={entry.path}
-              path={entry.path}
-              element={<SpecialCardPage name={entry.name} component={entry.component} />}
-            />
-          );
+          if ('component' in entry) {
+            return (
+              <Route
+                key={entry.path}
+                path={entry.path}
+                element={<SpecialCardPage name={entry.name} component={entry.component} />}
+              />
+            );
+          } else {
+            const component = (<HellsCard cardGetter={entry.cardGetter} cardMap={cards}/>)
+            return (
+              <Route
+                key={entry.path}
+                path={entry.path}
+                element={<SpecialCardPage name={entry.name} component={component} />}
+              />
+            );
+          }
         })}
       </Routes>
     </>

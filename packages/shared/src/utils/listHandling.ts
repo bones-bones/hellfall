@@ -615,7 +615,7 @@ export type stringIterable = string[] | Set<string> | IterableIterator<string>;
 
 /**
  * Gets a random element from a list
- * @param list list to get a random from
+ * @param list list to get a random element from
  */
 export const getRandom = (list: any[] | Set<any>) => {
   if (Array.isArray(list)) {

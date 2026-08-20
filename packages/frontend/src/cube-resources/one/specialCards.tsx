@@ -1,60 +1,72 @@
 import { JSX } from 'react';
-import { HellsCard } from './HellsCard.tsx';
+import { ScryCard } from './HellsCard.tsx';
 import {
-  Stormstorm,
   ObscureCommand,
-  PlumberUmbra,
   ABlueCard,
   WildMagic,
   DruidicVow,
   CurveTopper,
 } from './cards';
+import { CardMap, getRandom } from '@hellfall/shared/utils';
+import { HCCard } from '@hellfall/shared/types';
+import { searchCards } from '@hellfall/shared/filters';
 
-type Card = { path: string; name: string; component: JSX.Element };
+type ScryCardParams = { path: string; name: string; component: JSX.Element };
 
-export const specialCards: Card[] = [
+type HellsCardParams = {path: string; name: string; cardGetter: (cardMap:CardMap) => HCCard.Any}
+
+const getterForQuery = (query?:string):((cardMap:CardMap) => HCCard.Any) => {
+  const getter = (cardMap:CardMap):HCCard.Any => {
+    const resultSet = query ? searchCards(cardMap, query) : undefined;
+    const card = resultSet ? getRandom(resultSet) : cardMap.getRandomCard();
+    return card;
+  }
+  return getter
+}
+
+export const specialCards: (ScryCardParams|HellsCardParams)[] = [
   {
     path: '/hugh-man',
     name: 'Hugh Man, Human',
-    component: <HellsCard queryString="t:Human" />,
+    component: <ScryCard queryString="t:human" />,
   },
   {
     path: '/regal-karakas',
     name: 'Regal Karakas',
-    component: <HellsCard queryString="(type:creature+type:legendary)" />,
+    component: <ScryCard queryString="t:creature t:legendary" />,
   },
   {
     path: '/more-white-cards',
     name: 'We Need More White Cards',
     component: (
       <>
-        <HellsCard queryString="color=w" key="1" />
-        <HellsCard queryString="color=w" key="2" />
-        <HellsCard queryString="color=w" key="3" />
+        <ScryCard queryString="c=w" key="1" />
+        <ScryCard queryString="c=w" key="2" />
+        <ScryCard queryString="c=w" key="3" />
       </>
     ),
   },
   {
     path: '/illusionary-gf',
     name: 'Illusionary GF',
-    component: <HellsCard queryString="type:chandra" />,
+    component: <ScryCard queryString="t:chandra t:planeswalker" />,
   },
   {
     path: '/absurdly-cryptic',
     name: 'Absurdly Cryptic Command',
     component: (
       <>
-        <HellsCard queryString="type:instant+color=U" key="1" />
-        <HellsCard queryString="type:instant+color=U" key="2" />
-        <HellsCard queryString="type:instant+color=U" key="3" />
-        <HellsCard queryString="type:instant+color=U" key="4" />
+        <ScryCard queryString="t:instant c=U" key="1" />
+        <ScryCard queryString="t:instant c=U" key="2" />
+        <ScryCard queryString="t:instant c=U" key="3" />
+        <ScryCard queryString="t:instant c=U" key="4" />
       </>
     ),
   },
   {
     path: '/black-6-drop',
     name: 'A Black 6 Drop Creature',
-    component: <HellsCard queryString="color=B+manavalue=6+t:creature" />,
+    component: <ScryCard queryString="c=b mv=6 t:creature" />,
   },
   {
     path: '/puzzle-box',
@@ -65,7 +77,7 @@ export const specialCards: Card[] = [
           return (
             <div key={entry}>
               <h3>{entry + 1}</h3>
-              <HellsCard queryString="t:instant+or+t:sorcery" />
+              <ScryCard queryString="t:instant or t:sorcery" />
             </div>
           );
         })}
@@ -77,16 +89,16 @@ export const specialCards: Card[] = [
     name: 'Deathseeker',
     component: (
       <div key="deathseeker">
-        <HellsCard queryString={`oracle:"when+~+dies" t:creature`} key="1" />
-        <HellsCard queryString={`oracle:"when+~+dies" t:creature`} key="2" />
+        <ScryCard queryString={`o:"when ~ dies" t:creature`} key="1" />
+        <ScryCard queryString={`o:"when ~ dies" t:creature`} key="2" />
       </div>
     ),
   },
-  { path: '/storm-storm', name: 'Stormstorm', component: <Stormstorm /> },
+  { path: '/storm-storm', name: 'Stormstorm', cardGetter:getterForQuery('~stormstorm unique:cards include:extras') },
   {
     path: '/ultimate-ultimatum',
     name: 'Ultimate Ultimatum',
-    component: <HellsCard queryString="ultimatum+-clarion" />,
+    component: <ScryCard queryString="ultimatum c=3 -c:bant" />,
   },
   {
     path: '/obscure-command',
@@ -96,7 +108,7 @@ export const specialCards: Card[] = [
   {
     path: '/plumber-umbra',
     name: 'Plumber Umbra',
-    component: <PlumberUmbra />,
+    cardGetter:getterForQuery('~"plumber umbra" unique:cards include:extras')
   },
   { path: '/blue-card', name: 'A Blue Card', component: <ABlueCard /> },
   {
@@ -104,11 +116,11 @@ export const specialCards: Card[] = [
     name: 'Chandra, Throughout the Ages',
     component: (
       <>
-        <HellsCard queryString={`!"chandra,+novice+pyromancer"`} />
+        <ScryCard queryString={`!"chandra,+novice+pyromancer"`} />
         <br />
-        <HellsCard queryString={`!"chandra,+acolyte+of+flame"`} />
+        <ScryCard queryString={`!"chandra,+acolyte+of+flame"`} />
         <br />
-        <HellsCard queryString={`!"chandra,+awakened+inferno"`} />
+        <ScryCard queryString={`!"chandra,+awakened+inferno"`} />
       </>
     ),
   },
@@ -116,7 +128,7 @@ export const specialCards: Card[] = [
   {
     path: '/phyrexian-oublietterator',
     name: 'Phyrexian Oublietterator',
-    component: <HellsCard queryString={`!"Oubliette"`} />,
+    component: <ScryCard queryString={`!"Oubliette"`} />,
   },
   {
     path: '/druidic-vow',
@@ -126,29 +138,7 @@ export const specialCards: Card[] = [
   {
     path: '/lazav-with-a-flamethrower',
     name: 'Lazav With a Flamethrower',
-    component: <HellsCard queryString={`!"chandra,+fire+of+kaladesh"`} />,
-  },
-  // {
-  //   path: '/tit',
-  //   name: 'Tit for Tat',
-  //   component: (
-  //     <img
-  //       src={
-  //         'https://cdn.discordapp.com/attachments/631289553415700492/685521203217170526/cwx75bn555k41.png'
-  //       }
-  //     />
-  //   ),
-  // },
-  {
-    path: '/weed-token',
-    name: 'Weed Token',
-    component: (
-      <pre>{`Weed
-  Artifact Token
-
-  {2}, {tap}, Sacrifice this artifact: Flip a coin.
-  If you win the flip, gain 6 life. Otherwise, lose 3 life.`}</pre>
-    ),
+    component: <ScryCard queryString={`!"chandra,+fire+of+kaladesh"`} />,
   },
   {
     path: '/lucky-charms',
@@ -156,17 +146,17 @@ export const specialCards: Card[] = [
     component: (
       <>
         <h2>Blarney&apos;s</h2>
-        <HellsCard queryString={`!"rampant+growth"`} />
+        <ScryCard queryString={`!"rampant+growth"`} />
         <br />
-        <HellsCard queryString={`!"Naturalize"`} />
+        <ScryCard queryString={`!"Naturalize"`} />
         <br />
-        <HellsCard queryString={`!"explore"`} />
+        <ScryCard queryString={`!"explore"`} />
         <h2>Stumpy&apos;s</h2>
-        <HellsCard queryString={`!"fog"`} />
+        <ScryCard queryString={`!"fog"`} />
         <br />
-        <HellsCard queryString={`!"giant+growth"`} />
+        <ScryCard queryString={`!"giant+growth"`} />
         <br />
-        <HellsCard queryString={`!"reclaim"`} />
+        <ScryCard queryString={`!"reclaim"`} />
       </>
     ),
   },
@@ -178,7 +168,7 @@ export const specialCards: Card[] = [
   {
     path: '/random-growth',
     name: 'Random Growth',
-    component: <HellsCard queryString="type:land" />,
+    component: <ScryCard queryString="type:land" />,
   },
 ].sort((a, b) => {
   if (a.name > b.name) {

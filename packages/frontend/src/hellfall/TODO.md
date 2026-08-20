@@ -192,3 +192,4 @@ Write a script to transform the database
 - have deckbuilder interpret blank lines the same way as commented out lines? or just ignore them for legality check?
 - have the search results pull from the live db?
 - make rulings into an array
+- make hcj reprints of hcv cards override legality

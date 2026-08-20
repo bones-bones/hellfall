@@ -1,4 +1,4 @@
-import { HellsCard } from '../HellsCard.tsx';
+import { ScryCard } from '../HellsCard.tsx';
 
 export const ABlueCard = () => {
   const stormCards = [
@@ -23,5 +23,5 @@ export const ABlueCard = () => {
     `!"sudden+substitution"`,
     `!"snapcaster+mage"`,
   ];
-  return <HellsCard queryString={stormCards[Math.floor(Math.random() * stormCards.length)]} />;
+  return <ScryCard queryString={stormCards[Math.floor(Math.random() * stormCards.length)]} />;
 };
