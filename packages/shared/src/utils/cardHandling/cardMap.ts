@@ -1401,4 +1401,16 @@ export class CardMap extends LightCardMap {
     this.lookupMap.clear();
     this.forEach(card => this.lookupMap.set(card));
   };
+  toJSON() {
+    const { nameMap, aliasMap, hcidMap } = this.lookupMap.toJSON();
+    const idMap: Record<string, HCCard.Any> = {};
+    for (const [id, card] of this.idMap) {
+      idMap[id] = card;
+    }
+    const oracleMap: Record<string, string[]> = {};
+    for (const [oracle_id, ids] of this.oracleMap) {
+      oracleMap[oracle_id] = Array.from(ids);
+    }
+    return { nameMap, aliasMap, hcidMap, idMap, oracleMap };
+  }
 }

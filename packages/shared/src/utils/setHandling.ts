@@ -350,8 +350,7 @@ const splitSetCode = (
 export const splitCardName = (
   text: string
 ): { name: string; code?: SetCode; collector_number?: string } => {
-  const match = splitMasterpiece(text) ??
-    splitSetCode(text);
+  const match = splitMasterpiece(text) ?? splitSetCode(text);
   if (match) {
     return match;
   }

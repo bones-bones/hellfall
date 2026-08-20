@@ -121,7 +121,7 @@ const wordPrefixScore = (nameWords: string[], reqWords: string[]): number => {
   let score = 0;
   for (const reqWord of reqWords) {
     let found = false;
-    for (let i = 0; i < nameWords.length && !found; i++) {
+    for (let i = 0; i < nameWords.length; i++) {
       const nameWord = nameWords[i];
       if (nameWord.includes(reqWord) || reqWord.includes(nameWord)) {
         const overlap =
@@ -132,6 +132,7 @@ const wordPrefixScore = (nameWords: string[], reqWords: string[]): number => {
           overlap == 1 ? 3 : nameWord.startsWith(reqWord) || reqWord.startsWith(nameWord) ? 2 : 1;
         score += mult * overlap;
         found = true;
+        break;
       }
     }
     if (!found) {

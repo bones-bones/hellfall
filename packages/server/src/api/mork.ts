@@ -7,7 +7,7 @@ import {
   firestoreDocRefToCard,
 } from '@hellfall/shared/utils/firestore';
 
-export const commands = ['exact', 'exist', 'fuzzy', 'multiple_fuzzy'] as const;
+export const commands = ['exact', 'exist', 'fuzzy', 'multiple_fuzzy', 'get_cache'] as const;
 export type commandType = (typeof commands)[number];
 export const isCommand = (value: any): value is commandType => commands.includes(value);
 
@@ -52,6 +52,11 @@ export async function morkHandler(req: HandlerRequest, res: HandlerResponse) {
     if (!isCommand(body.command)) {
       res.statusCode = 404;
       res.end(JSON.stringify({ ok: false, reason: 'invalid_command' }));
+      return;
+    }
+    if (body.command == 'get_cache') {
+      res.statusCode = 200;
+      res.end(JSON.stringify(cardMap));
       return;
     }
     const getCard = exactCommands.includes(body.command)

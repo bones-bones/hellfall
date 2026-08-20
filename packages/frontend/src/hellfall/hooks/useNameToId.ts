@@ -1,14 +1,5 @@
 import { useAtomValue } from 'jotai';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
-import {
-  CardMap,
-  landNames,
-  textEquals,
-  textListIncludes,
-  textPrep,
-  unescapeText,
-} from '@hellfall/shared/utils';
-import { HCCard } from '@hellfall/shared/types';
 
 /**
  * Only for use with redirects.
