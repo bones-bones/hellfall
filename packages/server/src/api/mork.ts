@@ -7,7 +7,16 @@ import {
   firestoreDocRefToCard,
 } from '@hellfall/shared/utils/firestore';
 
-export const commands = ['exact', 'exist', 'fuzzy', 'multiple_fuzzy', 'get_cache'] as const;
+export const commands = [
+  'uuid',
+  'multiple_uuid',
+  'exact',
+  'multiple_exact',
+  'fuzzy',
+  'multiple_fuzzy',
+  'all_exist',
+  'get_cache',
+] as const;
 export type commandType = (typeof commands)[number];
 export const isCommand = (value: any): value is commandType => commands.includes(value);
 
@@ -33,9 +42,15 @@ const jsonHeaders = (req: HandlerRequest): Record<string, string> => {
   return withCors({ 'Content-Type': 'application/json' }, req);
 };
 
-const nameRequiredCommands: commandType[] = ['exact', 'fuzzy'];
-const exactCommands: commandType[] = ['exact', 'exist'];
-const nameListRequiredCommands: commandType[] = ['exist', 'multiple_fuzzy'];
+const exactCommands: commandType[] = ['exact', 'multiple_exact', 'all_exist'];
+const uuidRequiredCommands: commandType[] = ['uuid', 'multiple_uuid'];
+const nameRequiredCommands: commandType[] = ['uuid', 'exact', 'fuzzy'];
+const nameListRequiredCommands: commandType[] = [
+  'multiple_uuid',
+  'multiple_exact',
+  'multiple_fuzzy',
+  'all_exist',
+];
 
 export async function morkHandler(req: HandlerRequest, res: HandlerResponse) {
   const headers = jsonHeaders(req);
@@ -59,7 +74,9 @@ export async function morkHandler(req: HandlerRequest, res: HandlerResponse) {
       res.end(JSON.stringify(cardMap));
       return;
     }
-    const getCard = exactCommands.includes(body.command)
+    const getCard = uuidRequiredCommands.includes(body.command)
+      ? cardMap.get
+      : exactCommands.includes(body.command)
       ? cardMap.getFromName
       : cardMap.getFromFuzzyName;
     if (nameListRequiredCommands.includes(body.command)) {
@@ -69,7 +86,7 @@ export async function morkHandler(req: HandlerRequest, res: HandlerResponse) {
         return;
       }
       const cards = body.card_names.flatMap(card => getCard(card) ?? []);
-      if (body.command == 'exist') {
+      if (body.command == 'all_exist') {
         const ok = cards.length == body.card_names.length;
         res.statusCode = ok ? 200 : 404;
         res.end(JSON.stringify({ ok }));

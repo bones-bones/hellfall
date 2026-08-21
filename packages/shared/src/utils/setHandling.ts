@@ -260,7 +260,7 @@ export const splitAngleSetCode = (text: string): { name: string; code?: string }
   const match = text.match(angleSetCodeRegex)?.slice(1);
   if (match) {
     const [name, _code] = match.map(t => t.trim());
-    if (_code == 'HC' || isSetCode(_code)) {
+    if (_code.toUpperCase() == 'HC' || isSetCode(_code)) {
       const code = fixSetCode(_code);
       return { name, code };
     }

@@ -42,6 +42,10 @@ async function readJsonBody(req: HandlerRequest): Promise<unknown> {
 const stripDoubleSpaces = (text: string): string =>
   text.includes('  ') ? stripDoubleSpaces(text.replaceAll('  ', ' ')) : text;
 
+type RandomBody = {
+  num?: number;
+};
+
 const formatSearchResult = (
   idList: string[],
   cardMap: CardMap,
@@ -88,12 +92,21 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse, i
 
     const results = searchCards(cardMap, query ?? '');
     if (isRandom) {
+      const body = (await readJsonBody(req)) as RandomBody;
       if (!results.length) {
         res.statusCode = 404;
         res.end(JSON.stringify({ ok: false, reason: 'no_cards_found' }));
         return;
       }
       res.statusCode = 200;
+      if (body.num && body.num > 1) {
+        const randomCards: HCCard.Any[] = [];
+        for (let i = 0; i < body.num; i++) {
+          randomCards.push(getRandom(results));
+        }
+        res.end(JSON.stringify({ data: randomCards, object: 'list' }));
+        return;
+      }
       res.end(JSON.stringify(getRandom(results)));
       return;
     }
