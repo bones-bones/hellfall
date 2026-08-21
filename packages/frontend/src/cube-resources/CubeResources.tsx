@@ -109,10 +109,10 @@ export const CubeResources = () => {
       ),
     },
     {
-      name: 'HC Constructed',
+      name: 'Hellscube Cut Commanders',
       id: 'HCC',
       // readyForAutofill: true,
-      description: 'Cards that are legal in constructed, but are not in any cube',
+      description: 'Commanders cut from HC6 in votes due to slots. Still legal in Commander.',
     },
     {
       name: 'Hells Chase Posse',

@@ -20,6 +20,7 @@ import {
   CardMap,
   tokenInvariantMap,
   isValidV4UUID,
+  semiSplit,
 } from '@hellfall/shared/utils';
 
 export const fetchTokens = async (NO_SCRYFALL: boolean) => {
@@ -87,7 +88,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
         set: 'HCT',
         image: entryAt('image'),
         image_status: HCImageStatus.HighRes,
-        creators: entryAt('creators').split(';'),
+        creators: semiSplit(entryAt('creators')),
         collector_number: entryAt('accepted_order'),
         accepted_order: entryAt('accepted_order'),
       },
@@ -107,7 +108,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
               addPropToFace(token, 'name', value, index);
               addPropToFace(token, 'subtypes', value.split(' '), index);
             } else if (keys[i] == 'types') {
-              const typesAndSupertypes = value.split(';');
+              const typesAndSupertypes = semiSplit(value);
               const superList: string[] = [];
               const typeList: string[] = [];
               typesAndSupertypes.forEach(e => {
@@ -124,7 +125,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
             }
           });
         } else if (keys[i] == 'token_maker') {
-          entry[i].split(';').forEach(oldName => {
+          semiSplit(entry[i]).forEach(oldName => {
             const { name, hcid, code, collector_number, count } =
               parseRelatedReferenceName(oldName);
             const maker: HCRelatedCard = {
@@ -158,7 +159,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
     }
     const artistIndex = keys.indexOf('artists');
     if (entry[artistIndex]) {
-      const artists = entry[artistIndex].split(';');
+      const artists = semiSplit(entry[artistIndex]);
 
       token.artists = artists.map(fullArtist => {
         const hasNote = fullArtist.includes('<') && fullArtist.endsWith('>');
@@ -172,7 +173,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
       token.artists = Array.from(new Set(token.artists));
     }
 
-    setDerivedProps(token, entryAt('tags').split(';'));
+    setDerivedProps(token, semiSplit(entryAt('tags')));
     token.tags?.forEach(tag => {
       if (tag == 'draftpartner' && token.all_parts) {
         token.all_parts[0].is_draft_partner = true;

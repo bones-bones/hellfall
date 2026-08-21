@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { HellsCard } from '../HellsCard.tsx';
+import { ScryCard } from '../HellsCard.tsx';
 
 export const CurveTopper = () => {
   const [count, setCount] = useState(0);
@@ -23,7 +23,7 @@ export const CurveTopper = () => {
       </button>
       <br />
       {cardArray.map((e, index) => (
-        <HellsCard queryString={e} key={index} />
+        <ScryCard queryString={e} key={index} />
       ))}
     </>
   );
@@ -44,7 +44,7 @@ export const DruidicVow = () => {
         Set Mana value
       </button>
       <br />
-      {cost && <HellsCard key={cost} queryString={`mana=${cost}`} />}
+      {cost && <ScryCard key={cost} queryString={`mana=${cost}`} />}
     </>
   );
 };

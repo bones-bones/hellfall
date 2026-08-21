@@ -1,5 +1,6 @@
 import { isLegalitiesField } from '@hellfall/shared/types';
 import { FieldType } from './types';
+import { semiSplit } from '@hellfall/shared/utils';
 
 export function parseFieldValue(raw: string, type: FieldType): unknown {
   if (type === 'boolean') return raw === 'true' ? true : undefined;
@@ -9,11 +10,7 @@ export function parseFieldValue(raw: string, type: FieldType): unknown {
     return Number.isFinite(n) ? n : undefined;
   }
   if (type === 'semicolon-list' || type === 'multi-enum') {
-    if (!raw.trim()) return [];
-    return raw
-      .split(';')
-      .map(s => s.trim())
-      .filter(Boolean);
+    return semiSplit(raw);
   }
   if (type === 'legalities') {
     if (!raw.trim()) return undefined;

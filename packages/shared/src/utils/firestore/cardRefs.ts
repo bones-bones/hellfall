@@ -3,7 +3,7 @@ import { HCCard } from '@hellfall/shared/types';
 import { CardMap } from '../cardHandling';
 import { textEquals } from '../textHandling';
 import { firestoreToCard } from './cardConversion';
-import type { firestoreCard } from './firestoreTypes';
+import type { cardDocRefType, firestoreCard } from './firestoreTypes';
 
 /**
  * Gets all related cards to a given card
@@ -42,6 +42,13 @@ const partMatchesCard = (part: RelatedPartRef, card: HCCard.Any): boolean => {
     return true;
   }
   return false;
+};
+
+export const firestoreDocRefToCard = async (docRef: cardDocRefType) => {
+  const snap = (await docRef.get()).data();
+  if (snap) {
+    return firestoreToCard(snap);
+  }
 };
 
 /**

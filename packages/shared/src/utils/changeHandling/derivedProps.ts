@@ -154,12 +154,6 @@ export const setDerivedProps = (
 ) /* :{card:HCCard.Any;relateds?:HCCard.Any[]}  */ => {
   // todo: make sure this works when tags are empty
   if (tags) {
-    while (tags[0] == '') {
-      tags.shift();
-    }
-    while (tags.at(-1) == '') {
-      tags.pop();
-    }
     tags = Array.from(new Set(tags));
     applyChangesFromNewBase(card, tags);
   }

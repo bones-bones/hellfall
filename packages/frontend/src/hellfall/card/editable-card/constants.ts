@@ -7,7 +7,7 @@ import {
   HCCard,
   HCLayout,
 } from '@hellfall/shared/types';
-import { toFaces } from '@hellfall/shared/utils';
+import { semiSplit, toFaces } from '@hellfall/shared/utils';
 import type { FieldConfig, FieldConfigEntry } from './types';
 import { getFieldConfigs } from './types';
 
@@ -17,10 +17,7 @@ const getFaceTypes = (
   faceFields: Record<string, string>
 ): string[] => {
   if (faceFields.types) {
-    return faceFields.types
-      .split(';')
-      .map(t => t.trim())
-      .filter(Boolean);
+    return semiSplit(faceFields.types);
   }
   return toFaces(card)[faceIndex]?.types ?? [];
 };

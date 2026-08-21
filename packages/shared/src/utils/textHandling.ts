@@ -11,12 +11,6 @@ export const normalizeText = (text: string): string =>
     .replaceAll(/ {2,}/g, ' ');
 
 /**
- * Fixes a name by normalizing it, making it lowercase, and trimming it
- * @param text text to fix
- */
-export const fixName = (text: string) => textPrep(text.toLowerCase().trim());
-
-/**
  * Format smart quotes
  * @param text - The markdown text to convert to plaintext
  * @returns Text with smart quotes inserted
@@ -62,9 +56,15 @@ export const formatQuotes = (text: string): string => {
   return result.join('');
 };
 
+const delimiterList = [
+  '**', // bold
+  '__', // underline
+  '~~', // strikethrough
+  '*', // italics
+  '_', // italics
+];
 /**
  * Convert markdown text to plaintext by stripping formatting characters
- * Handles **bold**, *italic*, ~~strikethrough~~, and respects escaped characters
  * @param text - The markdown text to convert to plaintext
  * @returns Plaintext version with formatting removed
  */
@@ -73,139 +73,53 @@ export const textPrep = (text: string, preserveCaps: boolean = false): string =>
   const result: string[] = [];
   let i = 0;
   const len = text.length;
+  const foundDelimiter = (delimiter: string) => {
+    const delimitLen = delimiter.length;
+
+    if (!text.startsWith(delimiter, i)) return false;
+    if (i + delimitLen >= len) return false;
+
+    const end = text.indexOf(delimiter, i + delimitLen);
+    if (end == -1) {
+      return false;
+    }
+    const content = text.slice(i + delimitLen, end);
+    result.push(textPrep(content));
+    i = end + 2;
+    return true;
+  };
   while (i < len) {
+    if (i == 0 && !/[*_~()\\]/.test(text)) {
+      break;
+    }
     // Check for escaped characters
-    if (text[i] === '\\' && i + 1 < len && '[*_~()]'.includes(text[i + 1])) {
+    if (text[i] === '\\' && i + 1 < len && '*_~()\\'.includes(text[i + 1])) {
       // Remove the backslash and keep the next character as literal
       result.push(text[i + 1]);
       i += 2;
       continue;
     }
-
-    // Check for bold (**text**)
-    if (text[i] === '*' && text[i + 1] === '*' && i + 2 < len) {
-      const end = text.indexOf('**', i + 2);
-      if (end !== -1) {
-        // Check if the opening is escaped
-        let isEscaped = false;
-        let backslashCount = 0;
-        let pos = i - 1;
-        while (pos >= 0 && text[pos] === '\\') {
-          backslashCount++;
-          pos--;
-        }
-        isEscaped = backslashCount % 2 === 1;
-
-        if (!isEscaped) {
-          // Extract the content between ** and **
-          const content = text.substring(i + 2, end);
-          // Recursively process content for nested formatting
-          result.push(textPrep(content));
-          i = end + 2;
-          continue;
-        }
-      }
+    if (delimiterList.some(foundDelimiter)) {
+      continue;
     }
-
-    // Check for underline (__text__)
-    if (text[i] === '_' && text[i + 1] === '_' && i + 2 < len) {
-      const end = text.indexOf('__', i + 2);
-      if (end !== -1) {
-        let isEscaped = false;
-        let backslashCount = 0;
-        let pos = i - 1;
-        while (pos >= 0 && text[pos] === '\\') {
-          backslashCount++;
-          pos--;
-        }
-        isEscaped = backslashCount % 2 === 1;
-
-        if (!isEscaped) {
-          const content = text.substring(i + 2, end);
-          result.push(textPrep(content));
-          i = end + 2;
-          continue;
-        }
-      }
-    }
-
-    // Check for strikethrough (~~text~~)
-    if (text[i] === '~' && text[i + 1] === '~' && i + 2 < len) {
-      const end = text.indexOf('~~', i + 2);
-      if (end !== -1) {
-        let isEscaped = false;
-        let backslashCount = 0;
-        let pos = i - 1;
-        while (pos >= 0 && text[pos] === '\\') {
-          backslashCount++;
-          pos--;
-        }
-        isEscaped = backslashCount % 2 === 1;
-
-        if (!isEscaped) {
-          const content = text.substring(i + 2, end);
-          result.push(textPrep(content));
-          i = end + 2;
-          continue;
-        }
-      }
-    }
-
-    // Check for italic (*text*)
-    if (text[i] === '*' && (i + 1 >= len || text[i + 1] !== '*')) {
-      const end = text.indexOf('*', i + 1);
-      if (end !== -1) {
-        let isEscaped = false;
-        let backslashCount = 0;
-        let pos = i - 1;
-        while (pos >= 0 && text[pos] === '\\') {
-          backslashCount++;
-          pos--;
-        }
-        isEscaped = backslashCount % 2 === 1;
-
-        if (!isEscaped) {
-          const content = text.substring(i + 1, end);
-          result.push(textPrep(content));
-          i = end + 1;
-          continue;
-        }
-      }
-    }
-
-    // Check for italic (_text_)
-    if (text[i] === '_' && (i + 1 >= len || text[i + 1] !== '_')) {
-      const end = text.indexOf('_', i + 1);
-      if (end !== -1) {
-        let isEscaped = false;
-        let backslashCount = 0;
-        let pos = i - 1;
-        while (pos >= 0 && text[pos] === '\\') {
-          backslashCount++;
-          pos--;
-        }
-        isEscaped = backslashCount % 2 === 1;
-
-        if (!isEscaped) {
-          const content = text.substring(i + 1, end);
-          result.push(textPrep(content));
-          i = end + 1;
-          continue;
-        }
-      }
-    }
-
     // Regular character
     result.push(text[i]);
     i++;
   }
 
-  const normalized = normalizeText(result.join(''));
+  const normalized = normalizeText(result.length ? result.join('') : text);
   if (preserveCaps) {
     return normalized;
   }
   return normalized.toLowerCase();
 };
+
+/**
+ * Fixes a name by normalizing it, making it lowercase, and trimming it
+ * @param text text to fix
+ */
+export const fixName = (text: string) => textPrep(text.trim());
+
 /**
  * Checks whether search text is contained in text from a card
  * @param cardText text from the card
@@ -545,3 +459,10 @@ export const matchCount = (text: string, regex: RegExp, ...args: (RegExp | undef
 };
 export const toTitleCase = (text: string) =>
   `${text[0]?.toUpperCase() ?? ''}${text.slice(1).toLowerCase()}`;
+
+/**
+ * splits semicolon-separated text correctly (returning `[]` on `''`, trimming, etc.)
+ * @param text text to split
+ */
+export const semiSplit = (text: string): string[] =>
+  text.trim() ? text.split(';').flatMap(t => t.trim() || []) : [];

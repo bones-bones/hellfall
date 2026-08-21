@@ -615,7 +615,7 @@ export type stringIterable = string[] | Set<string> | IterableIterator<string>;
 
 /**
  * Gets a random element from a list
- * @param list list to get a random from
+ * @param list list to get a random element from
  */
 export const getRandom = (list: any[] | Set<any>) => {
   if (Array.isArray(list)) {
@@ -636,4 +636,14 @@ export const moveSomeOver = <T>(list1: T[], list2: T[], predicate: (value: T) =>
       list2.unshift(...list1.splice(i, 1));
     }
   }
+};
+
+export const filterSet = <T>(set: Set<T>, predicate: (item: T) => any): Set<T> => {
+  const ret = new Set<T>();
+  for (const item of set) {
+    if (predicate(item)) {
+      ret.add(item);
+    }
+  }
+  return ret;
 };

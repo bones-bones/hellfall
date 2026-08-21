@@ -1,8 +1,9 @@
 import { HCCard, SetCode } from '@hellfall/shared/types';
 import { getCollectorNumSets, getGroupSets, splitCardName } from '../setHandling';
 import { fixName } from '../textHandling';
-import { getAllNames } from './nameHandling';
+import { getAllNames, getClosestName } from './nameHandling';
 import { deleteFromMap, pushToMap } from '../listHandling';
+import { isInteger } from '../numHandling';
 
 /**
  * Maps a card's names to the ids that it should use. Only for use in CardMap.
@@ -13,12 +14,12 @@ class CardLookupObject {
   /**
    * Maps a set to the collector numbers that the card has prints in, which map to ids
    */
-  protected setNumMap = new Map<SetCode, Map<string, string>>();
+  setNumMap = new Map<SetCode, Map<string, string>>();
   /**
    * Maps a set to the ids that are in that set
    */
-  protected setMap = new Map<SetCode, Set<string>>();
-  protected defaultId: string;
+  setMap = new Map<SetCode, Set<string>>();
+  defaultId: string;
   /**
    * Creates a new CardLookupObject
    * @param card The initial card to use
@@ -35,20 +36,21 @@ class CardLookupObject {
    * @param noDefault whether to return undefined if the set isn't specified (used for random land handling)
    */
   get(code?: SetCode, collector_number?: string, noDefault?: boolean): string | undefined {
+    const defaultId = noDefault ? undefined : this.defaultId;
     if (!code) {
-      return noDefault ? undefined : this.defaultId;
+      return defaultId;
     }
     if (!collector_number) {
+      const ids = this.setMap.get(code);
+      if (ids?.size) {
+        return Array.from(ids.values())[0];
+      }
       const numIds = this.setNumMap.get(code)?.values();
       if (numIds) {
         const id = Array.from(numIds)[0];
         if (id) return id;
       }
-      const ids = this.setMap.get(code);
-      if (ids?.size) {
-        return Array.from(ids.values())[0];
-      }
-      return noDefault ? undefined : this.defaultId;
+      return defaultId;
     }
     const numMap = this.setNumMap.get(code);
     if (numMap) {
@@ -61,7 +63,7 @@ class CardLookupObject {
     if (ids?.size) {
       return Array.from(ids.values())[0];
     }
-    return noDefault ? undefined : this.defaultId;
+    return defaultId;
   }
 
   /**
@@ -120,6 +122,22 @@ class CardLookupObject {
       }
     });
     return false;
+  }
+  toJSON() {
+    const setNumMap: Record<string, Record<string, string>> = {};
+    for (const [set, map] of this.setNumMap) {
+      const numIDMap: Record<string, string> = {};
+      for (const [num, id] of map) {
+        numIDMap[num] = id;
+      }
+      setNumMap[set] = numIDMap;
+    }
+    const setMap: Record<string, string[]> = {};
+    for (const [set, ids] of this.setMap) {
+      setMap[set] = Array.from(ids);
+    }
+    const defaultId = this.defaultId;
+    return { setNumMap, setMap, defaultId };
   }
 }
 
@@ -192,6 +210,16 @@ class DoubleMap {
     this.forwardMap.clear();
     this.reverseMap.clear();
   };
+  *keys(): IterableIterator<string> {
+    for (const key of this.forwardMap.keys()) {
+      yield key;
+    }
+  }
+  *[Symbol.iterator](): Iterator<[string, string]> {
+    for (const [key, value] of this.forwardMap.entries()) {
+      yield [key, value];
+    }
+  }
 }
 
 /**
@@ -209,7 +237,7 @@ export class CardLookupMap {
   protected aliasMap = new DoubleMap();
 
   /**
-   * This maps a name to the preferred id to use
+   * This maps a hcid to the preferred id to use
    */
   protected hcidMap = new DoubleMap();
 
@@ -243,6 +271,19 @@ export class CardLookupMap {
   get = (text: string) => {
     const { name, code, collector_number } = splitCardName(fixName(text));
     return this.getBySetAndNumber(name, code, collector_number);
+  };
+
+  /**
+   * Returns the correct id for a card name, going with the best possible match if nothing is an exact match.
+   * @param text the name of the card to get
+   */
+  getFuzzy = (text: string) => {
+    const fixed = fixName(text);
+    const { name, code, collector_number } = splitCardName(fixed);
+    const exact = this.getBySetAndNumber(name, code, collector_number);
+    if (exact) return exact;
+    const closest = getClosestName(this.names(), fixed);
+    return this.getBySetAndNumber(closest, code, collector_number);
   };
 
   /**
@@ -312,4 +353,32 @@ export class CardLookupMap {
     this.aliasMap.clear();
     this.hcidMap.clear();
   };
+  *names(): IterableIterator<string> {
+    for (const name of this.nameMap.keys()) {
+      yield name;
+    }
+    for (const name of this.aliasMap.keys()) {
+      yield name;
+    }
+    for (const name of this.hcidMap.keys()) {
+      if (!isInteger(name)) {
+        yield name;
+      }
+    }
+  }
+  toJSON() {
+    const nameMap: Record<string, CardLookupObject> = {};
+    for (const [name, lookup] of this.nameMap) {
+      nameMap[name] = lookup;
+    }
+    const aliasMap: Record<string, string> = {};
+    for (const [alias, name] of this.aliasMap) {
+      aliasMap[alias] = name;
+    }
+    const hcidMap: Record<string, string> = {};
+    for (const [hcid, id] of this.hcidMap) {
+      hcidMap[hcid] = id;
+    }
+    return { nameMap, aliasMap, hcidMap };
+  }
 }

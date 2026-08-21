@@ -17,7 +17,7 @@ import {
 } from '@hellfall/shared/utils/firestore';
 
 const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
-const collection: cardsCollection = db.collection(env.FIRESTORE_CARDS_COLLECTION);
+const cardsCol: cardsCollection = db.collection(env.FIRESTORE_CARDS_COLLECTION);
 const changesetsCol: changesetCollection = db.collection(
   env.FIRESTORE_CHANGESETS_COLLECTION
 ) as changesetCollection;
@@ -98,7 +98,7 @@ export const cardTagsHandler = async (
       return;
     }
 
-    const docRef = collection.doc(cardId);
+    const docRef = cardsCol.doc(cardId);
 
     if (auditTrail) {
       if (req.method !== 'GET') {
@@ -169,11 +169,10 @@ export const cardTagsHandler = async (
         return;
       }
       const base_tags = [...(card.base_tags ?? [])];
-      if (change_type == 'add') {
-        addTagToBase(base_tags, tag);
-      } else {
-        deleteTagFromBase(base_tags, tag);
-      }
+      const tagActuallyChanged = (change_type == 'add' ? addTagToBase : deleteTagFromBase)(
+        base_tags,
+        tag
+      );
       const changes = getChangesFromTag(card as unknown as HCCard.Any, change_type, tag);
       // const changes: anyChange[] = [{ location: 'tag', change_type, tag } as tagChange];
       // if (tagChangesAnyProps(tag)) {
@@ -224,6 +223,16 @@ export const cardTagsHandler = async (
           return;
         }
       } else {
+        if (!tagActuallyChanged) {
+          res.statusCode = 400;
+          res.end(
+            JSON.stringify({
+              ok: false,
+              reason: `tag_${change_type == 'add' ? 'already' : 'not'}_there`,
+            })
+          );
+          return;
+        }
         const id = crypto.randomUUID();
         await changesetsCol.doc(id).set({
           id,
@@ -237,15 +246,6 @@ export const cardTagsHandler = async (
           comment: `${change_type == 'add' ? 'Added' : 'Deleted'} tag: "${tag}"`,
         });
       }
-
-      // if (base_tags.length) {
-      //   card.base_tags = base_tags;
-      // } else {
-      //   delete card.base_tags;
-      // }
-
-      // await docRef.set(card /* { merge: true } */);
-
       res.statusCode = 200;
       res.end(
         JSON.stringify({

@@ -1,3 +1,5 @@
+import { getRandom } from '@hellfall/shared/utils';
+
 export const ObscureCommand = () => {
   const commands = [
     ' Destroy all artifacts.',
@@ -28,7 +30,7 @@ export const ObscureCommand = () => {
         return (
           <>
             <h3>
-              {entry}. {commands[Math.floor(Math.random() * commands.length)]}
+              {entry}. {getRandom(commands)}
             </h3>
           </>
         );

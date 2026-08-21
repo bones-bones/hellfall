@@ -7,11 +7,10 @@ import {
   HCToDraftmancer,
   HCToTTSDeck,
   CardMap,
+  getRandom,
+  displaySetCode,
 } from '@hellfall/shared/utils';
 import { cardMap } from './cardMap.ts';
-import { tagsData } from '@hellfall/shared/data';
-
-// const tagsData = readDataJson<{ data: string[] }>('tags.json');
 
 export const searchFormats = [
   'json',
@@ -43,6 +42,10 @@ async function readJsonBody(req: HandlerRequest): Promise<unknown> {
 const stripDoubleSpaces = (text: string): string =>
   text.includes('  ') ? stripDoubleSpaces(text.replaceAll('  ', ' ')) : text;
 
+type RandomBody = {
+  num?: number;
+};
+
 const formatSearchResult = (
   idList: string[],
   cardMap: CardMap,
@@ -62,7 +65,7 @@ const formatSearchResult = (
   }
 };
 
-export async function searchHandler(req: HandlerRequest, res: HandlerResponse) {
+export async function searchHandler(req: HandlerRequest, res: HandlerResponse, isRandom?: boolean) {
   try {
     const intForm =
       (typeof req.query?.format == 'string' ? req.query?.format : req.query?.format?.[0]) ?? 'json';
@@ -79,7 +82,7 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse) {
 
     const inputSorts = typeof req.query?.order == 'string' ? [req.query?.order] : req.query?.order;
 
-    const { sortObjects, invalids, summary } = parseSearchQuery(query ?? '', new CardMap());
+    const { sortObjects, invalids, summary } = parseSearchQuery(query ?? '', cardMap);
 
     const { sortList } = combineAndWinnowSorts(sortObjects, inputSorts ?? []);
 
@@ -88,6 +91,25 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse) {
     );
 
     const results = searchCards(cardMap, query ?? '');
+    if (isRandom) {
+      const body = (await readJsonBody(req)) as RandomBody;
+      if (!results.length) {
+        res.statusCode = 404;
+        res.end(JSON.stringify({ ok: false, reason: 'no_cards_found' }));
+        return;
+      }
+      res.statusCode = 200;
+      if (body.num && body.num > 1) {
+        const randomCards: HCCard.Any[] = [];
+        for (let i = 0; i < body.num; i++) {
+          randomCards.push(getRandom(results));
+        }
+        res.end(JSON.stringify({ data: randomCards, object: 'list' }));
+        return;
+      }
+      res.end(JSON.stringify(getRandom(results)));
+      return;
+    }
 
     res.setHeader(
       'Content-Disposition',

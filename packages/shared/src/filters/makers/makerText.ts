@@ -63,7 +63,7 @@ export const makeOracleIDFilter: filterMaker<string> = (value: string, op: loose
     'oracleid',
     oracleIdFilter,
     oracleIdSummary,
-    `"${value}"`,
+    value,
     op,
     card => card.oracle_id
   );

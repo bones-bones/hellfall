@@ -164,7 +164,7 @@ export class NoUnescapeFilter<T, S> extends FilterObject<T, S> {
   }
   cardPassesFilter = (card: HCCard.Any) =>
     xor(
-      this.filter(this.getValueToCompare(card), this.getOp(), fixValue(this.value, 'lower')),
+      this.filter(this.getValueToCompare(card), this.getOp(), fixValue(this.value, 'keep')),
       this.inverted
     );
 }
