@@ -194,3 +194,4 @@ Write a script to transform the database
 - make rulings into an array
 - make hcj reprints of hcv cards override legality
 - add order for pip and set props
+- make sure the draftpartner worked for Kindle™

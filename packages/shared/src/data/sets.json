@@ -592,7 +592,9 @@
         "SCL_3",
         "SCL_4",
         "SCL_5",
-        "SCL_6"
+        "SCL_6",
+        "SCL_7",
+        "SCL_8"
       ],
       "filename": "scl.svg"
     },
@@ -695,6 +697,14 @@
       "code": "SCL_7",
       "name": "Scube Lair Drop: Hellscube 3 All-Stars",
       "description": "Hellscube 3 All-Stars",
+      "set_type": "lair",
+      "parent_set_code": "SCL"
+    },
+    {
+      "id": "9b0cf62a-0cb7-415f-9206-a3c46317f06d",
+      "code": "SCL_8",
+      "name": "Scube Lair Drop: Summer Vacation",
+      "description": "Summer Vacation",
       "set_type": "lair",
       "parent_set_code": "SCL"
     },
