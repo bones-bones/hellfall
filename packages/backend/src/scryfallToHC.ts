@@ -202,7 +202,7 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
         }
       });
       if ('image_uris' in face) {
-        addPropToFace(card, 'image', (face.image_uris as ScryfallImageUris).large.slice(0, -10), i);
+        addPropToFace(card, 'image', (face.image_uris as ScryfallImageUris).large.slice(0, -11), i);
         addPropToFace(card, 'image_status', HCImageStatus.HighRes, i);
       }
     });
