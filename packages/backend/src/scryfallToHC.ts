@@ -266,7 +266,7 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
     }
   });
   if ('image_uris' in entry) {
-    addPropToRoot(card, 'image', (entry.image_uris as ScryfallImageUris).large);
+    addPropToRoot(card, 'image', (entry.image_uris as ScryfallImageUris).large.slice(0, -11));
     addPropToRoot(card, 'image_status', HCImageStatus.HighRes);
   }
   if (entry.full_art) {
