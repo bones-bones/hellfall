@@ -195,7 +195,7 @@ export const CubeResources = () => {
       name: 'Sands of Hell',
       id: 'SOH',
       description:
-        "A desert cube where you must draft all of your mana sources. Featuring the return of draft mana!",
+        'A desert cube where you must draft all of your mana sources. Featuring the return of draft mana!',
       quickLink: (
         <>
           Draft Rules{' '}

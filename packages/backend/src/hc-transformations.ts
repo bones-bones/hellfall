@@ -244,13 +244,13 @@ const loadExistingData = () => {
 };
 const ignoreDuplicateNumbers: Partial<Record<SetCode, string[]>> = {
   HCV_1_0: ['8b'],
-  HCV_2_1: ['138b'],
+  HCV_2_1: ['87b'],
   HC9_0: ['137b', '324b'],
 };
 const ignoreDuplicateOrders: Partial<Record<SetCode, string[]>> = {
   HLC_0: ['8b', '65b'],
-  HC2_1: ['114b', '114c', '114d', '114e', '138b', '114f', '217b', '217c', '217d', '217e'],
-  HC3_1: ['248b', '346b', '346c', '346d'],
+  HC2_1: ['38b', '38c', '38d', '38e', '61b', '61c', '61d', '61e', '61f', '87b'],
+  HC3_1: ['251b', '348b', '348c', '348d'],
   HC6_0: ['10b'],
   HCJ: ['15b', '444b', '444c'],
   HC8_0: ['292b', '292c'],
@@ -372,7 +372,7 @@ const main = async () => {
     const max = Math.max(...Array.from(nums));
     for (let i = 1; i < max; i++) {
       if (!nums.has(i)) {
-        console.log(`Set ${getAcceptedOrderSet(code)} has a missing accepted number at ${i}`);
+        console.log(`Set ${getAcceptedOrderSet(code)} has a missing accepted order at ${i}`);
       }
     }
   }

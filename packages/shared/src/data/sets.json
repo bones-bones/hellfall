@@ -18,6 +18,7 @@
         "text": "Hellscube 1.2 PDF by eminamitie0453"
       },
       "set_type": "main",
+      "released_at": "2021-01-12",
       "child_set_codes": [
         "HLC_0",
         "HLC_1",
@@ -35,6 +36,7 @@
       "name": "Hellscube 1.0",
       "description": "The first 360 Hellscube cards. A strange and unplayable mess.",
       "set_type": "main",
+      "released_at": "2020-04-12",
       "parent_set_code": "HLC",
       "child_set_codes": ["HCV_1_0"]
     },
@@ -44,6 +46,7 @@
       "name": "Hellscube 1.1",
       "description": "A slightly more playable 360 card version of Hellscube 1.",
       "set_type": "main",
+      "released_at": "2020-07-24",
       "parent_set_code": "HLC",
       "child_set_codes": ["HCV_1_1"]
     },
@@ -53,6 +56,7 @@
       "name": "Hellscube 1.2",
       "description": "The full final 720 cards in Hellscube 1.",
       "set_type": "main",
+      "released_at": "2021-01-12",
       "parent_set_code": "HLC"
     },
     {
@@ -61,6 +65,7 @@
       "name": "Hellscube V(eto).1",
       "description": "Cards originally from HLC that didn't make the cut for the final version.",
       "set_type": "veto",
+      "released_at": "2020-07-24",
       "parent_set_code": "HCV",
       "child_set_codes": ["HCV_1_0", "HCV_1_1"]
     },
@@ -70,6 +75,7 @@
       "name": "Hellscube V(eto).1.0",
       "description": "Cards originally from HLC.0 that didn't make the cut for the final version.",
       "set_type": "veto",
+      "released_at": "2020-04-12",
       "parent_set_code": "HCV_1"
     },
     {
@@ -78,6 +84,7 @@
       "name": "Hellscube V(eto).1.1",
       "description": "Cards originally from HLC.1 that didn't make the cut for the final version.",
       "set_type": "veto",
+      "released_at": "2020-07-24",
       "parent_set_code": "HCV_1"
     },
     {
