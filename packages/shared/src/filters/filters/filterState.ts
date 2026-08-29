@@ -124,7 +124,8 @@ const stateResolutions: Record<
   draftable: (value: HCCard.Any) => value.kind == 'card' && !value.not_directly_draftable,
   modal: (value: HCCard.Any, dropFaces?: boolean) =>
     value.tags?.includes('modal') ||
-    textListIncludesEvery(getFromFaces(value, 'oracle_text', dropFaces), ['•', 'choose']),
+    textListIncludesEvery(getFromFaces(value, 'oracle_text', dropFaces), ['•', 'choose']) ||
+    textListIncludesEvery(getFromFaces(value, 'oracle_text', dropFaces), ['{paw}', 'choose']),
   vanilla: (value: HCCard.Any) => value.tags?.includes('vanilla'),
   frenchvanilla: (value: HCCard.Any) => value.tags?.includes('french-vanilla'),
   bear: (value: HCCard.Any, dropFaces?: boolean) =>

@@ -112,7 +112,7 @@ Write a script to transform the database
 - switch to using mapped/entry type pattern
 - add dropdown to tag editor for tags with multiple underlying base tags
 - use new change creator functions
-- make mse tag autoset image quality to medium
+- make mse, mtgnexus tag autoset image quality to medium
 - rename draft images to print images?
 - go back and do cards that I skipped before
 - add host/augment as layouts? or as frame effects?
@@ -194,4 +194,4 @@ Write a script to transform the database
 - make rulings into an array
 - make hcj reprints of hcv cards override legality
 - add order for pip and set props
-- make sure the draftpartner worked for Kindle™
+- get SOH ready for drafting

@@ -160,6 +160,7 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
       set: 'SFT',
       mana_value: entry.cmc,
       image_status: HCImageStatus.HighRes,
+      artists: entry.artist?.split(' & '),
     },
     {}
   );

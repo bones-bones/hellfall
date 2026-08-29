@@ -102,6 +102,11 @@ export const CubeResources = () => {
       description: 'The Commander Cube',
       // readyForAutofill: true,
       includeLands: true,
+      quickLink: (
+        <StyledLink to={'https://lh3.googleusercontent.com/d/1410wN4zP2UiusHElAoD39MqTuyEu3BgA'}>
+          Draft Rules
+        </StyledLink>
+      ),
       printLink: (
         <StyledLink to={'https://drive.google.com/file/d/1-kirKSuVUPrgRfMWYt3rhqDQlAbZhKws/view'}>
           PDF by killerfox3042
@@ -185,6 +190,24 @@ export const CubeResources = () => {
       name: 'Hellscube 9',
       id: 'HC9_0',
       description: 'The first 360 cards of the vintage cube with purple.',
+    },
+    {
+      name: 'Sands of Hell',
+      id: 'SOH',
+      description:
+        "A desert cube where you must draft all of your mana sources. Featuring the return of draft mana!",
+      quickLink: (
+        <>
+          Draft Rules{' '}
+          <StyledLink to={'https://lh3.googleusercontent.com/d/12SJ-2tIwL7QA1plE3S7qLXKmtXhlTp79'}>
+            (front)
+          </StyledLink>
+          ,{' '}
+          <StyledLink to={'https://lh3.googleusercontent.com/d/1Y1RFXGfuwx93VC_09YStIrjWMqz7L30h'}>
+            (back)
+          </StyledLink>
+        </>
+      ),
     },
     {
       name: 'All Hellscube Sets',

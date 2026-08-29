@@ -3,6 +3,7 @@ import {
   getGroupSets,
   getSetAndDirectChildSets,
   isNumber,
+  unescapeText,
 } from '@hellfall/shared/utils';
 import {
   anyLayoutSummary,
@@ -329,6 +330,7 @@ export const makeAnyLayoutFilter: propConvertFilterMaker = (value: string, op: l
 export const makeSetFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
   return new PropConvertFilter('set', setSummary, value, op, getSetAndDirectChildSets, true);
 };
+
 /**
  * Makes a block filter
  * @param value the value from the search
@@ -337,6 +339,7 @@ export const makeSetFilter: propConvertFilterMaker = (value: string, op: looseOp
 export const makeBlockFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
   return new PropConvertFilter('block', blockSummary, value, op, getBlockSets, true);
 };
+
 /**
  * Makes a group filter
  * @param value the value from the search
@@ -345,6 +348,7 @@ export const makeBlockFilter: propConvertFilterMaker = (value: string, op: loose
 export const makeGroupFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
   return new PropConvertFilter('group', groupSummary, value, op, getGroupSets, true);
 };
+
 /**
  * Makes a set type filter
  * @param value the value from the search
@@ -352,6 +356,18 @@ export const makeGroupFilter: propConvertFilterMaker = (value: string, op: loose
  */
 export const makeSetTypeFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
   return new PropConvertFilter('settype', setTypeSummary, value, op, toSetType);
+};
+
+/**
+ * Makes a cube filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeCubeFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
+  if (toSetType(unescapeText(value))) {
+    return new PropConvertFilter('settype', setTypeSummary, value, op, toSetType);
+  }
+  return new PropConvertFilter('set', setSummary, value, op, getSetAndDirectChildSets, true);
 };
 
 /**

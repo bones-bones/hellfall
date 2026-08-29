@@ -25,7 +25,7 @@
       "name": "Debug transform-hc (with -noscryfall)",
       "type": "node",
       "request": "launch",
-      "runtimeExecutable": "yarn",
+      "runtimeExecutable": "/usr/local/bin/yarn",
       "runtimeArgs": ["transform-hc", "--noscryfall"],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
