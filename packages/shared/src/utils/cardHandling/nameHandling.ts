@@ -1,8 +1,30 @@
 import { faceType, HCCard } from '@hellfall/shared/types';
 import { fixName } from '../textHandling';
 import { splitAngleSetCode } from '../setHandling';
-import { SequenceMatcher } from 'difflib-ts';
 import { stringIterable } from '../listHandling';
+
+/** Longest common subsequence length (character sequences). */
+const lcsLength = (a: string, b: string): number => {
+  const m = a.length;
+  const n = b.length;
+  const dp = Array.from({ length: n + 1 }, () => 0);
+  for (let i = 1; i <= m; i++) {
+    let prev = 0;
+    for (let j = 1; j <= n; j++) {
+      const temp = dp[j];
+      dp[j] = a.charCodeAt(i - 1) === b.charCodeAt(j - 1) ? prev + 1 : Math.max(dp[j], dp[j - 1]);
+      prev = temp;
+    }
+  }
+  return dp[n];
+};
+
+/** Like Python difflib SequenceMatcher.ratio() for two strings. */
+const sequenceMatcherRatio = (a: string, b: string): number => {
+  const total = a.length + b.length;
+  if (!total) return 1;
+  return (2 * lcsLength(a, b)) / total;
+};
 
 // breaks circular
 const toFaces = (card: HCCard.Any, dropFaces?: boolean): faceType[] => {
@@ -142,7 +164,7 @@ const wordPrefixScore = (nameWords: string[], reqWords: string[]): number => {
   return score / reqWords.length;
 };
 const similarity = (name: string, request: string): number => {
-  const ratio = new SequenceMatcher(undefined, request, name).ratio();
+  const ratio = sequenceMatcherRatio(request, name);
   let score = ratio * 1000;
   if (name.startsWith(request)) {
     score += 500 * (request.length / name.length);
