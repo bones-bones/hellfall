@@ -23,6 +23,13 @@ export type colorSearch = string[] | number | shorthandType;
 const MISC_BULLSHIT = 'Misc';
 
 /**
+ * Converts color names to {@linkcode HCColors}
+ * @param names names to convert
+ */
+export const convertNamesToColors = (names: string[]): HCColors =>
+  names.map(color => HCColor[color as keyof typeof HCColor]);
+
+/**
  * Gets all subsets of a given length from a set
  * @param set set to get the subsets of
  * @param len length of subsets to get

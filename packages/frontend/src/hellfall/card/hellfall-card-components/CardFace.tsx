@@ -54,7 +54,7 @@ export const CardFace = ({
         ))}
       <MediumLine key="cost"> {stringToMana(face.mana_cost)}</MediumLine>
       {face.flavor_name &&
-        (triggerEscapeList.some(e => face.name.includes(e)) ? (
+        (triggerEscapeList.some(e => face.flavor_name?.includes(e)) ? (
           <>
             <br />
             <MediumLine key="flavor-name">

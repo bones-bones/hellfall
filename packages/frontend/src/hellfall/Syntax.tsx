@@ -250,8 +250,8 @@ export const Syntax = () => {
         <div>
           {mapListToCodeAnd(['set:', 'block:', 'group:', 'settype:'])} work. You can also use{' '}
           <code>is:</code> with set types, and the list of available set types is{' '}
-          {mapListToCodeAnd(Object.values(SetType))}. <code>cube:</code> is an alias of{' '}
-          <code>settype:</code>
+          {mapListToCodeAnd(Object.values(SetType))}. <code>cube:</code> is an alias for both{' '}
+          <code>set:</code> and <code>settype:</code>.
         </div>
         <br />
         <div>

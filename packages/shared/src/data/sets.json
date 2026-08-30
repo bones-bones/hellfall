@@ -18,6 +18,7 @@
         "text": "Hellscube 1.2 PDF by eminamitie0453"
       },
       "set_type": "main",
+      "released_at": "2021-01-12",
       "child_set_codes": [
         "HLC_0",
         "HLC_1",
@@ -35,6 +36,7 @@
       "name": "Hellscube 1.0",
       "description": "The first 360 Hellscube cards. A strange and unplayable mess.",
       "set_type": "main",
+      "released_at": "2020-04-12",
       "parent_set_code": "HLC",
       "child_set_codes": ["HCV_1_0"]
     },
@@ -44,6 +46,7 @@
       "name": "Hellscube 1.1",
       "description": "A slightly more playable 360 card version of Hellscube 1.",
       "set_type": "main",
+      "released_at": "2020-07-24",
       "parent_set_code": "HLC",
       "child_set_codes": ["HCV_1_1"]
     },
@@ -53,6 +56,7 @@
       "name": "Hellscube 1.2",
       "description": "The full final 720 cards in Hellscube 1.",
       "set_type": "main",
+      "released_at": "2021-01-12",
       "parent_set_code": "HLC"
     },
     {
@@ -61,6 +65,7 @@
       "name": "Hellscube V(eto).1",
       "description": "Cards originally from HLC that didn't make the cut for the final version.",
       "set_type": "veto",
+      "released_at": "2020-07-24",
       "parent_set_code": "HCV",
       "child_set_codes": ["HCV_1_0", "HCV_1_1"]
     },
@@ -70,6 +75,7 @@
       "name": "Hellscube V(eto).1.0",
       "description": "Cards originally from HLC.0 that didn't make the cut for the final version.",
       "set_type": "veto",
+      "released_at": "2020-04-12",
       "parent_set_code": "HCV_1"
     },
     {
@@ -78,6 +84,7 @@
       "name": "Hellscube V(eto).1.1",
       "description": "Cards originally from HLC.1 that didn't make the cut for the final version.",
       "set_type": "veto",
+      "released_at": "2020-07-24",
       "parent_set_code": "HCV_1"
     },
     {
@@ -311,7 +318,7 @@
     {
       "id": "e8b3848d-513f-494c-bd78-8d159cc85386",
       "code": "HCC",
-      "name": "HC Constructed",
+      "name": "Hellscube Cut Commanders",
       "description": "Commanders cut from HC6 due to slots.",
       "set_type": "side",
       "filename": "hcc.svg"
@@ -592,7 +599,9 @@
         "SCL_3",
         "SCL_4",
         "SCL_5",
-        "SCL_6"
+        "SCL_6",
+        "SCL_7",
+        "SCL_8"
       ],
       "filename": "scl.svg"
     },
@@ -695,6 +704,14 @@
       "code": "SCL_7",
       "name": "Scube Lair Drop: Hellscube 3 All-Stars",
       "description": "Hellscube 3 All-Stars",
+      "set_type": "lair",
+      "parent_set_code": "SCL"
+    },
+    {
+      "id": "9b0cf62a-0cb7-415f-9206-a3c46317f06d",
+      "code": "SCL_8",
+      "name": "Scube Lair Drop: Summer Vacation",
+      "description": "Summer Vacation",
       "set_type": "lair",
       "parent_set_code": "SCL"
     },

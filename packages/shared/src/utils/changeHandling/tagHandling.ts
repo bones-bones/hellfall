@@ -139,51 +139,51 @@ export const splitFullTag = (fullTag: string) => {
   return { tag, note };
 };
 
-export const tagChangesVisibleProps = (fullTag: string): boolean => {
-  const { tag } = splitFullTag(fullTag);
-  if (tag in faceImageTagProps) {
-    return true;
-  }
-  if (tag in frontImageTagProps) {
-    return true;
-  }
-  if (tag == 'back-image') {
-    return true;
-  }
-  return false;
-};
+// export const tagChangesVisibleProps = (fullTag: string): boolean => {
+//   const { tag } = splitFullTag(fullTag);
+//   if (tag in faceImageTagProps) {
+//     return true;
+//   }
+//   if (tag in frontImageTagProps) {
+//     return true;
+//   }
+//   if (tag == 'back-image') {
+//     return true;
+//   }
+//   return false;
+// };
 
-export const tagChangesAnyProps = (fullTag: string): boolean => {
-  const { tag } = splitFullTag(fullTag);
-  if (tagChangesVisibleProps(tag)) {
-    return true;
-  }
-  if (tag in frameTags) {
-    return true;
-  }
-  if (tag in cardFrameTags) {
-    return true;
-  }
-  if (tag in tokenFrameTags) {
-    return true;
-  }
-  if (tag in anyFrameEffectTags) {
-    return true;
-  }
-  if (tag in faceFrameEffectTags) {
-    return true;
-  }
-  if (tag in borderColorTags) {
-    return true;
-  }
-  if (layoutTags.includes(tag as layoutTagType)) {
-    return true;
-  }
-  if (tag == 'foil') {
-    return true;
-  }
-  return false;
-};
+// export const tagChangesAnyProps = (fullTag: string): boolean => {
+//   const { tag } = splitFullTag(fullTag);
+//   if (tagChangesVisibleProps(tag)) {
+//     return true;
+//   }
+//   if (tag in frameTags) {
+//     return true;
+//   }
+//   if (tag in cardFrameTags) {
+//     return true;
+//   }
+//   if (tag in tokenFrameTags) {
+//     return true;
+//   }
+//   if (tag in anyFrameEffectTags) {
+//     return true;
+//   }
+//   if (tag in faceFrameEffectTags) {
+//     return true;
+//   }
+//   if (tag in borderColorTags) {
+//     return true;
+//   }
+//   if (layoutTags.includes(tag as layoutTagType)) {
+//     return true;
+//   }
+//   if (tag == 'foil') {
+//     return true;
+//   }
+//   return false;
+// };
 
 export const layoutTags = [
   'weird-leveler',
@@ -440,7 +440,7 @@ const subKeywords: Record<string, string | string[]> = {
   override: 'cleave',
   gx: 'exhaust',
   'devotion to dreadmaw': 'devotion',
-  inklink: 'lifelink',
+  inklink: 'link',
   'typeline menace': 'menace',
   denimwalk: 'walk',
   lifesteal: 'lifelink',
@@ -613,6 +613,27 @@ const subKeywords: Record<string, string | string[]> = {
   'manifest dreadmaw': 'manifest dread',
   sunlink: 'link',
   'art rampage': 'rampage',
+  'zodiac roosterlink': 'link',
+  plainstouch: 'touch',
+  "start everyone's engines": 'start your engines',
+  'mandatory flashback': 'flashback',
+  exiletouch: 'touch',
+  cleft: 'cleave',
+  multioffspring: ['offspring', 'multikicker'],
+  sideboarddredge: 'dredge',
+  changebling: 'changeling',
+  "Amileinsomeoneelse'sshoeswalk": 'walk',
+  draftsplice: 'splice',
+  yearn: 'learn',
+  swordlink: 'link',
+  squirrelshido: 'bushido',
+  onspring: 'offspring',
+  'spell-jutsu': 'ninjutsu',
+  'stack-transmute': 'transmute',
+  draftbond: 'soulbon',
+  gneathtouch: 'touch',
+  rain: 'storm',
+  'draft your engines': 'start your engines',
 };
 
 const keywordTags = [
@@ -1133,12 +1154,12 @@ export const getChangesFromTag = (
  * Adds a full tag to a `base_tags` array
  * @param base_tags `base_tags` array to add to
  * @param fullTag full tag to add
- * @returns whether the change could cause props to need to be rederived
+ * @returns whether the tag was actually added
  */
 export const addTagToBase = (base_tags: string[], fullTag: string): boolean => {
   if (!base_tags.includes(fullTag)) {
     base_tags.push(fullTag);
-    return tagChangesVisibleProps(fullTag);
+    return true;
   }
   return false;
 };
@@ -1147,23 +1168,21 @@ export const addTagToBase = (base_tags: string[], fullTag: string): boolean => {
  * Deletes a full tag from a `base_tags` array
  * @param base_tags `base_tags` array to delete from
  * @param fullTag full tag to delete
- * @returns whether the change could cause props to need to be rederived
+ * @returns whether the tag was actually deleted
  */
 export const deleteTagFromBase = (base_tags: string[], fullTag: string): boolean => {
   const { tag, note } = splitFullTag(fullTag);
-  let changesVisible = false;
+  let anyDeleted = false;
   for (let i = base_tags.length - 1; i >= 0; i--) {
     if (
       splitFullTag(base_tags[i]).tag == tag &&
       (note == undefined || note == (splitFullTag(base_tags[i]).note ?? ''))
     ) {
       base_tags.splice(i, 1);
-      if (tagChangesVisibleProps(tag)) {
-        changesVisible = true;
-      }
+      anyDeleted = true;
     }
   }
-  return changesVisible;
+  return anyDeleted;
 };
 
 // export const replaceTagInBase = (

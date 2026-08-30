@@ -160,6 +160,7 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
       set: 'SFT',
       mana_value: entry.cmc,
       image_status: HCImageStatus.HighRes,
+      artists: entry.artist?.split(' & '),
     },
     {}
   );
@@ -202,7 +203,7 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
         }
       });
       if ('image_uris' in face) {
-        addPropToFace(card, 'image', (face.image_uris as ScryfallImageUris).large, i);
+        addPropToFace(card, 'image', (face.image_uris as ScryfallImageUris).large.slice(0, -11), i);
         addPropToFace(card, 'image_status', HCImageStatus.HighRes, i);
       }
     });
@@ -265,7 +266,7 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
     }
   });
   if ('image_uris' in entry) {
-    addPropToRoot(card, 'image', (entry.image_uris as ScryfallImageUris).large);
+    addPropToRoot(card, 'image', (entry.image_uris as ScryfallImageUris).large.slice(0, -11));
     addPropToRoot(card, 'image_status', HCImageStatus.HighRes);
   }
   if (entry.full_art) {

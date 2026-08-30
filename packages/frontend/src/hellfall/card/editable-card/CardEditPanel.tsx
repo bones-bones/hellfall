@@ -39,6 +39,7 @@ import { FACE_FIELD_CONFIGS } from './constants.ts';
 import { getInvalidFields, isFieldValueInvalid } from './fieldValidation.ts';
 import { ImageUploadControl, type ImageTarget } from './ImageUploadControl.tsx';
 import { parseFieldValue } from './parseFieldValue.ts';
+import { semiSplit } from '@hellfall/shared/utils';
 
 const IMAGE_URL_KEYS = new Set<ImageTarget['imageProp']>([
   'image',
@@ -387,14 +388,7 @@ function MultiEnumEditor({
   disabled?: boolean;
   onChange: (value: string) => void;
 }) {
-  const selected = useMemo(
-    () =>
-      value
-        .split(';')
-        .map(s => s.trim())
-        .filter(Boolean),
-    [value]
-  );
+  const selected = useMemo(() => semiSplit(value), [value]);
   const selectedSet = useMemo(() => new Set(selected), [selected]);
 
   const toggle = (option: string) => {

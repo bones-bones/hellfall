@@ -1,4 +1,9 @@
-import { CollectionReference, FieldValue, Timestamp } from '@google-cloud/firestore';
+import {
+  CollectionReference,
+  DocumentReference,
+  FieldValue,
+  Timestamp,
+} from '@google-cloud/firestore';
 import { anyValueType, anyPropType, getAnyEntries, anyMappedType } from '@hellfall/shared/types';
 import { Changeset } from '../changeHandling';
 
@@ -34,6 +39,8 @@ export type cardsCollection = CollectionReference<firestoreCard, firestoreCard>;
  * A collection of changesets
  */
 export type changesetCollection = CollectionReference<Changeset, Changeset>;
+
+export type cardDocRefType = DocumentReference<firestoreCard, firestoreCard>;
 
 /**
  * A properly typed version of calling `Object.entries()` on {@linkcode firestoreCard}

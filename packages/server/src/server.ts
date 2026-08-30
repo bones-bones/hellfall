@@ -168,6 +168,10 @@ createServer(async (incoming: IncomingMessage, res: ServerResponse) => {
         await searchHandler(req, res as HandlerResponse);
         return;
       }
+      if (cardId === 'random') {
+        await searchHandler(req, res as HandlerResponse, true);
+        return;
+      }
       if (cardId === 'postcard') {
         const rest = path.slice(CARD_API_PREFIX.length + 'postcard'.length).replace(/^\//, '');
         const action = rest.split('/').filter(Boolean)[0] || null;

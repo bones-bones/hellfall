@@ -1222,6 +1222,27 @@ export class CardMap extends LightCardMap {
   getFromName = (name: string) => this.idMap.get(this.getIDFromName(name));
 
   /**
+   * Returns a specified oracle id from the CardMap object.
+   * @param name the name of the card to get
+   */
+  getOracleIDFromName = (name: string) => this.getFromName(name)?.oracle_id;
+
+  /**
+   * Returns a specified id from the CardMap object.
+   * If no card has the specified id, the name is returned
+   * @param name the fuzzy name of the card to get
+   */
+  getIDFromFuzzyName = (name: string) => this.lookupMap.getFuzzy(name) ?? name;
+
+  /**
+   * Returns a specified card from the CardMap object.
+   * Any change made to that card will effectively modify it inside the CardMap.
+   * If no card has the specified name, undefined is returned
+   * @param name the fuzzy name of the card to get
+   */
+  getFromFuzzyName = (name: string) => this.idMap.get(this.getIDFromFuzzyName(name));
+
+  /**
    * Returns a specified card from the CardMap object.
    * Any change made to that card will effectively modify it inside the CardMap.
    * If no card has the specified name, undefined is returned
@@ -1380,4 +1401,16 @@ export class CardMap extends LightCardMap {
     this.lookupMap.clear();
     this.forEach(card => this.lookupMap.set(card));
   };
+  toJSON() {
+    const { nameMap, aliasMap, hcidMap } = this.lookupMap.toJSON();
+    const idMap: Record<string, HCCard.Any> = {};
+    for (const [id, card] of this.idMap) {
+      idMap[id] = card;
+    }
+    const oracleMap: Record<string, string[]> = {};
+    for (const [oracle_id, ids] of this.oracleMap) {
+      oracleMap[oracle_id] = Array.from(ids);
+    }
+    return { nameMap, aliasMap, hcidMap, idMap, oracleMap };
+  }
 }

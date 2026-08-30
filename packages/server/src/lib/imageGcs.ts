@@ -1,5 +1,6 @@
 import { Storage } from '@google-cloud/storage';
 import { env } from '../api/lib/env.ts';
+import { semiSplit } from '@hellfall/shared/utils';
 
 let storage: Storage | null = null;
 
@@ -24,7 +25,7 @@ const IMAGE_MIME_TO_EXT: Record<string, string> = {
 
 function normalizeImageMime(contentType: string | undefined): string | undefined {
   if (!contentType) return undefined;
-  const normalized = contentType.split(';')[0].trim().toLowerCase();
+  const normalized = semiSplit(contentType)[0].toLowerCase();
   if (normalized === 'image/jpg') return 'image/jpeg';
   if (normalized in IMAGE_MIME_TO_EXT) return normalized;
   return undefined;

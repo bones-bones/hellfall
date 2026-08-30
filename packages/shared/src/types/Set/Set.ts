@@ -75,6 +75,8 @@ export const allSetsList = [
   'HCV_SOH',
   'SCL_6',
   'SCL_7',
+  'SCL_8',
+  'HC9_1',
   'HCV',
   'HCT',
   'HBB',
@@ -151,11 +153,11 @@ export type HCSet = HCObject.Object<HCObject.ObjectType.Set> & {
    */
   set_type: SetType;
   /**
-   * The date the set was released or the first card was printed in the set (in GMT-8 Pacific time).
+   * The date the set was finished
    *
    * @type IsoDate
    */
-  // released_at?: string;
+  released_at?: string;
   /**
    * The block code for this set, if any.
    */

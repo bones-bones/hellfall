@@ -27,6 +27,8 @@ import {
   CardMap,
   fixSetCode,
   getParentSetCode,
+  semiSplit,
+  convertNamesToColors,
 } from '@hellfall/shared/utils';
 import { hcjAoToCNMap } from './hcjCNMap.ts';
 
@@ -153,7 +155,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
           hcid: entryAt('hcid'),
           image: entryAt('image'),
           image_status: HCImageStatus.HighRes,
-          creators: entryAt('creators').split(';'),
+          creators: semiSplit(entryAt('creators')),
           set: fixSetCode(entryAt('set')) as SetCode,
           collector_number:
             fixSetCode(entryAt('set')) == 'HCJ'
@@ -167,25 +169,17 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 ? parseInt(entryAt('mana_value'))
                 : parseFloat(entryAt('mana_value'))
               : 999999999999999,
-          colors: entryAt('colors')
-            ? entryAt('colors')
-                .split(';')
-                .map(color => HCColor[color as keyof typeof HCColor])
-            : [],
+          colors: convertNamesToColors(semiSplit(entryAt('colors'))),
           // name: cardIsLand ? `${entryAt('name')} (L${parseInt(entryAt('hcid'))-8064})`:'' // #jank
         },
         {
           colors: cardIsMulti
             ? pipMap.getColorsFromText(entryAt('mana_cost'))
-            : entryAt('colors')
-            ? entryAt('colors')
-                .split(';')
-                .map(color => HCColor[color as keyof typeof HCColor])
-            : [],
+            : convertNamesToColors(semiSplit(entryAt('colors'))),
           mana_cost: entryAt('mana_cost'),
-          supertypes: entryAt('supertypes').split(';'),
-          types: entryAt('types').split(';'),
-          subtypes: entryAt('subtypes').split(';'),
+          supertypes: semiSplit(entryAt('supertypes')),
+          types: semiSplit(entryAt('types')),
+          subtypes: semiSplit(entryAt('subtypes')),
           power: entryAt('power'),
           toughness: entryAt('toughness'),
           loyalty: !entryAt('types').toLowerCase().includes('battle') ? entryAt('loyalty') : '',
@@ -212,7 +206,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
                 addPropToFace(
                   card,
                   key as 'supertypes' | 'types' | 'subtypes',
-                  value.split(';'),
+                  semiSplit(value),
                   face + index
                 );
               } else if (key == 'loyalty' && frontIsBattle(card, face + index)) {
@@ -261,7 +255,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
               };
               addPropToRoot(card, 'legalities', legalities);
             } else if (keys[i] == 'related') {
-              entry[i].split(';').forEach(oldName => {
+              semiSplit(entry[i]).forEach(oldName => {
                 const { name, hcid, code, collector_number, count } =
                   parseRelatedReferenceName(oldName);
                 const maker: HCRelatedCard = {
@@ -290,7 +284,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
 
       const artistIndex = keys.indexOf('artists');
       if (entry[artistIndex]) {
-        const artists = entry[artistIndex].split(';');
+        const artists = semiSplit(entry[artistIndex]);
 
         card.artists = artists.map(fullArtist => {
           const hasNote = fullArtist.includes('<') && fullArtist.endsWith('>');
@@ -310,7 +304,7 @@ export const fetchCards = async (usingApproved: boolean = false) => {
         });
       }
 
-      setDerivedProps(card, entryAt('tags').split(';'));
+      setDerivedProps(card, semiSplit(entryAt('tags')));
       card.tags?.forEach(tag => {
         if (tag == 'draftpartner' && card.all_parts) {
           card.all_parts[0].is_draft_partner = true;
