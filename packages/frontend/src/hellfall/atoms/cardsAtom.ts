@@ -1,10 +1,8 @@
 import { atom } from 'jotai';
-import { HCCard } from '@hellfall/shared/types';
 import { CardMap } from '@hellfall/shared/utils';
 import { loadCardsData } from '@hellfall/shared/data';
 import { getAuthApiUrl } from '../../auth/getAuthApiUrl';
 import { getCardsCatalogUrl } from '../../auth/getCardsCatalogUrl';
-import { unescapeCardNewlines } from './unescapeCardNewlines';
 
 async function fetchCatalogData(): Promise<CardMap> {
   const catalogUrl = getCardsCatalogUrl().replace(/\/$/, '');
@@ -25,7 +23,7 @@ async function loadCards(): Promise<CardMap> {
   try {
     return await fetchCatalogData();
   } catch {
-    return new CardMap((await loadCardsData()).data);
+    return new CardMap(await loadCardsData());
   }
 }
 
