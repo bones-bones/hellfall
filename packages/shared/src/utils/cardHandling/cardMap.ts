@@ -8,7 +8,7 @@ import {
   splitCardName,
   toSetNumber,
 } from '../setHandling';
-import { CardLookupMap } from './cardLookupMap';
+import { CardLookupMap, CardLookupObject, lookupCache, lookupMapCache } from './cardLookupMap';
 import { fixName } from '../textHandling';
 import { isInteger } from '../numHandling';
 import { getRandom, pushToMap, stringIterable } from '../listHandling';
@@ -72,6 +72,23 @@ const combineSets = (...args: (Set<string> | undefined)[]) => {
   }
 };
 
+/**
+ * A cache only containing cards.
+ */
+type cardCache = {
+  data: HCCard.Any[];
+};
+
+/**
+ * A full cache with everything needed to build a {@linkcode CardMap}
+ */
+type fullCache = {
+  nameMap: Record<string, lookupCache>;
+  idMap: Record<string, HCCard.Any>;
+  aliasMap: Record<string, string>;
+  hcidMap: Record<string, string>;
+  oracleMap: Record<string, string[]>;
+};
 /**
  * Sorts two cards based on their accepted order (can be used as a proxy for date)
  * @param value1 first card to sort
@@ -1200,10 +1217,36 @@ export class CardMap extends LightCardMap {
    * @param cards The initial cards to set, if any
    */
   constructor(cards: HCCard.Any[]);
-  constructor(cards?: HCCard.Any[]) {
+  /**
+   * Creates a new CardMap
+   * @param cards The initial {@linkcode cardCache} to set, if any
+   */
+  constructor(cards: cardCache);
+  /**
+   * Creates a new CardMap
+   * @param cards The initial {@linkcode fullCache} to set, if any
+   */
+  constructor(cards: fullCache);
+  constructor(cards?: HCCard.Any[] | cardCache | fullCache) {
     super();
     if (!cards) return;
-    cards.forEach(this.set);
+    const cardsToSet = Array.isArray(cards) ? cards : 'data' in cards ? cards.data : undefined;
+    if (cardsToSet) {
+      cardsToSet.forEach(this.set);
+      return;
+    }
+    if (!('idMap' in cards)) return;
+    for (const [id, card] of Object.entries(cards.idMap)) {
+      this.idMap.set(id, card);
+      pushToMap(this.setMap, card.set, id);
+    }
+    for (const [oracle_id, ids] of Object.entries(cards.oracleMap)) {
+      this.oracleMap.set(oracle_id, new Set(ids));
+    }
+
+    const { nameMap, aliasMap, hcidMap } = cards;
+    const lookupMap: lookupMapCache = { nameMap, aliasMap, hcidMap };
+    this.lookupMap = new CardLookupMap(lookupMap);
   }
 
   /**
@@ -1392,6 +1435,7 @@ export class CardMap extends LightCardMap {
     this.oracleMap.clear();
     this.lookupMap.clear();
   };
+
   /**
    * Removes all elements from the {@linkcode CardLookupMap} and rebuilds it.
    *
@@ -1401,6 +1445,10 @@ export class CardMap extends LightCardMap {
     this.lookupMap.clear();
     this.forEach(card => this.lookupMap.set(card));
   };
+
+  /**
+   * Returns a full cache from this `cardMap` for database lookups.
+   */
   toJSON() {
     const { nameMap, aliasMap, hcidMap } = this.lookupMap.toJSON();
     const idMap: Record<string, HCCard.Any> = {};

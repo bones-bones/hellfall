@@ -1,4 +1,4 @@
-import { HCCard, SetCode } from '@hellfall/shared/types';
+import { HCCard, isSetCode, SetCode } from '@hellfall/shared/types';
 import { getCollectorNumSets, getGroupSets, splitCardName } from '../setHandling';
 import { fixName } from '../textHandling';
 import { getAllNames, getClosestName } from './nameHandling';
@@ -6,11 +6,20 @@ import { deleteFromMap, pushToMap } from '../listHandling';
 import { isInteger } from '../numHandling';
 
 /**
+ * A cache for a {@linkcode CardLookupObject}
+ */
+export type lookupCache = {
+  setNumMap: Record<SetCode, Record<string, string>>;
+  setMap: Record<SetCode, string[]>;
+  defaultId: string;
+};
+
+/**
  * Maps a card's names to the ids that it should use. Only for use in CardMap.
  *
  * We won't worry about oracle ids here. That can get caught by specifying the set/number
  */
-class CardLookupObject {
+export class CardLookupObject {
   /**
    * Maps a set to the collector numbers that the card has prints in, which map to ids
    */
@@ -24,9 +33,29 @@ class CardLookupObject {
    * Creates a new CardLookupObject
    * @param card The initial card to use
    */
-  constructor(card: HCCard.Any) {
-    this.defaultId = card.id;
-    this.set(card);
+  constructor(card: HCCard.Any);
+  /**
+   * Creates a new CardLookupObject
+   * @param card The {@linkcode lookupCache} to use
+   */
+  constructor(card: lookupCache);
+  constructor(card: HCCard.Any | lookupCache) {
+    if ('object' in card) {
+      this.defaultId = card.id;
+      this.set(card);
+      return;
+    }
+    this.defaultId = card.defaultId;
+    for (const [set, ids] of Object.entries(card.setMap)) {
+      if (isSetCode(set)) {
+        this.setMap.set(set, new Set(ids));
+      }
+    }
+    for (const [set, numIds] of Object.entries(card.setNumMap)) {
+      if (isSetCode(set)) {
+        this.setNumMap.set(set, new Map<string, string>(Object.entries(numIds)));
+      }
+    }
   }
 
   /**
@@ -147,6 +176,19 @@ class CardLookupObject {
 class DoubleMap {
   protected forwardMap = new Map<string, string>();
   protected reverseMap = new Map<string, Set<string>>();
+
+  /**
+   * Creates a new DoubleMap
+   * @param initRecord the initial record to use, if any
+   */
+  constructor(initRecord?: Record<string, string>) {
+    if (!initRecord) return;
+    this.forwardMap = new Map(Object.entries(initRecord));
+    for (const [key, value] of this.forwardMap) {
+      pushToMap(this.reverseMap, value, key);
+    }
+  }
+
   /**
    * Gets the specified value.
    * @param key key of the value to get
@@ -223,6 +265,15 @@ class DoubleMap {
 }
 
 /**
+ * A cache for a {@linkcode CardLookupMap}
+ */
+export type lookupMapCache = {
+  nameMap: Record<string, lookupCache>;
+  aliasMap: Record<string, string>;
+  hcidMap: Record<string, string>;
+};
+
+/**
  * Maps a card's names to the ids that it should use. Only for use in CardMap.
  */
 export class CardLookupMap {
@@ -240,6 +291,19 @@ export class CardLookupMap {
    * This maps a hcid to the preferred id to use
    */
   protected hcidMap = new DoubleMap();
+
+  /**
+   * Creates a new CardLookupMap
+   * @param cache the {@linkcode lookupMapCache} to use, if any
+   */
+  constructor(cache?: lookupMapCache) {
+    if (!cache) return;
+    for (const [name, card] of Object.entries(cache.nameMap)) {
+      this.nameMap.set(name, new CardLookupObject(card));
+    }
+    this.aliasMap = new DoubleMap(cache.aliasMap);
+    this.hcidMap = new DoubleMap(cache.hcidMap);
+  }
 
   /**
    * Returns the correct id for a name, a set code, and a collector number

@@ -28,13 +28,10 @@ export async function publishCatalogSnapshot(): Promise<CatalogPublishResult> {
   releaseCatalogCache();
   console.log(`[catalog/publish] cache released ${heapMb()}`);
 
-  const { gzipBody, cardCount } = await buildCatalogGzipFromFirestore(
-    {
-      databaseId: env.FIRESTORE_DATABASE_ID,
-      collectionName: env.FIRESTORE_CARDS_COLLECTION,
-    },
-    count => console.log(`[catalog/publish] streaming cards=${count} ${heapMb()}`)
-  );
+  const { gzipBody, cardCount } = await buildCatalogGzipFromFirestore({
+    databaseId: env.FIRESTORE_DATABASE_ID,
+    collectionName: env.FIRESTORE_CARDS_COLLECTION,
+  });
   console.log(
     `[catalog/publish] serialized cards=${cardCount} gzip=${gzipBody.length} ${heapMb()}`
   );
