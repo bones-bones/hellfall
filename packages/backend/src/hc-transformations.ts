@@ -251,7 +251,7 @@ const ignoreDuplicateOrders: Partial<Record<SetCode, string[]>> = {
   HLC_0: ['8b', '65b'],
   HC2_1: ['38b', '38c', '38d', '38e', '61b', '61c', '61d', '61e', '61f', '87b'],
   HC3_1: ['251b', '348b', '348c', '348d'],
-  HC6_0: ['10b'],
+  HC6_0: ['11b'],
   HCJ: ['15b', '444b', '444c'],
   HC8_0: ['292b', '292c'],
   HC8_1: ['31b'],

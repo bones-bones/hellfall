@@ -681,6 +681,7 @@
       "child_set_codes": [
         "HCV_SOH"
       ],
+      "use_color_order": true,
       "filename": "soh.svg"
     },
     {

@@ -108,6 +108,9 @@ export const toCockCube = ({
    * @param set set to append
    */
   const appendCockSet = (set: HCSet) => {
+    if (!set) {
+      return;
+    }
     const tempSet = xmlDoc.createElement('set');
 
     const name = xmlDoc.createElement('name');
