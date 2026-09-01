@@ -12,6 +12,7 @@ export interface ImageProps extends React.ComponentProps<'img'> {
   hideTooltip?: boolean;
 }
 
+const srcToKey = (src: string | undefined) => (src ? `${src}-${Date.now()}` : undefined);
 const space = 30;
 const getPreferredRenderPos = (
   pos1: number,
@@ -54,12 +55,21 @@ export const Tooltip = ({ renderToLeft }: { renderToLeft?: boolean }) => {
     setImageHeight(243);
     setImageWidth(340);
   }, [tooltipSrc]);
+
   useEffect(() => {
-    if (imgRef.current) {
-      setImageWidth(imgRef.current?.getBoundingClientRect().width);
-      setImageHeight(imgRef.current?.getBoundingClientRect().height);
+    if (imageLoaded && imgRef.current) {
+      const rect = imgRef.current.getBoundingClientRect();
+      setImageWidth(rect.width || 243);
+      setImageHeight(rect.height || 340);
     }
-  }, [imageLoaded]);
+  }, [imageLoaded, imgRef.current]);
+
+  useEffect(() => {
+    // This is necessary due to how chrome caches images.
+    if (imgRef.current?.complete && !imageLoaded) {
+      setImageLoaded(true);
+    }
+  }, [tooltipSrc, imgRef.current?.complete]);
 
   return (
     <TooltipImage

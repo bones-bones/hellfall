@@ -10,7 +10,7 @@ import {
   createStyledTableRow,
 } from '../../../styling';
 import { system } from '@workday/canvas-tokens-web';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { getCollectorOrderSet, getSet } from '@hellfall/shared/utils';
 import { useAtom } from 'jotai';
 import { mouseXAtom, mouseYAtom, tooltipSrcAtom } from '../../atoms/tooltipAtom';
