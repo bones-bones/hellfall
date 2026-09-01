@@ -1,9 +1,14 @@
 // import styled from '@emotion/styled';
 import type { HCColors } from '@hellfall/shared/types';
 import { formatQuotes, pipMap, pipToSrc } from '@hellfall/shared/utils';
-import { BoxProps } from '@workday/canvas-kit-react';
+import { BoxProps, TextProps } from '@workday/canvas-kit-react';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
-import { createStenciledDiv, createStenciledImg, createStyledImg } from '../styling';
+import {
+  createStenciledDiv,
+  createStenciledImg,
+  createStenciledSpan,
+  createStyledImg,
+} from '../styling';
 
 export const stringToMana = (text: string, pipSize: string = '18px') => {
   return formatQuotes(text)
@@ -15,7 +20,7 @@ export const stringToMana = (text: string, pipSize: string = '18px') => {
         return icon ? (
           <PipContainer
             key={`container-${i}`}
-            useShadow={!icon.no_shadow}
+            data-use-shadow={!icon.no_shadow}
             clip_type={icon.clip_type}
           >
             <PipSymbol
@@ -60,8 +65,8 @@ interface symbolProps extends React.ComponentProps<'img'> {
 }
 const PipSymbol = createStenciledImg<symbolProps>(pipSymbol, 'PipSymbol');
 
-interface PipContainerProps extends BoxProps {
-  useShadow?: boolean;
+interface PipContainerProps extends TextProps {
+  'data-use-shadow'?: boolean;
   clip_type?: 'right-half' | 'top-left-third' | 'bottom-third';
 }
 const pipStencil = createStencil({
@@ -79,7 +84,7 @@ const pipStencil = createStencil({
     cursor: 'help',
   },
   modifiers: {
-    useShadow: {
+    'data-use-shadow': {
       true: {
         filter: 'drop-shadow(-1.125px 1.125px 0 rgba(0,0,0,0.85))',
       },
@@ -99,4 +104,4 @@ const pipStencil = createStencil({
     },
   },
 });
-const PipContainer = createStenciledDiv<PipContainerProps>(pipStencil, 'PipContainer');
+const PipContainer = createStenciledSpan<PipContainerProps>(pipStencil, 'PipContainer');

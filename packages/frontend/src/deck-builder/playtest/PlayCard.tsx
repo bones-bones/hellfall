@@ -13,7 +13,7 @@ export const PlayCard = ({ image }: Props) => {
       onClick={() => {
         setTapped(!tapped);
       }}
-      tapped={tapped}
+      data-tapped={tapped}
     />
   );
 };
@@ -24,7 +24,7 @@ const imageStencil = createStencil({
     rotate: '0deg',
   },
   modifiers: {
-    tapped: {
+    'data-tapped': {
       true: {
         rotate: '90deg',
       },
@@ -32,7 +32,7 @@ const imageStencil = createStencil({
   },
 });
 interface ImageProps extends React.ComponentPropsWithoutRef<'img'> {
-  tapped?: boolean;
+  'data-tapped'?: boolean;
 }
 
 const StyledImage = createStenciledImg<ImageProps>(imageStencil, 'StyledImage');

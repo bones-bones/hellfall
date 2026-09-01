@@ -218,8 +218,8 @@ export const HellfallCard = ({
 
   return (
     <div ref={windowRef} style={{ width: '100%' }}>
-      <Container key={displayCard.id} editing={editing} sideBySide={sideBySide}>
-        <PreviewSection sideBySide={sideBySide}>
+      <Container key={displayCard.id} editing={editing} data-side-by-side={sideBySide}>
+        <PreviewSection data-side-by-side={sideBySide}>
           {imageSection}
           <Card cs={cardStyles}>
             <Card.Body cs={cardBodyStyles}>
@@ -345,7 +345,7 @@ export const HellfallCard = ({
           )}
         </PreviewSection>
         {editing && (
-          <EditSection sideBySide={sideBySide}>
+          <EditSection data-side-by-side={sideBySide}>
             <CardEditPanel
               card={displayCard}
               onClose={() => setEditingState(false)}
@@ -377,7 +377,7 @@ const containerStencil = createStencil({
         width: '100%',
       },
     },
-    sideBySide: {
+    'data-side-by-side': {
       true: {
         flexDirection: 'row',
         gap: '16px',
@@ -389,7 +389,7 @@ const containerStencil = createStencil({
 });
 interface ContainerProps extends React.ComponentPropsWithoutRef<'div'> {
   editing?: boolean;
-  sideBySide?: boolean;
+  'data-side-by-side'?: boolean;
 }
 const Container = createStenciledDiv<ContainerProps>(containerStencil, 'Container');
 
@@ -401,7 +401,7 @@ const previewSectionStencil = createStencil({
     width: '100%',
   },
   modifiers: {
-    sideBySide: {
+    'data-side-by-side': {
       true: {
         flex: '0 1 240px',
         minWidth: '180px',
@@ -416,7 +416,7 @@ const previewSectionStencil = createStencil({
   },
 });
 interface PreviewSectionProps extends React.ComponentPropsWithoutRef<'div'> {
-  sideBySide?: boolean;
+  'data-side-by-side'?: boolean;
 }
 const PreviewSection = createStenciledDiv<PreviewSectionProps>(
   previewSectionStencil,
@@ -428,7 +428,7 @@ const editSectionStencil = createStencil({
     width: '100%',
   },
   modifiers: {
-    sideBySide: {
+    'data-side-by-side': {
       true: {
         flex: '1 1 280px',
         minWidth: '260px',
@@ -439,7 +439,7 @@ const editSectionStencil = createStencil({
   },
 });
 interface EditSectionProps extends React.ComponentPropsWithoutRef<'div'> {
-  sideBySide?: boolean;
+  'data-side-by-side'?: boolean;
 }
 const EditSection = createStenciledDiv<EditSectionProps>(editSectionStencil, 'EditSection');
 

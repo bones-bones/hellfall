@@ -29,7 +29,7 @@ const RenderLegality = ({ deck }: { deck: HCCard.Any[] }) => {
   const errors = checkStandardLegality(deck);
   return (
     <>
-      <LegalityText isInvalid={errors.length > 0}>
+      <LegalityText data-is-invalid={errors.length > 0}>
         {!errors?.length ? (
           'Deck is valid.'
         ) : (
@@ -52,14 +52,14 @@ const legalityTextStencil = createStencil({
   vars: {},
   base: {},
   modifiers: {
-    isInvalid: {
+    'data-is-invalid': {
       true: {
         color: '#c00',
       },
     },
   },
 });
-type LegalityProps = BoxProps & { isInvalid: boolean };
+type LegalityProps = BoxProps & { 'data-is-invalid': boolean };
 const LegalityText = createStenciledDiv<LegalityProps>(legalityTextStencil, 'LegalityText');
 
 export const DeckBuilder = () => {

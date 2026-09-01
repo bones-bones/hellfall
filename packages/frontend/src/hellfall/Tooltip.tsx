@@ -5,14 +5,13 @@ import { useAtomValue } from 'jotai';
 import { mouseXAtom, mouseYAtom, tooltipSrcAtom } from './atoms/tooltipAtom';
 
 export interface ImageProps extends React.ComponentProps<'img'> {
-  imageLoaded?: boolean;
+  'data-image-loaded'?: boolean;
   left: string;
   top: string;
-  hideImage?: boolean;
-  hideTooltip?: boolean;
+  'data-hide-image'?: boolean;
+  'data-hide-tooltip'?: boolean;
 }
 
-const srcToKey = (src: string | undefined) => (src ? `${src}-${Date.now()}` : undefined);
 const space = 30;
 const getPreferredRenderPos = (
   pos1: number,
@@ -79,10 +78,12 @@ export const Tooltip = ({ renderToLeft }: { renderToLeft?: boolean }) => {
       onLoad={e => {
         setImageLoaded(true);
       }}
+      referrerPolicy="no-referrer" // prevents 429s in firefox
       onError={() => setImageErrored(true)}
       src={tooltipSrc}
-      hideImage={!(imageLoaded || imageErrored)}
-      hideTooltip={!tooltipSrc}
+      data-hide-image={!(imageLoaded || imageErrored)}
+      data-hide-tooltip={!tooltipSrc}
+      data-image-loaded={imageLoaded}
     />
   );
 };
@@ -102,7 +103,7 @@ const imageStencil = createStencil({
     zIndex: '1000000',
   }),
   modifiers: {
-    imageLoaded: {
+    'data-image-loaded': {
       false: {
         backgroundImage: 'repeating-linear-gradient(-55deg, #DDD, #DDD 5px, #CCC 5px, #CCC 10px)',
         borderRadius: '4.75% / 3.5%',
@@ -112,7 +113,7 @@ const imageStencil = createStencil({
         display: 'block',
       },
     },
-    hideImage: {
+    'data-hide-image': {
       true: {
         visibility: 'hidden',
         display: 'inline',
@@ -121,7 +122,7 @@ const imageStencil = createStencil({
         opacity: 0,
       },
     },
-    hideTooltip: {
+    'data-hide-tooltip': {
       true: {
         display: 'none',
       },

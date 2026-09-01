@@ -17,7 +17,7 @@ export const NumericComparatorSelector = ({
 }) => {
   const [localValue, setLocalValue] = useState<undefined | number>(value?.[0]);
 
-  const [localOperator, setLocalOperator] = useState<looseOpType>(value?.[1] || ':');
+  const [localOperator, setLocalOperator] = useState<looseOpType>(value?.[1] ?? ':');
   useEffect(() => {
     setLocalValue(value?.[0]);
     setLocalOperator(value?.[1] || ':');
@@ -31,7 +31,7 @@ export const NumericComparatorSelector = ({
       <StyledLegend>{label}</StyledLegend>
       <Container>
         <StyledDropdownSelect
-          value={localOperator}
+          defaultValue={localOperator ?? ':'}
           onChange={event => {
             setLocalOperator(event.target.value as looseOpType);
           }}
