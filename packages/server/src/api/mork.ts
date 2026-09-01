@@ -27,13 +27,11 @@ const changesetsCol: changesetCollection = db.collection(
 ) as changesetCollection;
 const cardsCol: cardsCollection = db.collection(env.FIRESTORE_CARDS_COLLECTION);
 
-
-
 type CommandBody = {
   command: commandType;
   card_name?: string;
   card_names?: string[];
-  include_options?:boolean
+  include_options?: boolean;
 };
 async function readJsonBody(req: HandlerRequest): Promise<unknown> {
   const chunks: Buffer[] = [];
@@ -57,15 +55,15 @@ const nameListRequiredCommands: commandType[] = [
 ];
 
 type displayOptions = {
-  full_image?:boolean
-}
+  full_image?: boolean;
+};
 
-const splitOptions =(cardName: string): [string, displayOptions] =>  {
-  if (cardName.startsWith("!") && !cardName.toLowerCase().startsWith("!macro")) {
-    return [cardName.slice(1), {full_image: true}]
+const splitOptions = (cardName: string): [string, displayOptions] => {
+  if (cardName.startsWith('!') && !cardName.toLowerCase().startsWith('!macro')) {
+    return [cardName.slice(1), { full_image: true }];
   }
-  return [cardName, {}]
-}
+  return [cardName, {}];
+};
 
 export async function morkHandler(req: HandlerRequest, res: HandlerResponse) {
   const headers = jsonHeaders(req);
@@ -107,15 +105,15 @@ export async function morkHandler(req: HandlerRequest, res: HandlerResponse) {
           const [name, options] = splitOptions(cardName);
           const card = getCard(name);
           if (card) {
-            cards.push(card)
-            optionList.push(options)
+            cards.push(card);
+            optionList.push(options);
           }
         }
       } else {
         for (const cardName of body.card_names) {
           const card = getCard(cardName);
           if (card) {
-            cards.push(card)
+            cards.push(card);
           }
         }
       }

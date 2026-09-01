@@ -1138,7 +1138,7 @@ const numDateRecord: Partial<Record<SetCode, Record<number, string>>> = {
     54: '2025-02-03',
   },
   HCV_P: {
-    1: '2024-12-31',  
+    1: '2024-12-31',
     2: '2025-01-05',
     4: '2025-01-06',
     6: '2025-01-12',
