@@ -6,6 +6,7 @@ import {
   changesetCollection,
   firestoreDocRefToCard,
 } from '@hellfall/shared/utils/firestore';
+import { HCCard } from '@hellfall/shared/types';
 
 export const commands = [
   'uuid',
@@ -26,10 +27,13 @@ const changesetsCol: changesetCollection = db.collection(
 ) as changesetCollection;
 const cardsCol: cardsCollection = db.collection(env.FIRESTORE_CARDS_COLLECTION);
 
+
+
 type CommandBody = {
   command: commandType;
   card_name?: string;
   card_names?: string[];
+  include_options?:boolean
 };
 async function readJsonBody(req: HandlerRequest): Promise<unknown> {
   const chunks: Buffer[] = [];
@@ -51,6 +55,17 @@ const nameListRequiredCommands: commandType[] = [
   'multiple_fuzzy',
   'all_exist',
 ];
+
+type displayOptions = {
+  full_image?:boolean
+}
+
+const splitOptions =(cardName: string): [string, displayOptions] =>  {
+  if (cardName.startsWith("!") && !cardName.toLowerCase().startsWith("!macro")) {
+    return [cardName.slice(1), {full_image: true}]
+  }
+  return [cardName, {}]
+}
 
 export async function morkHandler(req: HandlerRequest, res: HandlerResponse) {
   const headers = jsonHeaders(req);
@@ -85,7 +100,26 @@ export async function morkHandler(req: HandlerRequest, res: HandlerResponse) {
         res.end(JSON.stringify({ ok: false, reason: 'missing_card_names' }));
         return;
       }
-      const cards = body.card_names.flatMap(card => getCard(card) ?? []);
+      const cards: HCCard.Any[] = [];
+      const optionList: displayOptions[] = [];
+      if (body.include_options) {
+        for (const cardName of body.card_names) {
+          const [name, options] = splitOptions(cardName);
+          const card = getCard(name);
+          if (card) {
+            cards.push(card)
+            optionList.push(options)
+          }
+        }
+      } else {
+        for (const cardName of body.card_names) {
+          const card = getCard(cardName);
+          if (card) {
+            cards.push(card)
+          }
+        }
+      }
+      // const cards = body.card_names.flatMap(card => getCard(card) ?? []);
       if (body.command == 'all_exist') {
         const ok = cards.length == body.card_names.length;
         res.statusCode = ok ? 200 : 404;
@@ -93,6 +127,10 @@ export async function morkHandler(req: HandlerRequest, res: HandlerResponse) {
         return;
       }
       res.statusCode = 200;
+      if (body.include_options) {
+        res.end(JSON.stringify({ data: cards, options: optionList }));
+        return;
+      }
       res.end(JSON.stringify({ data: cards }));
       return;
     }
