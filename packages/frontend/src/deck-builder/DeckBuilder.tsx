@@ -241,7 +241,8 @@ Cock and Balls to Torture and Abuse
                 title={`image-${i}`}
                 key={`image-${i}`}
                 src={image}
-                crossOrigin="anonymous"
+                referrerPolicy="no-referrer"
+                // crossOrigin="anonymous"
               />
             );
           })}

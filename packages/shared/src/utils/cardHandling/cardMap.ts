@@ -1319,7 +1319,8 @@ export class CardMap extends LightCardMap {
     const fixed = fixName(text);
     const first = fixed.split(' ')[0];
     const count = parseInt(first);
-    if (isInteger(first) && count > 0 && first.length != fixed.length) {
+    const startsWithNumber = isInteger(first) && count > 0 && first.length != fixed.length;
+    if (startsWithNumber) {
       const card = this.getForDeck(fixed.slice(first.length + 1))?.card;
       if (card) {
         return { card, count };
@@ -1334,7 +1335,7 @@ export class CardMap extends LightCardMap {
     } else if (isLand) {
       return { card: this.getRandomCard(landIdMap.get(name)) };
     }
-    if (isInteger(first) && count > 0) {
+    if (startsWithNumber && count < 200) {
       return { count };
     }
     return {};
