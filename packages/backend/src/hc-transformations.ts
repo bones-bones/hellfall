@@ -252,6 +252,7 @@ const ignoreDuplicateOrders: Partial<Record<SetCode, string[]>> = {
   HC2_1: ['38b', '38c', '38d', '38e', '61b', '61c', '61d', '61e', '61f', '87b'],
   HC3_1: ['251b', '348b', '348c', '348d'],
   HC6_0: ['11b'],
+  HC7_1: ['156b','156c'],
   HCJ: ['15b', '444b', '444c'],
   HC8_0: ['292b', '292c'],
   HC8_1: ['31b'],
@@ -368,7 +369,7 @@ const main = async () => {
   }
 
   for (const [code, nums] of acceptedMap) {
-    if (code.startsWith('HCV') || ['HCT', 'NRM', 'SFT'].includes(code)) continue;
+    if (/* code.startsWith('HCV') ||  */['HCT', 'NRM', 'SFT', 'HCV_SOH', 'HCV_8', 'HCV_9'].includes(code)) continue;
     const max = Math.max(...Array.from(nums));
     for (let i = 1; i < max; i++) {
       if (!nums.has(i)) {
