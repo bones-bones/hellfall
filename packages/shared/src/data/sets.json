@@ -419,6 +419,7 @@
       "name": "Normal Cube",
       "description": "How did that get in there?",
       "set_type": "unfunny",
+      "released_at": "2025-04-01",
       "filename": "nrm.svg"
     },
     {
@@ -681,6 +682,7 @@
       "child_set_codes": [
         "HCV_SOH"
       ],
+      "use_color_order": true,
       "filename": "soh.svg"
     },
     {

@@ -1,9 +1,9 @@
-import { createGzip } from 'node:zlib';
-import { once } from 'node:events';
+import { gzipSync } from 'node:zlib';
 import { FieldPath, type QueryDocumentSnapshot } from '@google-cloud/firestore';
 import { getFirestore, resolveCardsCollectionName } from '@hellfall/shared/utils/firestore';
 import { firestoreToCard } from '@hellfall/shared/utils/firestore';
 import type { firestoreCard } from '@hellfall/shared/utils/firestore';
+import { CardMap } from '@hellfall/shared/utils';
 
 const PAGE_SIZE = 200;
 
@@ -45,33 +45,57 @@ export type StreamedCatalogGzip = {
   cardCount: number;
 };
 
-/** Stream Firestore cards → JSON `{ data: [...] }` → gzip without holding all cards in memory. */
-export async function buildCatalogGzipFromFirestore(
-  options: {
-    databaseId?: string;
-    collectionName?: string;
-  },
-  onProgress?: (cardCount: number) => void
-): Promise<StreamedCatalogGzip> {
-  const chunks: Buffer[] = [];
-  const gzipStream = createGzip();
-  gzipStream.on('data', (chunk: Buffer) => chunks.push(chunk));
-
-  gzipStream.write('{"data":[');
+/**
+ * Stream Firestore cards → JSON `{}` → gzip.
+ *
+ * Cards
+ * */
+export async function buildCatalogGzipFromFirestore(options: {
+  databaseId?: string;
+  collectionName?: string;
+}): Promise<StreamedCatalogGzip> {
+  const cardMap = new CardMap();
   let cardCount = 0;
-  let first = true;
 
   for await (const card of iterateCatalogCards(options)) {
-    if (!first) gzipStream.write(',');
-    gzipStream.write(JSON.stringify(card));
-    first = false;
     cardCount++;
-    if (onProgress && cardCount % 500 === 0) onProgress(cardCount);
+    cardMap.set(card);
   }
 
-  gzipStream.write(']}');
-  gzipStream.end();
-  await once(gzipStream, 'end');
+  const cacheJSON = JSON.stringify(cardMap);
 
-  return { gzipBody: Buffer.concat(chunks), cardCount };
+  const gzipBody = gzipSync(cacheJSON, { level: 9 });
+
+  return { gzipBody, cardCount };
 }
+
+// /** Stream Firestore cards → JSON `{ data: [...] }` → gzip without holding all cards in memory. */
+// export async function buildCatalogGzipFromFirestore(
+//   options: {
+//     databaseId?: string;
+//     collectionName?: string;
+//   },
+//   onProgress?: (cardCount: number) => void
+// ): Promise<StreamedCatalogGzip> {
+//   const chunks: Buffer[] = [];
+//   const gzipStream = createGzip();
+//   gzipStream.on('data', (chunk: Buffer) => chunks.push(chunk));
+
+//   gzipStream.write('{"data":[');
+//   let cardCount = 0;
+//   let first = true;
+
+//   for await (const card of iterateCatalogCards(options)) {
+//     if (!first) gzipStream.write(',');
+//     gzipStream.write(JSON.stringify(card));
+//     first = false;
+//     cardCount++;
+//     if (onProgress && cardCount % 500 === 0) onProgress(cardCount);
+//   }
+
+//   gzipStream.write(']}');
+//   gzipStream.end();
+//   await once(gzipStream, 'end');
+
+//   return { gzipBody: Buffer.concat(chunks), cardCount };
+// }

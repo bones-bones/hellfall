@@ -110,7 +110,7 @@ export const Deck = () => {
   return (
     <BiggestContainer>
       <Tooltip renderToLeft />
-      <BigContainer showGutter={window.innerWidth > 800}>
+      <BigContainer data-show-gutter={window.innerWidth > 800}>
         <h2>{deck.title}</h2>
         <h3>By: {deck.author}</h3>
         <TextContainer>{deck.text}</TextContainer>
@@ -158,7 +158,7 @@ const bigContainerStencil = createStencil({
   },
 });
 interface GutterDivProps extends BoxProps {
-  showGutter?: boolean;
+  'data-show-gutter'?: boolean;
 }
 const BigContainer = createStenciledDiv<GutterDivProps>(bigContainerStencil, 'BigContainer');
 
@@ -186,7 +186,7 @@ const CardContainer = () => {
   return (
     <>
       {activeCard && (
-        <ActiveCardContainer showGutter={window.innerWidth > 800}>
+        <ActiveCardContainer data-show-gutter={window.innerWidth > 800}>
           <HellfallCard data={activeCard} />
         </ActiveCardContainer>
       )}
@@ -214,7 +214,7 @@ const activeCardContainerStencil = createStencil({
     right: '0px',
   },
   modifiers: {
-    showGutter: {
+    'data-show-gutter': {
       true: {
         right: '10vw',
       },

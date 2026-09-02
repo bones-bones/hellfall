@@ -216,7 +216,7 @@ createServer(async (incoming: IncomingMessage, res: ServerResponse) => {
     }
   }
 }).listen(PORT, () => {
-  const dataDir = process.env.DATA_DIR?.trim() || join(process.cwd(), 'packages/shared/src/data');
+  const dataDir = process.env.DATA_DIR?.trim() || join(process.cwd(), '../shared/src/data');
   const bundledPath = join(dataDir, 'Hellscube-Database.json');
   seedCatalogCacheGzip(gzipSync(readFileSync(bundledPath, 'utf-8')));
   warmCatalogCache();

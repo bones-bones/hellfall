@@ -61,9 +61,9 @@ export const GridEntry = ({
           onClick={e => handleClick(e, onClickTitle as any)}
         >
           {imgLinkUrl ? (
-            <ClickableTitleH3 hasURL={!!imgLinkUrl}>{name}</ClickableTitleH3>
+            <ClickableTitleH3 data-has-url={!!imgLinkUrl}>{name}</ClickableTitleH3>
           ) : (
-            <ClickableTitle hasURL={!!imgLinkUrl}>{name}</ClickableTitle>
+            <ClickableTitle data-has-url={!!imgLinkUrl}>{name}</ClickableTitle>
           )}
         </StyledTitleLink>
       )}
@@ -71,7 +71,7 @@ export const GridEntry = ({
         to={imgLinkUrl ?? linkUrl}
         onClick={e => handleClick(e)}
         title={plainText ?? name}
-        imageLoaded={imageLoaded}
+        data-image-loaded={imageLoaded}
       >
         <StyledImage
           key={id + '-image'}
@@ -81,10 +81,10 @@ export const GridEntry = ({
           title={plainText ?? name}
           onLoad={() => setImageLoaded(true)}
           onError={() => setImageErrored(true)}
-          hideImage={!(imageLoaded || imageErrored)}
+          data-hide-image={!(imageLoaded || imageErrored)}
         />
         {!onClickTitle && (
-          <LoadedTitle imageLoaded={imageLoaded} key={id + '-name'}>
+          <LoadedTitle data-image-loaded={imageLoaded} key={id + '-name'}>
             {name}
           </LoadedTitle>
         )}
@@ -112,7 +112,7 @@ const clickableTitleStencil = createStencil({
   vars: {},
   base: titleText,
   modifiers: {
-    hasURL: {
+    'data-has-url': {
       true: {
         lineHeight: 0,
       },
@@ -120,7 +120,7 @@ const clickableTitleStencil = createStencil({
   },
 });
 interface ClickableTitleProps extends TextProps {
-  hasURL?: boolean;
+  'data-has-url'?: boolean;
   as?: string;
 }
 export const ClickableTitle = createStenciledSpan<ClickableTitleProps>(
@@ -128,7 +128,7 @@ export const ClickableTitle = createStenciledSpan<ClickableTitleProps>(
   'ClickableTitle'
 );
 interface ClickableTitleH3Props extends htmlIntrinsicProps {
-  hasURL?: boolean;
+  'data-has-url'?: boolean;
   as?: string;
 }
 export const ClickableTitleH3 = createStenciledIntrinsic<ClickableTitleH3Props>(
@@ -155,7 +155,7 @@ const titleStencil = createStencil({
   vars: {},
   base: titleText,
   modifiers: {
-    imageLoaded: {
+    'data-image-loaded': {
       true: visuallyHidden,
       false: {
         // margin: '4px',
@@ -169,7 +169,7 @@ const titleStencil = createStencil({
   },
 });
 interface LoadedTitleProps extends TextProps {
-  imageLoaded?: boolean;
+  'data-image-loaded'?: boolean;
 }
 const LoadedTitle = createStenciledSpan<LoadedTitleProps>(titleStencil, 'LoadedTitle');
 
@@ -189,7 +189,7 @@ const imageStencil = createStencil({
     cursor: 'pointer',
   },
   modifiers: {
-    hideImage: {
+    'data-hide-image': {
       true: {
         visibility: 'hidden',
         display: 'inline',
@@ -201,12 +201,12 @@ const imageStencil = createStencil({
   },
 });
 interface ImageProps extends React.ComponentPropsWithoutRef<'img'> {
-  hideImage?: boolean;
+  'data-hide-image'?: boolean;
 }
 const StyledImage = createStenciledImg<ImageProps>(imageStencil, 'StyledImage');
 
 export interface ImageLinkProps extends LinkProps {
-  imageLoaded?: boolean;
+  'data-image-loaded'?: boolean;
 }
 
 const containerStyles = createStyles({
@@ -231,7 +231,7 @@ const imageLinkStencil = createStencil({
     cursor: 'pointer',
   },
   modifiers: {
-    imageLoaded: {
+    'data-image-loaded': {
       false: {
         backgroundImage: 'repeating-linear-gradient(-55deg, #DDD, #DDD 5px, #CCC 5px, #CCC 10px)',
         borderRadius: '4.75% / 3.5%',

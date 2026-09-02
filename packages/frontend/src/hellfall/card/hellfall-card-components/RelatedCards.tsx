@@ -10,7 +10,7 @@ import {
   createStyledTableRow,
 } from '../../../styling';
 import { system } from '@workday/canvas-tokens-web';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { getCollectorOrderSet, getSet } from '@hellfall/shared/utils';
 import { useAtom } from 'jotai';
 import { mouseXAtom, mouseYAtom, tooltipSrcAtom } from '../../atoms/tooltipAtom';
@@ -29,14 +29,14 @@ const nameCellStencil = createStencil({
     ':hover': { backgroundColor: system.color.brand.surface.primary.strong },
   },
   modifiers: {
-    isSourceCard: {
+    'data-is-source-card': {
       true: {
         backgroundColor: system.color.brand.surface.primary.strong,
       },
     },
   },
 });
-type NameCellProps = React.ComponentProps<'td'> & { isSourceCard: boolean };
+type NameCellProps = React.ComponentProps<'td'> & { 'data-is-source-card': boolean };
 const NameCell = createStenciledTableCell<NameCellProps>(nameCellStencil, 'NameCell');
 const cellLinkStyles = createStyles({
   color: 'black',
@@ -61,7 +61,7 @@ const CardCell = ({
 }) => {
   return (
     <NameCell
-      isSourceCard={isSourceCard}
+      data-is-source-card={isSourceCard}
       onMouseMove={e => handleMouseMove(e, entry.image ?? '')}
       onMouseLeave={() => handleMouseExit(entry.image ?? '')}
     >

@@ -146,15 +146,12 @@ export const HellFall = () => {
             <Container>
               <div style={{ display: 'block', width: '100%' }}>
                 {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
-                  <>
-                    <div
-                      key={`${entry.id}-${i}`}
-                      style={{ width: '60vw', margin: '0 auto', display: 'block' }}
-                    >
+                  <div key={`${entry.id}-${i}`}>
+                    <div style={{ width: '60vw', margin: '0 auto', display: 'block' }}>
                       <HellfallCard data={entry} onSinglePage={true} />
                     </div>
                     <Separator />
-                  </>
+                  </div>
                 ))}
               </div>
             </Container>

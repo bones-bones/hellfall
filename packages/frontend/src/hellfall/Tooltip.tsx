@@ -5,11 +5,11 @@ import { useAtomValue } from 'jotai';
 import { mouseXAtom, mouseYAtom, tooltipSrcAtom } from './atoms/tooltipAtom';
 
 export interface ImageProps extends React.ComponentProps<'img'> {
-  imageLoaded?: boolean;
+  'data-image-loaded'?: boolean;
   left: string;
   top: string;
-  hideImage?: boolean;
-  hideTooltip?: boolean;
+  'data-hide-image'?: boolean;
+  'data-hide-tooltip'?: boolean;
 }
 
 const space = 30;
@@ -54,12 +54,21 @@ export const Tooltip = ({ renderToLeft }: { renderToLeft?: boolean }) => {
     setImageHeight(243);
     setImageWidth(340);
   }, [tooltipSrc]);
+
   useEffect(() => {
-    if (imgRef.current) {
-      setImageWidth(imgRef.current?.getBoundingClientRect().width);
-      setImageHeight(imgRef.current?.getBoundingClientRect().height);
+    if (imageLoaded && imgRef.current) {
+      const rect = imgRef.current.getBoundingClientRect();
+      setImageWidth(rect.width || 243);
+      setImageHeight(rect.height || 340);
     }
-  }, [imageLoaded]);
+  }, [imageLoaded, imgRef.current]);
+
+  useEffect(() => {
+    // This is necessary due to how chrome caches images.
+    if (imgRef.current?.complete && !imageLoaded) {
+      setImageLoaded(true);
+    }
+  }, [tooltipSrc, imgRef.current?.complete]);
 
   return (
     <TooltipImage
@@ -69,10 +78,12 @@ export const Tooltip = ({ renderToLeft }: { renderToLeft?: boolean }) => {
       onLoad={e => {
         setImageLoaded(true);
       }}
+      referrerPolicy="no-referrer" // prevents 429s in firefox
       onError={() => setImageErrored(true)}
       src={tooltipSrc}
-      hideImage={!(imageLoaded || imageErrored)}
-      hideTooltip={!tooltipSrc}
+      data-hide-image={!(imageLoaded || imageErrored)}
+      data-hide-tooltip={!tooltipSrc}
+      data-image-loaded={imageLoaded}
     />
   );
 };
@@ -92,7 +103,7 @@ const imageStencil = createStencil({
     zIndex: '1000000',
   }),
   modifiers: {
-    imageLoaded: {
+    'data-image-loaded': {
       false: {
         backgroundImage: 'repeating-linear-gradient(-55deg, #DDD, #DDD 5px, #CCC 5px, #CCC 10px)',
         borderRadius: '4.75% / 3.5%',
@@ -102,7 +113,7 @@ const imageStencil = createStencil({
         display: 'block',
       },
     },
-    hideImage: {
+    'data-hide-image': {
       true: {
         visibility: 'hidden',
         display: 'inline',
@@ -111,7 +122,7 @@ const imageStencil = createStencil({
         opacity: 0,
       },
     },
-    hideTooltip: {
+    'data-hide-tooltip': {
       true: {
         display: 'none',
       },

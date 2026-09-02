@@ -48,7 +48,7 @@ export const TagSection = ({
           const pendingRemove = pendingTagStaging?.toRemove.includes(tagEntry);
           return (
             <span key={tagEntry}>
-              <TagLink pendingRemove={pendingRemove}>
+              <TagLink data-pending-remove={pendingRemove}>
                 <Link
                   to={`/?${new URLSearchParams([
                     ['q', `tag=${tagEntry.replaceAll('"', '')}`],
@@ -100,7 +100,7 @@ export const TagSection = ({
           return (
             <span key={`pending-${tagEntry}`}>
               {(displayCard.tags?.length || i > 0) && ', '}
-              <TagLink pendingAdd={pendingAdd}>
+              <TagLink data-pending-add={pendingAdd}>
                 <Link
                   to={`/?${new URLSearchParams([
                     ['q', `tag:${tagEntry.replaceAll('"', '')}`],
@@ -176,7 +176,7 @@ const tagLinkStencil = createStencil({
     '& a': {},
   },
   modifiers: {
-    pendingAdd: {
+    'data-pending-add': {
       true: {
         '& a': {
           color: '#28a745',
@@ -184,7 +184,7 @@ const tagLinkStencil = createStencil({
         },
       },
     },
-    pendingRemove: {
+    'data-pending-remove': {
       true: {
         '& a': {
           color: '#888',
@@ -195,8 +195,8 @@ const tagLinkStencil = createStencil({
   },
 });
 interface TagLinkProps extends TextProps {
-  pendingAdd?: boolean;
-  pendingRemove?: boolean;
+  'data-pending-add'?: boolean;
+  'data-pending-remove'?: boolean;
 }
 const TagLink = createStenciledSpan<TagLinkProps>(tagLinkStencil, 'TagLink');
 

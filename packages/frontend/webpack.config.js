@@ -11,7 +11,6 @@ import TerserPlugin from "terser-webpack-plugin";
 import CopyPlugin from "copy-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "react-dev-utils/ForkTsCheckerWebpackPlugin.js";
 import typescriptFormatter from "react-dev-utils/typescriptFormatter.js";
-import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 import { createRequire } from "module";
 // Import paths and modules - these are CommonJS modules, so we need to handle them
 import pathsModule from "../../config/paths.js";
@@ -112,7 +111,7 @@ export default function webpackConfig(webpackEnv) {
       ? shouldUseSourceMap
         ? "source-map"
         : false
-      : isEnvDevelopment && "source-map",
+      : isEnvDevelopment && "cheap-module-source-map",
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
     entry: paths.appIndexJs,

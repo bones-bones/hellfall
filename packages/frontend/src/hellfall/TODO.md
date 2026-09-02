@@ -194,4 +194,4 @@ Write a script to transform the database
 - make rulings into an array
 - make hcj reprints of hcv cards override legality
 - add order for pip and set props
-- get SOH ready for drafting
+- allow people to search for e.g. hc8 with just `set:8`

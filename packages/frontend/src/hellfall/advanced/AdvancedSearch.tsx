@@ -369,7 +369,6 @@ export const AdvancedSearch = () => {
               <StyledDropdownSelect
                 id="StyledDropdownSelect"
                 defaultValue={colorComparison}
-                value={colorComparison}
                 onChange={event => {
                   setColorComparison(event.target.value as any);
                 }}
@@ -397,7 +396,6 @@ export const AdvancedSearch = () => {
               <StyledDropdownSelect
                 id="styledColorIdentitySelect"
                 defaultValue={colorIdentityComparison}
-                value={colorIdentityComparison}
                 onChange={event => {
                   setColorIdentityComparison(event.target.value as any);
                 }}
@@ -443,6 +441,11 @@ export const AdvancedSearch = () => {
               'HCJ',
               'HKL',
               'HC9',
+              'HC9.0',
+              'HC9.1',
+              'SOH',
+              'SCL',
+              'HDH',
             ]}
             onChange={setSearchSet}
           />
@@ -466,7 +469,6 @@ export const AdvancedSearch = () => {
                   <StyledDropdownSelect
                     id="cards or tokens"
                     defaultValue={searchToken}
-                    value={searchToken}
                     onChange={event => {
                       setSearchToken(event.target.value as 'Cards' | 'Tokens' | 'Both');
                     }}
@@ -504,7 +506,6 @@ export const AdvancedSearch = () => {
                   <StyledDropdownSelect
                     id="standard"
                     defaultValue={standardLegality}
-                    value={standardLegality}
                     onChange={event => {
                       setStandardLegality(event.target.value as any);
                     }}
@@ -519,7 +520,6 @@ export const AdvancedSearch = () => {
                   <StyledDropdownSelect
                     id="4cb"
                     defaultValue={fourcbLegality}
-                    value={fourcbLegality}
                     onChange={event => {
                       set4cbLegality(event.target.value as any);
                     }}
@@ -534,7 +534,6 @@ export const AdvancedSearch = () => {
                   <StyledDropdownSelect
                     id="commander"
                     defaultValue={commanderLegality}
-                    value={commanderLegality}
                     onChange={event => {
                       setCommanderLegality(event.target.value as any);
                     }}
