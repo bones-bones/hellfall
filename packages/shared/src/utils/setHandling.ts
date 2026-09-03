@@ -37,14 +37,14 @@ export const fixSetCodeMaybe = <T extends string>(code?: T) => (code ? fixSetCod
  * The list of sets that should only be included if include:extras is used
  */
 export const extraSetList = sets
-  .filter(set => !['main', 'side', 'lair'].includes(set.set_type))
+  .filter(set => !['main', 'side', 'lair', 'land'].includes(set.set_type))
   .map(set => set.code);
 
 /**
  * The list of card sets
  */
 export const cardSetList = sets
-  .filter(set => ['main', 'side', 'veto', 'lair'].includes(set.set_type))
+  .filter(set => ['main', 'side', 'veto', 'lair', 'land'].includes(set.set_type))
   .map(set => set.code);
 
 export const eventSetList: SetCode[] = ['CDC', 'HWN'];

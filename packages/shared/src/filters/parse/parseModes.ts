@@ -26,12 +26,16 @@ const displayRedirects: Record<string, displayType> = {
   card: 'full',
 };
 const preferRedirects: Record<string, preferType> = {
+  no: 'none',
+  not: 'none',
+  e: 'exotic',
   n: 'newest',
   new: 'newest',
   newer: 'newest',
   o: 'oldest',
   old: 'oldest',
   older: 'oldest',
+  typical: 'default',
 };
 
 export const isUniqueType = (text: any): text is uniqueType => uniqueTypeList.includes(text);

@@ -307,6 +307,10 @@ export const Syntax = () => {
         </div>
         <br />
         <div>
+          You can also use <code>is:default</code> and <code>is:atypical.</code>
+        </div>
+        <br />
+        <div>
           Use the <code>border:</code> keyword to find cards with a{' '}
           {mapListToCodeOr(Object.values(HCBorderColor))} border.
         </div>
@@ -367,9 +371,9 @@ export const Syntax = () => {
         <div>
           <code>unique:</code>, <code>display:</code>, and <code>prefer:</code> are implemented now,
           but they're a bit basic for now. <code>prefer:</code> currently only takes{' '}
-          <code>oldest</code> and <code>newest</code>, while <code>unique:</code> can't do unique
-          arts yet, and <code>display:full</code> is ok, but could be improved, especially on
-          desktop.
+          {mapListToCodeAnd(['newest', 'oldest', 'default', 'typical', 'none', 'exotic'])}, while{' '}
+          <code>unique:</code> can't do unique arts yet, and <code>display:full</code> is ok, but
+          could be improved, especially on desktop.
         </div>
         <br />
         <div>

@@ -101,6 +101,21 @@ export const TransformFrameEffects: HCFrameEffect[] = [
   HCFrameEffect.Specialize,
   HCFrameEffect.Cube,
 ];
+
+/**
+ * The frames that aren't typical magic frames
+ */
+export const AtypicalFrameEffects: HCFrameEffect[] = [
+  HCFrameEffect.Colorshifted,
+  HCFrameEffect.Inverted,
+  HCFrameEffect.Showcase,
+  HCFrameEffect.Masterpiece,
+  HCFrameEffect.FullArt,
+  HCFrameEffect.Etched,
+  HCFrameEffect.Slab,
+  HCFrameEffect.ShatteredGlass,
+];
+
 /**
  * Checks if a value is a {@linkcode HCFrameEffect}
  * @param value the value to check

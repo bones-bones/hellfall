@@ -7,6 +7,7 @@ import {
   opToNt,
   opAsBool,
   createCorrectedSummary,
+  invertOp,
 } from '../utils';
 import {
   unescapeText,
@@ -23,6 +24,8 @@ import {
   cardIsHistoric,
   pipMap,
   eventSetList,
+  cardIsDefault,
+  cardIsAtypical,
 } from '@hellfall/shared/utils';
 import { regexListFilter } from './filterBase';
 
@@ -47,6 +50,8 @@ const stateList = [
   'draftable',
   'masterpiece',
   'reprint',
+  'default',
+  'atypical',
   'event',
   'rebalanced',
   'bounceland',
@@ -64,6 +69,7 @@ type stateType = (typeof stateList)[number];
 export const isStateType = (value: any): value is stateType => stateList.includes(value);
 const equivStateNames: Record<string, stateType> = {
   rulings: 'ruling',
+  typical: 'default',
   alchemy: 'rebalanced',
   alchemyrebalanced: 'rebalanced',
   rebalance: 'rebalanced',
@@ -136,6 +142,8 @@ const stateResolutions: Record<
   masterpiece: (value: HCCard.Any) => value.tags?.includes('masterpiece'),
   reprint: (value: HCCard.Any) =>
     value.tags?.includes('reprint') || value.tags?.includes('masterpiece'),
+  default: cardIsDefault,
+  atypical: cardIsAtypical,
   event: (value: HCCard.Any) => eventSetList.includes(value.set),
   rebalanced: (value: HCCard.Any) => value.tags?.includes('alchemy-rebalance'),
   bounceland: (value: HCCard.Any) => value.tags?.includes('bounceland'),
@@ -173,6 +181,10 @@ const stateSummaries: Record<stateType, (operator: opType) => string> = {
   draftable: (operator: opType) => `the cards are${opToNt(operator)} directly draftable`,
   masterpiece: (operator: opType) => `the cards are${opToNt(operator)} masterpieces`,
   reprint: (operator: opType) => `the cards are${opToNt(operator)} reprints`,
+  default: (operator: opType) =>
+    `the cards are${opToNt(operator)} printed with standard frames and effects`,
+  atypical: (operator: opType) =>
+    `the cards are${opToNt(invertOp(operator))} printed with standard frames and effects`,
   event: (operator: opType) => `the cards are${opToNt(operator)} from event sets`,
   rebalanced: (operator: opType) => `the cards are${opToNt(operator)} rebalanced Alchemy cards`,
   dual: (operator: opType) => `the cards are${opToNt(operator)} dual lands`,
