@@ -90,7 +90,7 @@ export const makeIDFilter: maybeNumberPropFilterMaker = (value: string, op: loos
 export const makeNameFilter: propFilterMaker = (value: string, op: looseOpType) => {
   return new PropFilter('name', value, op);
 };
-// TODO: Make cost search act more like number than string (and more like scryfall)
+
 /**
  * Makes a mana cost text filter
  * @param value the value from the search

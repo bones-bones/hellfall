@@ -245,6 +245,7 @@ const loadExistingData = () => {
 const ignoreDuplicateNumbers: Partial<Record<SetCode, string[]>> = {
   HCV_1_0: ['8b'],
   HCV_2_1: ['87b'],
+  HCV_J: ['10b', '10c'],
   HC9_0: ['137b', '324b'],
 };
 const ignoreDuplicateOrders: Partial<Record<SetCode, string[]>> = {
@@ -254,7 +255,8 @@ const ignoreDuplicateOrders: Partial<Record<SetCode, string[]>> = {
   HC6_0: ['11b'],
   HC7_1: ['156b', '156c'],
   HCJ: ['15b', '444b', '444c'],
-  HC8_0: ['292b', '292c'],
+  HCV_J: ['10b', '10c'],
+  HC8_0: ['293b', '293c'],
   HC8_1: ['31b'],
   HC9_0: ['137b', '324b'],
 };
@@ -369,11 +371,7 @@ const main = async () => {
   }
 
   for (const [code, nums] of acceptedMap) {
-    if (
-      /* code.startsWith('HCV') ||  */ ['HCT', 'NRM', 'SFT', 'HCV_SOH', 'HCV_8', 'HCV_9'].includes(
-        code
-      )
-    )
+    if (/* code.startsWith('HCV') ||  */ ['HCT', 'NRM', 'SFT', 'HCV_SOH', 'HCV_9'].includes(code))
       continue;
     const max = Math.max(...Array.from(nums));
     for (let i = 1; i < max; i++) {

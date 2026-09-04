@@ -405,7 +405,7 @@ export const Syntax = () => {
           of cards that were cut from those cubes after being accepted. To preserve accepted order,
           they are sorted with the half that they were cut from when using
           <code>setaccepted</code>. Also, both <code>setnumber</code> and <code>setaccepted</code>
-          treat SCL as a single set.
+          treat SCL as a single set. You can use <code>ao:</code> to search for accepted orders.
         </div>
         <h2>Miscellaneous</h2>
         <div>
