@@ -195,3 +195,5 @@ Write a script to transform the database
 - make hcj reprints of hcv cards override legality
 - add order for pip and set props
 - allow people to search for e.g. hc8 with just `set:8`
+- have scl collector numbers reflect rankings but accepted orders reflect dates
+- add rotation buttons for flip/aftermath cards

@@ -246,7 +246,7 @@ const ignoreDuplicateNumbers: Partial<Record<SetCode, string[]>> = {
   HCV_1_0: ['8b'],
   HCV_2_1: ['87b'],
   HCV_J: ['10b', '10c'],
-  HC9_0: ['137b', '324b'],
+  HC9_0: ['138b', '323b'],
 };
 const ignoreDuplicateOrders: Partial<Record<SetCode, string[]>> = {
   HLC_0: ['8b', '65b'],
@@ -258,7 +258,7 @@ const ignoreDuplicateOrders: Partial<Record<SetCode, string[]>> = {
   HCV_J: ['10b', '10c'],
   HC8_0: ['293b', '293c'],
   HC8_1: ['31b'],
-  HC9_0: ['137b', '324b'],
+  HC9_0: ['138b', '323b'],
 };
 const nontokenTokenNames = [
   'Force of Will',
@@ -361,7 +361,7 @@ const main = async () => {
   });
 
   for (const [code, nums] of collectorMap) {
-    if (code.startsWith('HCV') || ['HCT', 'NRM', 'SFT'].includes(code)) continue;
+    if (code.startsWith('HCV') || ['NRM', 'SFT'].includes(code)) continue;
     const max = Math.max(...Array.from(nums));
     for (let i = 1; i < max; i++) {
       if (!nums.has(i)) {
@@ -371,8 +371,7 @@ const main = async () => {
   }
 
   for (const [code, nums] of acceptedMap) {
-    if (/* code.startsWith('HCV') ||  */ ['HCT', 'NRM', 'SFT', 'HCV_SOH', 'HCV_9'].includes(code))
-      continue;
+    if (/* code.startsWith('HCV') ||  */ ['NRM', 'SFT'].includes(code)) continue;
     const max = Math.max(...Array.from(nums));
     for (let i = 1; i < max; i++) {
       if (!nums.has(i)) {
