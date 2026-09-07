@@ -153,7 +153,10 @@ export type HCSet = HCObject.Object<HCObject.ObjectType.Set> & {
    */
   set_type: SetType;
   /**
-   * The date the set was finished
+   * The date the set was released.
+   *
+   * This is generally roughly the date that the corresponding submissions channel was closed
+   * for this set. However, for SCL, this is instead the date that the winners were announced.
    *
    * @type IsoDate
    */

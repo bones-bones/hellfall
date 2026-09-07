@@ -18,7 +18,7 @@ import {
   getSet,
   splitCardName,
   toSetNumber,
-} from '../setHandling';
+} from '../setDateHandling';
 import { CardLookupMap, CardLookupObject, lookupCache, lookupMapCache } from './cardLookupMap';
 import { fixName } from '../textHandling';
 import { isInteger } from '../numHandling';

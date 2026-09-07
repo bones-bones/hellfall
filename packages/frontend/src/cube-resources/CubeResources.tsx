@@ -206,6 +206,10 @@ export const CubeResources = () => {
           <StyledLink to={'https://lh3.googleusercontent.com/d/1Y1RFXGfuwx93VC_09YStIrjWMqz7L30h'}>
             (back)
           </StyledLink>
+          <br />
+          <StyledLink to={'https://gist.github.com/Juancu/056b3c00bc9eb8beae4cb290cd2d4bc9'}>
+            Beta draftmancer script
+          </StyledLink>
         </>
       ),
     },

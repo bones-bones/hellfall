@@ -12,7 +12,7 @@ import {
 import { invariantToCockProps } from './HCToCockCard';
 import { prettifyXml } from './prettifyXml';
 import { toTitleCase } from '../textHandling';
-import { getSet, toSetNumber } from '../setHandling';
+import { getSet, toSetNumber } from '../setDateHandling';
 
 type RecursiveChild = (Node | RecursiveChild)[];
 
