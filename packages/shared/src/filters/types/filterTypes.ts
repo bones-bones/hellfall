@@ -99,6 +99,7 @@ export const sortTypeList = [
   'accepted',
   'setaccepted',
   'colormanavalue',
+  'date',
   'auto',
 ] as const;
 /**
@@ -135,6 +136,10 @@ export interface cardFilterFunction<T = any, S = any> extends anyFilterFunction 
   //  */
   // toSummary: summaryFunction<S>;
 }
+// /**
+//  * Any filter that compares a date from a card with a date from a search
+//  */
+// export interface dateFilterFunction extends cardFilterFunction<string, string> {}
 /**
  * Any filter that compares a string from a card with a string from a search
  */

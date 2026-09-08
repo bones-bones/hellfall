@@ -648,18 +648,29 @@ export const filterSet = <T>(set: Set<T>, predicate: (item: T) => any): Set<T> =
   return ret;
 };
 
+type sortable = boolean | number | string | undefined;
+
 /**
  * Gives the correct sort value for two values, putting the smaller one (or the false one) first
  * @param value1 first boolean or number
  * @param value2 second boolean or number
  * @param dirMult whether to reverse the direction (if `-1`)
  */
-export const valsToSort = (
-  value1: boolean | number,
-  value2: boolean | number,
-  dirMult: 1 | -1 = 1
-) => (+value1 - +value2) * dirMult;
-
+export const valsToSort = <T extends sortable>(value1: T, value2: T, dirMult: 1 | -1 = 1) => {
+  if (typeof value1 == 'string' && typeof value2 == 'string') {
+    return value1.localeCompare(value2, undefined, { sensitivity: 'base' }) * dirMult;
+  }
+  if (value1 == value2) {
+    return 0;
+  }
+  if (value1 == undefined) {
+    return -dirMult;
+  }
+  if (value2 == undefined) {
+    return dirMult;
+  }
+  return (+value1 - +value2) * dirMult;
+};
 /**
  * Gives the correct sort value for two values after checking against a function that returns
  * a boolean or a number, putting the smaller one (or the false one) first
@@ -676,7 +687,7 @@ export const funcToSort = <T>(
   dirMult: 1 | -1 = 1
 ) => valsToSort(callbackfn(value1), callbackfn(value2), dirMult);
 
-export type sortValueFunction<T> = (value: T) => boolean | number;
+export type sortValueFunction<T> = (value: T) => sortable;
 
 export type sortFunction<T> = (value1: T, value2: T, dirMult?: 1 | -1) => number;
 
@@ -691,8 +702,6 @@ const isSortValueFunction = <T>(value: any): value is sortValueFunction<T> => va
 export const createSortFunc = <T>(...args: (sortFunction<T> | sortValueFunction<T>)[]) => {
   const sort = (value1: T, value2: T, dirMult: 1 | -1 = 1) => {
     for (const sortFunc of args) {
-      if (isSortValueFunction(sortFunc)) {
-      }
       const curr = isSortValueFunction(sortFunc)
         ? funcToSort(sortFunc, value1, value2, dirMult)
         : (sortFunc(value1, value2, dirMult) as number);

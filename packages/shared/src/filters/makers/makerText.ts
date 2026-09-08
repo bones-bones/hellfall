@@ -52,8 +52,8 @@ import {
   legalityFilterMaker,
   stateFilterMaker,
   maybeNumberPropFilterMaker,
+  DateFilter,
 } from '../makerLib';
-
 /**
  * Makes an oracle id filter
  * @param value the value from the search
@@ -370,6 +370,14 @@ export const makeCubeFilter: propConvertFilterMaker = (value: string, op: looseO
   return new PropConvertFilter('set', setSummary, value, op, getSetAndDirectChildSets, true);
 };
 
+/**
+ * Makes a date filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeDateFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
+  return new DateFilter(value, op);
+};
 /**
  * Makes a legal filter
  * @param value the value from the search

@@ -4,7 +4,6 @@ import {
   faceType,
   HCCard,
   HCCardFace,
-  HCFrameEffect,
   HCRelatedCard,
   SetCode,
   SetType,
@@ -19,7 +18,7 @@ import {
   splitCardName,
   toSetNumber,
 } from '../setDateHandling';
-import { CardLookupMap, CardLookupObject, lookupCache, lookupMapCache } from './cardLookupMap';
+import { CardLookupMap, lookupCache, lookupMapCache } from './cardLookupMap';
 import { fixName } from '../textHandling';
 import { isInteger } from '../numHandling';
 import {
@@ -31,6 +30,7 @@ import {
   textListsShare,
 } from '../listHandling';
 import { toFaces } from './cardMethods';
+import { dateSort } from './sortMethods';
 
 const isNonExtra = (card: HCCard.Any) =>
   !extraSetList.includes(card.set) || Object.values(card.legalities).some(l => l == 'legal');
@@ -115,17 +115,6 @@ type fullCache = {
   hcidMap: Record<string, string>;
   oracleMap: Record<string, string[]>;
 };
-
-/**
- * Sorts two cards based on their accepted order (can be used as a proxy for date)
- * @param value1 first card to sort
- * @param value2 second card to sort
- * @param dirMult whether to reverse the direction (if `-1`)
- */
-export const dateSort = createSortFunc(
-  (card: HCCard.Any) => toSetNumber(getAcceptedOrderSet(card.set)),
-  (card: HCCard.Any) => parseInt(card.accepted_order)
-);
 
 const reverseDateSort = (value1: HCCard.Any, value2: HCCard.Any) => dateSort(value1, value2, -1);
 

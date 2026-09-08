@@ -52,6 +52,8 @@ import {
   devotionRegexFilter,
   devotionStateFilter,
   devotionSummary,
+  dateSummary,
+  dateShareFilter,
 } from '../filters';
 import {
   ensureArray,
@@ -60,13 +62,14 @@ import {
   stripQuotes,
   pipSearch,
   fixValue,
-  unescapeText,
   isRegexText,
   pipMap,
   getCostsFromPermanentFaces,
   setAsFix,
   dashAsFix,
+  bothAsFix,
 } from '@hellfall/shared/utils';
+import { toIsoDate } from '../../utils/setDateHandling/dateHandling';
 const parseNote = (text: string): { name: string; note?: boolean | string } => {
   if (text.endsWith('<')) {
     return { name: text.slice(0, -1), note: true };
@@ -474,6 +477,10 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
      * Whether to treat this as a set filter
      */
     public isSet?: boolean,
+    /**
+     * Whether to drop dashes in text
+     */
+    public dropDashes: boolean = true,
     defaultOp: opType = '=',
     invertOption: invertOptionType = 'flip'
   ) {
@@ -481,7 +488,10 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
       queryName,
       shareFilter,
       summary as summaryFunction<any>,
-      fixValue(ensureArray(toValue(fixValue(value, setAsFix(isSet)) as T)), setAsFix(isSet)),
+      fixValue(
+        ensureArray(toValue(fixValue(value, bothAsFix(!dropDashes, isSet)) as T)),
+        bothAsFix(!dropDashes, isSet)
+      ),
       op,
       card =>
         this.props.flatMap(
@@ -491,7 +501,7 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
               p,
               this.location,
               this.dropFaces,
-              setAsFix(this.isSet)
+              bothAsFix(!dropDashes, isSet)
             ) as string[]
         ),
       defaultOp,
@@ -506,7 +516,7 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
       this.filter(
         this.getValueToCompare(card),
         this.getOp(),
-        fixValue(this.value, setAsFix(this.isSet))
+        fixValue(this.value, bothAsFix(!this.dropDashes, this.isSet))
       ),
       this.inverted
     );
@@ -514,6 +524,31 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
    * @returns the result of `this.summary(this.getOp(), this.summaryValue, this.inverted)`
    */
   toSummary = () => (this.summary as any)(this.getOp(), this.summaryValue, this.inverted);
+}
+/**
+ * A filter object that handles dates correctly
+ */
+export class DateFilter extends PropConvertFilter<string> {
+  constructor(
+    value: string,
+    op: looseOpType,
+    dropDashes: boolean = false,
+    defaultOp: opType = '=',
+    invertOption: invertOptionType = 'flip'
+  ) {
+    super(
+      'date',
+      dateSummary as summaryFunction<any>,
+      value,
+      op,
+      toIsoDate,
+      undefined,
+      dropDashes,
+      defaultOp,
+      invertOption
+    );
+    this.filter = dateShareFilter;
+  }
 }
 
 /**
@@ -534,9 +569,18 @@ export class InFilter extends PropConvertFilter<string> {
     defaultOp: opType = '=',
     invertOption: invertOptionType = 'flip'
   ) {
-    super('in', inSummary as summaryFunction<any>, value, op, toIn, isSet, defaultOp, invertOption);
+    super(
+      'in',
+      inSummary as summaryFunction<any>,
+      value,
+      op,
+      toIn,
+      isSet,
+      undefined,
+      defaultOp,
+      invertOption
+    );
     this.summaryValue = value;
-    ({ props: this.props, location: this.location } = queryNameToValue('in'));
   }
   getValueToCompare = (card: HCCard.Any): string[] =>
     this.getAllPrints(card).flatMap(c =>

@@ -68,6 +68,7 @@ import {
   makeInvalidPreferFilter,
   makeCubeFilter,
   makeAcceptedOrderFilter,
+  makeDateFilter,
 } from '../makers';
 import { colorFilterNameType, filterNameType, printsFilterNameType } from '../types';
 import { colorFilterMaker, filterMaker, printsFilterMaker } from '../makerLib';
@@ -84,6 +85,7 @@ export const filters: Record<filterNameType, filterMaker<any>> = {
   cube: makeCubeFilter,
   number: makeCollectorNumFilter,
   accepted: makeAcceptedOrderFilter,
+  date: makeDateFilter,
   layout: makeCardLayoutFilter,
   facelayout: makeFaceLayoutFilter,
   anylayout: makeAnyLayoutFilter,

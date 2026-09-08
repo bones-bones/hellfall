@@ -33,6 +33,8 @@ import {
   tokenInvariantMap,
   textListIsContainedBy,
   cardToRelatedCard,
+  nameSort,
+  colorTypeSort,
 } from '@hellfall/shared/utils';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import { fetchHCJFronts } from './fetchHCJFronts.ts';
@@ -311,13 +313,11 @@ const main = async () => {
   const { existingCards, existingTokens } = loadExistingData();
   const merged = mergeDatabases(existingCards, newCards, existingTokens, newTokens);
   const finalCards = new CardMap(addToJSONToCards(merged));
-  const nameSort = makeSort('name', 'asc');
-  const colorSort = makeSort('color', 'asc', true);
   colorOrderSetList.forEach(set =>
     finalCards
       .getAllInSetDirect(set)
-      .sort(nameSort.filter)
-      .sort(colorSort.filter)
+      .sort(nameSort)
+      .sort(colorTypeSort)
       .forEach((card, i) => {
         card.collector_number = `${i + 1}`;
       })
