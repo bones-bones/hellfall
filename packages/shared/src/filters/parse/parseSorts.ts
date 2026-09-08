@@ -1,18 +1,16 @@
 import { unescapeText } from '@hellfall/shared/utils';
 import { makeSort } from '../makers';
-import { dirTypeList, dirType, sortTypeList, sortType } from '../types';
+import { dirTypeList, dirType, sortTypeList, sortType, equivSortAndFilterNames } from '../types';
 import { splitOnFirstOp } from '../utils';
 import { SortObject } from '../makerLib';
 
+/**
+ * This should only really have combo sorts explicitly declared here.
+ * Single sorts almost certainly also have a corresponding filter,
+ * so their redirects should go in {@linkcode equivSortAndFilterNames}
+ */
 const sortRedirects: Record<string, sortType> = {
-  mv: 'manavalue',
-  cmc: 'manavalue',
-  cn: 'number',
-  num: 'number',
-  ao: 'accepted',
-  accept: 'accepted',
-  acceptorder: 'accepted',
-  acceptedorder: 'accepted',
+  ...equivSortAndFilterNames,
   setcn: 'setnumber',
   setnum: 'setnumber',
   setao: 'setaccepted',
@@ -23,9 +21,6 @@ const sortRedirects: Record<string, sortType> = {
   colorcmc: 'colormanavalue',
   review: 'colormanavalue',
   setreview: 'colormanavalue',
-  year: 'date',
-  time: 'date',
-  dates: 'date',
 };
 const dirRedirects: Record<string, dirType> = {
   a: 'asc',

@@ -49,6 +49,7 @@ const ALL_SORT_OPTIONS: SelectItems<sortType> = [
   { label: 'Auto', value: 'auto' },
   { label: 'Name', value: 'name' },
   { label: 'Id', value: 'id' },
+  { label: 'Date', value: 'date' },
   { label: 'Set/Number', value: 'setnumber' },
   { label: 'Set/Accepted', value: 'setaccepted' },
   { label: 'Set', value: 'set' },

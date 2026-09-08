@@ -269,6 +269,21 @@ export const Syntax = () => {
           You can use <code>prints:</code> to compare the number of times a card has been printed,
           or <code>sets:</code> to do the same for the number of sets a card has been in..
         </div>
+        <h2>Dates</h2>
+        <div>
+          Hellfall assigns dates to cards a bit differently than Scryfall does. For cards that go
+          through veto polls, their dates are the date of the first version of the card to pass veto
+          polls, or the date of the last version, if it was vetoed. This is determined based on the
+          date of the corresponding post in <code>#veto-polls</code>. For cards that don't go
+          through veto polls, their dates are the date that the first version of the card to be
+          accepted was posted in the corresponding submissions channel.
+        </div>
+        <br />
+        <div>
+          Most of the stuff from <Link to={'https://scryfall.com/docs/syntax#year'}>Scryfall</Link>{' '}
+          works, with the exception of using set codes as a date, since that isn't really helpful
+          given how Hellfall assigns dates to cards.
+        </div>
         <h2>Legality</h2>
         <div>
           To find cards with a given legality in a given format, use <code>f:</code>,{' '}
@@ -428,7 +443,7 @@ export const Syntax = () => {
         </div>
         <h2>Not Implemented Yet</h2>
         <div>
-          Everything in Games, Promos, & Spotlights, Year, Languages (except{' '}
+          Everything in Games, Promos, & Spotlights and Languages (except{' '}
           {mapListToCodeAnd(['is:alchemy', 'is:rebalanced'])}){' '}
         </div>
         <h2>Won't Be Implemented</h2>

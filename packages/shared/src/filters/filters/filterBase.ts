@@ -5,6 +5,8 @@ import {
   textListContains,
   textListIncludes,
   toNumber,
+  IsoDate,
+  toIsoDate,
 } from '@hellfall/shared/utils';
 import {
   // dateFilterFunction,
@@ -31,7 +33,6 @@ import {
   opXorInvert,
   regexErrorMessage,
 } from '../utils';
-import { IsoDate, toIsoDate } from '../../utils/setDateHandling/dateHandling';
 
 /**
  * Compares a number from a card with a number from a search

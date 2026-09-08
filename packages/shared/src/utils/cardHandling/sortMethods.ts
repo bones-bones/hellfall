@@ -3,7 +3,7 @@ import { createSortFunc, textListIncludes } from '../listHandling';
 import { getAcceptedOrderSet, toSetNumber } from '../setDateHandling';
 import { toFaces } from './cardMethods';
 
-const toColorNumber = (card: HCCard.Any, useTypes?: boolean) => {
+const toColorNumberBoth = (card: HCCard.Any, useTypes?: boolean) => {
   if (useTypes && textListIncludes(toFaces(card)[0].types, 'land')) {
     return colorList.length + 2;
   }
@@ -17,7 +17,8 @@ const toColorNumber = (card: HCCard.Any, useTypes?: boolean) => {
   }
   return colorList.length;
 };
-const toTypedColorNumber = (card: HCCard.Any) => toColorNumber(card, true);
+const toColorNumber = (card: HCCard.Any) => toColorNumberBoth(card);
+const toTypedColorNumber = (card: HCCard.Any) => toColorNumberBoth(card, true);
 const toTokenNumber = (card: HCCard.Any) => parseInt(card.hcid.replace(card.name, ''));
 
 /**

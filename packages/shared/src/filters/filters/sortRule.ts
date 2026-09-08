@@ -29,6 +29,9 @@ const sortTypeToFunc: Record<sortType, sortFunction<HCCard.Any>> = {
   setaccepted: setAcceptedSort,
   date: dateSort,
 };
+const reversedAutoSorts: sortType[] = ['date'];
+const getMult = (sort: sortType, dir: dirType) =>
+  dir == 'auto' ? (reversedAutoSorts.includes(sort) ? -1 : 1) : dir == 'desc' ? -1 : 1;
 
 /**
  * A function that sorts two cards
@@ -44,4 +47,4 @@ export const filterSort: sortFilterFunction = (
   sort: sortType,
   dir: dirType
   // useTypes?: boolean
-) => sortTypeToFunc[sort](value1, value2, dir == 'desc' ? -1 : 1);
+) => sortTypeToFunc[sort](value1, value2, getMult(sort, dir));

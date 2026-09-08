@@ -1,9 +1,15 @@
+import { unescapeText } from '../textHandling';
+
 /* We're not using direct validation on this because we want to save overhead */
 export type IsoDate = string;
 
 const directDateRegex = /^20\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 const convertibleDateRegex =
   /^(?<yyyy>20\d{2})-?(?<mm>1[0-2]|0?[1-9])?-?(?<dd>[12]\d|3[01]|0?[1-9])?$/;
+
+const nowList = ['now', 'today'];
+
+const getCurrentDate = () => new Date().toISOString().split('T')[0];
 /**
  * Converts user-inputted text into an iso date, or returns undefined if the text is invalid
  * @param text text to format
@@ -11,6 +17,9 @@ const convertibleDateRegex =
 export const toIsoDate = (text: string): IsoDate | undefined => {
   if (directDateRegex.test(text)) {
     return text;
+  }
+  if (nowList.includes(text)) {
+    return getCurrentDate();
   }
   const groups = text.match(convertibleDateRegex);
   const year = groups?.groups?.yyyy;

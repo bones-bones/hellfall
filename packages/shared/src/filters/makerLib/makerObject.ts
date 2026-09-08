@@ -68,8 +68,8 @@ import {
   setAsFix,
   dashAsFix,
   bothAsFix,
+  toIsoDate,
 } from '@hellfall/shared/utils';
-import { toIsoDate } from '../../utils/setDateHandling/dateHandling';
 const parseNote = (text: string): { name: string; note?: boolean | string } => {
   if (text.endsWith('<')) {
     return { name: text.slice(0, -1), note: true };
@@ -89,7 +89,7 @@ const parseNote = (text: string): { name: string; note?: boolean | string } => {
  */
 export class SortObject implements sortInterface {
   queryName: 'sort' = 'sort';
-  constructor(public sort: sortType, public dir: dirType, public useTypes?: boolean) {}
+  constructor(public sort: sortType, public dir: dirType) {}
   /**
    * A function that sorts two cards
    * @param value1 the first card to sort
@@ -97,7 +97,7 @@ export class SortObject implements sortInterface {
    * @returns a number for `.sort()`
    */
   filter = (value1: HCCard.Any, value2: HCCard.Any) =>
-    filterSort(value1, value2, this.sort, this.dir, this.useTypes);
+    filterSort(value1, value2, this.sort, this.dir);
 }
 
 /**
