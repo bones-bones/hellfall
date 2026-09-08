@@ -124,9 +124,12 @@ export async function getCatalogResponseBody(): Promise<string> {
   return (await getCatalogResponse()).body;
 }
 
-/** Warm cache after listen so the first browser request is fast. */
+/** Warm gzip bytes after listen. Does not gunzip (keeps ~28MB JSON off the heap). */
 export function warmCatalogCache(): void {
-  void getCatalogResponse().catch(err => {
-    console.error('catalog cache warm failed', err);
-  });
+  if (cache) return;
+  void buildCatalogGzip()
+    .then(gzipBody => seedCatalogCacheGzip(gzipBody))
+    .catch(err => {
+      console.error('catalog cache warm failed', err);
+    });
 }

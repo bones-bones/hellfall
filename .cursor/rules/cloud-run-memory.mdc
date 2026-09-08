@@ -1,0 +1,13 @@
+---
+description: Do not raise Cloud Run memory or CPU
+alwaysApply: true
+---
+
+# Cloud Run resource limits
+
+This project's Cloud Run service **cannot** get more memory or CPU. Do not try to fix OOM, 503s, timeouts, or slow catalog sync by raising instance size.
+
+- Do **not** add or increase `--memory`, `--cpu`, `--cpu-boost`, or `--no-cpu-throttling` on `gcloud run deploy` or in `.github/workflows/deploy-auth-cloud-run.yml`.
+- Do **not** suggest bumping Cloud Run memory (e.g. 1Gi/2Gi) as a fix.
+- Keep `--timeout` if a long request must stay open (catalog `/run`).
+- Stay in the existing footprint: stream/paginate, gzip-only caches, release heap before heavy work, retry 502/503. Split accept (202) vs `/run` so CPU is allocated on the request without a larger instance.
