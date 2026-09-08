@@ -218,7 +218,14 @@ createServer(async (incoming: IncomingMessage, res: ServerResponse) => {
 }).listen(PORT, () => {
   const dataDir = process.env.DATA_DIR?.trim() || join(process.cwd(), 'packages/shared/src/data');
   const bundledPath = join(dataDir, 'Hellscube-Database.json');
-  seedCatalogCacheGzip(gzipSync(readFileSync(bundledPath, 'utf-8')));
-  warmCatalogCache();
+  try {
+    // Gzip buffer only — do not gunzip into a ~28MB string. Post-deploy /run
+    // publishes from Firestore on the same instance; overlapping uncompressed
+    // catalog + export OOMs Cloud Run's default 512Mi (platform 503).
+    seedCatalogCacheGzip(gzipSync(readFileSync(bundledPath)));
+  } catch (err) {
+    console.error('bundled catalog seed failed', err);
+    warmCatalogCache();
+  }
   console.log(`Server at http://localhost:${PORT}`);
 });
