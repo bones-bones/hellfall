@@ -1,3 +1,6 @@
+import { randomUUID } from 'node:crypto';
+import { Transform, type Writable } from 'node:stream';
+import { finished } from 'node:stream/promises';
 import { gunzipSync, gzipSync } from 'node:zlib';
 import { Storage } from '@google-cloud/storage';
 import { env } from '../api/lib/env.ts';
@@ -46,6 +49,84 @@ export async function downloadCatalogBodyFromGcs(): Promise<string | null> {
   return gunzipSync(gzipBody).toString('utf-8');
 }
 
+const CATALOG_GZIP_WRITE_OPTIONS = {
+  contentType: 'application/json',
+  resumable: true,
+  metadata: {
+    contentEncoding: 'gzip',
+    cacheControl: 'public, max-age=259200',
+  },
+} as const;
+
+async function writeCatalogManifest(
+  bucketName: string,
+  cardCount: number
+): Promise<CatalogManifest> {
+  const manifest: CatalogManifest = {
+    version: new Date().toISOString(),
+    cardCount,
+  };
+  const manifestObject = env.CATALOG_GCS_MANIFEST_OBJECT;
+  console.log(`[catalog/gcs] writing manifest gs://${bucketName}/${manifestObject}`);
+  await getStorage()
+    .bucket(bucketName)
+    .file(manifestObject)
+    .save(JSON.stringify(manifest), {
+      contentType: 'application/json',
+      metadata: {
+        cacheControl: 'public, max-age=300',
+      },
+    });
+  console.log(
+    `[catalog/gcs] manifest upload done version=${manifest.version} cards=${manifest.cardCount}`
+  );
+  return manifest;
+}
+
+/**
+ * Pipe a gzip catalog into GCS without holding the file in memory.
+ * Writes a UUID temp object, then moves it over `catalog.json` so readers never see a partial object.
+ */
+export async function uploadCatalogGzipStreamToGcs(
+  produce: (dest: Writable) => Promise<{ cardCount: number }>
+): Promise<{ manifest: CatalogManifest; bytes: number; cardCount: number }> {
+  const bucketName = env.CATALOG_GCS_BUCKET;
+  if (!bucketName) {
+    throw new Error('CATALOG_GCS_BUCKET is required to upload catalog');
+  }
+
+  const bucket = getStorage().bucket(bucketName);
+  const catalogObject = env.CATALOG_GCS_OBJECT;
+  const tmpObject = `${catalogObject}.${randomUUID()}.tmp`;
+  const tmpFile = bucket.file(tmpObject);
+
+  let bytes = 0;
+  const counter = new Transform({
+    transform(chunk, _enc, cb) {
+      bytes += (chunk as Buffer).length;
+      cb(null, chunk);
+    },
+  });
+  const gcs = tmpFile.createWriteStream(CATALOG_GZIP_WRITE_OPTIONS);
+  counter.pipe(gcs);
+
+  console.log(`[catalog/gcs] streaming catalog gs://${bucketName}/${tmpObject}`);
+  try {
+    const { cardCount } = await produce(counter);
+    await finished(gcs);
+    console.log(
+      `[catalog/gcs] stream complete gzip=${bytes}, moving to gs://${bucketName}/${catalogObject}`
+    );
+    await tmpFile.move(catalogObject);
+    const manifest = await writeCatalogManifest(bucketName, cardCount);
+    return { manifest, bytes, cardCount };
+  } catch (err) {
+    gcs.destroy();
+    await tmpFile.delete({ ignoreNotFound: true }).catch(() => undefined);
+    throw err;
+  }
+}
+
 /** Upload gzip-compressed catalog JSON and manifest after a publish. Requires CATALOG_GCS_BUCKET. */
 export async function uploadCatalogGzipToGcs(
   gzipBody: Buffer,
@@ -56,38 +137,15 @@ export async function uploadCatalogGzipToGcs(
     throw new Error('CATALOG_GCS_BUCKET is required to upload catalog');
   }
 
-  const manifest: CatalogManifest = {
-    version: new Date().toISOString(),
-    cardCount,
-  };
-  const compressed = gzipBody;
-  const bucket = getStorage().bucket(bucketName);
   const catalogObject = env.CATALOG_GCS_OBJECT;
-  const manifestObject = env.CATALOG_GCS_MANIFEST_OBJECT;
-
   console.log(
-    `[catalog/gcs] uploading catalog gs://${bucketName}/${catalogObject} (${compressed.length} bytes gzip)`
+    `[catalog/gcs] uploading catalog gs://${bucketName}/${catalogObject} (${gzipBody.length} bytes gzip)`
   );
-  await bucket.file(catalogObject).save(compressed, {
-    contentType: 'application/json',
-    metadata: {
-      contentEncoding: 'gzip',
-      cacheControl: 'public, max-age=259200',
-    },
-  });
-  console.log(
-    `[catalog/gcs] catalog upload done, writing manifest gs://${bucketName}/${manifestObject}`
-  );
-  await bucket.file(manifestObject).save(JSON.stringify(manifest), {
-    contentType: 'application/json',
-    metadata: {
-      cacheControl: 'public, max-age=300',
-    },
-  });
-  console.log(
-    `[catalog/gcs] manifest upload done version=${manifest.version} cards=${manifest.cardCount}`
-  );
-  return manifest;
+  await getStorage()
+    .bucket(bucketName)
+    .file(catalogObject)
+    .save(gzipBody, CATALOG_GZIP_WRITE_OPTIONS);
+  return writeCatalogManifest(bucketName, cardCount);
 }
 
 /** Upload gzip-compressed catalog JSON and manifest after a publish. Requires CATALOG_GCS_BUCKET. */

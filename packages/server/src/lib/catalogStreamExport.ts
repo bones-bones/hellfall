@@ -1,9 +1,11 @@
-import { gzipSync } from 'node:zlib';
+import { createGzip } from 'node:zlib';
+import { once } from 'node:events';
+import { pipeline } from 'node:stream/promises';
+import { Writable } from 'node:stream';
 import { FieldPath, type QueryDocumentSnapshot } from '@google-cloud/firestore';
 import { getFirestore, resolveCardsCollectionName } from '@hellfall/shared/utils/firestore';
 import { firestoreToCard } from '@hellfall/shared/utils/firestore';
 import type { firestoreCard } from '@hellfall/shared/utils/firestore';
-import { CardMap } from '@hellfall/shared/utils';
 
 const PAGE_SIZE = 200;
 
@@ -45,57 +47,70 @@ export type StreamedCatalogGzip = {
   cardCount: number;
 };
 
-/**
- * Stream Firestore cards → JSON `{}` → gzip.
- *
- * Cards
- * */
-export async function buildCatalogGzipFromFirestore(options: {
-  databaseId?: string;
-  collectionName?: string;
-}): Promise<StreamedCatalogGzip> {
-  const cardMap = new CardMap();
-  let cardCount = 0;
-
-  for await (const card of iterateCatalogCards(options)) {
-    cardCount++;
-    cardMap.set(card);
-  }
-
-  const cacheJSON = JSON.stringify(cardMap);
-
-  const gzipBody = gzipSync(cacheJSON, { level: 9 });
-
-  return { gzipBody, cardCount };
+async function writeWithBackpressure(dest: Writable, data: string): Promise<void> {
+  if (!dest.write(data)) await once(dest, 'drain');
 }
 
-// /** Stream Firestore cards → JSON `{ data: [...] }` → gzip without holding all cards in memory. */
-// export async function buildCatalogGzipFromFirestore(
-//   options: {
-//     databaseId?: string;
-//     collectionName?: string;
-//   },
-//   onProgress?: (cardCount: number) => void
-// ): Promise<StreamedCatalogGzip> {
-//   const chunks: Buffer[] = [];
-//   const gzipStream = createGzip();
-//   gzipStream.on('data', (chunk: Buffer) => chunks.push(chunk));
+/** JSON `{ data: [...] }` → gzip into `dest`. Does not buffer the gzip. */
+export async function gzipCatalogCardsToStream(
+  cards: AsyncIterable<unknown>,
+  dest: Writable,
+  onProgress?: (cardCount: number) => void
+): Promise<{ cardCount: number }> {
+  const gzipStream = createGzip();
+  const pipeDone = pipeline(gzipStream, dest);
 
-//   gzipStream.write('{"data":[');
-//   let cardCount = 0;
-//   let first = true;
+  let cardCount = 0;
+  try {
+    await writeWithBackpressure(gzipStream, '{"data":[');
+    let first = true;
+    for await (const card of cards) {
+      if (!first) await writeWithBackpressure(gzipStream, ',');
+      await writeWithBackpressure(gzipStream, JSON.stringify(card));
+      first = false;
+      cardCount++;
+      if (onProgress && cardCount % 500 === 0) onProgress(cardCount);
+    }
+    await writeWithBackpressure(gzipStream, ']}');
+    gzipStream.end();
+    await pipeDone;
+  } catch (err) {
+    gzipStream.destroy(err instanceof Error ? err : new Error(String(err)));
+    throw err;
+  }
+  return { cardCount };
+}
 
-//   for await (const card of iterateCatalogCards(options)) {
-//     if (!first) gzipStream.write(',');
-//     gzipStream.write(JSON.stringify(card));
-//     first = false;
-//     cardCount++;
-//     if (onProgress && cardCount % 500 === 0) onProgress(cardCount);
-//   }
+/**
+ * Firestore cards → JSON `{ data: [...] }` → gzip into `dest`.
+ * Does not buffer the gzip; callers must honor Writable backpressure.
+ */
+export async function streamCatalogGzipFromFirestore(
+  dest: Writable,
+  options: {
+    databaseId?: string;
+    collectionName?: string;
+  },
+  onProgress?: (cardCount: number) => void
+): Promise<{ cardCount: number }> {
+  return gzipCatalogCardsToStream(iterateCatalogCards(options), dest, onProgress);
+}
 
-//   gzipStream.write(']}');
-//   gzipStream.end();
-//   await once(gzipStream, 'end');
-
-//   return { gzipBody: Buffer.concat(chunks), cardCount };
-// }
+/** Same export as `streamCatalogGzipFromFirestore`, collected into a Buffer (local / no GCS). */
+export async function buildCatalogGzipFromFirestore(
+  options: {
+    databaseId?: string;
+    collectionName?: string;
+  },
+  onProgress?: (cardCount: number) => void
+): Promise<StreamedCatalogGzip> {
+  const chunks: Buffer[] = [];
+  const dest = new Writable({
+    write(chunk, _enc, cb) {
+      chunks.push(chunk as Buffer);
+      cb();
+    },
+  });
+  const { cardCount } = await streamCatalogGzipFromFirestore(dest, options, onProgress);
+  return { gzipBody: Buffer.concat(chunks), cardCount };
+}

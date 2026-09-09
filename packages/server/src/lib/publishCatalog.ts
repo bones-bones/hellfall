@@ -1,7 +1,10 @@
 import { env } from '../api/lib/env.ts';
 import { releaseCatalogCache, seedCatalogCacheGzip } from './catalogCache.ts';
-import { isCatalogGcsConfigured, uploadCatalogGzipToGcs } from './catalogGcs.ts';
-import { buildCatalogGzipFromFirestore } from './catalogStreamExport.ts';
+import { isCatalogGcsConfigured, uploadCatalogGzipStreamToGcs } from './catalogGcs.ts';
+import {
+  buildCatalogGzipFromFirestore,
+  streamCatalogGzipFromFirestore,
+} from './catalogStreamExport.ts';
 
 let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 let pendingPublish = false;
@@ -20,7 +23,7 @@ function heapMb(): string {
   return `heap=${Math.round(heapUsed / 1024 / 1024)}MB rss=${Math.round(rss / 1024 / 1024)}MB`;
 }
 
-/** Full Firestore export → in-memory cache (+ GCS when configured). */
+/** Full Firestore export → GCS stream (or in-memory cache when GCS is unset). */
 export async function publishCatalogSnapshot(): Promise<CatalogPublishResult> {
   const t0 = Date.now();
   console.log(`[catalog/publish] start ${heapMb()}`);
@@ -28,35 +31,44 @@ export async function publishCatalogSnapshot(): Promise<CatalogPublishResult> {
   releaseCatalogCache();
   console.log(`[catalog/publish] cache released ${heapMb()}`);
 
-  const { gzipBody, cardCount } = await buildCatalogGzipFromFirestore({
+  const exportOptions = {
     databaseId: env.FIRESTORE_DATABASE_ID,
     collectionName: env.FIRESTORE_CARDS_COLLECTION,
-  });
-  console.log(
-    `[catalog/publish] serialized cards=${cardCount} gzip=${gzipBody.length} ${heapMb()}`
-  );
+  };
+  const onProgress = (count: number) =>
+    console.log(`[catalog/publish] streaming cards=${count} ${heapMb()}`);
 
   let version: string | undefined;
+  let bytes = 0;
+  let cardCount = 0;
   const gcs = isCatalogGcsConfigured();
-  if (gcs) {
-    const manifest = await uploadCatalogGzipToGcs(gzipBody, cardCount);
-    version = manifest.version;
-    console.log(
-      `[catalog/publish] gcs version=${manifest.version} cards=${manifest.cardCount} gzip=${gzipBody.length}`
-    );
-  }
 
-  seedCatalogCacheGzip(gzipBody);
-  console.log(`[catalog/publish] cache seeded ${heapMb()}`);
+  if (gcs) {
+    const uploaded = await uploadCatalogGzipStreamToGcs(dest =>
+      streamCatalogGzipFromFirestore(dest, exportOptions, onProgress)
+    );
+    cardCount = uploaded.cardCount;
+    bytes = uploaded.bytes;
+    version = uploaded.manifest.version;
+    // Leave cache empty — seeding gzip (~14MB) next to CardMap is what OOMs 512Mi.
+    // Next Origin /api/cards/load downloads from GCS lazily.
+    console.log(
+      `[catalog/publish] gcs version=${version} cards=${cardCount} gzip=${bytes} cache=empty ${heapMb()}`
+    );
+  } else {
+    const built = await buildCatalogGzipFromFirestore(exportOptions, onProgress);
+    cardCount = built.cardCount;
+    bytes = built.gzipBody.length;
+    seedCatalogCacheGzip(built.gzipBody);
+    console.log(`[catalog/publish] cache seeded cards=${cardCount} gzip=${bytes} ${heapMb()}`);
+  }
 
   const durationMs = Date.now() - t0;
   console.log(
-    `[catalog/publish] complete cards=${cardCount} gcs=${gcs} total=${durationMs}ms gzip=${
-      gzipBody.length
-    } ${heapMb()}`
+    `[catalog/publish] complete cards=${cardCount} gcs=${gcs} total=${durationMs}ms gzip=${bytes} ${heapMb()}`
   );
 
-  return { cardCount, gcs, version, bytes: gzipBody.length, durationMs };
+  return { cardCount, gcs, version, bytes, durationMs };
 }
 
 async function flushCatalogPublish(): Promise<void> {

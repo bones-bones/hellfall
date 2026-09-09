@@ -9,7 +9,7 @@
     "dev": "tsx watch src/server.ts",
     "start": "tsx src/server.ts",
     "start:prod": "node dist/server.js",
-    "test": "tsx --test src/lib/imageGcs.test.ts"
+    "test": "tsx --test src/lib/imageGcs.test.ts src/lib/catalogStreamExport.test.ts"
   },
   "dependencies": {
     "@google-cloud/firestore": "^7.1.0",
