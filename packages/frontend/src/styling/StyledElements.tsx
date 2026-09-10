@@ -17,6 +17,8 @@ import {
   TertiaryButton,
   TableProps,
   Table,
+  IconProps,
+  Icon,
 } from '@workday/canvas-kit-react';
 import { handleCsProp, Stencil } from '@workday/canvas-kit-styling';
 import React from 'react';
@@ -378,6 +380,14 @@ export const createStyledBodyText = (styles: string, displayName: string = 'Styl
 export const createStyledSubtext = (styles: string, displayName: string = 'StyledSubtext') => {
   const Component = ({ children, ...props }: TypeLevelProps) => (
     <Subtext {...handleCsProp(props, styles)}>{children}</Subtext>
+  );
+  (Component as any).displayName = displayName;
+  return Component;
+};
+
+export const createStyledIcon = (styles: string, displayName: string = 'StyledIcon') => {
+  const Component = ({ children, ...props }: IconProps) => (
+    <Icon {...handleCsProp(props, styles)}>{children}</Icon>
   );
   (Component as any).displayName = displayName;
   return Component;

@@ -10,6 +10,7 @@ import {
 import { createStyles } from '@workday/canvas-kit-styling';
 import {
   createStyledButton,
+  createStyledIcon,
   createStyledLink,
   createStyledTable,
   createStyledTableBody,
@@ -18,21 +19,26 @@ import {
   createStyledTableRow,
 } from '../../styling';
 import { useAtom, useAtomValue } from 'jotai';
-import { inputSortAtom, sortAtom } from '../atoms/setAtoms';
+import { inputFilterAtom, inputSortAtom, sortAtom } from '../atoms/setAtoms';
 import { system } from '@workday/canvas-tokens-web';
-import { Table } from '@workday/canvas-kit-react';
+import { Icon, Table } from '@workday/canvas-kit-react';
 import { dirType, setSortType } from '@hellfall/shared/filters';
-import { HCSet } from '@hellfall/shared/types';
+import { HCSet, SetFilterType } from '@hellfall/shared/types';
 import { GridHeader, GridHeaderNoSort, parseDir, parseSetSort } from './sharedList';
 import { cardsAtom } from '../atoms/cardsAtom';
 import { downloadDraftmancer } from '../../cube-resources/downloadDraftmancer';
 import { toMPCAutofill } from '../../cube-resources/toMPCAutofill';
 import { getLands } from '../../cube-resources/getLands';
+import { arrowCornerDownRightIcon } from '@workday/canvas-system-icons-web';
+import { BlackSetSVG } from '../../stringToSetSVG';
+
+const noArrowFilters: (SetFilterType | undefined)[] = ['land', 'memorabilia', 'veto'];
 
 export const SetList = ({ sets }: { sets: HCSet[] }) => {
   const cardMap = useAtomValue(cardsAtom).filterToMap(e => !e.tags?.includes('offensive'));
   const [inputSorts, setInputSorts] = useAtom(inputSortAtom);
   const sortRules = useAtomValue(sortAtom);
+  const inputFilter = useAtomValue(inputFilterAtom);
   const handleSortChange = (newSort: setSortType) => {
     const newInputs = sortRules.length && inputSorts.length ? [...inputSorts] : ['auto,auto'];
     if (newSort != parseSetSort(newInputs[0])) {
@@ -60,6 +66,11 @@ export const SetList = ({ sets }: { sets: HCSet[] }) => {
     getCurrentSort,
     getCurrentDir,
   };
+  const shouldUseArrows =
+    !noArrowFilters.includes(inputFilter) &&
+    inputSorts.length < 2 &&
+    (getCurrentSort() ?? 'auto') == 'auto' &&
+    (getCurrentDir() ?? 'auto') != 'asc';
   return (
     <Grid>
       <GridHead>
@@ -87,14 +98,7 @@ export const SetList = ({ sets }: { sets: HCSet[] }) => {
       <GridBody>
         {sets.map(set => (
           <CardRow key={set.code}>
-            <NameCell key={`${set.code}-name`}>
-              <NameCellLink
-                key={`${set.code}-name-link`}
-                to={`/hellscubes/list/${encodeURIComponent(set.code)}`}
-              >
-                {set.name}
-              </NameCellLink>
-            </NameCell>
+            <NameCell key={`${set.code}-name`} set={set} shouldUseArrows={shouldUseArrows} />
             <CodeCell key={`${set.code}-code`}>{displaySetCode(set.code)}</CodeCell>
             <NumCell key={`${set.code}-num`}>{set.card_count}</NumCell>
             <DateCell key={`${set.code}-date`}>{set.released_at ?? 'ongoing'}</DateCell>
@@ -142,7 +146,8 @@ const gridBodyStyles = createStyles({});
 const GridBody = createStyledTableBody(gridBodyStyles, 'GridBody');
 
 const cardRowStyles = createStyles({
-  gridTemplateColumns: '90px 54px minmax(150px, 3fr) 150px 40px minmax(100px, 2fr)',
+  gridTemplateColumns:
+    'minmax(150px, 3fr) 50px 60px 150px minmax(100px, 2fr) 150px 150px 150px 150px 150px',
   ':hover': { backgroundColor: system.color.brand.surface.primary.strong },
 });
 const CardRow = createStyledTableRow(cardRowStyles, 'CardRow');
@@ -163,8 +168,27 @@ const nameCellLinkStyles = createStyles({
   ':hover': { textDecoration: 'underline' },
   ':visited': { color: '#444' },
 });
-const NameCell = createStyledTableCell(cellDefaultStyles, 'NameCell');
 const NameCellLink = createStyledLink(nameCellLinkStyles, 'NameCellLink');
+// const NameCell = createStyledTableCell(cellDefaultStyles, 'NameCell');
+
+const nameCellIconStyles = createStyles({});
+const NameCellIcon = createStyledIcon(nameCellIconStyles, 'NameCellIcon');
+
+const NameCell = ({ set, shouldUseArrows }: { set: HCSet; shouldUseArrows?: boolean }) => {
+  return (
+    <Table.Cell cs={cellDefaultStyles}>
+      {shouldUseArrows && set.parent_set_code && <NameCellIcon icon={arrowCornerDownRightIcon} />}
+      {set.filename && <BlackSetSVG svg={set.filename} />}
+      <NameCellLink
+        key={`${set.code}-name-link`}
+        to={`/hellscubes/list/${encodeURIComponent(set.code)}`}
+      >
+        {set.name}
+      </NameCellLink>
+    </Table.Cell>
+  );
+};
+
 const codeCellStyles = createStyles(cellDefaultStyles, { textAlign: 'right' });
 const CodeCell = createStyledTableCell(codeCellStyles, 'setCell');
 const numCellStyles = createStyles(cellDefaultStyles, {});

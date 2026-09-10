@@ -87,23 +87,23 @@ export const allExceptNormal = allSetsList.filter(set => set != 'NRM');
 export const getSet = (code: SetCode): HCSet | undefined => setMap.get(fixSetCode(code));
 
 /**
- * Gets the src of a set symbol image
+ * Gets the filename of a set symbol image
  * @param set the set to get the symbol image for
  */
-export const setToSrc = (set?: HCSet): undefined | string => {
+export const setToFilename = (set?: HCSet): undefined | string => {
   if (!set) return;
   if (set.filename) {
-    return `/sets/${set.filename}`;
+    return set.filename;
   } else if (set.parent_set_code) {
-    return setToSrc(getSet(set.parent_set_code));
+    return setToFilename(getSet(set.parent_set_code));
   }
 };
 
 /**
- * Gets the src of a set symbol image
+ * Gets the filename of a set symbol image
  * @param code the set code to get the symbol image for
  */
-export const getSetSrc = (code: SetCode) => setToSrc(getSet(code));
+export const getSetFilename = (code: SetCode) => setToFilename(getSet(code));
 
 /**
  * Gets the date of a set
