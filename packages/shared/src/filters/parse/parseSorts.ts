@@ -147,8 +147,8 @@ const isConflict = (sort: string, other: string) =>
   sort.slice(-9) == other.slice(-9); // if they are both manavalue
 
 /**
- * Winnows a list of {@linkcode SortObject | SortObjects} by removing those that can't have any effect and
- * @param sortList a list of strings to parse; they must have already passed {@linkcode isSortFilter} and {@linkcode sortIsValid}
+ * Winnows a list of {@linkcode SortObject | SortObjects} by removing those that can't have any effect
+ * @param sortList a list of sort objects to winnow
  */
 export const winnowSortObjects = (
   sortList: SortObject[]
@@ -194,7 +194,8 @@ export const winnowSortObjects = (
 };
 
 /**
- * Given a list of {@linkcode SortObject | SortObjects}, returns the options for {@linkcode sortType} that can have an effect, if any
+ * Given a list of {@linkcode SortObject | SortObjects}, returns the options
+ * for {@linkcode sortType} that can have an effect, if any
  * @param sortList list of sort objects to use
  */
 export const getWinnowedSortOptions = (sortList: SortObject[]): sortType[] => {

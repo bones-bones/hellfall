@@ -180,10 +180,8 @@ export type HCSet = HCObject.Object<HCObject.ObjectType.Set> & {
   child_set_codes?: SetCode[];
   /**
    * The number of cards in this set.
-   *
-   * @type Integer
    */
-  // card_count: number;
+  card_count?: number;
   /**
    * Whether to order collector numbers by color (if not, defaults to using AO)
    */
@@ -202,6 +200,13 @@ export type HCSet = HCObject.Object<HCObject.ObjectType.Set> & {
    * Whether to include lands in the MPC autofill
    */
   include_lands?: boolean;
+  /**
+   * Custom JSON serialization to ensure consistent property order.
+   * This method is automatically called by JSON.stringify().
+   *
+   * @returns An ordered object representation of the card
+   */
+  toJSON?(): Record<string, any>;
 };
 
 // ,

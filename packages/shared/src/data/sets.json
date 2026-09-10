@@ -1,6 +1,7 @@
 {
   "data": [
     {
+      "object": "set",
       "id": "8b2b9801-015b-4838-9a8d-4217f9e56e51",
       "code": "HLC",
       "name": "Hellscube 1",
@@ -31,6 +32,7 @@
       "filename": "hlc.svg"
     },
     {
+      "object": "set",
       "id": "a99c1076-3021-4ff7-ba5f-667aefe6a8de",
       "code": "HLC_0",
       "name": "Hellscube 1.0",
@@ -41,6 +43,7 @@
       "child_set_codes": ["HCV_1_0"]
     },
     {
+      "object": "set",
       "id": "2919c121-b8fb-4bb8-b524-21589c7ececf",
       "code": "HLC_1",
       "name": "Hellscube 1.1",
@@ -51,6 +54,7 @@
       "child_set_codes": ["HCV_1_1"]
     },
     {
+      "object": "set",
       "id": "91f87800-5363-4dd7-9e3a-5964f2ffa939",
       "code": "HLC_2",
       "name": "Hellscube 1.2",
@@ -60,6 +64,7 @@
       "parent_set_code": "HLC"
     },
     {
+      "object": "set",
       "id": "0b038041-ca3e-41f3-b39a-0972eda68ff1",
       "code": "HCV_1",
       "name": "Hellscube V(eto).1",
@@ -70,6 +75,7 @@
       "child_set_codes": ["HCV_1_0", "HCV_1_1"]
     },
     {
+      "object": "set",
       "id": "51f347fa-3857-4d7f-adcc-354670c37abc",
       "code": "HCV_1_0",
       "name": "Hellscube V(eto).1.0",
@@ -79,6 +85,7 @@
       "parent_set_code": "HCV_1"
     },
     {
+      "object": "set",
       "id": "32ea2ae0-5716-44a9-869e-4271ceb28d6e",
       "code": "HCV_1_1",
       "name": "Hellscube V(eto).1.1",
@@ -88,6 +95,7 @@
       "parent_set_code": "HCV_1"
     },
     {
+      "object": "set",
       "id": "22532957-d3da-4bfb-b420-f3aa2f67dd8f",
       "code": "HC2",
       "name": "Hellscube 2",
@@ -105,6 +113,7 @@
       "filename": "hc2.svg"
     },
     {
+      "object": "set",
       "id": "47cbd43e-79d4-4c23-9240-dd45a6552f32",
       "code": "HC2_0",
       "name": "Hellscube 2.0",
@@ -114,6 +123,7 @@
       "parent_set_code": "HC2"
     },
     {
+      "object": "set",
       "id": "8da16c7d-10c1-431b-9262-369074864962",
       "code": "HC2_1",
       "name": "Hellscube 2.1",
@@ -123,6 +133,7 @@
       "parent_set_code": "HC2"
     },
     {
+      "object": "set",
       "id": "5bff03b1-a59c-424f-af90-756cc104acad",
       "code": "HCV_2",
       "name": "Hellscube V(eto).2",
@@ -133,6 +144,7 @@
       "child_set_codes": ["HCV_2_0", "HCV_2_1"]
     },
     {
+      "object": "set",
       "id": "36a4348f-169d-4cf0-b1c8-70285b91bcae",
       "code": "HCV_2_0",
       "name": "Hellscube V(eto).2.0",
@@ -142,6 +154,7 @@
       "parent_set_code": "HCV_2"
     },
     {
+      "object": "set",
       "id": "31169da1-43f3-4946-aeb7-efbc07f34234",
       "code": "HCV_2_1",
       "name": "Hellscube V(eto).2.1",
@@ -151,6 +164,7 @@
       "parent_set_code": "HCV_2"
     },
     {
+      "object": "set",
       "id": "1f7be3a9-e063-4b39-9c8e-481bfe594366",
       "code": "HC3",
       "name": "Hellscube 3",
@@ -176,6 +190,7 @@
       "filename": "hc3.svg"
     },
     {
+      "object": "set",
       "id": "5b39a804-5422-4990-8bec-08caca243b97",
       "code": "HC3_0",
       "name": "Hellscube 3.0",
@@ -185,6 +200,7 @@
       "parent_set_code": "HC3"
     },
     {
+      "object": "set",
       "id": "a1971000-c5ff-450d-9e49-72d8534f9183",
       "code": "HC3_1",
       "name": "Hellscube 3.1",
@@ -194,6 +210,7 @@
       "parent_set_code": "HC3"
     },
     {
+      "object": "set",
       "id": "0953ab19-7b2a-4441-8594-85a21f77a8d6",
       "code": "HCV_3",
       "name": "Hellscube V(eto).3",
@@ -204,6 +221,7 @@
       "child_set_codes": ["HCV_3_0", "HCV_3_1"]
     },
     {
+      "object": "set",
       "id": "709db4b1-11cd-494f-9fc8-da1e328948c4",
       "code": "HCV_3_0",
       "name": "Hellscube V(eto).3.0",
@@ -213,6 +231,7 @@
       "parent_set_code": "HCV_3"
     },
     {
+      "object": "set",
       "id": "770b2fe9-e02a-4668-a9ef-e5102e1d4dfc",
       "code": "HCV_3_1",
       "name": "Hellscube V(eto).3.1",
@@ -222,6 +241,7 @@
       "parent_set_code": "HCV_3"
     },
     {
+      "object": "set",
       "id": "127f6366-1903-44db-b35e-95d6614ead50",
       "code": "HC4",
       "name": "Hellscube 4",
@@ -244,6 +264,7 @@
       "includeLands": true
     },
     {
+      "object": "set",
       "id": "834db0a8-2549-43ac-9a7b-308fc02aeb69",
       "code": "HC4_0",
       "name": "Hellscube 4.0",
@@ -253,6 +274,7 @@
       "parent_set_code": "HC4"
     },
     {
+      "object": "set",
       "id": "87a2ea8d-2c92-45ed-8845-c51ea308da08",
       "code": "HC4_1",
       "name": "Hellscube 4.1",
@@ -262,6 +284,7 @@
       "parent_set_code": "HC4"
     },
     {
+      "object": "set",
       "id": "f674f075-0041-4d3f-9e9c-6a17ae4cc0e4",
       "code": "HCV_4",
       "name": "Hellscube V(eto).4",
@@ -272,6 +295,7 @@
       "child_set_codes": ["HCV_4_0", "HCV_4_1"]
     },
     {
+      "object": "set",
       "id": "944d6d53-6be4-4f14-b78b-30ec40030c4f",
       "code": "HCV_4_0",
       "name": "Hellscube V(eto).4.0",
@@ -281,6 +305,7 @@
       "parent_set_code": "HCV_4"
     },
     {
+      "object": "set",
       "id": "18c7067b-37e1-47a6-8046-0d2cd74fd0ee",
       "code": "HCV_4_1",
       "name": "Hellscube V(eto).4.1",
@@ -290,6 +315,7 @@
       "parent_set_code": "HCV_4"
     },
     {
+      "object": "set",
       "id": "9bb49589-6642-4a7a-a874-fbf2bde38877",
       "code": "HC5",
       "name": "Hellscube 5",
@@ -299,6 +325,7 @@
       "filename": "hc5.svg"
     },
     {
+      "object": "set",
       "id": "cddf3259-f4f3-45fb-ab4d-207bc7118be8",
       "code": "HC6",
       "name": "Hellscube 6",
@@ -320,6 +347,7 @@
       "includeLands": true
     },
     {
+      "object": "set",
       "id": "521d742e-e93f-4ed3-a7f4-7ea1796ca0e4",
       "code": "HC6_0",
       "name": "Hellscube 6.0",
@@ -329,6 +357,7 @@
       "parent_set_code": "HC6"
     },
     {
+      "object": "set",
       "id": "ded90b43-d9df-4ea2-8f5a-f1680abc6b20",
       "code": "HC6_1",
       "name": "Hellscube 6.1",
@@ -338,6 +367,7 @@
       "parent_set_code": "HC6"
     },
     {
+      "object": "set",
       "id": "e8b3848d-513f-494c-bd78-8d159cc85386",
       "code": "HCC",
       "name": "Hellscube Cut Commanders",
@@ -347,6 +377,7 @@
       "filename": "hcc.svg"
     },
     {
+      "object": "set",
       "id": "e38f8294-0f9b-4ce9-bdb3-2d67db56e317",
       "code": "HCV_6",
       "name": "Hellscube V(eto).6",
@@ -356,6 +387,7 @@
       "parent_set_code": "HCV"
     },
     {
+      "object": "set",
       "id": "d3c98335-79b3-49fa-b172-87754efeb531",
       "code": "HWN",
       "name": "Halloween Event",
@@ -365,6 +397,7 @@
       "parent_set_code": "HCV"
     },
     {
+      "object": "set",
       "id": "144c8845-673b-4273-90e3-b4c90d650e91",
       "code": "HCP",
       "name": "Hells Chase Posse",
@@ -386,6 +419,7 @@
       "filename": "hcp.svg"
     },
     {
+      "object": "set",
       "id": "12cec91a-bb1d-4f7d-99fd-b0c679d880c5",
       "code": "HCV_P",
       "name": "Hellscube V(eto).P",
@@ -395,6 +429,7 @@
       "parent_set_code": "HCV"
     },
     {
+      "object": "set",
       "id": "3d05505e-d152-4155-a19c-1b615ecbd14b",
       "code": "HC7",
       "name": "Hellscube 7",
@@ -410,6 +445,7 @@
       "filename": "hc7.svg"
     },
     {
+      "object": "set",
       "id": "239bc2e5-e1c5-44ee-86dd-29bf9a0f924f",
       "code": "HC7_0",
       "name": "Hellscube 7.0",
@@ -419,6 +455,7 @@
       "parent_set_code": "HC7"
     },
     {
+      "object": "set",
       "id": "daac3b1c-f071-4852-baa6-0c7e49e5b0c3",
       "code": "HC7_1",
       "name": "Hellscube 7.1",
@@ -428,6 +465,7 @@
       "parent_set_code": "HC7"
     },
     {
+      "object": "set",
       "id": "e49b649f-6129-47de-b97b-fa0ace31c890",
       "code": "HCV_7",
       "name": "Hellscube V(eto).7",
@@ -437,6 +475,7 @@
       "parent_set_code": "HCV"
     },
     {
+      "object": "set",
       "id": "00947a38-70c6-4e5d-8f0d-a6f52b9c7015",
       "code": "CDC",
       "name": "Christmas Day Cards",
@@ -446,6 +485,7 @@
       "parent_set_code": "HCV"
     },
     {
+      "object": "set",
       "id": "9236cf83-972c-4edc-8156-45736c407419",
       "code": "NRM",
       "name": "Normal Cube",
@@ -455,6 +495,7 @@
       "filename": "nrm.svg"
     },
     {
+      "object": "set",
       "id": "05d34fc8-181f-4bf2-91ed-992c8a38f00d",
       "code": "HCK",
       "name": "Heckscube",
@@ -473,6 +514,7 @@
       "includeLands": true
     },
     {
+      "object": "set",
       "id": "50091ddf-4a0e-4d33-89b9-a2a42473c5a3",
       "code": "HCV_K",
       "name": "Hellscube V(eto).K",
@@ -482,6 +524,7 @@
       "parent_set_code": "HCV"
     },
     {
+      "object": "set",
       "id": "5e921324-7ba0-4706-913f-7c3c68900084",
       "code": "HC8",
       "name": "Hellscube 8",
@@ -501,6 +544,7 @@
       "filename": "hc8.svg"
     },
     {
+      "object": "set",
       "id": "4ba31c19-5c77-4ca9-9af7-4738cd8e1f6a",
       "code": "HC8_0",
       "name": "Hellscube 8.0",
@@ -510,6 +554,7 @@
       "parent_set_code": "HC8"
     },
     {
+      "object": "set",
       "id": "342cefa2-655d-45f6-8c7d-01563bfb5e26",
       "code": "HC8_1",
       "name": "Hellscube 8.1",
@@ -519,6 +564,7 @@
       "parent_set_code": "HC8"
     },
     {
+      "object": "set",
       "id": "03b7580d-ea5e-4158-b9b2-0f05a14b2c96",
       "code": "HCV_8",
       "name": "Hellscube V(eto).8",
@@ -528,6 +574,7 @@
       "parent_set_code": "HCV"
     },
     {
+      "object": "set",
       "id": "2f098751-40df-4ef0-9397-e43d812aea7b",
       "code": "HCJ",
       "name": "Hellscube Jumpstart",
@@ -546,9 +593,10 @@
         "FHCJ",
         "HCV_J"
       ],
-      "filename": "hcj.png"
+      "filename": "hcj.svg"
     },
     {
+      "object": "set",
       "id": "32b9149e-7b36-4332-9dbd-100e7972da03",
       "code": "FHCJ",
       "name": "HCJ Front Cards",
@@ -558,6 +606,7 @@
       "parent_set_code": "HCJ"
     },
     {
+      "object": "set",
       "id": "1bfa162d-ba08-48eb-8e3d-521e7c654b15",
       "code": "HCV_J",
       "name": "Hellscube V(eto).J",
@@ -567,6 +616,7 @@
       "parent_set_code": "HCV"
     },
     {
+      "object": "set",
       "id": "bf391f9e-bdb8-4947-9f18-fa84568ad989",
       "code": "HKL",
       "name": "Heckscube 2: Hecklands",
@@ -585,6 +635,7 @@
       "includeLands": true
     },
     {
+      "object": "set",
       "id": "f5ca4bb5-7037-46c4-91d2-fff683bf7317",
       "code": "HCV_HKL",
       "name": "Hellscube V(eto).L",
@@ -594,6 +645,7 @@
       "parent_set_code": "HCV"
     },
     {
+      "object": "set",
       "id": "80103ff4-a593-4cb8-a14c-e98871ba8212",
       "code": "HC9",
       "name": "Hellscube 9",
@@ -607,6 +659,7 @@
       "filename": "hc9.svg"
     },
     {
+      "object": "set",
       "id": "9aa35368-ccc7-446f-941b-4bacdaf43cd4",
       "code": "HC9_0",
       "name": "Hellscube 9.0",
@@ -616,6 +669,7 @@
       "parent_set_code": "HC9"
     },
     {
+      "object": "set",
       "id": "a76b218c-e7ef-42e6-b182-92ab45144986",
       "code": "HC9_1",
       "name": "Hellscube 9.1",
@@ -624,6 +678,7 @@
       "parent_set_code": "HC9"
     },
     {
+      "object": "set",
       "id": "7c2c3d60-6de1-4ee7-b12e-61a725543f9d",
       "code": "HCV_9",
       "name": "Hellscube V(eto).9",
@@ -632,6 +687,7 @@
       "parent_set_code": "HCV"
     },
     {
+      "object": "set",
       "id": "2b29cd50-a65a-4559-b66c-210b1e55f1d0",
       "code": "SCL",
       "name": "Scube Lair Drops",
@@ -651,6 +707,7 @@
       "filename": "scl.svg"
     },
     {
+      "object": "set",
       "id": "18dc5033-3f45-4be7-ae04-ced7362b01d0",
       "code": "SCL_1",
       "name": "Scube Lair Drop: Iconic Hellscube Cards",
@@ -660,6 +717,7 @@
       "parent_set_code": "SCL"
     },
     {
+      "object": "set",
       "id": "a88f00da-cd24-4747-b54b-fd284b2f6b74",
       "code": "SCL_2",
       "name": "Scube Lair Drop: Hellscube 1 All-Stars",
@@ -669,6 +727,7 @@
       "parent_set_code": "SCL"
     },
     {
+      "object": "set",
       "id": "35c775f8-7e6a-436f-8a76-924b58eff7cf",
       "code": "SCL_3",
       "name": "Scube Lair Drop: Pride Month",
@@ -678,6 +737,7 @@
       "parent_set_code": "SCL"
     },
     {
+      "object": "set",
       "id": "d43fde19-1d17-468a-b252-70629b93dd97",
       "code": "HCV_SCL",
       "name": "Hellscube V(eto).S",
@@ -686,6 +746,7 @@
       "parent_set_code": "HCV"
     },
     {
+      "object": "set",
       "id": "bf391f9e-bdb8-4947-9f18-fa84568ad989",
       "code": "HDH",
       "name": "Hellder Dragon Highlander",
@@ -697,6 +758,7 @@
       "filename": "hdh.svg"
     },
     {
+      "object": "set",
       "id": "05a4c3b8-d4c0-43e4-a1db-f0a7cfb0bf92",
       "code": "HCV_HDH",
       "name": "Hellscube V(eto).H",
@@ -705,6 +767,7 @@
       "parent_set_code": "HCV"
     },
     {
+      "object": "set",
       "id": "9ca79db9-2757-4f8f-9205-0245a24269aa",
       "code": "SCL_4",
       "name": "Scube Lair Drop: Basic Land Box 1",
@@ -714,6 +777,7 @@
       "parent_set_code": "SCL"
     },
     {
+      "object": "set",
       "id": "75c224b2-4bdf-4923-9f1a-3e1b0279152a",
       "code": "SCL_5",
       "name": "Scube Lair Drop: Hellscube 2 All-Stars",
@@ -723,6 +787,7 @@
       "parent_set_code": "SCL"
     },
     {
+      "object": "set",
       "id": "aec96c19-ae44-4e8a-a61a-0fe3995e3f8a",
       "code": "SOH",
       "name": "Sands of Hell",
@@ -736,6 +801,7 @@
       "filename": "soh.svg"
     },
     {
+      "object": "set",
       "id": "e4a504f7-14b0-49b4-a3ba-26d8d72213a4",
       "code": "HCV_SOH",
       "name": "Hellscube V(eto).D",
@@ -745,6 +811,7 @@
       "parent_set_code": "HCV"
     },
     {
+      "object": "set",
       "id": "f3913747-9c4a-4ef7-9346-57b34d75708c",
       "code": "SCL_6",
       "name": "Scube Lair Drop: Pro Tour: Hellscube 8",
@@ -754,6 +821,7 @@
       "parent_set_code": "SCL"
     },
     {
+      "object": "set",
       "id": "2e8202c5-2c80-46b0-9033-87f5eb081bdb",
       "code": "SCL_7",
       "name": "Scube Lair Drop: Hellscube 3 All-Stars",
@@ -763,6 +831,7 @@
       "parent_set_code": "SCL"
     },
     {
+      "object": "set",
       "id": "9b0cf62a-0cb7-415f-9206-a3c46317f06d",
       "code": "SCL_8",
       "name": "Scube Lair Drop: Summer Vacation",
@@ -772,6 +841,7 @@
       "parent_set_code": "SCL"
     },
     {
+      "object": "set",
       "id": "b65627ea-38e8-4b8a-85cf-7a1997f8322b",
       "code": "HCV",
       "name": "Hellscube V(eto)",
@@ -799,6 +869,7 @@
       "filename": "hcv.svg"
     },
     {
+      "object": "set",
       "id": "533707e0-22f6-4889-8ef8-9b2e9a753e72",
       "code": "HCT",
       "name": "Tokens",
@@ -807,6 +878,7 @@
       "filename": "hct.svg"
     },
     {
+      "object": "set",
       "id": "767d38f1-e424-42c6-a84f-0d815bcb4fa4",
       "code": "HBB",
       "name": "Hellscube Basic Box",
@@ -822,6 +894,7 @@
       "filename": "hbb.svg"
     },
     {
+      "object": "set",
       "id": "47510fe8-4462-4a0a-8da4-6f5efc31b44a",
       "code": "HBB_0",
       "name": "Hellscube Basic Box Old",
@@ -830,6 +903,7 @@
       "parent_set_code": "HBB"
     },
     {
+      "object": "set",
       "id": "11f05c55-2fc2-4040-ba43-40f1cab5f753",
       "code": "HBB_4",
       "name": "Hellscube Basic Box HC4",
@@ -839,6 +913,7 @@
       "parent_set_code": "HBB"
     },
     {
+      "object": "set",
       "id": "1f648c14-6510-44a6-aa10-0069c4c4934b",
       "code": "HBB_7",
       "name": "Hellscube Basic Box HC7",
@@ -847,6 +922,7 @@
       "parent_set_code": "HBB"
     },
     {
+      "object": "set",
       "id": "7a298815-362e-4fce-9d55-b0002fb260c6",
       "code": "HBB_L",
       "name": "Hellscube Basic Box HKL",
@@ -855,6 +931,7 @@
       "parent_set_code": "HBB"
     },
     {
+      "object": "set",
       "id": "7a298815-362e-4fce-9d55-b0002fb260c6",
       "code": "HBB_9",
       "name": "Hellscube Basic Box HC9",
@@ -863,6 +940,7 @@
       "parent_set_code": "HBB"
     },
     {
+      "object": "set",
       "id": "ad05b828-cfee-4ef7-b6e9-0d7b9d553e89",
       "code": "HBB_S",
       "name": "Hellscube Basic Box: Lair Rejects",
@@ -871,6 +949,7 @@
       "parent_set_code": "HBB"
     },
     {
+      "object": "set",
       "id": "f650b918-dfec-47ab-a571-bc1890a727ec",
       "code": "SFT",
       "name": "Scryfall Tokens",

@@ -1,5 +1,12 @@
 import { setsData } from '@hellfall/shared/data';
-import { allSetsList, HCCard, HCSet, isSetCode, SetCode } from '@hellfall/shared/types';
+import {
+  allSetsList,
+  HCCard,
+  HCSet,
+  isSetCode,
+  SetCode,
+  setPropOrder,
+} from '@hellfall/shared/types';
 import { cardDateMap } from './cardDateMap';
 
 const sets = setsData.data;
@@ -15,6 +22,7 @@ const setMap = new Map(sets.map(set => [set.code, set]));
 export const colorOrderSetList = sets.filter(set => set.use_color_order).map(set => set.code);
 
 export const toSetNumber = (code: SetCode) => allSetsList.indexOf(code);
+export const getSetPosition = (set: HCSet) => toSetNumber(set.code);
 
 /**
  * Fixes valid set code input to actually work
@@ -120,6 +128,26 @@ export const getParentSet = (code: SetCode): HCSet | undefined => {
  * @param code Set code to get the parent of
  */
 export const getParentSetCode = (code: SetCode): SetCode | undefined => getParentSet(code)?.code;
+
+/**
+ * Gets the block set code of a set
+ * @param code Set code to get the block set code of
+ */
+export const getBlockSetCode = (code: SetCode): SetCode | undefined => {
+  let set = getSet(code);
+  if (!set) return;
+  if (!set?.parent_set_code) return set.code;
+  while (set.parent_set_code) {
+    set = getSet(set.parent_set_code);
+    if (!set) return;
+  }
+  return set.code;
+};
+/**
+ * Gets the block set code of a set
+ * @param set Set to get the block set code of
+ */
+export const getBlockSetCodeForSet = (set: HCSet): SetCode | undefined => getBlockSetCode(set.code);
 
 /**
  * Gets the sets that are the children of another set
@@ -423,3 +451,42 @@ export const getDateForCard = (card: HCCard.Any) =>
  */
 export const getDateForCodeNum = (code: SetCode, accepted_order: string) =>
   cardDateMap.get(getAcceptedOrderSet(code), accepted_order) ?? getSetDate(code);
+
+/**
+ * Adds `toJSON()` to a set. Uses a predefined prop order.
+ * @param set set to add `toJSON()` to
+ */
+export const addToJSONToSet = (set: HCSet): HCSet => {
+  if (Object.prototype.hasOwnProperty.call(set, 'toJSON')) {
+    return set;
+  }
+  const ignoreLeftovers = ['toJSON'];
+  Object.defineProperty(set, 'toJSON', {
+    value(this: Record<string, any>) {
+      const ordered: Record<string, any> = {};
+      setPropOrder.forEach(prop => {
+        if (prop in this) {
+          ordered[prop] = this[prop];
+        }
+      });
+      const leftovers = (Object.keys(this) as (typeof setPropOrder)[number][]).filter(
+        left => !setPropOrder.includes(left) && !ignoreLeftovers.includes(left)
+      );
+      if (leftovers.length) {
+        // You forgot a prop.
+        throw new Error(`You forgot one or more card props: ${leftovers}`);
+      }
+      return ordered;
+    },
+    enumerable: false,
+    configurable: true,
+    writable: true,
+  });
+  return set as HCSet;
+};
+
+/**
+ * Adds `toJSON()` to sets. Uses a predefined prop order.
+ * @param sets sets to add `toJSON()` to
+ */
+export const addToJSONToSets = (sets: HCSet[]): HCSet[] => sets.map(set => addToJSONToSet(set));

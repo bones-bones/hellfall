@@ -9,6 +9,7 @@ import {
   HCLegalitiesField,
   HCLegality,
   HCRelatedCard,
+  HCSet,
   SetCode,
   allSetsList,
   anyPropType,
@@ -35,10 +36,10 @@ import {
   cardToRelatedCard,
   nameSort,
   colorTypeSort,
+  addToJSONToSets,
 } from '@hellfall/shared/utils';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import { fetchHCJFronts } from './fetchHCJFronts.ts';
-import { makeSort } from '@hellfall/shared/filters';
 import { printHCJ } from './printHCJ.ts';
 
 const usingApproved = false;
@@ -220,6 +221,7 @@ const dataToCards = <K extends anyPropType>(
 const loadExistingData = () => {
   const databasePath = '../shared/src/data/Hellscube-Database.json';
   const tokensPath = '../shared/src/data/tokens.json';
+  const setsPath = '../shared/src/data/sets.json';
 
   let databaseContent = undefined;
   let tokensContent = undefined;
@@ -239,10 +241,11 @@ const loadExistingData = () => {
   } catch (error) {
     console.warn('Could not load tokens, proceeding with undefined content:', error);
   }
+  const sets: HCSet[] = addToJSONToSets(JSON.parse(fs.readFileSync(setsPath, 'utf-8')).data);
 
   const existingTokens = new CardMap(dataToCards(tokensContent?.data ?? []));
 
-  return { existingCards, existingTokens };
+  return { existingCards, existingTokens, sets };
 };
 const ignoreDuplicateNumbers: Partial<Record<SetCode, string[]>> = {
   HCV_1_0: ['8b'],
@@ -310,7 +313,7 @@ const main = async () => {
   newTokens.setMultiple(fetchHCJFronts());
 
   console.log('Running in update mode - merging with existing data...');
-  const { existingCards, existingTokens } = loadExistingData();
+  const { existingCards, existingTokens, sets } = loadExistingData();
   const merged = mergeDatabases(existingCards, newCards, existingTokens, newTokens);
   const finalCards = new CardMap(addToJSONToCards(merged));
   colorOrderSetList.forEach(set =>
@@ -477,7 +480,7 @@ const main = async () => {
     entry.artists?.forEach(e => artistSet.add(e.replaceAll('"', '')));
     entry.tags?.forEach(e => tagSet.add(e.replaceAll('"', '')));
   });
-
+  sets.forEach(set => (set.card_count = finalCards.getNumInSet(set.code)));
   const types = Array.from(typeSet).sort((a, b) => {
     if (a > b) {
       return 1;
@@ -569,6 +572,16 @@ const main = async () => {
     JSON.stringify(
       {
         data: finalCards.cards(),
+      },
+      null,
+      '\t'
+    )
+  );
+  fs.writeFileSync(
+    '../shared/src/data/sets.json',
+    JSON.stringify(
+      {
+        data: sets,
       },
       null,
       '\t'

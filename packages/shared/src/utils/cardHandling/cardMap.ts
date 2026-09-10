@@ -384,6 +384,16 @@ export class LightCardMap {
     );
 
   /**
+   * Returns the number of cards directly in the given set.
+   * @param code the set code to get
+   */
+  getNumInSet = (code: SetCode): number =>
+    combineSets(
+      this.getAllIdsInSetExact(code),
+      ...(getDirectChildSets(code)?.map(this.getAllIdsInSetExact) ?? [])
+    )?.size ?? 0;
+
+  /**
    * Returns the portion of the CardMap object exactly in the given set as a list.
    * @param code the set code to get
    */

@@ -1,4 +1,4 @@
-import { HCCard, HCCardSymbol, HCFormat } from '@hellfall/shared/types';
+import { HCCard, HCCardSymbol, HCFormat, HCSet } from '@hellfall/shared/types';
 import {
   cardFilterFunction,
   stateFilterFunction,
@@ -18,6 +18,8 @@ import {
   filterNameType,
   colorFilterNameType,
   printsFilterNameType,
+  setSortInterface,
+  setSortType,
 } from '../types';
 import {
   createInvalidSummary,
@@ -54,6 +56,7 @@ import {
   devotionSummary,
   dateSummary,
   dateShareFilter,
+  filterSetSort,
 } from '../filters';
 import {
   ensureArray,
@@ -98,6 +101,20 @@ export class SortObject implements sortInterface {
    */
   filter = (value1: HCCard.Any, value2: HCCard.Any) =>
     filterSort(value1, value2, this.sort, this.dir);
+}
+/**
+ * A set sort object
+ */
+export class SetSortObject implements setSortInterface {
+  queryName: 'set_sort' = 'set_sort';
+  constructor(public sort: setSortType, public dir: dirType) {}
+  /**
+   * A function that sorts two sets
+   * @param value1 the first set to sort
+   * @param value2 the second set to sort
+   * @returns a number for `.sort()`
+   */
+  filter = (value1: HCSet, value2: HCSet) => filterSetSort(value1, value2, this.sort, this.dir);
 }
 
 /**

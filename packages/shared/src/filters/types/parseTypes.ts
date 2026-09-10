@@ -92,6 +92,10 @@ export const equivSortAndFilterNames: Record<string, filterNameType & sortType> 
   dates: 'date',
   mv: 'manavalue',
   cmc: 'manavalue',
+  c: 'creator',
+  creators: 'creator',
+  art: 'artist',
+  artists: 'artist',
 };
 
 /**

@@ -1,5 +1,5 @@
-import { sortType, dirType } from '../types';
-import { sortMaker, SortObject } from '../makerLib';
+import { sortType, dirType, setSortType } from '../types';
+import { setSortMaker, SetSortObject, sortMaker, SortObject } from '../makerLib';
 
 /**
  * Makes a {@linkcode SortObject}
@@ -8,4 +8,13 @@ import { sortMaker, SortObject } from '../makerLib';
  */
 export const makeSort: sortMaker = (sort: sortType, dir: dirType) => {
   return new SortObject(sort, dir);
+};
+
+/**
+ * Makes a {@linkcode SetSortObject}
+ * @param sort the sort option from the search
+ * @param dir the sort direction option from the search
+ */
+export const makeSetSort: setSortMaker = (sort: setSortType, dir: dirType) => {
+  return new SetSortObject(sort, dir);
 };

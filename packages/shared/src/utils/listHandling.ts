@@ -648,17 +648,36 @@ export const filterSet = <T>(set: Set<T>, predicate: (item: T) => any): Set<T> =
   return ret;
 };
 
-type sortable = boolean | number | string | undefined;
+type sortable = boolean | number | string | string[] | undefined;
 
 /**
- * Gives the correct sort value for two values, putting the smaller one (or the false one) first
- * @param value1 first boolean or number
- * @param value2 second boolean or number
+ * Gives the correct sort value for two values
+ *
+ * For different types, these are the ones that go first when `dirMult == 1`:
+ *
+ * boolean: false; number: smaller; string: alphabetically first; one is undefined: the defined one;
+ * list of strings: goes through lists and compares each position
+ * @param value1 first value
+ * @param value2 second value
  * @param dirMult whether to reverse the direction (if `-1`)
  */
-export const valsToSort = <T extends sortable>(value1: T, value2: T, dirMult: 1 | -1 = 1) => {
+export const valsToSort = <T extends sortable>(
+  value1: T,
+  value2: T,
+  dirMult: 1 | -1 = 1
+): number => {
   if (typeof value1 == 'string' && typeof value2 == 'string') {
     return value1.localeCompare(value2, undefined, { sensitivity: 'base' }) * dirMult;
+  }
+  if (Array.isArray(value1) && Array.isArray(value2)) {
+    const len = Math.max(value1.length, value2.length);
+    for (let i = 0; i < len; i++) {
+      const ret = valsToSort(value1[i], value2[i], dirMult);
+      if (ret) {
+        return ret;
+      }
+    }
+    return 0;
   }
   if (value1 == value2) {
     return 0;
