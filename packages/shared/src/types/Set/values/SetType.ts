@@ -32,3 +32,19 @@ export enum SetType {
  */
 export const isSetType = (value: any): value is SetType =>
   Object.values(SetType).includes(value as SetType);
+
+export type SetFilterType = `${SetType}` | 'full';
+
+export const toSetFilterType = (input: string | null | undefined): SetFilterType | undefined => {
+  if (!input) return;
+  if (isSetType(input) || input == 'full') {
+    return input;
+  }
+  return;
+};
+/**
+ * Checks if a value is a {@linkcode SetFilterType}
+ * @param value the value to check
+ */
+export const isSetFilterType = (value: any): value is SetFilterType =>
+  isSetType(value) || value == 'full';

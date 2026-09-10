@@ -182,7 +182,7 @@ const setPropRecord = {
   code: 'code',
   name: 'name',
   description: 'description',
-  quick_link: 'quick_link',
+  quick_links: 'quick_links',
   tts_link: 'tts_link',
   print_link: 'print_link',
   set_type: 'set_type',

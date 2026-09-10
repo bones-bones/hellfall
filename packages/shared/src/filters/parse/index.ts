@@ -5,3 +5,4 @@ export * from './parseSearchQuery';
 export * from './parseSorts';
 export * from './searchCards';
 export * from './parseModes';
+export * from './parseSetSorts';

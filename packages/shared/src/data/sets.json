@@ -6,10 +6,10 @@
       "code": "HLC",
       "name": "Hellscube 1",
       "description": "A refined version of the cube that started it all.",
-      "quick_link": {
+      "quick_links": [{
         "url": "one",
         "text": "Rules and macros"
-      },
+      }],
       "tts_link": {
         "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3009290113",
         "text": "Plugin by Benana"
@@ -330,6 +330,10 @@
       "code": "HC6",
       "name": "Hellscube 6",
       "description": "The Commander Cube",
+      "quick_links": [{
+        "url": "https://lh3.googleusercontent.com/d/1410wN4zP2UiusHElAoD39MqTuyEu3BgA",
+        "text": "Draft Rules"
+      }],
       "print_link": {
         "url": "https://drive.google.com/file/d/1-kirKSuVUPrgRfMWYt3rhqDQlAbZhKws/view",
         "text": "PDF by killerfox3042"
@@ -402,10 +406,10 @@
       "code": "HCP",
       "name": "Hells Chase Posse",
       "description": "Planes and Phenomena for some sick planechase action.",
-      "quick_link": {
+      "quick_links": [{
         "url": "https://drive.google.com/file/d/1LsaqqKCsaGdBMQtFF0w7yfGwqlkcE41H/view?usp=sharing",
         "text": "Rules"
-      },
+      }],
       "print_link": {
         "url": "https://drive.google.com/file/d/1LsaqqKCsaGdBMQtFF0w7yfGwqlkcE41H/view?usp=sharing",
         "text": "PDF by hostus"
@@ -529,10 +533,10 @@
       "code": "HC8",
       "name": "Hellscube 8",
       "description": "The 8th cube, we've got archetypes.",
-      "quick_link": {
+      "quick_links": [{
         "url": "/hellscubes/eight",
         "text": "Archetype documents"
-      },
+      }],
       "set_type": "main",
       "released_at": "2026-03-13",
       "child_set_codes": [
@@ -579,10 +583,10 @@
       "code": "HCJ",
       "name": "Hellscube Jumpstart",
       "description": "Hellstart, our version of Jumpstart, contains wildly unbalanced theme packs.",
-      "quick_link": {
+      "quick_links": [{
         "url": "https://docs.google.com/spreadsheets/d/1agtuvnH4VlFT6ygud8nNrhQg7wF6HptbwZXQdjxxYuQ",
         "text": "Primer & Packs"
-      },
+      }],
       "print_link": {
         "url": "https://drive.google.com/file/d/1CGJXmtv1Z9LBm7IkEkCxz0-R9AFoO7_i/view",
         "text": "PDF by g0m"
@@ -794,6 +798,20 @@
       "description": "Desert cube",
       "set_type": "side",
       "released_at": "2026-08-16",
+      "quick_links": [
+        {
+          "url": "https://lh3.googleusercontent.com/d/12SJ-2tIwL7QA1plE3S7qLXKmtXhlTp79",
+          "text": "Draft Rules Front"
+        },
+        {
+          "url": "https://lh3.googleusercontent.com/d/1Y1RFXGfuwx93VC_09YStIrjWMqz7L30h",
+          "text": "Draft Rules Back"
+        },
+        {
+          "url": "https://gist.github.com/Juancu/056b3c00bc9eb8beae4cb290cd2d4bc9",
+          "text": "Beta draftmancer script"
+        }
+      ],
       "child_set_codes": [
         "HCV_SOH"
       ],

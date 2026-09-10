@@ -11,12 +11,10 @@ import {
 import {
   extraSetList,
   fixSetCodeMaybe,
-  getAcceptedOrderSet,
   getChildSets,
   getDirectChildSets,
   getSet,
   splitCardName,
-  toSetNumber,
 } from '../setDateHandling';
 import { CardLookupMap, lookupCache, lookupMapCache } from './cardLookupMap';
 import { fixName } from '../textHandling';
@@ -29,7 +27,6 @@ import {
   textListIncludes,
   textListsShare,
 } from '../listHandling';
-import { toFaces } from './cardMethods';
 import { dateSort } from './sortMethods';
 
 const isNonExtra = (card: HCCard.Any) =>
@@ -127,7 +124,7 @@ const partIsAtypical = (part: HCCard.Any | HCCardFace.MultiFaced | faceType) =>
  * @param card card to check
  */
 export const cardIsAtypical = (card: HCCard.Any) =>
-  partIsAtypical(card) || partIsAtypical(toFaces(card)[0]);
+  partIsAtypical(card) || ('card_faces' in card && partIsAtypical(card.card_faces[0]));
 
 /**
  * Checks whether a card is printed with standard frames and effects

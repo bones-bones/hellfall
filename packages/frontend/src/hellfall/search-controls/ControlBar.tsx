@@ -58,6 +58,8 @@ const ALL_SORT_OPTIONS: SelectItems<sortType> = [
   { label: 'Color/MV', value: 'colormanavalue' },
   { label: 'Color', value: 'color' },
   { label: 'Mana Value', value: 'manavalue' },
+  { label: 'Creator', value: 'creator' },
+  { label: 'Artist', value: 'artist' },
 ];
 
 const DIR_OPTIONS: SelectItems<dirType> = [
@@ -79,7 +81,7 @@ export const ControlBar = ({
   children,
 }: {
   /**
-   * Whether to hide the label. If true, also removes the padding on this component.
+   * Whether to remove the padding on this component.
    * Use this if you want to use different layout styling on the control bar.
    */
   noPad?: boolean;
@@ -236,44 +238,42 @@ export const ControlBar = ({
                 {i != sortRules.length - 1 && <BarText data-is-then> then </BarText>}
               </div>
             ))}
-            <>
-              <ButtonGroup>
-                <CompactButton
-                  icon={plusIcon}
-                  title={
-                    canAddInput
-                      ? 'Add sort rule'
-                      : "You can't add another sort rule given your current sort rules"
-                  }
-                  aria-label={
-                    canAddInput
-                      ? 'Add sort rule'
-                      : "You can't add another sort rule given your current sort rules"
-                  }
-                  onClick={handleAddInput}
-                  disabled={!canAddInput}
-                />
-                <CompactButton
-                  icon={minusIcon}
-                  title={
-                    canDelInput
-                      ? 'Remove sort rule'
-                      : inputSorts.length > 1
-                      ? "You can't use this to remove a sort rule specified by search terms"
-                      : "You can't remove the only sort rule"
-                  }
-                  aria-label={
-                    canDelInput
-                      ? 'Remove sort rule'
-                      : inputSorts.length > 1
-                      ? "You can't use this to remove a sort rule specified by search terms"
-                      : "You can't remove the only sort rule"
-                  }
-                  onClick={handleDelInput}
-                  disabled={!canDelInput}
-                />
-              </ButtonGroup>
-            </>
+            <ButtonGroup>
+              <CompactButton
+                icon={plusIcon}
+                title={
+                  canAddInput
+                    ? 'Add sort rule'
+                    : "You can't add another sort rule given your current sort rules"
+                }
+                aria-label={
+                  canAddInput
+                    ? 'Add sort rule'
+                    : "You can't add another sort rule given your current sort rules"
+                }
+                onClick={handleAddInput}
+                disabled={!canAddInput}
+              />
+              <CompactButton
+                icon={minusIcon}
+                title={
+                  canDelInput
+                    ? 'Remove sort rule'
+                    : inputSorts.length > 1
+                    ? "You can't use this to remove a sort rule specified by search terms"
+                    : "You can't remove the only sort rule"
+                }
+                aria-label={
+                  canDelInput
+                    ? 'Remove sort rule'
+                    : inputSorts.length > 1
+                    ? "You can't use this to remove a sort rule specified by search terms"
+                    : "You can't remove the only sort rule"
+                }
+                onClick={handleDelInput}
+                disabled={!canDelInput}
+              />
+            </ButtonGroup>
           </SortElements>
           {children}
         </div>

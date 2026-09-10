@@ -139,7 +139,7 @@ export type HCSet = HCObject.Object<HCObject.ObjectType.Set> & {
   /**
    * A link to something to help.
    */
-  quick_link?: storedLink;
+  quick_links?: storedLink[];
   /**
    * A link to a tts plugin, if not using the normal download.
    */

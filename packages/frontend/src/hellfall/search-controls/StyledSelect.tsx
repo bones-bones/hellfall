@@ -6,7 +6,7 @@ import { useEffect } from 'react';
  * An array of select items
  * @template T The type of the value for the select
  */
-export type SelectItems<T extends string> = { label: string; value: T }[];
+export type SelectItems<T extends string | undefined> = { label: string; value: T }[];
 
 /**
  * Use this as a styled version of {@linkcode Select}

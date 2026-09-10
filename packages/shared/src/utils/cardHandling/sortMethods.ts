@@ -2,21 +2,20 @@ import { colorList, HCCard, HCSet, toKindIndex } from '@hellfall/shared/types';
 import { createSortFunc, textListIncludes } from '../listHandling';
 import {
   getAcceptedOrderSet,
-  getBlockSetCode,
   getBlockSetCodeForSet,
-  getGroupSets,
   getSetPosition,
   toSetNumber,
 } from '../setDateHandling';
-import { toFaces } from './cardMethods';
 
+const getFirstTypes = (card: HCCard.Any) =>
+  ('card_faces' in card ? card.card_faces[0] : card).types;
 const toColorNumberBoth = (card: HCCard.Any, useTypes?: boolean) => {
-  if (useTypes && textListIncludes(toFaces(card)[0].types, 'land')) {
+  if (useTypes && textListIncludes(getFirstTypes(card), 'land')) {
     return colorList.length + 2;
   }
   switch (card.colors.length) {
     case 0:
-      return !useTypes || textListIncludes(toFaces(card)[0].types, 'artifact')
+      return !useTypes || textListIncludes(getFirstTypes(card), 'artifact')
         ? colorList.length + 1
         : -1;
     case 1:

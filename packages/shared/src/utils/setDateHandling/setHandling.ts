@@ -2,15 +2,32 @@ import { setsData } from '@hellfall/shared/data';
 import {
   allSetsList,
   HCCard,
+  HCObject,
   HCSet,
   isSetCode,
   SetCode,
   setPropOrder,
+  SetType,
 } from '@hellfall/shared/types';
 import { cardDateMap } from './cardDateMap';
 
 const sets = setsData.data;
 
+const allCount = sets.reduce(
+  (total, curSet) => (curSet.parent_set_code ? total : total + (curSet.card_count ?? 0)),
+  0
+);
+const allSetObject: HCSet = {
+  object: HCObject.ObjectType.Set,
+  id: '0075c7d6-96c6-4e26-a8fa-615c8fa23231',
+  code: 'All' as SetCode,
+  name: 'All Hellscube Sets',
+  description: 'All sets!',
+  set_type: '' as SetType,
+  card_count: allCount,
+};
+
+export const setList = [...sets, allSetObject];
 /**
  * maps set codes to sets
  */
@@ -22,7 +39,7 @@ const setMap = new Map(sets.map(set => [set.code, set]));
 export const colorOrderSetList = sets.filter(set => set.use_color_order).map(set => set.code);
 
 export const toSetNumber = (code: SetCode) => allSetsList.indexOf(code);
-export const getSetPosition = (set: HCSet) => toSetNumber(set.code);
+export const getSetPosition = (set: HCSet) => toSetNumber(set.code) ?? 1000;
 
 /**
  * Fixes valid set code input to actually work
