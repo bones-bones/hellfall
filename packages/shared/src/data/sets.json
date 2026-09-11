@@ -1,982 +1,1087 @@
 {
-  "data": [
-    {
-      "object": "set",
-      "id": "8b2b9801-015b-4838-9a8d-4217f9e56e51",
-      "code": "HLC",
-      "name": "Hellscube 1",
-      "description": "A refined version of the cube that started it all.",
-      "quick_links": [{
-        "url": "one",
-        "text": "Rules and macros"
-      }],
-      "tts_link": {
-        "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3009290113",
-        "text": "Plugin by Benana"
-      },
-      "print_link": {
-        "url": "https://drive.google.com/file/d/1U2Ww7WElGpA95BTOwb2E2sQ0bir4FJHt/view",
-        "text": "PDF by eminamitie0453"
-      },
-      "set_type": "main",
-      "released_at": "2021-01-12",
-      "child_set_codes": [
-        "HLC_0",
-        "HLC_1",
-        "HLC_2",
-        "HCV_1",
-        "HCV_1_0",
-        "HCV_1_1"
-      ],
-      "use_color_order": true,
-      "filename": "hlc.svg"
-    },
-    {
-      "object": "set",
-      "id": "a99c1076-3021-4ff7-ba5f-667aefe6a8de",
-      "code": "HLC_0",
-      "name": "Hellscube 1.0",
-      "description": "The first 360 Hellscube cards. A strange and unplayable mess.",
-      "set_type": "main",
-      "released_at": "2020-04-12",
-      "parent_set_code": "HLC",
-      "child_set_codes": ["HCV_1_0"]
-    },
-    {
-      "object": "set",
-      "id": "2919c121-b8fb-4bb8-b524-21589c7ececf",
-      "code": "HLC_1",
-      "name": "Hellscube 1.1",
-      "description": "A slightly more playable 360 card version of Hellscube 1.",
-      "set_type": "main",
-      "released_at": "2020-07-24",
-      "parent_set_code": "HLC",
-      "child_set_codes": ["HCV_1_1"]
-    },
-    {
-      "object": "set",
-      "id": "91f87800-5363-4dd7-9e3a-5964f2ffa939",
-      "code": "HLC_2",
-      "name": "Hellscube 1.2",
-      "description": "The full final 720 cards in Hellscube 1.",
-      "set_type": "main",
-      "released_at": "2021-01-12",
-      "parent_set_code": "HLC"
-    },
-    {
-      "object": "set",
-      "id": "0b038041-ca3e-41f3-b39a-0972eda68ff1",
-      "code": "HCV_1",
-      "name": "Hellscube V(eto).1",
-      "description": "Cards originally from HLC that didn't make the cut for the final version.",
-      "set_type": "veto",
-      "released_at": "2020-07-24",
-      "parent_set_code": "HCV",
-      "child_set_codes": ["HCV_1_0", "HCV_1_1"]
-    },
-    {
-      "object": "set",
-      "id": "51f347fa-3857-4d7f-adcc-354670c37abc",
-      "code": "HCV_1_0",
-      "name": "Hellscube V(eto).1.0",
-      "description": "Cards originally from HLC.0 that didn't make the cut for the final version.",
-      "set_type": "veto",
-      "released_at": "2020-04-12",
-      "parent_set_code": "HCV_1"
-    },
-    {
-      "object": "set",
-      "id": "32ea2ae0-5716-44a9-869e-4271ceb28d6e",
-      "code": "HCV_1_1",
-      "name": "Hellscube V(eto).1.1",
-      "description": "Cards originally from HLC.1 that didn't make the cut for the final version.",
-      "set_type": "veto",
-      "released_at": "2020-07-24",
-      "parent_set_code": "HCV_1"
-    },
-    {
-      "object": "set",
-      "id": "22532957-d3da-4bfb-b420-f3aa2f67dd8f",
-      "code": "HC2",
-      "name": "Hellscube 2",
-      "description": "The second cube, trades purple for clear archetypes.",
-      "set_type": "main",
-      "released_at": "2021-11-02",
-      "child_set_codes": [
-        "HC2_0",
-        "HC2_1",
-        "HCV_2",
-        "HCV_2_0",
-        "HCV_2_1"
-      ],
-      "use_color_order": true,
-      "filename": "hc2.svg"
-    },
-    {
-      "object": "set",
-      "id": "47cbd43e-79d4-4c23-9240-dd45a6552f32",
-      "code": "HC2_0",
-      "name": "Hellscube 2.0",
-      "description": "The first 360 cards of Hellscube 2.",
-      "set_type": "main",
-      "released_at": "2021-06-05",
-      "parent_set_code": "HC2"
-    },
-    {
-      "object": "set",
-      "id": "8da16c7d-10c1-431b-9262-369074864962",
-      "code": "HC2_1",
-      "name": "Hellscube 2.1",
-      "description": "The last 360 cards of Hellscube 2.",
-      "set_type": "main",
-      "released_at": "2021-11-02",
-      "parent_set_code": "HC2"
-    },
-    {
-      "object": "set",
-      "id": "5bff03b1-a59c-424f-af90-756cc104acad",
-      "code": "HCV_2",
-      "name": "Hellscube V(eto).2",
-      "description": "Cards cut from HC2.",
-      "set_type": "veto",
-      "parent_set_code": "HCV",
-      "released_at": "2021-11-02",
-      "child_set_codes": ["HCV_2_0", "HCV_2_1"]
-    },
-    {
-      "object": "set",
-      "id": "36a4348f-169d-4cf0-b1c8-70285b91bcae",
-      "code": "HCV_2_0",
-      "name": "Hellscube V(eto).2.0",
-      "description": "Cards cut from HC2.0.",
-      "set_type": "veto",
-      "released_at": "2021-06-05",
-      "parent_set_code": "HCV_2"
-    },
-    {
-      "object": "set",
-      "id": "31169da1-43f3-4946-aeb7-efbc07f34234",
-      "code": "HCV_2_1",
-      "name": "Hellscube V(eto).2.1",
-      "description": "Cards cut from HC2.1.",
-      "set_type": "veto",
-      "released_at": "2021-11-02",
-      "parent_set_code": "HCV_2"
-    },
-    {
-      "object": "set",
-      "id": "1f7be3a9-e063-4b39-9c8e-481bfe594366",
-      "code": "HC3",
-      "name": "Hellscube 3",
-      "description": "At least it's not HC2.",
-      "tts_link": {
-        "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3309357076",
-        "text": "Plugin by Benana"
-      },
-      "print_link": {
-        "url": "https://drive.google.com/file/d/1SuXpECOkcCpIcCD-KKGyNjkT9NfeLrEH/view",
-        "text": "PDF of 3.0 by Jumberlack"
-      },
-      "set_type": "main",
-      "released_at": "2022-10-24",
-      "child_set_codes": [
-        "HC3_0",
-        "HC3_1",
-        "HCV_3",
-        "HCV_3_0",
-        "HCV_3_1"
-      ],
-      "use_color_order": true,
-      "filename": "hc3.svg"
-    },
-    {
-      "object": "set",
-      "id": "5b39a804-5422-4990-8bec-08caca243b97",
-      "code": "HC3_0",
-      "name": "Hellscube 3.0",
-      "description": "The first 360 cards of Hellscube 3.",
-      "set_type": "main",
-      "released_at": "2022-03-25",
-      "parent_set_code": "HC3"
-    },
-    {
-      "object": "set",
-      "id": "a1971000-c5ff-450d-9e49-72d8534f9183",
-      "code": "HC3_1",
-      "name": "Hellscube 3.1",
-      "description": "The last 360 cards of Hellscube 3.",
-      "set_type": "main",
-      "released_at": "2022-10-24",
-      "parent_set_code": "HC3"
-    },
-    {
-      "object": "set",
-      "id": "0953ab19-7b2a-4441-8594-85a21f77a8d6",
-      "code": "HCV_3",
-      "name": "Hellscube V(eto).3",
-      "description": "Cards cut from HC3.",
-      "set_type": "veto",
-      "released_at": "2022-10-24",
-      "parent_set_code": "HCV",
-      "child_set_codes": ["HCV_3_0", "HCV_3_1"]
-    },
-    {
-      "object": "set",
-      "id": "709db4b1-11cd-494f-9fc8-da1e328948c4",
-      "code": "HCV_3_0",
-      "name": "Hellscube V(eto).3.0",
-      "description": "Cards cut from HC3.0.",
-      "set_type": "veto",
-      "released_at": "2022-03-25",
-      "parent_set_code": "HCV_3"
-    },
-    {
-      "object": "set",
-      "id": "770b2fe9-e02a-4668-a9ef-e5102e1d4dfc",
-      "code": "HCV_3_1",
-      "name": "Hellscube V(eto).3.1",
-      "description": "Cards cut from HC3.1.",
-      "set_type": "veto",
-      "released_at": "2022-10-24",
-      "parent_set_code": "HCV_3"
-    },
-    {
-      "object": "set",
-      "id": "127f6366-1903-44db-b35e-95d6614ead50",
-      "code": "HC4",
-      "name": "Hellscube 4",
-      "description": "A Vintage power cube. A rip-roaring good time.",
-      "print_link": {
-        "url": "https://drive.google.com/file/d/1xURrTX8zbeLhQFhPqEsI3kHEPb-lLwpE/view",
-        "text": "PDF by killerfox3042"
-      },
-      "set_type": "main",
-      "released_at": "2024-04-22",
-      "child_set_codes": [
-        "HC4_0",
-        "HC4_1",
-        "HCV_4",
-        "HCV_4_0",
-        "HCV_4_1"
-      ],
-      "use_color_order": true,
-      "filename": "hc4.svg",
-      "includeLands": true
-    },
-    {
-      "object": "set",
-      "id": "834db0a8-2549-43ac-9a7b-308fc02aeb69",
-      "code": "HC4_0",
-      "name": "Hellscube 4.0",
-      "description": "The first 360 cards of the Vintage Cube. Let freaky pizza consume your soul.",
-      "set_type": "main",
-      "released_at": "2023-07-25",
-      "parent_set_code": "HC4"
-    },
-    {
-      "object": "set",
-      "id": "87a2ea8d-2c92-45ed-8845-c51ea308da08",
-      "code": "HC4_1",
-      "name": "Hellscube 4.1",
-      "description": "The last 360 cards of the Vintage Cube. Let freaky pizza consume your soul.",
-      "set_type": "main",
-      "released_at": "2024-04-22",
-      "parent_set_code": "HC4"
-    },
-    {
-      "object": "set",
-      "id": "f674f075-0041-4d3f-9e9c-6a17ae4cc0e4",
-      "code": "HCV_4",
-      "name": "Hellscube V(eto).4",
-      "description": "Cards cut from HC4.",
-      "set_type": "veto",
-      "released_at": "2024-04-22",
-      "parent_set_code": "HCV",
-      "child_set_codes": ["HCV_4_0", "HCV_4_1"]
-    },
-    {
-      "object": "set",
-      "id": "944d6d53-6be4-4f14-b78b-30ec40030c4f",
-      "code": "HCV_4_0",
-      "name": "Hellscube V(eto).4.0",
-      "description": "Cards cut from HC4.0.",
-      "set_type": "veto",
-      "released_at": "2023-07-25",
-      "parent_set_code": "HCV_4"
-    },
-    {
-      "object": "set",
-      "id": "18c7067b-37e1-47a6-8046-0d2cd74fd0ee",
-      "code": "HCV_4_1",
-      "name": "Hellscube V(eto).4.1",
-      "description": "Cards cut from HC4.1.",
-      "set_type": "veto",
-      "released_at": "2024-04-22",
-      "parent_set_code": "HCV_4"
-    },
-    {
-      "object": "set",
-      "id": "9bb49589-6642-4a7a-a874-fbf2bde38877",
-      "code": "HC5",
-      "name": "Hellscube 5",
-      "description": "L̵̨̡̧͎̩̘͓̩̬̂̈́́͒͌̔̽̈̌͗̏̈́͘͠͝Ợ̷̛̼̐͆͌̈́̑͗̆͑́̈́̓̀̚͠͝S̸̺̲͕̺̫͉̣̿̈ͅT̸̘̖͇͍͍̫̝̑͑̇̀͋̉̎̑͊͝ͅ",
-      "set_type": "main",
-      "released_at": "2024-05-05",
-      "filename": "hc5.svg"
-    },
-    {
-      "object": "set",
-      "id": "cddf3259-f4f3-45fb-ab4d-207bc7118be8",
-      "code": "HC6",
-      "name": "Hellscube 6",
-      "description": "The Commander Cube",
-      "quick_links": [{
-        "url": "https://lh3.googleusercontent.com/d/1410wN4zP2UiusHElAoD39MqTuyEu3BgA",
-        "text": "Draft Rules"
-      }],
-      "print_link": {
-        "url": "https://drive.google.com/file/d/1-kirKSuVUPrgRfMWYt3rhqDQlAbZhKws/view",
-        "text": "PDF by killerfox3042"
-      },
-      "set_type": "main",
-      "released_at": "2024-12-28",
-      "child_set_codes": [
-        "HC6_0",
-        "HC6_1",
-        "HCC",
-        "HCV_6"
-      ],
-      "use_color_order": true,
-      "filename": "hc6.svg",
-      "includeLands": true
-    },
-    {
-      "object": "set",
-      "id": "521d742e-e93f-4ed3-a7f4-7ea1796ca0e4",
-      "code": "HC6_0",
-      "name": "Hellscube 6.0",
-      "description": "The first 360 cards of the Commander Cube.",
-      "set_type": "main",
-      "released_at": "2024-08-19",
-      "parent_set_code": "HC6"
-    },
-    {
-      "object": "set",
-      "id": "ded90b43-d9df-4ea2-8f5a-f1680abc6b20",
-      "code": "HC6_1",
-      "name": "Hellscube 6.1",
-      "description": "The last 360 cards of the Commander Cube.",
-      "set_type": "main",
-      "released_at": "2024-12-28",
-      "parent_set_code": "HC6"
-    },
-    {
-      "object": "set",
-      "id": "e8b3848d-513f-494c-bd78-8d159cc85386",
-      "code": "HCC",
-      "name": "Hellscube Cut Commanders",
-      "description": "Commanders cut from HC6 due to slots.",
-      "set_type": "side",
-      "released_at": "2024-12-28",
-      "filename": "hcc.svg"
-    },
-    {
-      "object": "set",
-      "id": "e38f8294-0f9b-4ce9-bdb3-2d67db56e317",
-      "code": "HCV_6",
-      "name": "Hellscube V(eto).6",
-      "description": "Cards vetoed or slotsed from HC6.",
-      "set_type": "veto",
-      "released_at": "2024-12-28",
-      "parent_set_code": "HCV"
-    },
-    {
-      "object": "set",
-      "id": "d3c98335-79b3-49fa-b172-87754efeb531",
-      "code": "HWN",
-      "name": "Halloween Event",
-      "description": "Cards from the Halloween event.",
-      "set_type": "veto",
-      "released_at": "2024-10-31",
-      "parent_set_code": "HCV"
-    },
-    {
-      "object": "set",
-      "id": "144c8845-673b-4273-90e3-b4c90d650e91",
-      "code": "HCP",
-      "name": "Hells Chase Posse",
-      "description": "Planes and Phenomena for some sick planechase action.",
-      "quick_links": [{
-        "url": "https://drive.google.com/file/d/1LsaqqKCsaGdBMQtFF0w7yfGwqlkcE41H/view?usp=sharing",
-        "text": "Rules"
-      }],
-      "print_link": {
-        "url": "https://drive.google.com/file/d/1LsaqqKCsaGdBMQtFF0w7yfGwqlkcE41H/view?usp=sharing",
-        "text": "PDF by hostus"
-      },
-      "set_type": "side",
-      "released_at": "2025-01-29",
-      "child_set_codes": [
-        "HCV_P"
-      ],
-      "use_color_order": true,
-      "filename": "hcp.svg"
-    },
-    {
-      "object": "set",
-      "id": "12cec91a-bb1d-4f7d-99fd-b0c679d880c5",
-      "code": "HCV_P",
-      "name": "Hellscube V(eto).P",
-      "description": "Cards vetoed or slotsed from HCP.",
-      "set_type": "veto",
-      "released_at": "2025-01-29",
-      "parent_set_code": "HCV"
-    },
-    {
-      "object": "set",
-      "id": "3d05505e-d152-4155-a19c-1b615ecbd14b",
-      "code": "HC7",
-      "name": "Hellscube 7",
-      "description": "The 7th cube, purple abounds. Set themes include draft mana, Your Dreadmaw, drug tokens, and HELL.",
-      "set_type": "main",
-      "released_at": "2025-06-03",
-      "child_set_codes": [
-        "HC7_0",
-        "HC7_1",
-        "HCV_7"
-      ],
-      "use_color_order": true,
-      "filename": "hc7.svg"
-    },
-    {
-      "object": "set",
-      "id": "239bc2e5-e1c5-44ee-86dd-29bf9a0f924f",
-      "code": "HC7_0",
-      "name": "Hellscube 7.0",
-      "description": "The first 360 cards of Hellscube 7.",
-      "set_type": "main",
-      "released_at": "2025-04-12",
-      "parent_set_code": "HC7"
-    },
-    {
-      "object": "set",
-      "id": "daac3b1c-f071-4852-baa6-0c7e49e5b0c3",
-      "code": "HC7_1",
-      "name": "Hellscube 7.1",
-      "description": "The last 360 cards of Hellscube 7.",
-      "set_type": "main",
-      "released_at": "2025-06-03",
-      "parent_set_code": "HC7"
-    },
-    {
-      "object": "set",
-      "id": "e49b649f-6129-47de-b97b-fa0ace31c890",
-      "code": "HCV_7",
-      "name": "Hellscube V(eto).7",
-      "description": "Cards vetoed or slotsed from HC7.",
-      "set_type": "veto",
-      "released_at": "2025-06-03",
-      "parent_set_code": "HCV"
-    },
-    {
-      "object": "set",
-      "id": "00947a38-70c6-4e5d-8f0d-a6f52b9c7015",
-      "code": "CDC",
-      "name": "Christmas Day Cards",
-      "description": "Christmas Day seasonal cards.",
-      "set_type": "veto",
-      "released_at": "2025-01-08",
-      "parent_set_code": "HCV"
-    },
-    {
-      "object": "set",
-      "id": "9236cf83-972c-4edc-8156-45736c407419",
-      "code": "NRM",
-      "name": "Normal Cube",
-      "description": "How did that get in there?",
-      "set_type": "unfunny",
-      "released_at": "2025-04-01",
-      "filename": "nrm.svg"
-    },
-    {
-      "object": "set",
-      "id": "05d34fc8-181f-4bf2-91ed-992c8a38f00d",
-      "code": "HCK",
-      "name": "Heckscube",
-      "description": "This minicube brings you cards of the quality and caliber of the Portal sets, one of WotC's first forays into \"beginner-friendly\" Magic all the way back in '97.",
-      "tts_link": {
-        "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3747475872",
-        "text": "Plugin by Sultan"
-      },
-      "set_type": "side",
-      "released_at": "2025-06-23",
-      "child_set_codes": [
-        "HCV_K"
-      ],
-      "use_color_order": true,
-      "filename": "hck.svg",
-      "includeLands": true
-    },
-    {
-      "object": "set",
-      "id": "50091ddf-4a0e-4d33-89b9-a2a42473c5a3",
-      "code": "HCV_K",
-      "name": "Hellscube V(eto).K",
-      "description": "Cards vetoed or slotsed from HCK.",
-      "set_type": "veto",
-      "released_at": "2025-06-23",
-      "parent_set_code": "HCV"
-    },
-    {
-      "object": "set",
-      "id": "5e921324-7ba0-4706-913f-7c3c68900084",
-      "code": "HC8",
-      "name": "Hellscube 8",
-      "description": "The 8th cube, we've got archetypes.",
-      "quick_links": [{
-        "url": "/hellscubes/eight",
-        "text": "Archetype documents"
-      }],
-      "set_type": "main",
-      "released_at": "2026-03-13",
-      "child_set_codes": [
-        "HC8_0",
-        "HC8_1",
-        "HCV_8"
-      ],
-      "use_color_order": true,
-      "filename": "hc8.svg"
-    },
-    {
-      "object": "set",
-      "id": "4ba31c19-5c77-4ca9-9af7-4738cd8e1f6a",
-      "code": "HC8_0",
-      "name": "Hellscube 8.0",
-      "description": "The first 360 cards of Hellscube 8.",
-      "set_type": "main",
-      "released_at": "2025-10-03",
-      "parent_set_code": "HC8"
-    },
-    {
-      "object": "set",
-      "id": "342cefa2-655d-45f6-8c7d-01563bfb5e26",
-      "code": "HC8_1",
-      "name": "Hellscube 8.1",
-      "description": "The last 360 cards of Hellscube 8.",
-      "set_type": "main",
-      "released_at": "2026-03-13",
-      "parent_set_code": "HC8"
-    },
-    {
-      "object": "set",
-      "id": "03b7580d-ea5e-4158-b9b2-0f05a14b2c96",
-      "code": "HCV_8",
-      "name": "Hellscube V(eto).8",
-      "description": "Cards vetoed or slotsed from HC8.",
-      "set_type": "veto",
-      "released_at": "2026-03-13",
-      "parent_set_code": "HCV"
-    },
-    {
-      "object": "set",
-      "id": "2f098751-40df-4ef0-9397-e43d812aea7b",
-      "code": "HCJ",
-      "name": "Hellscube Jumpstart",
-      "description": "Hellstart, our version of Jumpstart, contains wildly unbalanced theme packs.",
-      "quick_links": [{
-        "url": "https://docs.google.com/spreadsheets/d/1agtuvnH4VlFT6ygud8nNrhQg7wF6HptbwZXQdjxxYuQ",
-        "text": "Primer & Packs"
-      }],
-      "print_link": {
-        "url": "https://drive.google.com/file/d/1CGJXmtv1Z9LBm7IkEkCxz0-R9AFoO7_i/view",
-        "text": "PDF by g0m"
-      },
-      "set_type": "side",
-      "released_at": "2025-12-04",
-      "child_set_codes": [
-        "FHCJ",
-        "HCV_J"
-      ],
-      "filename": "hcj.svg"
-    },
-    {
-      "object": "set",
-      "id": "32b9149e-7b36-4332-9dbd-100e7972da03",
-      "code": "FHCJ",
-      "name": "HCJ Front Cards",
-      "description": "The front cards for the HCJ packs.",
-      "set_type": "memorabilia",
-      "released_at": "2025-12-04",
-      "parent_set_code": "HCJ"
-    },
-    {
-      "object": "set",
-      "id": "1bfa162d-ba08-48eb-8e3d-521e7c654b15",
-      "code": "HCV_J",
-      "name": "Hellscube V(eto).J",
-      "description": "Cards vetoed or slotsed from HCJ.",
-      "set_type": "veto",
-      "released_at": "2025-12-04",
-      "parent_set_code": "HCV"
-    },
-    {
-      "object": "set",
-      "id": "bf391f9e-bdb8-4947-9f18-fa84568ad989",
-      "code": "HKL",
-      "name": "Heckscube 2: Hecklands",
-      "description": "Heckscube 2: Hecklands is a return to classic 90's Magic: the Gathering. This minicube includes cards roughly of the caliber and quality of Homelands, everyone's favorite Magic set.",
-      "tts_link": {
-        "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3747489298",
-        "text": "Plugin by Sultan"
-      },
-      "set_type": "side",
-      "released_at": "2026-04-17",
-      "child_set_codes": [
-        "HCV_HKL"
-      ],
-      "use_color_order": true,
-      "filename": "hkl.svg",
-      "includeLands": true
-    },
-    {
-      "object": "set",
-      "id": "f5ca4bb5-7037-46c4-91d2-fff683bf7317",
-      "code": "HCV_HKL",
-      "name": "Hellscube V(eto).HKL",
-      "description": "Cards vetoed or slotsed from HKL.",
-      "set_type": "veto",
-      "released_at": "2026-04-17",
-      "parent_set_code": "HCV"
-    },
-    {
-      "object": "set",
-      "id": "80103ff4-a593-4cb8-a14c-e98871ba8212",
-      "code": "HC9",
-      "name": "Hellscube 9",
-      "description": "All 720 cards from the vintage cube with purple.",
-      "set_type": "main",
-      "child_set_codes": [
-        "HC9_0",
-        "HC9_1",
-        "HCV_9"
-      ],
-      "filename": "hc9.svg"
-    },
-    {
-      "object": "set",
-      "id": "9aa35368-ccc7-446f-941b-4bacdaf43cd4",
-      "code": "HC9_0",
-      "name": "Hellscube 9.0",
-      "description": "The first 360 cards of Hellscube 9.",
-      "set_type": "main",
-      "released_at": "2026-06-22",
-      "parent_set_code": "HC9"
-    },
-    {
-      "object": "set",
-      "id": "a76b218c-e7ef-42e6-b182-92ab45144986",
-      "code": "HC9_1",
-      "name": "Hellscube 9.1",
-      "description": "The last 360 cards of Hellscube 9.",
-      "set_type": "main",
-      "parent_set_code": "HC9"
-    },
-    {
-      "object": "set",
-      "id": "7c2c3d60-6de1-4ee7-b12e-61a725543f9d",
-      "code": "HCV_9",
-      "name": "Hellscube V(eto).9",
-      "description": "Cards vetoed or slotsed from HC9.",
-      "set_type": "veto",
-      "parent_set_code": "HCV"
-    },
-    {
-      "object": "set",
-      "id": "2b29cd50-a65a-4559-b66c-210b1e55f1d0",
-      "code": "SCL",
-      "name": "Scube Lair Drops",
-      "description": "Like real Secret Lairs, but better in every way.",
-      "set_type": "lair",
-      "child_set_codes": [
-        "HCV_SCL",
-        "SCL_1",
-        "SCL_2",
-        "SCL_3",
-        "SCL_4",
-        "SCL_5",
-        "SCL_6",
-        "SCL_7",
-        "SCL_8"
-      ],
-      "filename": "scl.svg"
-    },
-    {
-      "object": "set",
-      "id": "18dc5033-3f45-4be7-ae04-ced7362b01d0",
-      "code": "SCL_1",
-      "name": "Scube Lair Drop: Iconic Hellscube Cards",
-      "description": "Iconic Hellscube Cards to Celebrate 5,000 Hellscube Members!",
-      "set_type": "lair",
-      "released_at": "2026-06-20",
-      "parent_set_code": "SCL"
-    },
-    {
-      "object": "set",
-      "id": "a88f00da-cd24-4747-b54b-fd284b2f6b74",
-      "code": "SCL_2",
-      "name": "Scube Lair Drop: Hellscube 1 All-Stars",
-      "description": "Hellscube 1 All-Stars",
-      "set_type": "lair",
-      "released_at": "2026-06-28",
-      "parent_set_code": "SCL"
-    },
-    {
-      "object": "set",
-      "id": "35c775f8-7e6a-436f-8a76-924b58eff7cf",
-      "code": "SCL_3",
-      "name": "Scube Lair Drop: Pride Month",
-      "description": "Pride Month Celebration!",
-      "set_type": "lair",
-      "released_at": "2026-07-05",
-      "parent_set_code": "SCL"
-    },
-    {
-      "object": "set",
-      "id": "d43fde19-1d17-468a-b252-70629b93dd97",
-      "code": "HCV_SCL",
-      "name": "Hellscube V(eto).SCL",
-      "description": "Cards from SCL that didn't make it into the top 5 but got enough upvotes.",
-      "set_type": "veto",
-      "parent_set_code": "HCV"
-    },
-    {
-      "object": "set",
-      "id": "bf391f9e-bdb8-4947-9f18-fa84568ad989",
-      "code": "HDH",
-      "name": "Hellder Dragon Highlander",
-      "description": "Hellmander Precons",
-      "set_type": "side",
-      "child_set_codes": [
-        "HCV_HDH"
-      ],
-      "filename": "hdh.svg"
-    },
-    {
-      "object": "set",
-      "id": "05a4c3b8-d4c0-43e4-a1db-f0a7cfb0bf92",
-      "code": "HCV_HDH",
-      "name": "Hellscube V(eto).HDH",
-      "description": "Cards vetoed or slotsed from HDH.",
-      "set_type": "veto",
-      "parent_set_code": "HCV"
-    },
-    {
-      "object": "set",
-      "id": "9ca79db9-2757-4f8f-9205-0245a24269aa",
-      "code": "SCL_4",
-      "name": "Scube Lair Drop: Basic Land Box 1",
-      "description": "Basic Land Box 1",
-      "set_type": "lair",
-      "released_at": "2026-07-15",
-      "parent_set_code": "SCL"
-    },
-    {
-      "object": "set",
-      "id": "75c224b2-4bdf-4923-9f1a-3e1b0279152a",
-      "code": "SCL_5",
-      "name": "Scube Lair Drop: Hellscube 2 All-Stars",
-      "description": "Hellscube 2 All-Stars",
-      "set_type": "lair",
-      "released_at": "2026-07-28",
-      "parent_set_code": "SCL"
-    },
-    {
-      "object": "set",
-      "id": "aec96c19-ae44-4e8a-a61a-0fe3995e3f8a",
-      "code": "SOH",
-      "name": "Sands of Hell",
-      "description": "Desert cube",
-      "set_type": "side",
-      "released_at": "2026-08-16",
-      "quick_links": [
-        {
-          "url": "https://lh3.googleusercontent.com/d/12SJ-2tIwL7QA1plE3S7qLXKmtXhlTp79",
-          "text": "Front"
-        },
-        {
-          "url": "https://lh3.googleusercontent.com/d/1Y1RFXGfuwx93VC_09YStIrjWMqz7L30h",
-          "text": "Back"
-        },
-        {
-          "url": "https://gist.github.com/Juancu/056b3c00bc9eb8beae4cb290cd2d4bc9",
-          "text": "Beta draftmancer script"
-        }
-      ],
-      "child_set_codes": [
-        "HCV_SOH"
-      ],
-      "use_color_order": true,
-      "filename": "soh.svg"
-    },
-    {
-      "object": "set",
-      "id": "e4a504f7-14b0-49b4-a3ba-26d8d72213a4",
-      "code": "HCV_SOH",
-      "name": "Hellscube V(eto).SOH",
-      "description": "Cards vetoed or slotsed from SOH.",
-      "set_type": "veto",
-      "released_at": "2026-08-16",
-      "parent_set_code": "HCV"
-    },
-    {
-      "object": "set",
-      "id": "f3913747-9c4a-4ef7-9346-57b34d75708c",
-      "code": "SCL_6",
-      "name": "Scube Lair Drop: Pro Tour: Hellscube 8",
-      "description": "Cards from nobroam's Pro Tour: Hellscube 8 winning decklist.",
-      "set_type": "lair",
-      "released_at": "2026-08-09",
-      "parent_set_code": "SCL"
-    },
-    {
-      "object": "set",
-      "id": "2e8202c5-2c80-46b0-9033-87f5eb081bdb",
-      "code": "SCL_7",
-      "name": "Scube Lair Drop: Hellscube 3 All-Stars",
-      "description": "Hellscube 3 All-Stars",
-      "set_type": "lair",
-      "released_at": "2026-08-11",
-      "parent_set_code": "SCL"
-    },
-    {
-      "object": "set",
-      "id": "9b0cf62a-0cb7-415f-9206-a3c46317f06d",
-      "code": "SCL_8",
-      "name": "Scube Lair Drop: Summer Vacation",
-      "description": "Summer Vacation",
-      "set_type": "lair",
-      "released_at": "2026-08-18",
-      "parent_set_code": "SCL"
-    },
-    {
-      "object": "set",
-      "id": "b65627ea-38e8-4b8a-85cf-7a1997f8322b",
-      "code": "HCV",
-      "name": "Hellscube V(eto)",
-      "description": "Here's where vetoed, slotsed, and seasonal cards go. Not suitable for play.",
-      "set_type": "veto",
-      "child_set_codes": [
-        "HCV_1",
-        "HCV_2",
-        "HCV_3",
-        "HCV_4",
-        "HCV_6",
-        "HWN",
-        "HCV_P",
-        "HCV_7",
-        "CDC",
-        "HCV_K",
-        "HCV_8",
-        "HCV_J",
-        "HCV_HKL",
-        "HCV_9",
-        "HCV_SCL",
-        "HCV_HDH",
-        "HCV_SOH"
-      ],
-      "filename": "hcv.svg"
-    },
-    {
-      "object": "set",
-      "id": "533707e0-22f6-4889-8ef8-9b2e9a753e72",
-      "code": "HCT",
-      "name": "Tokens",
-      "description": "Custom tokens for Hellscube cards.",
-      "set_type": "token",
-      "filename": "hct.svg"
-    },
-    {
-      "object": "set",
-      "id": "767d38f1-e424-42c6-a84f-0d815bcb4fa4",
-      "code": "HBB",
-      "name": "Hellscube Basic Box",
-      "description": "Custom basic lands for hellscube.",
-      "set_type": "land",
-      "child_set_codes": [
-        "HBB_0",
-        "HBB_4",
-        "HBB_7",
-        "HBB_HKL",
-        "HBB_9"
-      ],
-      "filename": "hbb.svg"
-    },
-    {
-      "object": "set",
-      "id": "47510fe8-4462-4a0a-8da4-6f5efc31b44a",
-      "code": "HBB_0",
-      "name": "Hellscube Basic Box Old",
-      "description": "Custom basic lands (original).",
-      "set_type": "land",
-      "released_at": "2021-12-03",
-      "parent_set_code": "HBB"
-    },
-    {
-      "object": "set",
-      "id": "11f05c55-2fc2-4040-ba43-40f1cab5f753",
-      "code": "HBB_4",
-      "name": "Hellscube Basic Box HC4",
-      "description": "Custom basic lands for HC4.",
-      "set_type": "land",
-      "released_at": "2024-05-12",
-      "parent_set_code": "HBB"
-    },
-    {
-      "object": "set",
-      "id": "1f648c14-6510-44a6-aa10-0069c4c4934b",
-      "code": "HBB_7",
-      "name": "Hellscube Basic Box HC7",
-      "description": "Custom basic lands for HC7.",
-      "set_type": "land",
-      "parent_set_code": "HBB"
-    },
-    {
-      "object": "set",
-      "id": "7a298815-362e-4fce-9d55-b0002fb260c6",
-      "code": "HBB_HKL",
-      "name": "Hellscube Basic Box HKL",
-      "description": "Custom basic lands for HKL.",
-      "set_type": "land",
-      "released_at": "2026-04-11",
-      "parent_set_code": "HBB"
-    },
-    {
-      "object": "set",
-      "id": "7a298815-362e-4fce-9d55-b0002fb260c6",
-      "code": "HBB_9",
-      "name": "Hellscube Basic Box HC9",
-      "description": "Custom basic lands for HC9.",
-      "set_type": "land",
-      "released_at": "2026-06-30",
-      "parent_set_code": "HBB"
-    },
-    {
-      "object": "set",
-      "id": "ad05b828-cfee-4ef7-b6e9-0d7b9d553e89",
-      "code": "HBB_SCL",
-      "name": "Hellscube Basic Box: Runners-Up",
-      "description": "Basic lands that were runners-up from an SCL Basic Box.",
-      "set_type": "land",
-      "parent_set_code": "HBB"
-    },
-    {
-      "object": "set",
-      "id": "f650b918-dfec-47ab-a571-bc1890a727ec",
-      "code": "SFT",
-      "name": "Scryfall Tokens",
-      "description": "Tokens from Scryfall for cards that need tokens but haven't had custom tokens made yet.",
-      "set_type": "token",
-      "filename": "sft.svg"
-    }
-  ]
+	"data": [
+		{
+			"object": "set",
+			"id": "8b2b9801-015b-4838-9a8d-4217f9e56e51",
+			"code": "HLC",
+			"name": "Hellscube 1",
+			"description": "A refined version of the cube that started it all.",
+			"quick_links": [
+				{
+					"url": "one",
+					"text": "Rules and macros"
+				}
+			],
+			"tts_link": {
+				"url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3009290113",
+				"text": "Plugin by Benana"
+			},
+			"print_link": {
+				"url": "https://drive.google.com/file/d/1U2Ww7WElGpA95BTOwb2E2sQ0bir4FJHt/view",
+				"text": "PDF by eminamitie0453"
+			},
+			"set_type": "main",
+			"released_at": "2021-01-12",
+			"child_set_codes": [
+				"HLC_0",
+				"HLC_1",
+				"HLC_2",
+				"HCV_1",
+				"HCV_1_0",
+				"HCV_1_1"
+			],
+			"card_count": 721,
+			"use_color_order": true,
+			"filename": "hlc.svg"
+		},
+		{
+			"object": "set",
+			"id": "a99c1076-3021-4ff7-ba5f-667aefe6a8de",
+			"code": "HLC_0",
+			"name": "Hellscube 1.0",
+			"description": "The first 360 Hellscube cards. A strange and unplayable mess.",
+			"set_type": "main",
+			"released_at": "2020-04-12",
+			"parent_set_code": "HLC",
+			"child_set_codes": [
+				"HCV_1_0"
+			],
+			"card_count": 266
+		},
+		{
+			"object": "set",
+			"id": "2919c121-b8fb-4bb8-b524-21589c7ececf",
+			"code": "HLC_1",
+			"name": "Hellscube 1.1",
+			"description": "A slightly more playable 360 card version of Hellscube 1.",
+			"set_type": "main",
+			"released_at": "2020-07-24",
+			"parent_set_code": "HLC",
+			"child_set_codes": [
+				"HCV_1_1"
+			],
+			"card_count": 223
+		},
+		{
+			"object": "set",
+			"id": "91f87800-5363-4dd7-9e3a-5964f2ffa939",
+			"code": "HLC_2",
+			"name": "Hellscube 1.2",
+			"description": "The full final 720 cards in Hellscube 1.",
+			"set_type": "main",
+			"released_at": "2021-01-12",
+			"parent_set_code": "HLC",
+			"card_count": 232
+		},
+		{
+			"object": "set",
+			"id": "0b038041-ca3e-41f3-b39a-0972eda68ff1",
+			"code": "HCV_1",
+			"name": "Hellscube V(eto).1",
+			"description": "Cards originally from HLC that didn't make the cut for the final version.",
+			"set_type": "veto",
+			"released_at": "2020-07-24",
+			"parent_set_code": "HCV",
+			"child_set_codes": [
+				"HCV_1_0",
+				"HCV_1_1"
+			],
+			"card_count": 113
+		},
+		{
+			"object": "set",
+			"id": "51f347fa-3857-4d7f-adcc-354670c37abc",
+			"code": "HCV_1_0",
+			"name": "Hellscube V(eto).1.0",
+			"description": "Cards originally from HLC.0 that didn't make the cut for the final version.",
+			"set_type": "veto",
+			"released_at": "2020-04-12",
+			"parent_set_code": "HCV_1",
+			"card_count": 108
+		},
+		{
+			"object": "set",
+			"id": "32ea2ae0-5716-44a9-869e-4271ceb28d6e",
+			"code": "HCV_1_1",
+			"name": "Hellscube V(eto).1.1",
+			"description": "Cards originally from HLC.1 that didn't make the cut for the final version.",
+			"set_type": "veto",
+			"released_at": "2020-07-24",
+			"parent_set_code": "HCV_1",
+			"card_count": 5
+		},
+		{
+			"object": "set",
+			"id": "22532957-d3da-4bfb-b420-f3aa2f67dd8f",
+			"code": "HC2",
+			"name": "Hellscube 2",
+			"description": "The second cube, trades purple for clear archetypes.",
+			"set_type": "main",
+			"released_at": "2021-11-02",
+			"child_set_codes": [
+				"HC2_0",
+				"HC2_1",
+				"HCV_2",
+				"HCV_2_0",
+				"HCV_2_1"
+			],
+			"card_count": 732,
+			"use_color_order": true,
+			"filename": "hc2.svg"
+		},
+		{
+			"object": "set",
+			"id": "47cbd43e-79d4-4c23-9240-dd45a6552f32",
+			"code": "HC2_0",
+			"name": "Hellscube 2.0",
+			"description": "The first 360 cards of Hellscube 2.",
+			"set_type": "main",
+			"released_at": "2021-06-05",
+			"parent_set_code": "HC2",
+			"card_count": 356
+		},
+		{
+			"object": "set",
+			"id": "8da16c7d-10c1-431b-9262-369074864962",
+			"code": "HC2_1",
+			"name": "Hellscube 2.1",
+			"description": "The last 360 cards of Hellscube 2.",
+			"set_type": "main",
+			"released_at": "2021-11-02",
+			"parent_set_code": "HC2",
+			"card_count": 376
+		},
+		{
+			"object": "set",
+			"id": "5bff03b1-a59c-424f-af90-756cc104acad",
+			"code": "HCV_2",
+			"name": "Hellscube V(eto).2",
+			"description": "Cards cut from HC2.",
+			"set_type": "veto",
+			"released_at": "2021-11-02",
+			"parent_set_code": "HCV",
+			"child_set_codes": [
+				"HCV_2_0",
+				"HCV_2_1"
+			],
+			"card_count": 18
+		},
+		{
+			"object": "set",
+			"id": "36a4348f-169d-4cf0-b1c8-70285b91bcae",
+			"code": "HCV_2_0",
+			"name": "Hellscube V(eto).2.0",
+			"description": "Cards cut from HC2.0.",
+			"set_type": "veto",
+			"released_at": "2021-06-05",
+			"parent_set_code": "HCV_2",
+			"card_count": 7
+		},
+		{
+			"object": "set",
+			"id": "31169da1-43f3-4946-aeb7-efbc07f34234",
+			"code": "HCV_2_1",
+			"name": "Hellscube V(eto).2.1",
+			"description": "Cards cut from HC2.1.",
+			"set_type": "veto",
+			"released_at": "2021-11-02",
+			"parent_set_code": "HCV_2",
+			"card_count": 10
+		},
+		{
+			"object": "set",
+			"id": "1f7be3a9-e063-4b39-9c8e-481bfe594366",
+			"code": "HC3",
+			"name": "Hellscube 3",
+			"description": "At least it's not HC2.",
+			"tts_link": {
+				"url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3309357076",
+				"text": "Plugin by Benana"
+			},
+			"print_link": {
+				"url": "https://drive.google.com/file/d/1SuXpECOkcCpIcCD-KKGyNjkT9NfeLrEH/view",
+				"text": "PDF of 3.0 by Jumberlack"
+			},
+			"set_type": "main",
+			"released_at": "2022-10-24",
+			"child_set_codes": [
+				"HC3_0",
+				"HC3_1",
+				"HCV_3",
+				"HCV_3_0",
+				"HCV_3_1"
+			],
+			"card_count": 730,
+			"use_color_order": true,
+			"filename": "hc3.svg"
+		},
+		{
+			"object": "set",
+			"id": "5b39a804-5422-4990-8bec-08caca243b97",
+			"code": "HC3_0",
+			"name": "Hellscube 3.0",
+			"description": "The first 360 cards of Hellscube 3.",
+			"set_type": "main",
+			"released_at": "2022-03-25",
+			"parent_set_code": "HC3",
+			"card_count": 355
+		},
+		{
+			"object": "set",
+			"id": "a1971000-c5ff-450d-9e49-72d8534f9183",
+			"code": "HC3_1",
+			"name": "Hellscube 3.1",
+			"description": "The last 360 cards of Hellscube 3.",
+			"set_type": "main",
+			"released_at": "2022-10-24",
+			"parent_set_code": "HC3",
+			"card_count": 375
+		},
+		{
+			"object": "set",
+			"id": "0953ab19-7b2a-4441-8594-85a21f77a8d6",
+			"code": "HCV_3",
+			"name": "Hellscube V(eto).3",
+			"description": "Cards cut from HC3.",
+			"set_type": "veto",
+			"released_at": "2022-10-24",
+			"parent_set_code": "HCV",
+			"child_set_codes": [
+				"HCV_3_0",
+				"HCV_3_1"
+			],
+			"card_count": 15
+		},
+		{
+			"object": "set",
+			"id": "709db4b1-11cd-494f-9fc8-da1e328948c4",
+			"code": "HCV_3_0",
+			"name": "Hellscube V(eto).3.0",
+			"description": "Cards cut from HC3.0.",
+			"set_type": "veto",
+			"released_at": "2022-03-25",
+			"parent_set_code": "HCV_3",
+			"card_count": 8
+		},
+		{
+			"object": "set",
+			"id": "770b2fe9-e02a-4668-a9ef-e5102e1d4dfc",
+			"code": "HCV_3_1",
+			"name": "Hellscube V(eto).3.1",
+			"description": "Cards cut from HC3.1.",
+			"set_type": "veto",
+			"released_at": "2022-10-24",
+			"parent_set_code": "HCV_3",
+			"card_count": 7
+		},
+		{
+			"object": "set",
+			"id": "127f6366-1903-44db-b35e-95d6614ead50",
+			"code": "HC4",
+			"name": "Hellscube 4",
+			"description": "A Vintage power cube. A rip-roaring good time.",
+			"print_link": {
+				"url": "https://drive.google.com/file/d/1xURrTX8zbeLhQFhPqEsI3kHEPb-lLwpE/view",
+				"text": "PDF by killerfox3042"
+			},
+			"set_type": "main",
+			"released_at": "2024-04-22",
+			"child_set_codes": [
+				"HC4_0",
+				"HC4_1",
+				"HCV_4",
+				"HCV_4_0",
+				"HCV_4_1"
+			],
+			"card_count": 754,
+			"use_color_order": true,
+			"filename": "hc4.svg",
+			"include_lands": true
+		},
+		{
+			"object": "set",
+			"id": "834db0a8-2549-43ac-9a7b-308fc02aeb69",
+			"code": "HC4_0",
+			"name": "Hellscube 4.0",
+			"description": "The first 360 cards of the Vintage Cube. Let freaky pizza consume your soul.",
+			"set_type": "main",
+			"released_at": "2023-07-25",
+			"parent_set_code": "HC4",
+			"card_count": 358
+		},
+		{
+			"object": "set",
+			"id": "87a2ea8d-2c92-45ed-8845-c51ea308da08",
+			"code": "HC4_1",
+			"name": "Hellscube 4.1",
+			"description": "The last 360 cards of the Vintage Cube. Let freaky pizza consume your soul.",
+			"set_type": "main",
+			"released_at": "2024-04-22",
+			"parent_set_code": "HC4",
+			"card_count": 396
+		},
+		{
+			"object": "set",
+			"id": "f674f075-0041-4d3f-9e9c-6a17ae4cc0e4",
+			"code": "HCV_4",
+			"name": "Hellscube V(eto).4",
+			"description": "Cards cut from HC4.",
+			"set_type": "veto",
+			"released_at": "2024-04-22",
+			"parent_set_code": "HCV",
+			"child_set_codes": [
+				"HCV_4_0",
+				"HCV_4_1"
+			],
+			"card_count": 14
+		},
+		{
+			"object": "set",
+			"id": "944d6d53-6be4-4f14-b78b-30ec40030c4f",
+			"code": "HCV_4_0",
+			"name": "Hellscube V(eto).4.0",
+			"description": "Cards cut from HC4.0.",
+			"set_type": "veto",
+			"released_at": "2023-07-25",
+			"parent_set_code": "HCV_4",
+			"card_count": 6
+		},
+		{
+			"object": "set",
+			"id": "18c7067b-37e1-47a6-8046-0d2cd74fd0ee",
+			"code": "HCV_4_1",
+			"name": "Hellscube V(eto).4.1",
+			"description": "Cards cut from HC4.1.",
+			"set_type": "veto",
+			"released_at": "2024-04-22",
+			"parent_set_code": "HCV_4",
+			"card_count": 3
+		},
+		{
+			"object": "set",
+			"id": "9bb49589-6642-4a7a-a874-fbf2bde38877",
+			"code": "HC5",
+			"name": "Hellscube 5",
+			"description": "L̵̨̡̧͎̩̘͓̩̬̂̈́́͒͌̔̽̈̌͗̏̈́͘͠͝Ợ̷̛̼̐͆͌̈́̑͗̆͑́̈́̓̀̚͠͝S̸̺̲͕̺̫͉̣̿̈ͅT̸̘̖͇͍͍̫̝̑͑̇̀͋̉̎̑͊͝ͅ",
+			"set_type": "main",
+			"released_at": "2024-05-05",
+			"card_count": 0,
+			"filename": "hc5.svg"
+		},
+		{
+			"object": "set",
+			"id": "cddf3259-f4f3-45fb-ab4d-207bc7118be8",
+			"code": "HC6",
+			"name": "Hellscube 6",
+			"description": "The Commander Cube",
+			"quick_links": [
+				{
+					"url": "https://lh3.googleusercontent.com/d/1410wN4zP2UiusHElAoD39MqTuyEu3BgA",
+					"text": "Draft Rules"
+				}
+			],
+			"print_link": {
+				"url": "https://drive.google.com/file/d/1-kirKSuVUPrgRfMWYt3rhqDQlAbZhKws/view",
+				"text": "PDF by killerfox3042"
+			},
+			"set_type": "main",
+			"released_at": "2024-12-28",
+			"child_set_codes": [
+				"HC6_0",
+				"HC6_1",
+				"HCC",
+				"HCV_6"
+			],
+			"card_count": 723,
+			"use_color_order": true,
+			"filename": "hc6.svg",
+			"include_lands": true
+		},
+		{
+			"object": "set",
+			"id": "521d742e-e93f-4ed3-a7f4-7ea1796ca0e4",
+			"code": "HC6_0",
+			"name": "Hellscube 6.0",
+			"description": "The first 360 cards of the Commander Cube.",
+			"set_type": "main",
+			"released_at": "2024-08-19",
+			"parent_set_code": "HC6",
+			"card_count": 377
+		},
+		{
+			"object": "set",
+			"id": "ded90b43-d9df-4ea2-8f5a-f1680abc6b20",
+			"code": "HC6_1",
+			"name": "Hellscube 6.1",
+			"description": "The last 360 cards of the Commander Cube.",
+			"set_type": "main",
+			"released_at": "2024-12-28",
+			"parent_set_code": "HC6",
+			"card_count": 346
+		},
+		{
+			"object": "set",
+			"id": "e8b3848d-513f-494c-bd78-8d159cc85386",
+			"code": "HCC",
+			"name": "Hellscube Cut Commanders",
+			"description": "Commanders cut from HC6 due to slots.",
+			"set_type": "side",
+			"released_at": "2024-12-28",
+			"card_count": 78,
+			"filename": "hcc.svg"
+		},
+		{
+			"object": "set",
+			"id": "e38f8294-0f9b-4ce9-bdb3-2d67db56e317",
+			"code": "HCV_6",
+			"name": "Hellscube V(eto).6",
+			"description": "Cards vetoed or slotsed from HC6.",
+			"set_type": "veto",
+			"released_at": "2024-12-28",
+			"parent_set_code": "HCV",
+			"card_count": 146
+		},
+		{
+			"object": "set",
+			"id": "d3c98335-79b3-49fa-b172-87754efeb531",
+			"code": "HWN",
+			"name": "Halloween Event",
+			"description": "Cards from the Halloween event.",
+			"set_type": "veto",
+			"released_at": "2024-10-31",
+			"parent_set_code": "HCV",
+			"card_count": 11
+		},
+		{
+			"object": "set",
+			"id": "144c8845-673b-4273-90e3-b4c90d650e91",
+			"code": "HCP",
+			"name": "Hells Chase Posse",
+			"description": "Planes and Phenomena for some sick planechase action.",
+			"quick_links": [
+				{
+					"url": "https://drive.google.com/file/d/1LsaqqKCsaGdBMQtFF0w7yfGwqlkcE41H/view?usp=sharing",
+					"text": "Rules"
+				}
+			],
+			"print_link": {
+				"url": "https://drive.google.com/file/d/1LsaqqKCsaGdBMQtFF0w7yfGwqlkcE41H/view?usp=sharing",
+				"text": "PDF by hostus"
+			},
+			"set_type": "side",
+			"released_at": "2025-01-29",
+			"child_set_codes": [
+				"HCV_P"
+			],
+			"card_count": 54,
+			"use_color_order": true,
+			"filename": "hcp.svg"
+		},
+		{
+			"object": "set",
+			"id": "12cec91a-bb1d-4f7d-99fd-b0c679d880c5",
+			"code": "HCV_P",
+			"name": "Hellscube V(eto).P",
+			"description": "Cards vetoed or slotsed from HCP.",
+			"set_type": "veto",
+			"released_at": "2025-01-29",
+			"parent_set_code": "HCV",
+			"card_count": 7
+		},
+		{
+			"object": "set",
+			"id": "3d05505e-d152-4155-a19c-1b615ecbd14b",
+			"code": "HC7",
+			"name": "Hellscube 7",
+			"description": "The 7th cube, purple abounds. Set themes include draft mana, Your Dreadmaw, drug tokens, and HELL.",
+			"set_type": "main",
+			"released_at": "2025-06-03",
+			"child_set_codes": [
+				"HC7_0",
+				"HC7_1",
+				"HCV_7"
+			],
+			"card_count": 741,
+			"use_color_order": true,
+			"filename": "hc7.svg"
+		},
+		{
+			"object": "set",
+			"id": "239bc2e5-e1c5-44ee-86dd-29bf9a0f924f",
+			"code": "HC7_0",
+			"name": "Hellscube 7.0",
+			"description": "The first 360 cards of Hellscube 7.",
+			"set_type": "main",
+			"released_at": "2025-04-12",
+			"parent_set_code": "HC7",
+			"card_count": 367
+		},
+		{
+			"object": "set",
+			"id": "daac3b1c-f071-4852-baa6-0c7e49e5b0c3",
+			"code": "HC7_1",
+			"name": "Hellscube 7.1",
+			"description": "The last 360 cards of Hellscube 7.",
+			"set_type": "main",
+			"released_at": "2025-06-03",
+			"parent_set_code": "HC7",
+			"card_count": 374
+		},
+		{
+			"object": "set",
+			"id": "e49b649f-6129-47de-b97b-fa0ace31c890",
+			"code": "HCV_7",
+			"name": "Hellscube V(eto).7",
+			"description": "Cards vetoed or slotsed from HC7.",
+			"set_type": "veto",
+			"released_at": "2025-06-03",
+			"parent_set_code": "HCV",
+			"card_count": 68
+		},
+		{
+			"object": "set",
+			"id": "00947a38-70c6-4e5d-8f0d-a6f52b9c7015",
+			"code": "CDC",
+			"name": "Christmas Day Cards",
+			"description": "Christmas Day seasonal cards.",
+			"set_type": "veto",
+			"released_at": "2025-01-08",
+			"parent_set_code": "HCV",
+			"card_count": 3
+		},
+		{
+			"object": "set",
+			"id": "9236cf83-972c-4edc-8156-45736c407419",
+			"code": "NRM",
+			"name": "Normal Cube",
+			"description": "How did that get in there?",
+			"set_type": "unfunny",
+			"released_at": "2025-04-01",
+			"card_count": 430,
+			"filename": "nrm.svg"
+		},
+		{
+			"object": "set",
+			"id": "05d34fc8-181f-4bf2-91ed-992c8a38f00d",
+			"code": "HCK",
+			"name": "Heckscube",
+			"description": "This minicube brings you cards of the quality and caliber of the Portal sets, one of WotC's first forays into \"beginner-friendly\" Magic all the way back in '97.",
+			"tts_link": {
+				"url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3747475872",
+				"text": "Plugin by Sultan"
+			},
+			"set_type": "side",
+			"released_at": "2025-06-23",
+			"child_set_codes": [
+				"HCV_K"
+			],
+			"card_count": 219,
+			"use_color_order": true,
+			"filename": "hck.svg",
+			"include_lands": true
+		},
+		{
+			"object": "set",
+			"id": "50091ddf-4a0e-4d33-89b9-a2a42473c5a3",
+			"code": "HCV_K",
+			"name": "Hellscube V(eto).K",
+			"description": "Cards vetoed or slotsed from HCK.",
+			"set_type": "veto",
+			"released_at": "2025-06-23",
+			"parent_set_code": "HCV",
+			"card_count": 14
+		},
+		{
+			"object": "set",
+			"id": "5e921324-7ba0-4706-913f-7c3c68900084",
+			"code": "HC8",
+			"name": "Hellscube 8",
+			"description": "The 8th cube, we've got archetypes.",
+			"quick_links": [
+				{
+					"url": "/hellscubes/eight",
+					"text": "Archetype documents"
+				}
+			],
+			"set_type": "main",
+			"released_at": "2026-03-13",
+			"child_set_codes": [
+				"HC8_0",
+				"HC8_1",
+				"HCV_8"
+			],
+			"card_count": 767,
+			"use_color_order": true,
+			"filename": "hc8.svg"
+		},
+		{
+			"object": "set",
+			"id": "4ba31c19-5c77-4ca9-9af7-4738cd8e1f6a",
+			"code": "HC8_0",
+			"name": "Hellscube 8.0",
+			"description": "The first 360 cards of Hellscube 8.",
+			"set_type": "main",
+			"released_at": "2025-10-03",
+			"parent_set_code": "HC8",
+			"card_count": 383
+		},
+		{
+			"object": "set",
+			"id": "342cefa2-655d-45f6-8c7d-01563bfb5e26",
+			"code": "HC8_1",
+			"name": "Hellscube 8.1",
+			"description": "The last 360 cards of Hellscube 8.",
+			"set_type": "main",
+			"released_at": "2026-03-13",
+			"parent_set_code": "HC8",
+			"card_count": 384
+		},
+		{
+			"object": "set",
+			"id": "03b7580d-ea5e-4158-b9b2-0f05a14b2c96",
+			"code": "HCV_8",
+			"name": "Hellscube V(eto).8",
+			"description": "Cards vetoed or slotsed from HC8.",
+			"set_type": "veto",
+			"released_at": "2026-03-13",
+			"parent_set_code": "HCV",
+			"card_count": 114
+		},
+		{
+			"object": "set",
+			"id": "2f098751-40df-4ef0-9397-e43d812aea7b",
+			"code": "HCJ",
+			"name": "Hellscube Jumpstart",
+			"description": "Hellstart, our version of Jumpstart, contains wildly unbalanced theme packs.",
+			"quick_links": [
+				{
+					"url": "https://docs.google.com/spreadsheets/d/1agtuvnH4VlFT6ygud8nNrhQg7wF6HptbwZXQdjxxYuQ",
+					"text": "Primer & Packs"
+				}
+			],
+			"print_link": {
+				"url": "https://drive.google.com/file/d/1CGJXmtv1Z9LBm7IkEkCxz0-R9AFoO7_i/view",
+				"text": "PDF by g0m"
+			},
+			"set_type": "side",
+			"released_at": "2025-12-04",
+			"child_set_codes": [
+				"FHCJ",
+				"HCV_J"
+			],
+			"card_count": 493,
+			"filename": "hcj.svg"
+		},
+		{
+			"object": "set",
+			"id": "32b9149e-7b36-4332-9dbd-100e7972da03",
+			"code": "FHCJ",
+			"name": "HCJ Front Cards",
+			"description": "The front cards for the HCJ packs.",
+			"set_type": "memorabilia",
+			"released_at": "2025-12-04",
+			"parent_set_code": "HCJ",
+			"card_count": 38
+		},
+		{
+			"object": "set",
+			"id": "1bfa162d-ba08-48eb-8e3d-521e7c654b15",
+			"code": "HCV_J",
+			"name": "Hellscube V(eto).J",
+			"description": "Cards vetoed or slotsed from HCJ.",
+			"set_type": "veto",
+			"released_at": "2025-12-04",
+			"parent_set_code": "HCV",
+			"card_count": 48
+		},
+		{
+			"object": "set",
+			"id": "bf391f9e-bdb8-4947-9f18-fa84568ad989",
+			"code": "HKL",
+			"name": "Heckscube 2: Hecklands",
+			"description": "Heckscube 2: Hecklands is a return to classic 90's Magic: the Gathering. This minicube includes cards roughly of the caliber and quality of Homelands, everyone's favorite Magic set.",
+			"tts_link": {
+				"url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3747489298",
+				"text": "Plugin by Sultan"
+			},
+			"set_type": "side",
+			"released_at": "2026-04-17",
+			"child_set_codes": [
+				"HCV_HKL"
+			],
+			"card_count": 364,
+			"use_color_order": true,
+			"filename": "hkl.svg",
+			"include_lands": true
+		},
+		{
+			"object": "set",
+			"id": "f5ca4bb5-7037-46c4-91d2-fff683bf7317",
+			"code": "HCV_HKL",
+			"name": "Hellscube V(eto).HKL",
+			"description": "Cards vetoed or slotsed from HKL.",
+			"set_type": "veto",
+			"released_at": "2026-04-17",
+			"parent_set_code": "HCV",
+			"card_count": 68
+		},
+		{
+			"object": "set",
+			"id": "80103ff4-a593-4cb8-a14c-e98871ba8212",
+			"code": "HC9",
+			"name": "Hellscube 9",
+			"description": "All 720 cards from the vintage cube with purple.",
+			"set_type": "main",
+			"child_set_codes": [
+				"HC9_0",
+				"HC9_1",
+				"HCV_9"
+			],
+			"card_count": 376,
+			"filename": "hc9.svg"
+		},
+		{
+			"object": "set",
+			"id": "9aa35368-ccc7-446f-941b-4bacdaf43cd4",
+			"code": "HC9_0",
+			"name": "Hellscube 9.0",
+			"description": "The first 360 cards of Hellscube 9.",
+			"set_type": "main",
+			"released_at": "2026-06-22",
+			"parent_set_code": "HC9",
+			"card_count": 376
+		},
+		{
+			"object": "set",
+			"id": "a76b218c-e7ef-42e6-b182-92ab45144986",
+			"code": "HC9_1",
+			"name": "Hellscube 9.1",
+			"description": "The last 360 cards of Hellscube 9.",
+			"set_type": "main",
+			"parent_set_code": "HC9",
+			"card_count": 0
+		},
+		{
+			"object": "set",
+			"id": "7c2c3d60-6de1-4ee7-b12e-61a725543f9d",
+			"code": "HCV_9",
+			"name": "Hellscube V(eto).9",
+			"description": "Cards vetoed or slotsed from HC9.",
+			"set_type": "veto",
+			"parent_set_code": "HCV",
+			"card_count": 78
+		},
+		{
+			"object": "set",
+			"id": "2b29cd50-a65a-4559-b66c-210b1e55f1d0",
+			"code": "SCL",
+			"name": "Scube Lair Drops",
+			"description": "Like real Secret Lairs, but better in every way.",
+			"set_type": "lair",
+			"child_set_codes": [
+				"HCV_SCL",
+				"SCL_1",
+				"SCL_2",
+				"SCL_3",
+				"SCL_4",
+				"SCL_5",
+				"SCL_6",
+				"SCL_7",
+				"SCL_8"
+			],
+			"card_count": 44,
+			"filename": "scl.svg"
+		},
+		{
+			"object": "set",
+			"id": "18dc5033-3f45-4be7-ae04-ced7362b01d0",
+			"code": "SCL_1",
+			"name": "Scube Lair Drop: Iconic Hellscube Cards",
+			"description": "Iconic Hellscube Cards to Celebrate 5,000 Hellscube Members!",
+			"set_type": "lair",
+			"released_at": "2026-06-20",
+			"parent_set_code": "SCL",
+			"card_count": 5
+		},
+		{
+			"object": "set",
+			"id": "a88f00da-cd24-4747-b54b-fd284b2f6b74",
+			"code": "SCL_2",
+			"name": "Scube Lair Drop: Hellscube 1 All-Stars",
+			"description": "Hellscube 1 All-Stars",
+			"set_type": "lair",
+			"released_at": "2026-06-28",
+			"parent_set_code": "SCL",
+			"card_count": 5
+		},
+		{
+			"object": "set",
+			"id": "35c775f8-7e6a-436f-8a76-924b58eff7cf",
+			"code": "SCL_3",
+			"name": "Scube Lair Drop: Pride Month",
+			"description": "Pride Month Celebration!",
+			"set_type": "lair",
+			"released_at": "2026-07-05",
+			"parent_set_code": "SCL",
+			"card_count": 5
+		},
+		{
+			"object": "set",
+			"id": "d43fde19-1d17-468a-b252-70629b93dd97",
+			"code": "HCV_SCL",
+			"name": "Hellscube V(eto).SCL",
+			"description": "Cards from SCL that didn't make it into the top 5 but got enough upvotes.",
+			"set_type": "veto",
+			"parent_set_code": "HCV",
+			"card_count": 52
+		},
+		{
+			"object": "set",
+			"id": "bf391f9e-bdb8-4947-9f18-fa84568ad989",
+			"code": "HDH",
+			"name": "Hellder Dragon Highlander",
+			"description": "Hellmander Precons",
+			"set_type": "side",
+			"child_set_codes": [
+				"HCV_HDH"
+			],
+			"card_count": 9,
+			"filename": "hdh.svg"
+		},
+		{
+			"object": "set",
+			"id": "05a4c3b8-d4c0-43e4-a1db-f0a7cfb0bf92",
+			"code": "HCV_HDH",
+			"name": "Hellscube V(eto).HDH",
+			"description": "Cards vetoed or slotsed from HDH.",
+			"set_type": "veto",
+			"parent_set_code": "HCV",
+			"card_count": 5
+		},
+		{
+			"object": "set",
+			"id": "9ca79db9-2757-4f8f-9205-0245a24269aa",
+			"code": "SCL_4",
+			"name": "Scube Lair Drop: Basic Land Box 1",
+			"description": "Basic Land Box 1",
+			"set_type": "lair",
+			"released_at": "2026-07-15",
+			"parent_set_code": "SCL",
+			"card_count": 8
+		},
+		{
+			"object": "set",
+			"id": "75c224b2-4bdf-4923-9f1a-3e1b0279152a",
+			"code": "SCL_5",
+			"name": "Scube Lair Drop: Hellscube 2 All-Stars",
+			"description": "Hellscube 2 All-Stars",
+			"set_type": "lair",
+			"released_at": "2026-07-28",
+			"parent_set_code": "SCL",
+			"card_count": 5
+		},
+		{
+			"object": "set",
+			"id": "aec96c19-ae44-4e8a-a61a-0fe3995e3f8a",
+			"code": "SOH",
+			"name": "Sands of Hell",
+			"description": "Desert cube",
+			"quick_links": [
+				{
+					"url": "https://lh3.googleusercontent.com/d/12SJ-2tIwL7QA1plE3S7qLXKmtXhlTp79",
+					"text": "Front"
+				},
+				{
+					"url": "https://lh3.googleusercontent.com/d/1Y1RFXGfuwx93VC_09YStIrjWMqz7L30h",
+					"text": "Back"
+				},
+				{
+					"url": "https://gist.github.com/Juancu/056b3c00bc9eb8beae4cb290cd2d4bc9",
+					"text": "Beta draftmancer script"
+				}
+			],
+			"set_type": "side",
+			"released_at": "2026-08-16",
+			"child_set_codes": [
+				"HCV_SOH"
+			],
+			"card_count": 360,
+			"use_color_order": true,
+			"filename": "soh.svg"
+		},
+		{
+			"object": "set",
+			"id": "e4a504f7-14b0-49b4-a3ba-26d8d72213a4",
+			"code": "HCV_SOH",
+			"name": "Hellscube V(eto).SOH",
+			"description": "Cards vetoed or slotsed from SOH.",
+			"set_type": "veto",
+			"released_at": "2026-08-16",
+			"parent_set_code": "HCV",
+			"card_count": 46
+		},
+		{
+			"object": "set",
+			"id": "f3913747-9c4a-4ef7-9346-57b34d75708c",
+			"code": "SCL_6",
+			"name": "Scube Lair Drop: Pro Tour: Hellscube 8",
+			"description": "Cards from nobroam's Pro Tour: Hellscube 8 winning decklist.",
+			"set_type": "lair",
+			"released_at": "2026-08-09",
+			"parent_set_code": "SCL",
+			"card_count": 6
+		},
+		{
+			"object": "set",
+			"id": "2e8202c5-2c80-46b0-9033-87f5eb081bdb",
+			"code": "SCL_7",
+			"name": "Scube Lair Drop: Hellscube 3 All-Stars",
+			"description": "Hellscube 3 All-Stars",
+			"set_type": "lair",
+			"released_at": "2026-08-11",
+			"parent_set_code": "SCL",
+			"card_count": 5
+		},
+		{
+			"object": "set",
+			"id": "9b0cf62a-0cb7-415f-9206-a3c46317f06d",
+			"code": "SCL_8",
+			"name": "Scube Lair Drop: Summer Vacation",
+			"description": "Summer Vacation",
+			"set_type": "lair",
+			"released_at": "2026-08-18",
+			"parent_set_code": "SCL",
+			"card_count": 5
+		},
+		{
+			"object": "set",
+			"id": "b65627ea-38e8-4b8a-85cf-7a1997f8322b",
+			"code": "HCV",
+			"name": "Hellscube V(eto)",
+			"description": "Here's where vetoed, slotsed, and seasonal cards go. Not suitable for play.",
+			"set_type": "veto",
+			"child_set_codes": [
+				"HCV_1",
+				"HCV_2",
+				"HCV_3",
+				"HCV_4",
+				"HCV_6",
+				"HWN",
+				"HCV_P",
+				"HCV_7",
+				"CDC",
+				"HCV_K",
+				"HCV_8",
+				"HCV_J",
+				"HCV_HKL",
+				"HCV_9",
+				"HCV_SCL",
+				"HCV_HDH",
+				"HCV_SOH"
+			],
+			"card_count": 820,
+			"filename": "hcv.svg"
+		},
+		{
+			"object": "set",
+			"id": "533707e0-22f6-4889-8ef8-9b2e9a753e72",
+			"code": "HCT",
+			"name": "Tokens",
+			"description": "Custom tokens for Hellscube cards.",
+			"set_type": "token",
+			"card_count": 2057,
+			"filename": "hct.svg"
+		},
+		{
+			"object": "set",
+			"id": "767d38f1-e424-42c6-a84f-0d815bcb4fa4",
+			"code": "HBB",
+			"name": "Hellscube Basic Box",
+			"description": "Custom basic lands for hellscube.",
+			"set_type": "land",
+			"child_set_codes": [
+				"HBB_0",
+				"HBB_4",
+				"HBB_7",
+				"HBB_HKL",
+				"HBB_9"
+			],
+			"card_count": 171,
+			"filename": "hbb.svg"
+		},
+		{
+			"object": "set",
+			"id": "47510fe8-4462-4a0a-8da4-6f5efc31b44a",
+			"code": "HBB_0",
+			"name": "Hellscube Basic Box Old",
+			"description": "Custom basic lands (original).",
+			"set_type": "land",
+			"released_at": "2021-12-03",
+			"parent_set_code": "HBB",
+			"card_count": 122
+		},
+		{
+			"object": "set",
+			"id": "11f05c55-2fc2-4040-ba43-40f1cab5f753",
+			"code": "HBB_4",
+			"name": "Hellscube Basic Box HC4",
+			"description": "Custom basic lands for HC4.",
+			"set_type": "land",
+			"released_at": "2024-05-12",
+			"parent_set_code": "HBB",
+			"card_count": 45
+		},
+		{
+			"object": "set",
+			"id": "1f648c14-6510-44a6-aa10-0069c4c4934b",
+			"code": "HBB_7",
+			"name": "Hellscube Basic Box HC7",
+			"description": "Custom basic lands for HC7.",
+			"set_type": "land",
+			"parent_set_code": "HBB",
+			"card_count": 1
+		},
+		{
+			"object": "set",
+			"id": "7a298815-362e-4fce-9d55-b0002fb260c6",
+			"code": "HBB_HKL",
+			"name": "Hellscube Basic Box HKL",
+			"description": "Custom basic lands for HKL.",
+			"set_type": "land",
+			"released_at": "2026-04-11",
+			"parent_set_code": "HBB",
+			"card_count": 2
+		},
+		{
+			"object": "set",
+			"id": "7a298815-362e-4fce-9d55-b0002fb260c6",
+			"code": "HBB_9",
+			"name": "Hellscube Basic Box HC9",
+			"description": "Custom basic lands for HC9.",
+			"set_type": "land",
+			"released_at": "2026-06-30",
+			"parent_set_code": "HBB",
+			"card_count": 1
+		},
+		{
+			"object": "set",
+			"id": "ad05b828-cfee-4ef7-b6e9-0d7b9d553e89",
+			"code": "HBB_SCL",
+			"name": "Hellscube Basic Box: Runners-Up",
+			"description": "Basic lands that were runners-up from an SCL Basic Box.",
+			"set_type": "land",
+			"parent_set_code": "HBB",
+			"card_count": 8
+		},
+		{
+			"object": "set",
+			"id": "f650b918-dfec-47ab-a571-bc1890a727ec",
+			"code": "SFT",
+			"name": "Scryfall Tokens",
+			"description": "Tokens from Scryfall for cards that need tokens but haven't had custom tokens made yet.",
+			"set_type": "token",
+			"card_count": 316,
+			"filename": "sft.svg"
+		}
+	]
 }
