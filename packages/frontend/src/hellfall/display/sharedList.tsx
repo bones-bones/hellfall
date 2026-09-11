@@ -1,6 +1,5 @@
 import { dirType, setSortType, sortType } from '@hellfall/shared/filters';
-import { Table } from '@workday/canvas-kit-react';
-import { ButtonProps } from '@workday/canvas-kit-react/dist/es6/button/lib/Button';
+import { GridProps, Table } from '@workday/canvas-kit-react';
 import { createStencil, createStyles, handleCsProp } from '@workday/canvas-kit-styling';
 import { createStyledTableHeader } from '../../styling';
 
@@ -39,7 +38,7 @@ const gridHeaderButtonStyles = createStyles({
   background: 'none',
 });
 
-interface gridHeaderProps<T extends sortType | setSortType> extends ButtonProps {
+interface gridHeaderProps<T extends sortType | setSortType> extends GridProps {
   alignRight?: boolean;
   value: T;
   sortIsOverridden?: () => boolean;
