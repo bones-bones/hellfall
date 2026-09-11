@@ -27,7 +27,7 @@ export const useSetUrlSync = () => {
   const [sortRules, setSortRules] = useAtom(sortAtom);
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const filter = toSetFilterType(params.get('unique'));
+    const filter = toSetFilterType(params.get('type'));
     if (filter != inputFilter) {
       setInputFilter(filter);
     }

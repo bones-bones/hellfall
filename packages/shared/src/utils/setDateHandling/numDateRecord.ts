@@ -1823,7 +1823,7 @@ export const numDateRecord: Partial<Record<SetCode, Record<number, string>>> = {
     4: '2026-07-06',
     5: '2026-07-08',
   },
-  HBB_S: {
+  HBB_SCL: {
     1: '2026-07-12',
     8: '2026-07-13',
   },
@@ -1927,7 +1927,7 @@ export const numDateRecord: Partial<Record<SetCode, Record<number, string>>> = {
   HBB_7: {
     1: '2025-09-28',
   },
-  HBB_L: {
+  HBB_HKL: {
     1: '2026-04-09',
     2: '2026-04-11',
   },

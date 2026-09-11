@@ -1,12 +1,13 @@
 import { createStyles } from '@workday/canvas-kit-styling';
 import { createStyledHR } from '../styling';
-import { useUpdateSetURL } from '../hellfall/hooks/useSetUrlSync.ts';
+import { useSetUrlSync, useUpdateSetURL } from '../hellfall/hooks/useSetUrlSync.ts';
 import { useSetResults } from '../hellfall/hooks/useSetResults.ts';
 import { SetControlBar } from '../hellfall/search-controls/SetControlBar.tsx';
 import { SetList } from '../hellfall/display/SetList.tsx';
 
 export const CubeResources = () => {
   useUpdateSetURL();
+  useSetUrlSync();
 
   const { resultSet } = useSetResults();
   return (

@@ -16,7 +16,7 @@
       },
       "print_link": {
         "url": "https://drive.google.com/file/d/1U2Ww7WElGpA95BTOwb2E2sQ0bir4FJHt/view",
-        "text": "Hellscube 1.2 PDF by eminamitie0453"
+        "text": "PDF by eminamitie0453"
       },
       "set_type": "main",
       "released_at": "2021-01-12",
@@ -906,7 +906,7 @@
         "HBB_0",
         "HBB_4",
         "HBB_7",
-        "HBB_L",
+        "HBB_HKL",
         "HBB_9"
       ],
       "filename": "hbb.svg"
@@ -918,6 +918,7 @@
       "name": "Hellscube Basic Box Old",
       "description": "Custom basic lands (original).",
       "set_type": "land",
+      "released_at": "2021-12-03",
       "parent_set_code": "HBB"
     },
     {
@@ -942,10 +943,11 @@
     {
       "object": "set",
       "id": "7a298815-362e-4fce-9d55-b0002fb260c6",
-      "code": "HBB_L",
+      "code": "HBB_HKL",
       "name": "Hellscube Basic Box HKL",
       "description": "Custom basic lands for HKL.",
       "set_type": "land",
+      "released_at": "2026-04-11",
       "parent_set_code": "HBB"
     },
     {
@@ -955,14 +957,15 @@
       "name": "Hellscube Basic Box HC9",
       "description": "Custom basic lands for HC9.",
       "set_type": "land",
+      "released_at": "2026-06-30",
       "parent_set_code": "HBB"
     },
     {
       "object": "set",
       "id": "ad05b828-cfee-4ef7-b6e9-0d7b9d553e89",
-      "code": "HBB_S",
-      "name": "Hellscube Basic Box: Lair Rejects",
-      "description": "Basic lands that got rejected from an SCL Basic Box.",
+      "code": "HBB_SCL",
+      "name": "Hellscube Basic Box: Runners-Up",
+      "description": "Basic lands that were runners-up from an SCL Basic Box.",
       "set_type": "land",
       "parent_set_code": "HBB"
     },

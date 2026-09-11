@@ -14,7 +14,7 @@ export const useSetResults = () => {
       ? setList.filter(set => set.set_type == inputFilter)
       : inputFilter
       ? setList.filter(set => !set.parent_set_code)
-      : setList;
+      : setList.filter(set => !set.code.startsWith('SCL_'));
 
     tempResults.sort(setAutoSort);
     for (let i = sortRules.length - 1; i >= 0; i--) {

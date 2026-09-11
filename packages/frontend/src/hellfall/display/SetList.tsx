@@ -133,7 +133,7 @@ const gridStyles = createStyles({
     backgroundColor: '#f5f0ff',
     ':hover': { backgroundColor: system.color.brand.surface.primary.strong },
   },
-  overflowX: 'scroll',
+  // overflowX: 'scroll',
   borderRadius: 0,
   tableLayout: 'fixed',
 });
@@ -181,7 +181,7 @@ const nameCellArrowStyles = createStyles({
   padding: '0px 0px 0px 0px',
   verticalAlign: 'inherit',
   // marginTop: '-0.25rem',
-  margin: '1px 0px 5px 0px',
+  margin: '1px 0px 5px 4px',
 });
 const nameCellIconStyles = createStyles({
   height: '18px',
@@ -200,7 +200,7 @@ const NameCell = ({ set, shouldUseArrows }: { set: HCSet; shouldUseArrows?: bool
     <Table.Cell cs={cellDefaultStyles}>
       {shouldUseArrows && set.parent_set_code && (
         <NameCellArrowWrapper>
-          <NameCellIcon size="xxs" color="#777777" icon={arrowCornerDownRightIcon} />
+          <NameCellIcon size="xxs" color="#9B9B9B" icon={arrowCornerDownRightIcon} />
         </NameCellArrowWrapper>
       )}
       <NameCellIconWrapper>
