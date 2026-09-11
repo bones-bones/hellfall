@@ -1,8 +1,116 @@
 import { setsData } from '@hellfall/shared/data';
-import { allSetsList, HCSet, isSetCode, SetCode } from '../types';
+import {
+  allSetsList,
+  HCCard,
+  HCObject,
+  HCSet,
+  isSetCode,
+  SetCode,
+  setPropOrder,
+  SetType,
+} from '@hellfall/shared/types';
+import { cardDateMap } from './cardDateMap';
 
 const sets = setsData.data;
 
+export const setPageOrder = [
+  'NRM',
+  'SFT',
+  'HBB',
+  'HCT',
+  'HCV',
+  'HCV_1',
+  'HLC_2',
+  'HCV_1_1',
+  'HLC_1',
+  'HCV_1_0',
+  'HLC_0',
+  'HLC',
+  'HCV_2',
+  'HCV_2_1',
+  'HC2_1',
+  'HCV_2_0',
+  'HC2_0',
+  'HC2',
+  'HBB_0',
+  'HCV_3',
+  'HCV_3_1',
+  'HC3_1',
+  'HCV_3_0',
+  'HC3_0',
+  'HC3',
+  'HCV_4',
+  'HBB_4',
+  'HCV_4_1',
+  'HC4_1',
+  'HCV_4_0',
+  'HC4_0',
+  'HC4',
+  'HC5',
+  'HWN',
+  'HCV_6',
+  'HCC',
+  'HC6_1',
+  'HC6_0',
+  'HC6',
+  'HCV_P',
+  'HCP',
+  'CDC',
+  'HCV_7',
+  'HBB_7',
+  'HC7_1',
+  'HC7_0',
+  'HC7',
+  'HCV_K',
+  'HCK',
+  'HCV_J',
+  'FHCJ',
+  'HCJ',
+  'HCV_8',
+  'HC8_1',
+  'HC8_0',
+  'HC8',
+  'HCV_HKL',
+  'HBB_HKL',
+  'HKL',
+  'HCV_SCL',
+  'HBB_SCL',
+  'SCL_8',
+  'SCL_7',
+  'SCL_6',
+  'SCL_5',
+  'SCL_4',
+  'SCL_3',
+  'SCL_2',
+  'SCL_1',
+  'SCL',
+  'HCV_HDH',
+  'HDH',
+  'HCV_SOH',
+  'SOH',
+  'HCV_9',
+  'HBB_9',
+  'HC9_1',
+  'HC9_0',
+  'HC9',
+  'All',
+];
+
+const allCount = sets.reduce(
+  (total, curSet) => (curSet.parent_set_code ? total : total + (curSet.card_count ?? 0)),
+  0
+);
+const allSetObject: HCSet = {
+  object: HCObject.ObjectType.Set,
+  id: '0075c7d6-96c6-4e26-a8fa-615c8fa23231',
+  code: 'All' as SetCode,
+  name: 'All Hellscube Sets',
+  description: 'All sets!',
+  set_type: '' as SetType,
+  card_count: allCount,
+};
+
+export const setList = [...sets, allSetObject];
 /**
  * maps set codes to sets
  */
@@ -14,13 +122,18 @@ const setMap = new Map(sets.map(set => [set.code, set]));
 export const colorOrderSetList = sets.filter(set => set.use_color_order).map(set => set.code);
 
 export const toSetNumber = (code: SetCode) => allSetsList.indexOf(code);
+/**
+ * Gets the position of a set on the set page
+ * @param set set to get the position for
+ */
+export const getSetPosition = (set: HCSet) => setPageOrder.indexOf(set.code);
 
 /**
  * Fixes valid set code input to actually work
  * @param code input to fix
  */
 export const fixSetCode = <T extends string>(code: T) =>
-  code.toUpperCase().replaceAll('.', '_') as T;
+  code?.toUpperCase().replaceAll('.', '_') as T;
 /**
  * Gets the display version of a set code
  * @param code input to fix
@@ -37,14 +150,14 @@ export const fixSetCodeMaybe = <T extends string>(code?: T) => (code ? fixSetCod
  * The list of sets that should only be included if include:extras is used
  */
 export const extraSetList = sets
-  .filter(set => !['main', 'side', 'lair'].includes(set.set_type))
+  .filter(set => !['main', 'side', 'lair', 'land'].includes(set.set_type))
   .map(set => set.code);
 
 /**
  * The list of card sets
  */
 export const cardSetList = sets
-  .filter(set => ['main', 'side', 'veto', 'lair'].includes(set.set_type))
+  .filter(set => ['main', 'side', 'veto', 'lair', 'land'].includes(set.set_type))
   .map(set => set.code);
 
 export const eventSetList: SetCode[] = ['CDC', 'HWN'];
@@ -61,23 +174,29 @@ export const allExceptNormal = allSetsList.filter(set => set != 'NRM');
 export const getSet = (code: SetCode): HCSet | undefined => setMap.get(fixSetCode(code));
 
 /**
- * Gets the src of a set symbol image
+ * Gets the filename of a set symbol image
  * @param set the set to get the symbol image for
  */
-export const setToSrc = (set?: HCSet): undefined | string => {
+export const setToFilename = (set?: HCSet): undefined | string => {
   if (!set) return;
   if (set.filename) {
-    return `/sets/${set.filename}`;
+    return set.filename;
   } else if (set.parent_set_code) {
-    return setToSrc(getSet(set.parent_set_code));
+    return setToFilename(getSet(set.parent_set_code));
   }
 };
 
 /**
- * Gets the src of a set symbol image
+ * Gets the filename of a set symbol image
  * @param code the set code to get the symbol image for
  */
-export const getSetSrc = (code: SetCode) => setToSrc(getSet(code));
+export const getSetFilename = (code: SetCode) => setToFilename(getSet(code));
+
+/**
+ * Gets the date of a set
+ * @param code the set code to get the date for
+ */
+export const getSetDate = (code: SetCode) => getSet(getAcceptedOrderSet(code))?.released_at;
 
 /**
  * Gets the set code that is the direct parent of another set
@@ -113,6 +232,26 @@ export const getParentSet = (code: SetCode): HCSet | undefined => {
  * @param code Set code to get the parent of
  */
 export const getParentSetCode = (code: SetCode): SetCode | undefined => getParentSet(code)?.code;
+
+/**
+ * Gets the block set code of a set
+ * @param code Set code to get the block set code of
+ */
+export const getBlockSetCode = (code: SetCode): SetCode | undefined => {
+  let set = getSet(code);
+  if (!set) return;
+  if (!set?.parent_set_code) return set.code;
+  while (set.parent_set_code) {
+    set = getSet(set.parent_set_code);
+    if (!set) return;
+  }
+  return set.code;
+};
+/**
+ * Gets the block set code of a set
+ * @param set Set to get the block set code of
+ */
+export const getBlockSetCodeForSet = (set: HCSet): SetCode | undefined => getBlockSetCode(set.code);
 
 /**
  * Gets the sets that are the children of another set
@@ -401,3 +540,57 @@ export const parseRelatedReferenceName = (
   const hcid = shouldUseBase ? match : '';
   return { name, hcid, code, collector_number, count };
 };
+
+/**
+ * Gets the correct date for a card
+ * @param card card to get the date for
+ */
+export const getDateForCard = (card: HCCard.Any) =>
+  cardDateMap.get(getAcceptedOrderSet(card.set), card.accepted_order) ?? getSetDate(card.set);
+
+/**
+ * Gets the correct date for a set code and an accepted order
+ * @param code set code to get the date for
+ * @param accepted_order accepted order to get the date for
+ */
+export const getDateForCodeNum = (code: SetCode, accepted_order: string) =>
+  cardDateMap.get(getAcceptedOrderSet(code), accepted_order) ?? getSetDate(code);
+
+/**
+ * Adds `toJSON()` to a set. Uses a predefined prop order.
+ * @param set set to add `toJSON()` to
+ */
+export const addToJSONToSet = (set: HCSet): HCSet => {
+  if (Object.prototype.hasOwnProperty.call(set, 'toJSON')) {
+    return set;
+  }
+  const ignoreLeftovers = ['toJSON'];
+  Object.defineProperty(set, 'toJSON', {
+    value(this: Record<string, any>) {
+      const ordered: Record<string, any> = {};
+      setPropOrder.forEach(prop => {
+        if (prop in this) {
+          ordered[prop] = this[prop];
+        }
+      });
+      const leftovers = (Object.keys(this) as (typeof setPropOrder)[number][]).filter(
+        left => !setPropOrder.includes(left) && !ignoreLeftovers.includes(left)
+      );
+      if (leftovers.length) {
+        // You forgot a prop.
+        throw new Error(`You forgot one or more card props: ${leftovers}`);
+      }
+      return ordered;
+    },
+    enumerable: false,
+    configurable: true,
+    writable: true,
+  });
+  return set as HCSet;
+};
+
+/**
+ * Adds `toJSON()` to sets. Uses a predefined prop order.
+ * @param sets sets to add `toJSON()` to
+ */
+export const addToJSONToSets = (sets: HCSet[]): HCSet[] => sets.map(set => addToJSONToSet(set));

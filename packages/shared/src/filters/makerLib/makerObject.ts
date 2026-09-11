@@ -1,4 +1,4 @@
-import { HCCard, HCCardSymbol, HCFormat } from '@hellfall/shared/types';
+import { HCCard, HCCardSymbol, HCFormat, HCSet } from '@hellfall/shared/types';
 import {
   cardFilterFunction,
   stateFilterFunction,
@@ -18,6 +18,8 @@ import {
   filterNameType,
   colorFilterNameType,
   printsFilterNameType,
+  setSortInterface,
+  setSortType,
 } from '../types';
 import {
   createInvalidSummary,
@@ -52,6 +54,9 @@ import {
   devotionRegexFilter,
   devotionStateFilter,
   devotionSummary,
+  dateSummary,
+  dateShareFilter,
+  filterSetSort,
 } from '../filters';
 import {
   ensureArray,
@@ -60,12 +65,13 @@ import {
   stripQuotes,
   pipSearch,
   fixValue,
-  unescapeText,
   isRegexText,
   pipMap,
   getCostsFromPermanentFaces,
   setAsFix,
   dashAsFix,
+  bothAsFix,
+  toIsoDate,
 } from '@hellfall/shared/utils';
 const parseNote = (text: string): { name: string; note?: boolean | string } => {
   if (text.endsWith('<')) {
@@ -86,7 +92,7 @@ const parseNote = (text: string): { name: string; note?: boolean | string } => {
  */
 export class SortObject implements sortInterface {
   queryName: 'sort' = 'sort';
-  constructor(public sort: sortType, public dir: dirType, public useTypes?: boolean) {}
+  constructor(public sort: sortType, public dir: dirType) {}
   /**
    * A function that sorts two cards
    * @param value1 the first card to sort
@@ -94,7 +100,21 @@ export class SortObject implements sortInterface {
    * @returns a number for `.sort()`
    */
   filter = (value1: HCCard.Any, value2: HCCard.Any) =>
-    filterSort(value1, value2, this.sort, this.dir, this.useTypes);
+    filterSort(value1, value2, this.sort, this.dir);
+}
+/**
+ * A set sort object
+ */
+export class SetSortObject implements setSortInterface {
+  queryName: 'set_sort' = 'set_sort';
+  constructor(public sort: setSortType, public dir: dirType) {}
+  /**
+   * A function that sorts two sets
+   * @param value1 the first set to sort
+   * @param value2 the second set to sort
+   * @returns a number for `.sort()`
+   */
+  filter = (value1: HCSet, value2: HCSet) => filterSetSort(value1, value2, this.sort, this.dir);
 }
 
 /**
@@ -474,6 +494,10 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
      * Whether to treat this as a set filter
      */
     public isSet?: boolean,
+    /**
+     * Whether to drop dashes in text
+     */
+    public dropDashes: boolean = true,
     defaultOp: opType = '=',
     invertOption: invertOptionType = 'flip'
   ) {
@@ -481,7 +505,10 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
       queryName,
       shareFilter,
       summary as summaryFunction<any>,
-      fixValue(ensureArray(toValue(fixValue(value, setAsFix(isSet)) as T)), setAsFix(isSet)),
+      fixValue(
+        ensureArray(toValue(fixValue(value, bothAsFix(!dropDashes, isSet)) as T)),
+        bothAsFix(!dropDashes, isSet)
+      ),
       op,
       card =>
         this.props.flatMap(
@@ -491,7 +518,7 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
               p,
               this.location,
               this.dropFaces,
-              setAsFix(this.isSet)
+              bothAsFix(!dropDashes, isSet)
             ) as string[]
         ),
       defaultOp,
@@ -506,7 +533,7 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
       this.filter(
         this.getValueToCompare(card),
         this.getOp(),
-        fixValue(this.value, setAsFix(this.isSet))
+        fixValue(this.value, bothAsFix(!this.dropDashes, this.isSet))
       ),
       this.inverted
     );
@@ -514,6 +541,31 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
    * @returns the result of `this.summary(this.getOp(), this.summaryValue, this.inverted)`
    */
   toSummary = () => (this.summary as any)(this.getOp(), this.summaryValue, this.inverted);
+}
+/**
+ * A filter object that handles dates correctly
+ */
+export class DateFilter extends PropConvertFilter<string> {
+  constructor(
+    value: string,
+    op: looseOpType,
+    dropDashes: boolean = false,
+    defaultOp: opType = '=',
+    invertOption: invertOptionType = 'flip'
+  ) {
+    super(
+      'date',
+      dateSummary as summaryFunction<any>,
+      value,
+      op,
+      toIsoDate,
+      undefined,
+      dropDashes,
+      defaultOp,
+      invertOption
+    );
+    this.filter = dateShareFilter;
+  }
 }
 
 /**
@@ -534,9 +586,18 @@ export class InFilter extends PropConvertFilter<string> {
     defaultOp: opType = '=',
     invertOption: invertOptionType = 'flip'
   ) {
-    super('in', inSummary as summaryFunction<any>, value, op, toIn, isSet, defaultOp, invertOption);
+    super(
+      'in',
+      inSummary as summaryFunction<any>,
+      value,
+      op,
+      toIn,
+      isSet,
+      undefined,
+      defaultOp,
+      invertOption
+    );
     this.summaryValue = value;
-    ({ props: this.props, location: this.location } = queryNameToValue('in'));
   }
   getValueToCompare = (card: HCCard.Any): string[] =>
     this.getAllPrints(card).flatMap(c =>

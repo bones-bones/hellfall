@@ -4,104 +4,22 @@ import {
   getFromFaces,
   listsAreExactlyEqual,
 } from '@hellfall/shared/utils';
-import { createStencil, createStyles, handleCsProp } from '@workday/canvas-kit-styling';
+import { createStyles } from '@workday/canvas-kit-styling';
 import {
   createStyledLink,
   createStyledTable,
   createStyledTableBody,
   createStyledTableCell,
   createStyledTableHead,
-  createStyledTableHeader,
   createStyledTableRow,
 } from '../../styling';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { activeCardAtom, inputSortAtom, sortAtom } from '../atoms/searchAtoms';
 import { stringToMana } from '../stringToMana';
 import { system } from '@workday/canvas-tokens-web';
-import { Table } from '@workday/canvas-kit-react';
 import { dirType, sortType } from '@hellfall/shared/filters';
-import { ButtonProps } from '@workday/canvas-kit-react/dist/es6/button/lib/Button';
 import { HCCard } from '@hellfall/shared/types';
-
-const gridHeaderStencil = createStencil({
-  vars: {},
-  base: {
-    color: '#551A8B',
-    ':hover': {
-      color: '#000000',
-    },
-    border: 0,
-    borderRadius: 0,
-    cursor: 'pointer',
-    minHeight: '30px',
-    maxHeight: '30px',
-    padding: '5px 6px 5px 6px',
-  },
-  modifiers: {
-    alignRight: {
-      true: {
-        textAlign: 'right',
-        justifyContent: 'right',
-      },
-    },
-  },
-});
-const gridHeaderButtonStyles = createStyles({
-  color: '#551A8B',
-  ':hover': {
-    color: '#000000',
-  },
-  border: 0,
-  borderRadius: 0,
-  cursor: 'pointer',
-  padding: 0,
-  background: 'none',
-});
-
-interface gridHeaderProps extends ButtonProps {
-  alignRight?: boolean;
-  value: sortType;
-  sortIsOverridden: () => boolean;
-  dirIsOverridden: () => boolean;
-  handleSortChange: (newSort: sortType) => void;
-  handleDirChange: (newDir: dirType) => void;
-  getCurrentSort: () => sortType;
-  getCurrentDir: () => dirType;
-}
-const parseSort = (order: string): sortType => order?.split(',')?.[0] as sortType;
-const parseDir = (order: string): dirType => order?.split(',')?.[1] as dirType;
-const GridHeader = ({
-  children,
-  alignRight,
-  value,
-  sortIsOverridden,
-  dirIsOverridden,
-  handleSortChange,
-  handleDirChange,
-  getCurrentSort,
-  getCurrentDir,
-  ...props
-}: gridHeaderProps) => {
-  return (
-    <Table.Header {...handleCsProp(props, gridHeaderStencil({ alignRight }))}>
-      <button
-        onClick={() => {
-          if (getCurrentSort() != value) {
-            if (!sortIsOverridden()) {
-              handleSortChange(value);
-            }
-          } else if (!dirIsOverridden()) {
-            handleDirChange(getCurrentDir() == 'desc' ? 'asc' : 'desc');
-          }
-        }}
-        className={gridHeaderButtonStyles}
-      >
-        {children} {getCurrentSort() == value ? (getCurrentDir() == 'desc' ? '▼' : '▲') : ''}
-      </button>
-    </Table.Header>
-  );
-};
-const GridHeaderNoSort = createStyledTableHeader(gridHeaderStencil.base, 'GridHeaderNoSort');
+import { GridHeader, GridHeaderNoSort, parseDir, parseSort } from './sharedList';
 
 export const Checklist = ({ cards }: { cards: HCCard.Any[] }) => {
   const setActiveCard = useSetAtom(activeCardAtom);
@@ -144,19 +62,19 @@ export const Checklist = ({ cards }: { cards: HCCard.Any[] }) => {
     <Grid>
       <GridHead>
         <CardRow>
-          <GridHeader value="set" {...headerProps}>
+          <GridHeader<sortType> value="set" {...headerProps}>
             SET
           </GridHeader>
-          <GridHeader value="setnumber" alignRight {...headerProps}>
+          <GridHeader<sortType> value="setnumber" alignRight {...headerProps}>
             №
           </GridHeader>
-          <GridHeader value="name" {...headerProps}>
+          <GridHeader<sortType> value="name" {...headerProps}>
             NAME
           </GridHeader>
-          <GridHeader value="colormanavalue" {...headerProps}>
+          <GridHeader<sortType> value="colormanavalue" {...headerProps}>
             COST
           </GridHeader>
-          <GridHeader value="manavalue" alignRight {...headerProps}>
+          <GridHeader<sortType> value="manavalue" alignRight {...headerProps}>
             MV
           </GridHeader>
           <GridHeaderNoSort>TYPE</GridHeaderNoSort>

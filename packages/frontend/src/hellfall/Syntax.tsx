@@ -269,6 +269,21 @@ export const Syntax = () => {
           You can use <code>prints:</code> to compare the number of times a card has been printed,
           or <code>sets:</code> to do the same for the number of sets a card has been in..
         </div>
+        <h2>Dates</h2>
+        <div>
+          Hellfall assigns dates to cards a bit differently than Scryfall does. For cards that go
+          through veto polls, their dates are the date of the first version of the card to pass veto
+          polls, or the date of the last version, if it was vetoed. This is determined based on the
+          date of the corresponding post in <code>#veto-polls</code>. For cards that don't go
+          through veto polls, their dates are the date that the first version of the card to be
+          accepted was posted in the corresponding submissions channel.
+        </div>
+        <br />
+        <div>
+          Most of the stuff from <Link to={'https://scryfall.com/docs/syntax#year'}>Scryfall</Link>{' '}
+          works, with the exception of using set codes as a date, since that isn't really helpful
+          given how Hellfall assigns dates to cards.
+        </div>
         <h2>Legality</h2>
         <div>
           To find cards with a given legality in a given format, use <code>f:</code>,{' '}
@@ -304,6 +319,10 @@ export const Syntax = () => {
           <code>facelayout:</code> to find face layouts, and <code>anylayout:</code> to find both.
           This includes all the layouts that work with{' '}
           <Link to={'https://scryfall.com/docs/syntax#faces'}>Scryfall</Link>.
+        </div>
+        <br />
+        <div>
+          You can also use <code>is:default</code> and <code>is:atypical.</code>
         </div>
         <br />
         <div>
@@ -367,9 +386,9 @@ export const Syntax = () => {
         <div>
           <code>unique:</code>, <code>display:</code>, and <code>prefer:</code> are implemented now,
           but they're a bit basic for now. <code>prefer:</code> currently only takes{' '}
-          <code>oldest</code> and <code>newest</code>, while <code>unique:</code> can't do unique
-          arts yet, and <code>display:full</code> is ok, but could be improved, especially on
-          desktop.
+          {mapListToCodeAnd(['newest', 'oldest', 'default', 'typical', 'none', 'exotic'])}, while{' '}
+          <code>unique:</code> can't do unique arts yet, and <code>display:full</code> is ok, but
+          could be improved, especially on desktop.
         </div>
         <br />
         <div>
@@ -401,7 +420,7 @@ export const Syntax = () => {
           of cards that were cut from those cubes after being accepted. To preserve accepted order,
           they are sorted with the half that they were cut from when using
           <code>setaccepted</code>. Also, both <code>setnumber</code> and <code>setaccepted</code>
-          treat SCL as a single set.
+          treat SCL as a single set. You can use <code>ao:</code> to search for accepted orders.
         </div>
         <h2>Miscellaneous</h2>
         <div>
@@ -424,7 +443,7 @@ export const Syntax = () => {
         </div>
         <h2>Not Implemented Yet</h2>
         <div>
-          Everything in Games, Promos, & Spotlights, Year, Languages (except{' '}
+          Everything in Games, Promos, & Spotlights and Languages (except{' '}
           {mapListToCodeAnd(['is:alchemy', 'is:rebalanced'])}){' '}
         </div>
         <h2>Won't Be Implemented</h2>

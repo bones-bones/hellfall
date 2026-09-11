@@ -30,6 +30,15 @@ export const makeCollectorNumFilter: numberPropFilterMaker = (value: string, op:
 };
 
 /**
+ * Makes a collector number filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeAcceptedOrderFilter: numberPropFilterMaker = (value: string, op: looseOpType) => {
+  return new NumberPropFilter('accepted', value, op);
+};
+
+/**
  * Makes a mana value filter
  * @param value the value from the search
  * @param op the operator from the search

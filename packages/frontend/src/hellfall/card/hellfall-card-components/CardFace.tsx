@@ -1,6 +1,6 @@
-import { faceType, HCCard } from '@hellfall/shared/types';
+import { faceType } from '@hellfall/shared/types';
 import { colorsToIndicator, stringToMana } from '../../stringToMana.tsx';
-import { formatParens, toFaces, toPlainText } from '@hellfall/shared/utils';
+import { formatParens } from '@hellfall/shared/utils';
 import {
   FlavorItalics,
   FlavorText,

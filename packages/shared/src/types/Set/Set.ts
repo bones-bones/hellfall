@@ -55,7 +55,7 @@ export const allSetsList = [
   'HC8_1',
   'HCV_8',
   'HKL',
-  'HBB_L',
+  'HBB_HKL',
   'HCV_HKL',
   'HC9',
   'HC9_0',
@@ -69,7 +69,7 @@ export const allSetsList = [
   'HDH',
   'HCV_HDH',
   'SCL_4',
-  'HBB_S',
+  'HBB_SCL',
   'SCL_5',
   'SOH',
   'HCV_SOH',
@@ -139,7 +139,7 @@ export type HCSet = HCObject.Object<HCObject.ObjectType.Set> & {
   /**
    * A link to something to help.
    */
-  quick_link?: storedLink;
+  quick_links?: storedLink[];
   /**
    * A link to a tts plugin, if not using the normal download.
    */
@@ -153,7 +153,10 @@ export type HCSet = HCObject.Object<HCObject.ObjectType.Set> & {
    */
   set_type: SetType;
   /**
-   * The date the set was finished
+   * The date the set was released.
+   *
+   * This is generally roughly the date that the corresponding submissions channel was closed
+   * for this set. However, for SCL, this is instead the date that the winners were announced.
    *
    * @type IsoDate
    */
@@ -177,10 +180,8 @@ export type HCSet = HCObject.Object<HCObject.ObjectType.Set> & {
   child_set_codes?: SetCode[];
   /**
    * The number of cards in this set.
-   *
-   * @type Integer
    */
-  // card_count: number;
+  card_count?: number;
   /**
    * Whether to order collector numbers by color (if not, defaults to using AO)
    */
@@ -199,6 +200,13 @@ export type HCSet = HCObject.Object<HCObject.ObjectType.Set> & {
    * Whether to include lands in the MPC autofill
    */
   include_lands?: boolean;
+  /**
+   * Custom JSON serialization to ensure consistent property order.
+   * This method is automatically called by JSON.stringify().
+   *
+   * @returns An ordered object representation of the card
+   */
+  toJSON?(): Record<string, any>;
 };
 
 // ,

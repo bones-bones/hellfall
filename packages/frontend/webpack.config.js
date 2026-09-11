@@ -258,7 +258,7 @@ export default function webpackConfig(webpackEnv) {
       rules: [
         {
           oneOf: [
-                       {
+            {
               test: /\.json$/,
               type: 'javascript/auto',
               include: [
@@ -290,6 +290,13 @@ export default function webpackConfig(webpackEnv) {
             {
               test: /\.css$/i,
               use: ["style-loader", "css-loader"],
+            },
+            {
+              test: /\.svg$/i,
+              include: [
+                path.resolve(__dirname, '../frontend/src/assets/sets'),
+              ],
+              type: 'asset/source',
             },
 
             // "url" loader works like "file" loader except that it embeds assets
@@ -403,10 +410,6 @@ export default function webpackConfig(webpackEnv) {
           {
             from: "public/pips",
             to: "pips",
-          },
-          {
-            from: "public/sets",
-            to: "sets",
           },
           {
             from: "public/favicon.ico",

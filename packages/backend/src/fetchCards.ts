@@ -190,6 +190,9 @@ export const fetchCards = async (usingApproved: boolean = false) => {
           image_status: entryAt('0image') ? HCImageStatus.HighRes : undefined,
         }
       );
+      if (card.accepted_order.includes('VALUE')) {
+        console.error(`card hcid: ${card.hcid} has formula wreckage`);
+      }
       const costColors = pipMap.getColorsFromText(entryAt('mana_cost'));
       if (!costColors.length && card.colors.length && !cardIsMulti) {
         addPropToFace(card, 'color_indicator', card.colors);

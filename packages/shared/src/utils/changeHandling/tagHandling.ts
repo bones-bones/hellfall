@@ -17,7 +17,7 @@ import {
   rootPropType,
 } from '@hellfall/shared/types';
 import { getDefaultFaceValue, getDefaultKindLayout, getDefaultRootValue } from './defaults';
-import { getSet } from '../setHandling';
+import { getSet } from '../setDateHandling';
 import {
   anyChange,
   createFaceChange,
@@ -1030,6 +1030,8 @@ const flagTags = [
   'no-compress',
   'irregular-mana-value',
 ];
+
+const vetoTags = ['slotsed', 'slotsed-headliner', 'bad-gameplay', 'too-strong', 'too-swingy'];
 
 /**
  * Checks if a card has a flag tag

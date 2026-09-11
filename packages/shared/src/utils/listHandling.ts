@@ -647,3 +647,86 @@ export const filterSet = <T>(set: Set<T>, predicate: (item: T) => any): Set<T> =
   }
   return ret;
 };
+
+type sortable = boolean | number | string | string[] | undefined;
+
+/**
+ * Gives the correct sort value for two values
+ *
+ * For different types, these are the ones that go first when `dirMult == 1`:
+ *
+ * boolean: false; number: smaller; string: alphabetically first; one is undefined: the defined one;
+ * list of strings: goes through lists and compares each position
+ * @param value1 first value
+ * @param value2 second value
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const valsToSort = <T extends sortable>(
+  value1: T,
+  value2: T,
+  dirMult: 1 | -1 = 1
+): number => {
+  if (typeof value1 == 'string' && typeof value2 == 'string') {
+    return value1.localeCompare(value2, undefined, { sensitivity: 'base' }) * dirMult;
+  }
+  if (Array.isArray(value1) && Array.isArray(value2)) {
+    const len = Math.max(value1.length, value2.length);
+    for (let i = 0; i < len; i++) {
+      const ret = valsToSort(value1[i], value2[i], dirMult);
+      if (ret) {
+        return ret;
+      }
+    }
+    return 0;
+  }
+  if (value1 == value2) {
+    return 0;
+  }
+  if (value1 == undefined) {
+    return -dirMult;
+  }
+  if (value2 == undefined) {
+    return dirMult;
+  }
+  return (+value1 - +value2) * dirMult;
+};
+/**
+ * Gives the correct sort value for two values after checking against a function that returns
+ * a boolean or a number, putting the smaller one (or the false one) first
+ * @template T the type of the values to sort
+ * @param callbackfn the function to use
+ * @param value1 first boolean or number
+ * @param value2 second boolean or number
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const funcToSort = <T>(
+  callbackfn: sortValueFunction<T>,
+  value1: T,
+  value2: T,
+  dirMult: 1 | -1 = 1
+) => valsToSort(callbackfn(value1), callbackfn(value2), dirMult);
+
+export type sortValueFunction<T> = (value: T) => sortable;
+
+export type sortFunction<T> = (value1: T, value2: T, dirMult?: 1 | -1) => number;
+
+const isSortValueFunction = <T>(value: any): value is sortValueFunction<T> => value?.length == 1;
+
+/**
+ * Creates a sort function given a list of functions that return booleans or numbers.
+ * Iterates through the functions until it reaches one where the values differ, then puts
+ * the smaller/false one (or bigger/true one if `dirMult == -1`) first
+ * @param args functions to use; can also take the output of itself
+ */
+export const createSortFunc = <T>(...args: (sortFunction<T> | sortValueFunction<T>)[]) => {
+  const sort = (value1: T, value2: T, dirMult: 1 | -1 = 1) => {
+    for (const sortFunc of args) {
+      const curr = isSortValueFunction(sortFunc)
+        ? funcToSort(sortFunc, value1, value2, dirMult)
+        : (sortFunc(value1, value2, dirMult) as number);
+      if (curr) return curr;
+    }
+    return 0;
+  };
+  return sort;
+};

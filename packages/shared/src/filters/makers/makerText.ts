@@ -52,8 +52,8 @@ import {
   legalityFilterMaker,
   stateFilterMaker,
   maybeNumberPropFilterMaker,
+  DateFilter,
 } from '../makerLib';
-
 /**
  * Makes an oracle id filter
  * @param value the value from the search
@@ -90,7 +90,7 @@ export const makeIDFilter: maybeNumberPropFilterMaker = (value: string, op: loos
 export const makeNameFilter: propFilterMaker = (value: string, op: looseOpType) => {
   return new PropFilter('name', value, op);
 };
-// TODO: Make cost search act more like number than string (and more like scryfall)
+
 /**
  * Makes a mana cost text filter
  * @param value the value from the search
@@ -370,6 +370,14 @@ export const makeCubeFilter: propConvertFilterMaker = (value: string, op: looseO
   return new PropConvertFilter('set', setSummary, value, op, getSetAndDirectChildSets, true);
 };
 
+/**
+ * Makes a date filter
+ * @param value the value from the search
+ * @param op the operator from the search
+ */
+export const makeDateFilter: propConvertFilterMaker = (value: string, op: looseOpType) => {
+  return new DateFilter(value, op);
+};
 /**
  * Makes a legal filter
  * @param value the value from the search
