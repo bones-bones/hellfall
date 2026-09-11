@@ -152,7 +152,7 @@ export const SetControlBar = ({
                   currentValue={getCurrentDir(i)}
                   title={'Change sort direction'}
                 />
-                {i != sortRules.length - 1 && <BarText data-is-then> then </BarText>}
+                {i < sortRules.length - 1 && <BarText data-is-then> then </BarText>}
               </div>
             ))}
             <ButtonGroup>

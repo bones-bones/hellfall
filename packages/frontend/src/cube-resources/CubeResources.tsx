@@ -18,8 +18,6 @@ export const CubeResources = () => {
           <SortSeparator />
         </>
       )}
-
-      <Separator />
       <SetList sets={resultSet} />
       {resultSet.length != 1 && (
         <>

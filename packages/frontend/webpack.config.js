@@ -294,7 +294,7 @@ export default function webpackConfig(webpackEnv) {
             {
               test: /\.svg$/i,
               include: [
-                path.resolve(__dirname, '../src/assets/sets'),
+                path.resolve(__dirname, '../frontend/src/assets/sets'),
               ],
               type: 'asset/source',
             },

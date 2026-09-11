@@ -642,7 +642,7 @@
       "object": "set",
       "id": "f5ca4bb5-7037-46c4-91d2-fff683bf7317",
       "code": "HCV_HKL",
-      "name": "Hellscube V(eto).L",
+      "name": "Hellscube V(eto).HKL",
       "description": "Cards vetoed or slotsed from HKL.",
       "set_type": "veto",
       "released_at": "2026-04-17",
@@ -744,7 +744,7 @@
       "object": "set",
       "id": "d43fde19-1d17-468a-b252-70629b93dd97",
       "code": "HCV_SCL",
-      "name": "Hellscube V(eto).S",
+      "name": "Hellscube V(eto).SCL",
       "description": "Cards from SCL that didn't make it into the top 5 but got enough upvotes.",
       "set_type": "veto",
       "parent_set_code": "HCV"
@@ -765,7 +765,7 @@
       "object": "set",
       "id": "05a4c3b8-d4c0-43e4-a1db-f0a7cfb0bf92",
       "code": "HCV_HDH",
-      "name": "Hellscube V(eto).H",
+      "name": "Hellscube V(eto).HDH",
       "description": "Cards vetoed or slotsed from HDH.",
       "set_type": "veto",
       "parent_set_code": "HCV"
@@ -801,11 +801,11 @@
       "quick_links": [
         {
           "url": "https://lh3.googleusercontent.com/d/12SJ-2tIwL7QA1plE3S7qLXKmtXhlTp79",
-          "text": "Draft Rules Front"
+          "text": "Front"
         },
         {
           "url": "https://lh3.googleusercontent.com/d/1Y1RFXGfuwx93VC_09YStIrjWMqz7L30h",
-          "text": "Draft Rules Back"
+          "text": "Back"
         },
         {
           "url": "https://gist.github.com/Juancu/056b3c00bc9eb8beae4cb290cd2d4bc9",
@@ -822,7 +822,7 @@
       "object": "set",
       "id": "e4a504f7-14b0-49b4-a3ba-26d8d72213a4",
       "code": "HCV_SOH",
-      "name": "Hellscube V(eto).D",
+      "name": "Hellscube V(eto).SOH",
       "description": "Cards vetoed or slotsed from SOH.",
       "set_type": "veto",
       "released_at": "2026-08-16",

@@ -1,4 +1,6 @@
 import { useEffect, useRef } from 'react';
+import { createStyledSVG } from './styling';
+import { createStyles } from '@workday/canvas-kit-styling';
 
 type RawSvgContext = {
   keys(): string[];
@@ -6,7 +8,7 @@ type RawSvgContext = {
 };
 
 const svgContext = require.context(
-  '@/assets/sets',
+  './assets/sets',
   false,
   /\.svg$/,
   'sync'
@@ -15,23 +17,28 @@ const svgContext = require.context(
 const svgByName: Record<string, string> = {};
 for (const key of svgContext.keys()) {
   const name = key.replace(/^\.\//, '').replace(/\.svg$/, '');
-  svgByName[name] = svgContext(key);
+  const mod = svgContext(key);
+  svgByName[name] = typeof mod === 'string' ? mod : (mod as any).default;
 }
 
-export function getSetSvg(fileName: string): string {
-  const name = fileName.replace(/\.svg$/, '');
+export function getSetSvg(filename?: string): string | null {
+  if (!filename) {
+    return null;
+  }
+  const name = filename.replace(/\.svg$/, '');
   const svg = svgByName[name];
   if (svg == null) {
-    throw new Error(`SVG "${fileName}" not found. Available: ${Object.keys(svgByName).join(', ')}`);
+    throw new Error(`SVG "${filename}" not found. Available: ${Object.keys(svgByName).join(', ')}`);
   }
   return svg;
 }
 
-export const BlackSetSVG = ({ svg }: { svg: string }) => {
+export const BlackSetSVG = ({ filename }: { filename?: string }) => {
+  const svg = getSetSvg(filename);
   const containerRef = useRef<SVGSVGElement>(null);
   useEffect(() => {
     const container = containerRef.current;
-    if (!container) return;
+    if (!container || !svg) return;
 
     // Clear previous content to prevent duplicates on re-render
     container.innerHTML = '';
@@ -51,13 +58,30 @@ export const BlackSetSVG = ({ svg }: { svg: string }) => {
     }
   }, [svg]);
 
-  return <svg ref={containerRef} />;
+  return <BlackSetIcon ref={containerRef} />;
 };
-export const WhiteSetSVG = ({ svg }: { svg: string }) => {
+const blackSetIconStyles = createStyles({
+  height: '18px',
+  width: '20px',
+  display: 'inline-block',
+  fontFamily:
+    '"Lato", "Helvetica Neue", Arial, Helvetica, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+  lineHeight: '1.25rem',
+  // alignItems: 'top',
+  padding: '0px 0px 0px 0px',
+  verticalAlign: 'inherit',
+  // marginTop: '-0.25rem',
+  margin: '1px 1px 5px 1px',
+});
+
+const BlackSetIcon = createStyledSVG('svg', blackSetIconStyles, 'BlackSetIcon');
+
+export const WhiteSetSVG = ({ filename }: { filename: string }) => {
+  const svg = getSetSvg(filename);
   const containerRef = useRef<SVGSVGElement>(null);
   useEffect(() => {
     const container = containerRef.current;
-    if (!container) return;
+    if (!container || !svg) return;
 
     // Clear previous content to prevent duplicates on re-render
     container.innerHTML = '';

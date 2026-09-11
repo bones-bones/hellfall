@@ -4,14 +4,17 @@ import {
   getRelatedsFromSet,
   HCToTTSDeck,
   listsAreExactlyEqual,
+  setToFilename,
   toCockCube,
   unescapeBase64,
 } from '@hellfall/shared/utils';
 import { createStyles } from '@workday/canvas-kit-styling';
 import {
   createStyledButton,
+  createStyledDiv,
   createStyledIcon,
   createStyledLink,
+  createStyledSpan,
   createStyledTable,
   createStyledTableBody,
   createStyledTableCell,
@@ -74,7 +77,7 @@ export const SetList = ({ sets }: { sets: HCSet[] }) => {
   return (
     <Grid>
       <GridHead>
-        <CardRow>
+        <SetRow>
           <GridHeader<setSortType> value="name" {...headerProps}>
             NAME
           </GridHeader>
@@ -93,11 +96,11 @@ export const SetList = ({ sets }: { sets: HCSet[] }) => {
           <GridHeaderNoSort>DRAFT</GridHeaderNoSort>
           <GridHeaderNoSort>MPC</GridHeaderNoSort>
           <GridHeaderNoSort>PDF</GridHeaderNoSort>
-        </CardRow>
+        </SetRow>
       </GridHead>
       <GridBody>
         {sets.map(set => (
-          <CardRow key={set.code}>
+          <SetRow key={set.code}>
             <NameCell key={`${set.code}-name`} set={set} shouldUseArrows={shouldUseArrows} />
             <CodeCell key={`${set.code}-code`}>{displaySetCode(set.code)}</CodeCell>
             <NumCell key={`${set.code}-num`}>{set.card_count}</NumCell>
@@ -117,7 +120,7 @@ export const SetList = ({ sets }: { sets: HCSet[] }) => {
             <DraftCell key={`${set.code}-draft`} set={set} cardMap={cardMap} />
             <MPCCell key={`${set.code}-mpc`} set={set} cardMap={cardMap} />
             <PDFCell key={`${set.code}-pdf`} set={set} />
-          </CardRow>
+          </SetRow>
         ))}
       </GridBody>
     </Grid>
@@ -145,12 +148,12 @@ const GridHead = createStyledTableHead(gridHeadStyles, 'GridHead');
 const gridBodyStyles = createStyles({});
 const GridBody = createStyledTableBody(gridBodyStyles, 'GridBody');
 
-const cardRowStyles = createStyles({
+const setRowStyles = createStyles({
   gridTemplateColumns:
-    'minmax(150px, 3fr) 50px 60px 150px minmax(100px, 2fr) 150px 150px 150px 150px 150px',
+    'minmax(150px, 3fr) 73px 60px 90px minmax(100px, 1.5fr) 125px 90px 90px 90px 150px',
   ':hover': { backgroundColor: system.color.brand.surface.primary.strong },
 });
-const CardRow = createStyledTableRow(cardRowStyles, 'CardRow');
+const SetRow = createStyledTableRow(setRowStyles, 'SetRow');
 const cellDefaultStyles = createStyles({
   backgroundColor: 'inherit',
   overflow: 'hidden',
@@ -171,14 +174,38 @@ const nameCellLinkStyles = createStyles({
 const NameCellLink = createStyledLink(nameCellLinkStyles, 'NameCellLink');
 // const NameCell = createStyledTableCell(cellDefaultStyles, 'NameCell');
 
-const nameCellIconStyles = createStyles({});
+const nameCellArrowStyles = createStyles({
+  height: '18px',
+  width: '20px',
+  display: 'inline-block',
+  padding: '0px 0px 0px 0px',
+  verticalAlign: 'inherit',
+  // marginTop: '-0.25rem',
+  margin: '1px 0px 5px 0px',
+});
+const nameCellIconStyles = createStyles({
+  height: '18px',
+  width: '20px',
+  display: 'inline-block',
+  padding: '0px 0px 0px 0px',
+  verticalAlign: 'inherit',
+  // marginTop: '-0.25rem',
+  margin: '1px 4px 5px 1px',
+});
 const NameCellIcon = createStyledIcon(nameCellIconStyles, 'NameCellIcon');
-
+const NameCellArrowWrapper = createStyledSpan(nameCellArrowStyles, 'NameCellArrowWrapper');
+const NameCellIconWrapper = createStyledSpan(nameCellIconStyles, 'NameCellIconWrapper');
 const NameCell = ({ set, shouldUseArrows }: { set: HCSet; shouldUseArrows?: boolean }) => {
   return (
     <Table.Cell cs={cellDefaultStyles}>
-      {shouldUseArrows && set.parent_set_code && <NameCellIcon icon={arrowCornerDownRightIcon} />}
-      {set.filename && <BlackSetSVG svg={set.filename} />}
+      {shouldUseArrows && set.parent_set_code && (
+        <NameCellArrowWrapper>
+          <NameCellIcon size="xxs" color="#777777" icon={arrowCornerDownRightIcon} />
+        </NameCellArrowWrapper>
+      )}
+      <NameCellIconWrapper>
+        <BlackSetSVG filename={setToFilename(set)} />
+      </NameCellIconWrapper>
       <NameCellLink
         key={`${set.code}-name-link`}
         to={`/hellscubes/list/${encodeURIComponent(set.code)}`}
@@ -189,7 +216,11 @@ const NameCell = ({ set, shouldUseArrows }: { set: HCSet; shouldUseArrows?: bool
   );
 };
 
-const codeCellStyles = createStyles(cellDefaultStyles, { textAlign: 'right' });
+const codeCellStyles = createStyles(cellDefaultStyles, {
+  textAlign: 'right',
+  fontFamily: 'monospace',
+  color: '#9B9B9B',
+});
 const CodeCell = createStyledTableCell(codeCellStyles, 'setCell');
 const numCellStyles = createStyles(cellDefaultStyles, {});
 const NumCell = createStyledTableCell(numCellStyles, 'NumCell');

@@ -13,6 +13,89 @@ import { cardDateMap } from './cardDateMap';
 
 const sets = setsData.data;
 
+export const setPageOrder = [
+  'NRM',
+  'SFT',
+  'HBB',
+  'HCT',
+  'HCV',
+  'HCV_1',
+  'HLC_2',
+  'HCV_1_1',
+  'HLC_1',
+  'HCV_1_0',
+  'HLC_0',
+  'HLC',
+  'HCV_2',
+  'HCV_2_1',
+  'HC2_1',
+  'HCV_2_0',
+  'HC2_0',
+  'HC2',
+  'HBB_0',
+  'HCV_3',
+  'HCV_3_1',
+  'HC3_1',
+  'HCV_3_0',
+  'HC3_0',
+  'HC3',
+  'HCV_4',
+  'HBB_4',
+  'HCV_4_1',
+  'HC4_1',
+  'HCV_4_0',
+  'HC4_0',
+  'HC4',
+  'HC5',
+  'HWN',
+  'HCV_6',
+  'HCC',
+  'HC6_1',
+  'HC6_0',
+  'HC6',
+  'HCV_P',
+  'HCP',
+  'CDC',
+  'HCV_7',
+  'HBB_7',
+  'HC7_1',
+  'HC7_0',
+  'HC7',
+  'HCV_K',
+  'HCK',
+  'HCV_J',
+  'FHCJ',
+  'HCJ',
+  'HCV_8',
+  'HC8_1',
+  'HC8_0',
+  'HC8',
+  'HCV_HKL',
+  'HBB_L',
+  'HKL',
+  'HCV_SCL',
+  'HBB_S',
+  'SCL_8',
+  'SCL_7',
+  'SCL_6',
+  'SCL_5',
+  'SCL_4',
+  'SCL_3',
+  'SCL_2',
+  'SCL_1',
+  'SCL',
+  'HCV_HDH',
+  'HDH',
+  'HCV_SOH',
+  'SOH',
+  'HCV_9',
+  'HBB_9',
+  'HC9_1',
+  'HC9_0',
+  'HC9',
+  'All',
+];
+
 const allCount = sets.reduce(
   (total, curSet) => (curSet.parent_set_code ? total : total + (curSet.card_count ?? 0)),
   0
@@ -39,7 +122,11 @@ const setMap = new Map(sets.map(set => [set.code, set]));
 export const colorOrderSetList = sets.filter(set => set.use_color_order).map(set => set.code);
 
 export const toSetNumber = (code: SetCode) => allSetsList.indexOf(code);
-export const getSetPosition = (set: HCSet) => toSetNumber(set.code) ?? 1000;
+/**
+ * Gets the position of a set on the set page
+ * @param set set to get the position for
+ */
+export const getSetPosition = (set: HCSet) => setPageOrder.indexOf(set.code);
 
 /**
  * Fixes valid set code input to actually work
