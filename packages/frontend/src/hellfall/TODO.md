@@ -74,7 +74,7 @@ Write a script to transform the database
 - add double url (both id and name) like scryfall?
 - make popup window resizeable
 - add real-card-reference tags
-- add {69}, {45}, {-2}
+- add {69}, {45}
 - make card name text render in hellfallentry below card (so if card doesn't render, the name will)
 - add collections to deal with types, tags, keywords, etc.
 - add minimize button next to close button on card pane (turns it into small popup at bottom with only cardname) (also add ability to store multiple like this) (use minus symbol)
@@ -197,3 +197,5 @@ Write a script to transform the database
 - allow people to search for e.g. hc8 with just `set:8`
 - have scl collector numbers reflect rankings but accepted orders reflect dates
 - add rotation buttons for flip/aftermath cards
+- make sure updog has correct italics
+- make sure dyes // doom blade worked

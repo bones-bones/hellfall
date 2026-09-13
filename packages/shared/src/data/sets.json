@@ -737,7 +737,7 @@
 				"HC9_1",
 				"HCV_9"
 			],
-			"card_count": 376,
+			"card_count": 450,
 			"filename": "hc9.svg"
 		},
 		{
@@ -759,7 +759,7 @@
 			"description": "The last 360 cards of Hellscube 9.",
 			"set_type": "main",
 			"parent_set_code": "HC9",
-			"card_count": 0
+			"card_count": 74
 		},
 		{
 			"object": "set",
@@ -769,7 +769,7 @@
 			"description": "Cards vetoed or slotsed from HC9.",
 			"set_type": "veto",
 			"parent_set_code": "HCV",
-			"card_count": 78
+			"card_count": 82
 		},
 		{
 			"object": "set",
@@ -979,7 +979,7 @@
 				"HCV_HDH",
 				"HCV_SOH"
 			],
-			"card_count": 820,
+			"card_count": 824,
 			"filename": "hcv.svg"
 		},
 		{
@@ -989,7 +989,7 @@
 			"name": "Tokens",
 			"description": "Custom tokens for Hellscube cards.",
 			"set_type": "token",
-			"card_count": 2057,
+			"card_count": 2059,
 			"filename": "hct.svg"
 		},
 		{
