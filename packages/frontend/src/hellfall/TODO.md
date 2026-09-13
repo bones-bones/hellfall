@@ -193,9 +193,7 @@ Write a script to transform the database
 - have the search results pull from the live db?
 - make rulings into an array
 - make hcj reprints of hcv cards override legality
-- add order for pip and set props
+- add order for pip props
 - allow people to search for e.g. hc8 with just `set:8`
 - have scl collector numbers reflect rankings but accepted orders reflect dates
 - add rotation buttons for flip/aftermath cards
-- make sure updog has correct italics
-- make sure dyes // doom blade worked
