@@ -787,9 +787,10 @@
 				"SCL_5",
 				"SCL_6",
 				"SCL_7",
-				"SCL_8"
+				"SCL_8",
+				"SCL_9"
 			],
-			"card_count": 44,
+			"card_count": 49,
 			"filename": "scl.svg"
 		},
 		{
@@ -833,7 +834,7 @@
 			"description": "Cards from SCL that didn't make it into the top 5 but got enough upvotes.",
 			"set_type": "veto",
 			"parent_set_code": "HCV",
-			"card_count": 52
+			"card_count": 55
 		},
 		{
 			"object": "set",
@@ -845,7 +846,7 @@
 			"child_set_codes": [
 				"HCV_HDH"
 			],
-			"card_count": 9,
+			"card_count": 25,
 			"filename": "hdh.svg"
 		},
 		{
@@ -955,6 +956,17 @@
 		},
 		{
 			"object": "set",
+			"id": "357f4ebd-7df6-4c44-90aa-aa78e1a3736c",
+			"code": "SCL_9",
+			"name": "Scube Lair Drop: Back to School",
+			"description": "Back to School",
+			"set_type": "lair",
+			"released_at": "2026-09-08",
+			"parent_set_code": "SCL",
+			"card_count": 5
+		},
+		{
+			"object": "set",
 			"id": "b65627ea-38e8-4b8a-85cf-7a1997f8322b",
 			"code": "HCV",
 			"name": "Hellscube V(eto)",
@@ -979,7 +991,7 @@
 				"HCV_HDH",
 				"HCV_SOH"
 			],
-			"card_count": 824,
+			"card_count": 827,
 			"filename": "hcv.svg"
 		},
 		{
@@ -989,7 +1001,7 @@
 			"name": "Tokens",
 			"description": "Custom tokens for Hellscube cards.",
 			"set_type": "token",
-			"card_count": 2059,
+			"card_count": 2067,
 			"filename": "hct.svg"
 		},
 		{
