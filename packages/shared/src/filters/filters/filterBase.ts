@@ -5,8 +5,11 @@ import {
   textListContains,
   textListIncludes,
   toNumber,
+  IsoDate,
+  toIsoDate,
 } from '@hellfall/shared/utils';
 import {
+  // dateFilterFunction,
   numFilterFunction,
   numSearch,
   numSearchFilterFunction,
@@ -20,6 +23,8 @@ import {
   textListsFilterFunction,
 } from '../types';
 import {
+  createCorrectedSummary,
+  createNumSummary,
   includeEqualsOp,
   invertOpStrict,
   opAsBool,
@@ -82,6 +87,61 @@ export const numSearchListFilter: numSearchListFilterFunction = (
   operator: opType,
   value2: numSearch
 ) => value1.some(value => numSearchFilter(value, operator, value2));
+
+/**
+ * Compares a date from a card with a date from a search
+ * @param value1 date from the card
+ * @param operator operator to use
+ * @param value2 date from the search
+ */
+export const dateFilter: textFilterFunction = (
+  value1: IsoDate,
+  operator: opType,
+  value2: IsoDate
+) => {
+  const len = Math.min(value1.length, value2.length);
+  const date1 = value1.length == len ? value1 : value1.slice(0, len);
+  const date2 = value2.length == len ? value2 : value2.slice(0, len);
+  switch (operator) {
+    case '<':
+      return date1 < date2;
+    case '<=':
+      return date1 <= date2;
+    case '=':
+      return date1 == date2;
+    case '>=':
+      return date1 >= date2;
+    case '>':
+      return date1 > date2;
+    case '!=':
+      return date1 != date2;
+  }
+};
+
+/**
+ * Compares a date list from a card with a date list from a search
+ * @param value1 date list from the card
+ * @param operator operator to use
+ * @param value2 date list from the search
+ */
+export const dateShareFilter: textListsFilterFunction = <T extends string>(
+  value1: string[],
+  operator: opType,
+  value2: T[]
+) => value1.some(v1 => value2.some(v2 => dateFilter(v1, operator, v2)));
+
+/**
+ * The summary for a date filter
+ * @param operator the operator to use
+ * @param value the date from the search
+ * @param invert dummy
+ */
+export const dateSummary = createCorrectedSummary(
+  toIsoDate,
+  createNumSummary('the date'),
+  (operator, value) => `!Unknown date "${value}"`,
+  true
+);
 
 /**
  * Compares text from a card with text from a search

@@ -151,6 +151,17 @@ export const NotMagicFrames: HCFrame[] = [
 ];
 
 /**
+ * The frames that aren't typical magic frames
+ */
+export const AtypicalFrames: HCFrame[] = [
+  HCFrame.Future,
+  HCFrame.Playtest,
+  HCFrame.Shattered,
+  HCFrame.WebsiteApp,
+  ...NotMagicFrames,
+];
+
+/**
  * Checks if a value is a {@linkcode HCFrame}
  * @param value the value to check
  */

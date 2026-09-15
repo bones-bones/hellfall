@@ -6,7 +6,8 @@ import { useAtom, useAtomValue } from 'jotai';
 import { queryAtom, sortAtom, pageAtom, inputUniqueAtom } from '../atoms/searchAtoms.ts';
 
 import { CHUNK_SIZE } from '../constants.ts';
-import { makeSort, searchCards } from '@hellfall/shared/filters';
+import { searchCards } from '@hellfall/shared/filters';
+import { nameSort } from '@hellfall/shared/utils';
 // import { useAuth } from '../../auth/AuthContext.tsx';
 
 export const useSearchResults = (asRandom?: boolean) => {
@@ -39,8 +40,7 @@ export const useSearchResults = (asRandom?: boolean) => {
       setResultSet(tempResults);
       return;
     }
-    const defaultSort = makeSort('name', 'auto');
-    tempResults.sort(defaultSort.filter);
+    tempResults.sort(nameSort);
     for (let i = sortRules.length - 1; i >= 0; i--) {
       tempResults.sort(sortRules[i].filter);
     }

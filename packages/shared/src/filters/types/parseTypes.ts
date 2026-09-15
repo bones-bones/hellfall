@@ -1,3 +1,5 @@
+import { sortType } from './filterTypes';
+
 /**
  * The names for a regular filter
  */
@@ -12,6 +14,8 @@ export const filterNames = [
   'settype',
   'cube',
   'number',
+  'accepted',
+  'date',
   'layout',
   'facelayout',
   'anylayout',
@@ -69,23 +73,45 @@ export type filterNameType = (typeof filterNames)[number];
  * @param value value to check
  */
 export const isFilterName = (value: any): value is filterNameType => filterNames.includes(value);
+
+export const equivSortAndFilterNames: Record<string, filterNameType & sortType> = {
+  s: 'set',
+  cn: 'number',
+  num: 'number',
+  collector: 'number',
+  collectornumber: 'number',
+  ao: 'accepted',
+  accept: 'accepted',
+  acceptorder: 'accepted',
+  acceptedorder: 'accepted',
+  released: 'date',
+  year: 'date',
+  month: 'date',
+  day: 'date',
+  time: 'date',
+  dates: 'date',
+  mv: 'manavalue',
+  cmc: 'manavalue',
+  c: 'creator',
+  creators: 'creator',
+  art: 'artist',
+  artists: 'artist',
+};
+
 /**
  * Equivalent strings for {@linkcode filterNameType}
  */
 export const equivFilterNames: Record<string, filterNameType> = {
+  ...equivSortAndFilterNames,
   cardid: 'id',
   hcid: 'id',
   oid: 'oracleid',
   oi: 'oracleid',
   k: 'kind',
   n: 'name',
-  s: 'set',
   b: 'block',
   g: 'group',
   st: 'settype',
-  cn: 'number',
-  collector: 'number',
-  collectornumber: 'number',
   cardlayout: 'layout',
   fl: 'facelayout',
   al: 'anylayout',
@@ -99,8 +125,6 @@ export const equivFilterNames: Record<string, filterNameType> = {
   mct: 'manatext',
   manacostt: 'manatext',
   manacosttextt: 'manatext',
-  mv: 'manavalue',
-  cmc: 'manavalue',
   t: 'type',
   super: 'supertype',
   supert: 'supertype',

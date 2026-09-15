@@ -32,6 +32,7 @@ import {
 import { getCardEntries, getCardFaceEntries, toFaces } from '../cardHandling';
 // @circular-ignore These are too intertwined to separate.
 import { addPropToFace, addPropToRoot } from './modificationHandling';
+import { getDateForCodeNum } from '../setDateHandling';
 
 const defaultRootProps: rootMappedType = {
   id: '',
@@ -270,6 +271,10 @@ export const getDefaultCard = (
         : value != '' && value != undefined && !(typeof value == 'number' && isNaN(value))
     )
     .forEach(([prop, value]) => addPropToFace(card, prop, value, 0));
+  const date = getDateForCodeNum(card.set, card.accepted_order);
+  if (date) {
+    card.released_at = date;
+  }
   return card;
 };
 

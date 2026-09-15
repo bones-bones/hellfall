@@ -257,6 +257,7 @@ const costSubstitutes: [RegExp | string, string][] = [
   ['?', '0'],
   ['9/3', '3'],
   ['-1', '0'],
+  ['-2', '0'],
   ['Orange/U', 'U'],
   ['Pickle', '0'],
   ['U/BB', 'U/B'],

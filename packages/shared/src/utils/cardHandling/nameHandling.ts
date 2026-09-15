@@ -1,6 +1,6 @@
 import { faceType, HCCard } from '@hellfall/shared/types';
 import { fixName } from '../textHandling';
-import { splitAngleSetCode } from '../setHandling';
+import { splitAngleSetCode } from '../setDateHandling';
 import { stringIterable } from '../listHandling';
 
 /** Longest common subsequence length (character sequences). */

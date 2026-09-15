@@ -55,7 +55,7 @@ export const allSetsList = [
   'HC8_1',
   'HCV_8',
   'HKL',
-  'HBB_L',
+  'HBB_HKL',
   'HCV_HKL',
   'HC9',
   'HC9_0',
@@ -69,7 +69,7 @@ export const allSetsList = [
   'HDH',
   'HCV_HDH',
   'SCL_4',
-  'HBB_S',
+  'HBB_SCL',
   'SCL_5',
   'SOH',
   'HCV_SOH',
@@ -77,6 +77,7 @@ export const allSetsList = [
   'SCL_7',
   'SCL_8',
   'HC9_1',
+  'SCL_9',
   'HCV',
   'HCT',
   'HBB',
@@ -84,6 +85,90 @@ export const allSetsList = [
   'SFT',
   'NRM',
 ] as const;
+
+export const setPageOrder = [
+  'NRM',
+  'SFT',
+  'HBB',
+  'HCT',
+  'HCV',
+  'HCV_1',
+  'HLC_2',
+  'HCV_1_1',
+  'HLC_1',
+  'HCV_1_0',
+  'HLC_0',
+  'HLC',
+  'HCV_2',
+  'HCV_2_1',
+  'HC2_1',
+  'HCV_2_0',
+  'HC2_0',
+  'HC2',
+  'HBB_0',
+  'HCV_3',
+  'HCV_3_1',
+  'HC3_1',
+  'HCV_3_0',
+  'HC3_0',
+  'HC3',
+  'HCV_4',
+  'HBB_4',
+  'HCV_4_1',
+  'HC4_1',
+  'HCV_4_0',
+  'HC4_0',
+  'HC4',
+  'HC5',
+  'HWN',
+  'HCV_6',
+  'HCC',
+  'HC6_1',
+  'HC6_0',
+  'HC6',
+  'HCV_P',
+  'HCP',
+  'CDC',
+  'HCV_7',
+  'HBB_7',
+  'HC7_1',
+  'HC7_0',
+  'HC7',
+  'HCV_K',
+  'HCK',
+  'HCV_J',
+  'FHCJ',
+  'HCJ',
+  'HCV_8',
+  'HC8_1',
+  'HC8_0',
+  'HC8',
+  'HCV_HKL',
+  'HBB_HKL',
+  'HKL',
+  'HCV_SCL',
+  'HBB_SCL',
+  'SCL_9',
+  'SCL_8',
+  'SCL_7',
+  'SCL_6',
+  'SCL_5',
+  'SCL_4',
+  'SCL_3',
+  'SCL_2',
+  'SCL_1',
+  'SCL',
+  'HCV_HDH',
+  'HDH',
+  'HCV_SOH',
+  'SOH',
+  'HCV_9',
+  'HBB_9',
+  'HC9_1',
+  'HC9_0',
+  'HC9',
+  'All',
+];
 
 /**
  * The 3-6 character code for a set
@@ -139,7 +224,7 @@ export type HCSet = HCObject.Object<HCObject.ObjectType.Set> & {
   /**
    * A link to something to help.
    */
-  quick_link?: storedLink;
+  quick_links?: storedLink[];
   /**
    * A link to a tts plugin, if not using the normal download.
    */
@@ -153,7 +238,10 @@ export type HCSet = HCObject.Object<HCObject.ObjectType.Set> & {
    */
   set_type: SetType;
   /**
-   * The date the set was finished
+   * The date the set was released.
+   *
+   * This is generally roughly the date that the corresponding submissions channel was closed
+   * for this set. However, for SCL, this is instead the date that the winners were announced.
    *
    * @type IsoDate
    */
@@ -177,10 +265,8 @@ export type HCSet = HCObject.Object<HCObject.ObjectType.Set> & {
   child_set_codes?: SetCode[];
   /**
    * The number of cards in this set.
-   *
-   * @type Integer
    */
-  // card_count: number;
+  card_count?: number;
   /**
    * Whether to order collector numbers by color (if not, defaults to using AO)
    */
@@ -199,6 +285,13 @@ export type HCSet = HCObject.Object<HCObject.ObjectType.Set> & {
    * Whether to include lands in the MPC autofill
    */
   include_lands?: boolean;
+  /**
+   * Custom JSON serialization to ensure consistent property order.
+   * This method is automatically called by JSON.stringify().
+   *
+   * @returns An ordered object representation of the card
+   */
+  toJSON?(): Record<string, any>;
 };
 
 // ,

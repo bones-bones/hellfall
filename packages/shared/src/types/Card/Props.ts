@@ -1,4 +1,5 @@
 import type { HCObject } from '../Object';
+import { HCSet } from '../Set';
 import type { HCCard } from './Card';
 import type { HCCardFace } from './CardFace';
 import type { HCRelatedCard } from './RelatedCard';
@@ -18,6 +19,7 @@ const anyPropRecord = {
   set: 'set',
   collector_number: 'collector_number',
   accepted_order: 'accepted_order',
+  released_at: 'released_at',
   rarity: 'rarity',
   layout: 'layout',
   image_status: 'image_status',
@@ -84,6 +86,7 @@ const rootPropRecord = {
   set: 'set',
   collector_number: 'collector_number',
   accepted_order: 'accepted_order',
+  released_at: 'released_at',
   rarity: 'rarity',
   layout: 'layout',
   image_status: 'image_status',
@@ -172,6 +175,28 @@ const partPropRecord = {
   persistent: 'persistent',
 } as const satisfies Record<partPropType, string>;
 export const partPropOrder: partPropType[] = Object.values(partPropRecord);
+
+const setPropRecord = {
+  object: 'object',
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  quick_links: 'quick_links',
+  tts_link: 'tts_link',
+  print_link: 'print_link',
+  set_type: 'set_type',
+  released_at: 'released_at',
+  parent_set_code: 'parent_set_code',
+  child_set_codes: 'child_set_codes',
+  card_count: 'card_count',
+  use_color_order: 'use_color_order',
+  filename: 'filename',
+  ready_for_autofill: 'ready_for_autofill',
+  include_lands: 'include_lands',
+  toJSON: 'toJSON',
+} as const satisfies Record<setPropType, string>;
+export const setPropOrder: setPropType[] = Object.values(setPropRecord);
 
 /**
  * Any prop of a card or face
@@ -332,6 +357,21 @@ export const isPartPropType = (value: any): value is partPropType => partPropOrd
 export type partValueType<K extends partPropType> = HCRelatedCard[K];
 
 /**
+ * Any prop of a set
+ */
+export type setPropType = keyof HCSet;
+/**
+ * Checks if a value is {@linkcode setPropType}
+ * @param value the value to check
+ */
+export const isSetPropType = (value: any): value is setPropType => setPropOrder.includes(value);
+/**
+ * The value that corresponds to {@linkcode setPropType}.
+ * @template K the type of the prop to get the type of value for
+ */
+export type setValueType<K extends setPropType> = HCSet[K];
+
+/**
  * An object that maps {@linkcode anyPropType} to {@linkcode anyValueType}
  */
 export type anyMappedType = { [K in anyPropType]?: anyValueType<K> };
@@ -359,6 +399,10 @@ export type faceElementMappedType = { [K in facePropType]?: faceElementValueType
  * An object that maps {@linkcode partPropType} to {@linkcode partValueType}
  */
 export type partMappedType = { [K in partPropType]?: partValueType<K> };
+/**
+ * An object that maps {@linkcode setPropType} to {@linkcode setValueType}
+ */
+export type setMappedType = { [K in setPropType]?: setValueType<K> };
 
 /**
  * The return type of calling {@linkcode Object.entries()} on {@linkcode anyMappedType}
@@ -394,6 +438,10 @@ export type faceElementEntriesType = {
  * The return type of calling {@linkcode Object.entries()} on {@linkcode partMappedType}
  */
 export type partEntriesType = { [K in partPropType]: [K, partValueType<K>] }[partPropType][];
+/**
+ * The return type of calling {@linkcode Object.entries()} on {@linkcode setMappedType}
+ */
+export type setEntriesType = { [K in setPropType]: [K, setValueType<K>] }[setPropType][];
 
 /**
  * A properly typed version of calling `Object.entries()` on a mapped type
@@ -433,3 +481,8 @@ export const getFaceElementEntries = (record: faceElementMappedType) =>
  * @param record The record to get the entries of
  */
 export const getPartEntries = (record: partMappedType) => Object.entries(record) as partEntriesType;
+/**
+ * A properly typed version of calling `Object.entries()` on a mapped type
+ * @param record The record to get the entries of
+ */
+export const getSetEntries = (record: setMappedType) => Object.entries(record) as setEntriesType;

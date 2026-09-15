@@ -448,6 +448,20 @@
       "no_shadow": true
     },
     {
+      "filename": "colorIndicators/WUPRG.svg",
+      "symbol": "CI-WUPRG",
+      "english": "Color Indicator: White, Blue, Purple, Black, Red, and Green",
+      "represents_mana": false,
+      "colors": [
+        "W",
+        "U",
+        "P",
+        "R",
+        "G"
+      ],
+      "no_shadow": true
+    },
+    {
       "filename": "colorIndicators/mono/Orange.svg",
       "symbol": "CI-Orange",
       "english": "Color Indicator: Orange",
@@ -965,6 +979,16 @@
       "english": "negative one generic mana",
       "represents_mana": true,
       "mana_value": -1,
+      "colors": [
+        "C"
+      ]
+    },
+    {
+      "filename": "mono/nums/weird/-2.svg",
+      "symbol": "-2",
+      "english": "negative two generic mana",
+      "represents_mana": true,
+      "mana_value": -2,
       "colors": [
         "C"
       ]

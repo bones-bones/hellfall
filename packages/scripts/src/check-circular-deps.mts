@@ -41,10 +41,10 @@ if (rootPackageJson.workspaces) {
 }
 const defaultPackages = [
   'packages/shared',
-  // 'packages/backend',
-  // 'packages/frontend',
-  // 'packages/server',
-  // 'packages/scripts',
+  'packages/backend',
+  'packages/frontend',
+  'packages/server',
+  'packages/scripts',
 ];
 const intPackages =
   // workspacePackages.length > 0

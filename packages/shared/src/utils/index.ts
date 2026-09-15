@@ -6,7 +6,7 @@ export * from './cockatrice';
 export * from './draftmancer';
 export * from './tts';
 // export * from './cardModification';
-export * from './setHandling.ts';
+export * from './setDateHandling';
 export * from './cubeList';
 export * from './changeHandling';
 export * from './pipsAndColors';

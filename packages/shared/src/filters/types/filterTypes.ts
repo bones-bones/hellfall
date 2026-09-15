@@ -1,7 +1,7 @@
-import { HCCard, HCCardSymbol } from '@hellfall/shared/types';
+import { HCCard, HCCardSymbol, HCSet } from '@hellfall/shared/types';
 import { colorSearch, pipSearch, shorthandType } from '@hellfall/shared/utils';
 /**
- * The type of an operator
+ * The type of an operator, excluding loose operators
  *
  * For clarity, always use `operator` as the parameter name for this
  */
@@ -99,24 +99,36 @@ export const sortTypeList = [
   'accepted',
   'setaccepted',
   'colormanavalue',
+  'date',
+  'creator',
+  'artist',
   'auto',
 ] as const;
 /**
  * a sort option
  */
 export type sortType = (typeof sortTypeList)[number];
-
 /**
  * A function that sorts two cards
  */
 export interface sortFilterFunction {
-  (
-    value1: HCCard.Any,
-    value2: HCCard.Any,
-    sort: sortType,
-    dir: dirType,
-    useTypes?: boolean
-  ): number;
+  (value1: HCCard.Any, value2: HCCard.Any, sort: sortType, dir: dirType): number;
+}
+
+/**
+ * the list of set sort options
+ */
+export const setSortTypeList = ['date', 'name', 'code', 'block', 'number', 'auto'] as const;
+/**
+ * a set sort option
+ */
+export type setSortType = (typeof setSortTypeList)[number];
+
+/**
+ * A function that sorts two sets
+ */
+export interface setSortFilterFunction {
+  (value1: HCSet, value2: HCSet, sort: setSortType, dir: dirType): number;
 }
 
 /**
@@ -135,6 +147,10 @@ export interface cardFilterFunction<T = any, S = any> extends anyFilterFunction 
   //  */
   // toSummary: summaryFunction<S>;
 }
+// /**
+//  * Any filter that compares a date from a card with a date from a search
+//  */
+// export interface dateFilterFunction extends cardFilterFunction<string, string> {}
 /**
  * Any filter that compares a string from a card with a string from a search
  */

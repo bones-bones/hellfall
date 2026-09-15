@@ -1,17 +1,33 @@
-import { HCCard, HCRelatedCard, SetCode } from '@hellfall/shared/types';
+import {
+  AtypicalFrameEffects,
+  AtypicalFrames,
+  faceType,
+  HCCard,
+  HCCardFace,
+  HCRelatedCard,
+  SetCode,
+  SetType,
+} from '@hellfall/shared/types';
 import {
   extraSetList,
   fixSetCodeMaybe,
-  getAcceptedOrderSet,
   getChildSets,
   getDirectChildSets,
+  getSet,
   splitCardName,
-  toSetNumber,
-} from '../setHandling';
-import { CardLookupMap, CardLookupObject, lookupCache, lookupMapCache } from './cardLookupMap';
+} from '../setDateHandling';
+import { CardLookupMap, lookupCache, lookupMapCache } from './cardLookupMap';
 import { fixName } from '../textHandling';
 import { isInteger } from '../numHandling';
-import { getRandom, pushToMap, stringIterable } from '../listHandling';
+import {
+  createSortFunc,
+  getRandom,
+  pushToMap,
+  stringIterable,
+  textListIncludes,
+  textListsShare,
+} from '../listHandling';
+import { dateSort } from './sortMethods';
 
 const isNonExtra = (card: HCCard.Any) =>
   !extraSetList.includes(card.set) || Object.values(card.legalities).some(l => l == 'legal');
@@ -53,7 +69,14 @@ const isLandName = (name: string) => landIdMap.has(name);
 /**
  * the list of preference options
  */
-export const preferTypeList = ['newest', 'oldest'] as const;
+export const preferTypeList = [
+  'none',
+  'exotic',
+  'newest',
+  'oldest',
+  'default',
+  'atypical',
+] as const;
 /**
  * a preference option
  */
@@ -89,20 +112,58 @@ type fullCache = {
   hcidMap: Record<string, string>;
   oracleMap: Record<string, string[]>;
 };
+
+const reverseDateSort = (value1: HCCard.Any, value2: HCCard.Any) => dateSort(value1, value2, -1);
+
+const partIsAtypical = (part: HCCard.Any | HCCardFace.MultiFaced | faceType) =>
+  textListIncludes(AtypicalFrames, part.frame) ||
+  textListsShare(AtypicalFrameEffects, part.frame_effects);
+
 /**
- * Sorts two cards based on their accepted order (can be used as a proxy for date)
+ * Checks whether a card isn't printed with standard frames and effects
+ * @param card card to check
+ */
+export const cardIsAtypical = (card: HCCard.Any) =>
+  partIsAtypical(card) || ('card_faces' in card && partIsAtypical(card.card_faces[0]));
+
+/**
+ * Checks whether a card is printed with standard frames and effects
+ * @param card card to check
+ */
+export const cardIsDefault = (card: HCCard.Any) => !cardIsAtypical(card);
+
+/**
+ * Sorts two cards based on their atypicality
  * @param value1 first card to sort
  * @param value2 second card to sort
  * @param dirMult whether to reverse the direction (if `-1`)
  */
-export const dateSort = (value1: HCCard.Any, value2: HCCard.Any, dirMult: 1 | -1 = 1) =>
-  (toSetNumber(getAcceptedOrderSet(value1.set)) - toSetNumber(getAcceptedOrderSet(value2.set)) ||
-    parseInt(value1.accepted_order) - parseInt(value2.accepted_order)) * dirMult;
-const reverseDateSort = (value1: HCCard.Any, value2: HCCard.Any) => dateSort(value1, value2, -1);
+export const atypicalSort = createSortFunc(cardIsDefault, reverseDateSort);
+
+const typicalSort = (value1: HCCard.Any, value2: HCCard.Any) => atypicalSort(value1, value2, -1);
+
+const setTypeIsNonNonExtra = (setType?: SetType) =>
+  setType && [SetType.Land, SetType.Main, SetType.Side].includes(setType);
+
+const outCube = (card: HCCard.Any) => !setTypeIsNonNonExtra(getSet(card.set)?.set_type);
+
+/**
+ * Sorts two cards by default
+ * @param value1 first card to sort
+ * @param value2 second card to sort
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const defaultSort = createSortFunc(outCube, cardIsAtypical, reverseDateSort);
+
+const exoticSort = (value1: HCCard.Any, value2: HCCard.Any) => defaultSort(value1, value2, -1);
 
 const preferToSort: Record<preferType, (value1: HCCard.Any, value2: HCCard.Any) => number> = {
+  none: defaultSort,
+  exotic: exoticSort,
   newest: reverseDateSort,
   oldest: dateSort,
+  atypical: atypicalSort,
+  default: typicalSort,
 };
 /**
  * Gets the preferred version of a card based on a {@linkcode preferType}
@@ -318,6 +379,16 @@ export class LightCardMap {
       this.getAllIdsInSetExact(code),
       ...(getDirectChildSets(code)?.map(this.getAllIdsInSetExact) ?? [])
     );
+
+  /**
+   * Returns the number of cards directly in the given set.
+   * @param code the set code to get
+   */
+  getNumInSet = (code: SetCode): number =>
+    combineSets(
+      this.getAllIdsInSetExact(code),
+      ...(getDirectChildSets(code)?.map(this.getAllIdsInSetExact) ?? [])
+    )?.size ?? 0;
 
   /**
    * Returns the portion of the CardMap object exactly in the given set as a list.

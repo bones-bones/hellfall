@@ -15,8 +15,16 @@ import {
   PipFilter,
   InvalidFilter,
   DevotionFilter,
+  SetSortObject,
 } from './makerObject';
-import { dirType, looseOpType, sortType, allPrintsGetterType, summaryFunction } from '../types';
+import {
+  dirType,
+  looseOpType,
+  sortType,
+  allPrintsGetterType,
+  summaryFunction,
+  setSortType,
+} from '../types';
 import { colorSearch, pipSearch } from '@hellfall/shared/utils';
 import { HCCardSymbol } from '@hellfall/shared/types';
 
@@ -152,6 +160,11 @@ export type stringOrNumFilterMaker = (
  * A function that creates a {@linkcode SortObject}
  * @param sort the sort option from the search
  * @param dir the sort direction option from the search
- * @param useTypes whether to use card types for color sort
  */
-export type sortMaker = (sort: sortType, dir: dirType, useTypes?: boolean) => SortObject;
+export type sortMaker = (sort: sortType, dir: dirType) => SortObject;
+/**
+ * A function that creates a {@linkcode SetSortObject}
+ * @param sort the sort option from the search
+ * @param dir the sort direction option from the search
+ */
+export type setSortMaker = (sort: setSortType, dir: dirType) => SetSortObject;

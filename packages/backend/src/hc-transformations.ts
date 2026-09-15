@@ -9,6 +9,7 @@ import {
   HCLegalitiesField,
   HCLegality,
   HCRelatedCard,
+  HCSet,
   SetCode,
   allSetsList,
   anyPropType,
@@ -33,10 +34,12 @@ import {
   tokenInvariantMap,
   textListIsContainedBy,
   cardToRelatedCard,
+  nameSort,
+  colorTypeSort,
+  addToJSONToSets,
 } from '@hellfall/shared/utils';
 import namesRawData from '@hellfall/shared/data/oracle-names.json';
 import { fetchHCJFronts } from './fetchHCJFronts.ts';
-import { makeSort } from '@hellfall/shared/filters';
 import { printHCJ } from './printHCJ.ts';
 
 const usingApproved = false;
@@ -218,6 +221,7 @@ const dataToCards = <K extends anyPropType>(
 const loadExistingData = () => {
   const databasePath = '../shared/src/data/Hellscube-Database.json';
   const tokensPath = '../shared/src/data/tokens.json';
+  const setsPath = '../shared/src/data/sets.json';
 
   let databaseContent = undefined;
   let tokensContent = undefined;
@@ -237,25 +241,29 @@ const loadExistingData = () => {
   } catch (error) {
     console.warn('Could not load tokens, proceeding with undefined content:', error);
   }
+  const sets: HCSet[] = addToJSONToSets(JSON.parse(fs.readFileSync(setsPath, 'utf-8')).data);
 
   const existingTokens = new CardMap(dataToCards(tokensContent?.data ?? []));
 
-  return { existingCards, existingTokens };
+  return { existingCards, existingTokens, sets };
 };
 const ignoreDuplicateNumbers: Partial<Record<SetCode, string[]>> = {
   HCV_1_0: ['8b'],
   HCV_2_1: ['87b'],
-  HC9_0: ['137b', '324b'],
+  HCV_J: ['10b', '10c'],
+  HC9_0: ['138b', '323b'],
 };
 const ignoreDuplicateOrders: Partial<Record<SetCode, string[]>> = {
   HLC_0: ['8b', '65b'],
   HC2_1: ['38b', '38c', '38d', '38e', '61b', '61c', '61d', '61e', '61f', '87b'],
   HC3_1: ['251b', '348b', '348c', '348d'],
   HC6_0: ['11b'],
+  HC7_1: ['156b', '156c'],
   HCJ: ['15b', '444b', '444c'],
-  HC8_0: ['292b', '292c'],
+  HCV_J: ['10b', '10c'],
+  HC8_0: ['293b', '293c'],
   HC8_1: ['31b'],
-  HC9_0: ['137b', '324b'],
+  HC9_0: ['138b', '323b'],
 };
 const nontokenTokenNames = [
   'Force of Will',
@@ -305,16 +313,14 @@ const main = async () => {
   newTokens.setMultiple(fetchHCJFronts());
 
   console.log('Running in update mode - merging with existing data...');
-  const { existingCards, existingTokens } = loadExistingData();
+  const { existingCards, existingTokens, sets } = loadExistingData();
   const merged = mergeDatabases(existingCards, newCards, existingTokens, newTokens);
   const finalCards = new CardMap(addToJSONToCards(merged));
-  const nameSort = makeSort('name', 'asc');
-  const colorSort = makeSort('color', 'asc', true);
   colorOrderSetList.forEach(set =>
     finalCards
       .getAllInSetDirect(set)
-      .sort(nameSort.filter)
-      .sort(colorSort.filter)
+      .sort(nameSort)
+      .sort(colorTypeSort)
       .forEach((card, i) => {
         card.collector_number = `${i + 1}`;
       })
@@ -358,7 +364,7 @@ const main = async () => {
   });
 
   for (const [code, nums] of collectorMap) {
-    if (code.startsWith('HCV') || ['HCT', 'NRM', 'SFT'].includes(code)) continue;
+    if (code.startsWith('HCV') || ['NRM', 'SFT'].includes(code)) continue;
     const max = Math.max(...Array.from(nums));
     for (let i = 1; i < max; i++) {
       if (!nums.has(i)) {
@@ -368,7 +374,7 @@ const main = async () => {
   }
 
   for (const [code, nums] of acceptedMap) {
-    if (code.startsWith('HCV') || ['HCT', 'NRM', 'SFT'].includes(code)) continue;
+    if (/* code.startsWith('HCV') ||  */ ['NRM', 'SFT'].includes(code)) continue;
     const max = Math.max(...Array.from(nums));
     for (let i = 1; i < max; i++) {
       if (!nums.has(i)) {
@@ -474,7 +480,7 @@ const main = async () => {
     entry.artists?.forEach(e => artistSet.add(e.replaceAll('"', '')));
     entry.tags?.forEach(e => tagSet.add(e.replaceAll('"', '')));
   });
-
+  sets.forEach(set => (set.card_count = finalCards.getNumInSet(set.code)));
   const types = Array.from(typeSet).sort((a, b) => {
     if (a > b) {
       return 1;
@@ -566,6 +572,16 @@ const main = async () => {
     JSON.stringify(
       {
         data: finalCards.cards(),
+      },
+      null,
+      '\t'
+    )
+  );
+  fs.writeFileSync(
+    '../shared/src/data/sets.json',
+    JSON.stringify(
+      {
+        data: sets,
       },
       null,
       '\t'

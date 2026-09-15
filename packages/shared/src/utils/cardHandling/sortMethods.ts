@@ -1,0 +1,194 @@
+import { colorList, HCCard, HCSet, toKindIndex } from '@hellfall/shared/types';
+import { createSortFunc, textListIncludes } from '../listHandling';
+import {
+  getAcceptedOrderSet,
+  getBlockSetCodeForSet,
+  getSetPosition,
+  toSetNumber,
+} from '../setDateHandling';
+
+const getFirstTypes = (card: HCCard.Any) =>
+  ('card_faces' in card ? card.card_faces[0] : card).types;
+const toColorNumberBoth = (card: HCCard.Any, useTypes?: boolean) => {
+  if (useTypes && textListIncludes(getFirstTypes(card), 'land')) {
+    return colorList.length + 2;
+  }
+  switch (card.colors.length) {
+    case 0:
+      return !useTypes || textListIncludes(getFirstTypes(card), 'artifact')
+        ? colorList.length + 1
+        : -1;
+    case 1:
+      return colorList.indexOf(card.colors[0]);
+  }
+  return colorList.length;
+};
+const toColorNumber = (card: HCCard.Any) => toColorNumberBoth(card);
+const toTypedColorNumber = (card: HCCard.Any) => toColorNumberBoth(card, true);
+const toTokenNumber = (card: HCCard.Any) => parseInt(card.hcid.replace(card.name, ''));
+
+/**
+ * Sorts two cards based on their color
+ * @param value1 first card to sort
+ * @param value2 second card to sort
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const colorSort = createSortFunc(toColorNumber);
+/**
+ * Sorts two cards based on their color and types (for use in setting collector numbers)
+ * @param value1 first card to sort
+ * @param value2 second card to sort
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const colorTypeSort = createSortFunc(toTypedColorNumber);
+/**
+ * Sorts two cards based on their mana value
+ * @param value1 first card to sort
+ * @param value2 second card to sort
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const manaValueSort = createSortFunc((card: HCCard.Any) => card.mana_value);
+/**
+ * Sorts two cards based on their color, then mana value
+ * @param value1 first card to sort
+ * @param value2 second card to sort
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const colorManaValueSort = createSortFunc(colorSort, manaValueSort);
+/**
+ * Sorts two cards based on their collector numbers
+ * @param value1 first card to sort
+ * @param value2 second card to sort
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const collectorNumberSort = createSortFunc((card: HCCard.Any) =>
+  parseInt(card.collector_number)
+);
+/**
+ * Sorts two cards based on their accepted order
+ * @param value1 first card to sort
+ * @param value2 second card to sort
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const acceptedOrderSort = createSortFunc((card: HCCard.Any) =>
+  parseInt(card.accepted_order)
+);
+
+/**
+ * Sorts two cards based on their hcids
+ * @param value1 first card to sort
+ * @param value2 second card to sort
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const hcidSort = (value1: HCCard.Any, value2: HCCard.Any, dirMult: -1 | 1 = 1) => {
+  if (value1.kind != value2.kind) {
+    return (toKindIndex(value1.kind) - toKindIndex(value2.kind)) * dirMult;
+  }
+  if (value1.kind == 'card') {
+    return (parseInt(value1.hcid) - parseInt(value2.hcid)) * dirMult;
+  }
+  if (value1.name == value2.name) {
+    return (toTokenNumber(value1) - toTokenNumber(value2)) * dirMult;
+  }
+  return value1.hcid < value2.hcid ? -dirMult : dirMult;
+};
+
+/**
+ * Sorts two cards based on their names
+ * @param value1 first card to sort
+ * @param value2 second card to sort
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const nameSort = createSortFunc((card: HCCard.Any) => card.name);
+
+/**
+ * Sorts two cards based on their creators
+ * @param value1 first card to sort
+ * @param value2 second card to sort
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const creatorSort = createSortFunc((card: HCCard.Any) => card.creators);
+
+/**
+ * Sorts two cards based on their artists
+ * @param value1 first card to sort
+ * @param value2 second card to sort
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const artistSort = createSortFunc((card: HCCard.Any) => card.artists);
+
+/**
+ * Sorts two cards based on their set
+ * @param value1 first card to sort
+ * @param value2 second card to sort
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const setSort = createSortFunc((card: HCCard.Any) =>
+  toSetNumber(getAcceptedOrderSet(card.set))
+);
+/**
+ * Sorts two cards based on their set, then collector number
+ * @param value1 first card to sort
+ * @param value2 second card to sort
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const setNumberSort = createSortFunc(setSort, collectorNumberSort);
+
+/**
+ * Sorts two cards based on their set, then accepted order
+ * @param value1 first card to sort
+ * @param value2 second card to sort
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const setAcceptedSort = createSortFunc(setSort, acceptedOrderSort);
+
+/**
+ * Sorts two cards based on their date, then set, then accepted order
+ * @param value1 first card to sort
+ * @param value2 second card to sort
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const dateSort = createSortFunc((card: HCCard.Any) => card.released_at, setAcceptedSort);
+
+/**
+ * Sorts two sets based on their date
+ * @param value1 first set to sort
+ * @param value2 second set to sort
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const setDateSort = createSortFunc((set: HCSet) => set.released_at);
+/**
+ * Sorts two sets based on their name
+ * @param value1 first set to sort
+ * @param value2 second set to sort
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const setNameSort = createSortFunc((set: HCSet) => set.name);
+/**
+ * Sorts two sets based on their code
+ * @param value1 first set to sort
+ * @param value2 second set to sort
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const setCodeSort = createSortFunc((set: HCSet) => set.code);
+/**
+ * Sorts two sets based on their block code
+ * @param value1 first set to sort
+ * @param value2 second set to sort
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const setBlockSort = createSortFunc(getBlockSetCodeForSet);
+/**
+ * Sorts two sets based on their number of cards
+ * @param value1 first set to sort
+ * @param value2 second set to sort
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const setCountSort = createSortFunc((set: HCSet) => set.card_count);
+/**
+ * Sorts two sets automatically (based on their position)
+ * @param value1 first set to sort
+ * @param value2 second set to sort
+ * @param dirMult whether to reverse the direction (if `-1`)
+ */
+export const setAutoSort = createSortFunc(getSetPosition);

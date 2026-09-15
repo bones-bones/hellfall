@@ -26,7 +26,7 @@ import {
 // @circular-ignore scryfall does this too, so it's probably fine
 import type { HCCardFace } from './CardFace.ts';
 import type { HCRelatedCard } from './RelatedCard.ts';
-import type { SetCode } from '../Set';
+import type { SetCode, SetType } from '../Set';
 // import { HCManaTypes, HCCoreManaTypes, HCMiscManaTypes } from './values/ManaType';
 // import { SetType } from "../Set/values";
 
@@ -449,6 +449,19 @@ export namespace HCCardFields.Print {
      * This card's rarity.
      */
     rarity?: HCRarity;
+    /**
+     * The date this card was accepted, in GMT/UTC.
+     *
+     * For cards that go through veto polls, this is the date of the first version of the card
+     * to pass veto polls, or the date of the last version, if it was vetoed. This is determined
+     * based on the date of the corresponding post in `#veto-polls`
+     *
+     * For cards that don't go through veto polls, this is the date that the first version of the
+     * card to be accepted was posted in the corresponding submissions channel.
+     *
+     * @type IsoDate
+     */
+    released_at?: string;
     /**
      * This card's set code.
      */

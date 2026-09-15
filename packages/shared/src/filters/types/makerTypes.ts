@@ -6,6 +6,8 @@ import {
   invertOptionType,
   looseOpType,
   opType,
+  setSortFilterFunction,
+  setSortType,
   sortFilterFunction,
   sortType,
   summaryFunction,
@@ -58,10 +60,28 @@ export interface sortInterface {
    * The sort direction option
    */
   dir: dirType;
+}
+
+/**
+ * An interface for a SetSortObject
+ */
+export interface setSortInterface {
   /**
-   * whether to use card types for color sort
+   * The query name
    */
-  useTypes?: boolean;
+  queryName: 'set_sort';
+  /**
+   * The filter function to use
+   */
+  filter: setSortFilterFunction;
+  /**
+   * The set sort option
+   */
+  sort: setSortType;
+  /**
+   * The sort direction option
+   */
+  dir: dirType;
 }
 
 /**

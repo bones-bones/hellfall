@@ -1,14 +1,8 @@
-// import styled from '@emotion/styled';
 import type { HCColors } from '@hellfall/shared/types';
 import { formatQuotes, pipMap, pipToSrc } from '@hellfall/shared/utils';
-import { BoxProps, TextProps } from '@workday/canvas-kit-react';
-import { createStencil, createStyles } from '@workday/canvas-kit-styling';
-import {
-  createStenciledDiv,
-  createStenciledImg,
-  createStenciledSpan,
-  createStyledImg,
-} from '../styling';
+import { TextProps } from '@workday/canvas-kit-react';
+import { createStencil } from '@workday/canvas-kit-styling';
+import { createStenciledImg, createStenciledSpan } from '../styling';
 
 export const stringToMana = (text: string, pipSize: string = '18px') => {
   return formatQuotes(text)

@@ -1,5 +1,5 @@
 import { HCCard, isSetCode, SetCode } from '@hellfall/shared/types';
-import { getCollectorNumSets, getGroupSets, splitCardName } from '../setHandling';
+import { getCollectorNumSets, getGroupSets, splitCardName } from '../setDateHandling';
 import { fixName } from '../textHandling';
 import { getAllNames, getClosestName } from './nameHandling';
 import { deleteFromMap, pushToMap } from '../listHandling';

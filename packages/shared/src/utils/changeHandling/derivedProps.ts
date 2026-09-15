@@ -44,6 +44,7 @@ import { baseIncludesFlag, fillSubKeywords, getBaseDiffs, getChangesFromTag } fr
 import { anyChange, createFaceChange, sortChanges } from './changeTypes';
 import { applyChanges, removeDuplicateChanges } from './changeHandling';
 import { getChangesFromDifferences } from './getCardDiff';
+import { getDateForCard } from '../setDateHandling';
 
 const ignoreFaceIdentityImageStatus: HCImageStatus[] = [
   HCImageStatus.Dungeon,
@@ -168,6 +169,11 @@ export const setDerivedProps = (
   });
   if (changes.length) {
     applyChanges(card, changes);
+  }
+
+  const date = getDateForCard(card);
+  if (date) {
+    card.released_at = date;
   }
 
   const getKeywordsFromFace = (face: faceType, i: number) => {

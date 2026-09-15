@@ -102,17 +102,19 @@ export const opToDoesnt = (operator: opType, invert?: boolean) =>
  * it to one that can be displayed, or returns `undefined` if the value is invalid
  * @param validSummary a {@linkcode summaryFunction<T>} to be used when the value is valid
  * @param invalidSummary a {@linkcode summaryFunction<T>} to be used when the value
+ * @param noFix whether to skip fixing the value (use when this would break stuff)
  * is invalid; make sure that the first character is `!`
  */
 export const createCorrectedSummary =
   <T>(
     correctValue: (value: T) => T | undefined,
     validSummary: summaryFunction<T>,
-    invalidSummary: summaryFunction<T>
+    invalidSummary: summaryFunction<T>,
+    noFix?: boolean
   ): summaryFunction<T> =>
   (operator: opType, value: T, invert?: boolean) =>
-    correctValue(fixValue(value)) != undefined
-      ? validSummary(operator, correctValue(fixValue(value)) as T, invert)
+    correctValue(noFix ? value : fixValue(value)) != undefined
+      ? validSummary(operator, correctValue(noFix ? value : fixValue(value)) as T, invert)
       : invalidSummary(operator, value, invert);
 /**
  * Creates a corrected {@linkcode summaryFunction<T>}
