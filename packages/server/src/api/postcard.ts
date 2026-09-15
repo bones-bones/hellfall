@@ -146,12 +146,26 @@ async function findByHcid(hcid: string) {
   return matches.docs[0] ?? null;
 }
 
+/** Trailing `(Alias Name)` — only used when the paren text matches a real card. */
+function oracleIdFromTrailingParenAlias(name: string): string | undefined {
+  const match = name.match(/\(([^()]+)\)\s*$/);
+  if (!match) return undefined;
+  const alias = match[1].trim();
+  if (!alias) return undefined;
+  const oracleId = cardMap.getOracleIDFromName(alias);
+  return oracleId && isValidV4UUID(oracleId) ? oracleId : undefined;
+}
+
 /** Reuse previous / catalog / Firestore oracle_id; mint only when truly new. */
 function resolvePostcardOracleId(body: PostcardBody, previous: firestoreCard | null): string {
   if (previous?.oracle_id) {
     return newUnlessValid(previous.oracle_id);
   }
   const { name, code } = splitMasterpiecePostcard(body.name ?? '');
+  const fromAlias = oracleIdFromTrailingParenAlias(name);
+  if (fromAlias) {
+    return fromAlias;
+  }
   if (!body.set?.startsWith('SCL') && !code) {
     return newCardId();
   }
