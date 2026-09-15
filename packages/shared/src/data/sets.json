@@ -769,7 +769,7 @@
 			"description": "Cards vetoed or slotsed from HC9.",
 			"set_type": "veto",
 			"parent_set_code": "HCV",
-			"card_count": 82
+			"card_count": 81
 		},
 		{
 			"object": "set",
@@ -788,9 +788,10 @@
 				"SCL_6",
 				"SCL_7",
 				"SCL_8",
-				"SCL_9"
+				"SCL_9",
+				"SCL_10"
 			],
-			"card_count": 49,
+			"card_count": 54,
 			"filename": "scl.svg"
 		},
 		{
@@ -834,7 +835,7 @@
 			"description": "Cards from SCL that didn't make it into the top 5 but got enough upvotes.",
 			"set_type": "veto",
 			"parent_set_code": "HCV",
-			"card_count": 55
+			"card_count": 76
 		},
 		{
 			"object": "set",
@@ -967,6 +968,17 @@
 		},
 		{
 			"object": "set",
+			"id": "915741d4-28bb-44c0-8bc4-66a15aa661a4",
+			"code": "SCL_10",
+			"name": "Scube Lair Drop: Demakes",
+			"description": "Demakes",
+			"set_type": "lair",
+			"released_at": "2026-09-15",
+			"parent_set_code": "SCL",
+			"card_count": 5
+		},
+		{
+			"object": "set",
 			"id": "b65627ea-38e8-4b8a-85cf-7a1997f8322b",
 			"code": "HCV",
 			"name": "Hellscube V(eto)",
@@ -991,7 +1003,7 @@
 				"HCV_HDH",
 				"HCV_SOH"
 			],
-			"card_count": 827,
+			"card_count": 847,
 			"filename": "hcv.svg"
 		},
 		{
