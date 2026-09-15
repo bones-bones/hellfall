@@ -79,6 +79,12 @@ export const env = {
     return process.env.DISCORD_ADMIN_ROLE_ID?.trim() || '';
   },
 
+  /** Override catalog-sync role snowflake (defaults to CATALOG_SYNC_ROLE in discord/constants.ts). */
+  get DISCORD_CATALOG_SYNC_ROLE_ID(): string | undefined {
+    const v = process.env.DISCORD_CATALOG_SYNC_ROLE_ID?.trim();
+    return v || undefined;
+  },
+
   /** GCS bucket for published catalog snapshots and card/token images. */
   get CATALOG_GCS_BUCKET(): string {
     const v = process.env.CATALOG_GCS_BUCKET?.trim();

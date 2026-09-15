@@ -40,9 +40,9 @@ export const Header = () => {
                 {user.username}
                 {/* <Link to="/settings">{user.username}</Link> */}
               </span>
-              {(user.isAdmin || user.isContributor) && (
+              {(user.isAdmin || user.isContributor || user.canSyncCatalog) && (
                 <>
-                  , <Link to="/review">review</Link>
+                  , <Link to="/review">changes</Link>
                 </>
               )}
               , <a href={logoutUrl}>logout</a>

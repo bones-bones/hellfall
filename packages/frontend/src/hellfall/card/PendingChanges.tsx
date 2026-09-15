@@ -38,7 +38,7 @@ export function PendingChanges({ cardId }: { cardId: string }) {
                 {formatChangesetDiffValue(row.after)}
               </FieldDiff>
             ))}
-            <ReviewLink to={`/review/${cardId}`}>View in Review</ReviewLink>
+            <ReviewLink to={`/review/${cardId}`}>View in Changes</ReviewLink>
           </ChangesetBlock>
         ))}
     </Container>
