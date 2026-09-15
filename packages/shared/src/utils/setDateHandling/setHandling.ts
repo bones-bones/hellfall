@@ -151,6 +151,39 @@ export const getParentSet = (code: SetCode): HCSet | undefined => {
  */
 export const getParentSetCode = (code: SetCode): SetCode | undefined => getParentSet(code)?.code;
 
+const getChildVeto = (set: HCSet) => {
+  if (set.child_set_codes) {
+    for (const child of set.child_set_codes) {
+      const childSet = getSet(child);
+      if (childSet?.set_type == 'veto') {
+        return childSet;
+      }
+    }
+  }
+};
+
+/**
+ * Gets the set that is the veto set for another set
+ * @param code Set code to get the veto set for
+ */
+export const getVetoSet = (code: SetCode): HCSet | undefined => {
+  let set = getSet(code);
+  if (!set || set.set_type == 'veto') return;
+  let veto = getChildVeto(set);
+  while (!veto && set.parent_set_code) {
+    set = getSet(set.parent_set_code);
+    if (!set) return;
+    veto = getChildVeto(set);
+  }
+  return veto;
+};
+
+/**
+ * Gets the set code that is the veto set code of another set
+ * @param code Set code to get the veto set code for
+ */
+export const getVetoSetCode = (code: SetCode): SetCode | undefined => getVetoSet(code)?.code;
+
 /**
  * Gets the block set code of a set
  * @param code Set code to get the block set code of
