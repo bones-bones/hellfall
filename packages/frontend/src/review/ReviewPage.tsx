@@ -116,6 +116,8 @@ export const ReviewPage = () => {
   const syncTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const canViewChangesets = Boolean(user?.isAdmin || user?.isContributor);
+  const canSyncCatalog = Boolean(user?.canSyncCatalog || user?.isAdmin);
+  const canAccessPage = canViewChangesets || canSyncCatalog;
 
   const fetchChangesets = useCallback(async () => {
     if (!baseUrl || !canViewChangesets) return;
@@ -237,7 +239,7 @@ export const ReviewPage = () => {
   };
 
   const handleCatalogSync = async () => {
-    if (!baseUrl || !user?.isAdmin) return;
+    if (!baseUrl || !canSyncCatalog) return;
     setSyncBusy(true);
     setSyncElapsedSec(0);
     setSyncMessage('Starting catalog sync…');
@@ -340,7 +342,7 @@ export const ReviewPage = () => {
   if (authLoading) {
     return (
       <PageContainer>
-        <Heading size="medium">Review Changesets</Heading>
+        <Heading size="medium">Changes</Heading>
         <p>Loading...</p>
       </PageContainer>
     );
@@ -349,17 +351,17 @@ export const ReviewPage = () => {
   if (!user) {
     return (
       <PageContainer>
-        <Heading size="medium">Review Changesets</Heading>
-        <p> log in to view changesets.</p>
+        <Heading size="medium">Changes</Heading>
+        <p>Log in to view changesets or sync the catalog.</p>
       </PageContainer>
     );
   }
 
-  if (!canViewChangesets) {
+  if (!canAccessPage) {
     return (
       <PageContainer>
-        <Heading size="medium">Review Changesets</Heading>
-        <p>You need admin or database contributor access to view changesets.</p>
+        <Heading size="medium">Changes</Heading>
+        <p>You need admin, database contributor, or catalog sync access for this page.</p>
       </PageContainer>
     );
   }
@@ -367,8 +369,8 @@ export const ReviewPage = () => {
   return (
     <PageContainer>
       <HeaderRow>
-        <Heading size="medium">Review Changesets</Heading>
-        {user.isAdmin && (
+        <Heading size="medium">Changes</Heading>
+        {canSyncCatalog && (
           <SyncButton disabled={syncBusy} onClick={handleCatalogSync}>
             {syncBusy ? `Syncing catalog… ${syncElapsedSec}s` : 'Sync catalog to site'}
           </SyncButton>
@@ -376,46 +378,52 @@ export const ReviewPage = () => {
       </HeaderRow>
       {syncMessage && <SyncMessage>{syncMessage}</SyncMessage>}
       {syncError && <ErrorText size="large">{syncError}</ErrorText>}
-      <FilterRow>
-        {(['pending', 'accepted', 'rejected', 'all'] as StatusFilter[]).map(s => (
-          <FilterButton key={s} data_active={filter === s} onClick={() => setFilter(s)}>
-            {s}
-          </FilterButton>
-        ))}
-      </FilterRow>
-      {loading && <p>Loading...</p>}
-      {error && <ErrorText size="large">{error}</ErrorText>}
-      {canBulkApprove && (
-        <BulkBar>
-          <BulkCheckbox
-            type="checkbox"
-            checked={allPendingSelected}
-            onChange={toggleSelectAll}
-            aria-label="Select all pending changesets"
-          />
-          <BulkLabel>
-            {selectedIds.size > 0 ? `${selectedIds.size} selected` : 'Select all'}
-          </BulkLabel>
-          {selectedIds.size > 0 && (
-            <BulkAcceptButton disabled={bulkBusy} onClick={handleBulkAccept}>
-              {bulkBusy ? 'Accepting…' : `Accept ${selectedIds.size}`}
-            </BulkAcceptButton>
+      {canViewChangesets ? (
+        <>
+          <FilterRow>
+            {(['pending', 'accepted', 'rejected', 'all'] as StatusFilter[]).map(s => (
+              <FilterButton key={s} data_active={filter === s} onClick={() => setFilter(s)}>
+                {s}
+              </FilterButton>
+            ))}
+          </FilterRow>
+          {loading && <p>Loading...</p>}
+          {error && <ErrorText size="large">{error}</ErrorText>}
+          {canBulkApprove && (
+            <BulkBar>
+              <BulkCheckbox
+                type="checkbox"
+                checked={allPendingSelected}
+                onChange={toggleSelectAll}
+                aria-label="Select all pending changesets"
+              />
+              <BulkLabel>
+                {selectedIds.size > 0 ? `${selectedIds.size} selected` : 'Select all'}
+              </BulkLabel>
+              {selectedIds.size > 0 && (
+                <BulkAcceptButton disabled={bulkBusy} onClick={handleBulkAccept}>
+                  {bulkBusy ? 'Accepting…' : `Accept ${selectedIds.size}`}
+                </BulkAcceptButton>
+              )}
+              {bulkError && <ErrorText size="medium">{bulkError}</ErrorText>}
+            </BulkBar>
           )}
-          {bulkError && <ErrorText size="medium">{bulkError}</ErrorText>}
-        </BulkBar>
+          {!loading && !error && changesets.length === 0 && <p>No changesets found.</p>}
+          {changesets.map(cs => (
+            <ChangesetCard
+              key={cs.id}
+              cs={cs}
+              isAdmin={user.isAdmin || cs.submittedBy.userId == user.id}
+              onAction={handleAction}
+              selectable={user.isAdmin && cs.status === 'pending'}
+              selected={cs.id ? selectedIds.has(cs.id) : false}
+              onToggleSelect={cs.id ? () => toggleSelect(cs.id!) : undefined}
+            />
+          ))}
+        </>
+      ) : (
+        <p>Use Sync catalog to site to publish Firestore to the live cache.</p>
       )}
-      {!loading && !error && changesets.length === 0 && <p>No changesets found.</p>}
-      {changesets.map(cs => (
-        <ChangesetCard
-          key={cs.id}
-          cs={cs}
-          isAdmin={user.isAdmin || cs.submittedBy.userId == user.id}
-          onAction={handleAction}
-          selectable={user.isAdmin && cs.status === 'pending'}
-          selected={cs.id ? selectedIds.has(cs.id) : false}
-          onToggleSelect={cs.id ? () => toggleSelect(cs.id!) : undefined}
-        />
-      ))}
     </PageContainer>
   );
 };

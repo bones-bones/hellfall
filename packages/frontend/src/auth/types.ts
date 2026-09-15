@@ -7,6 +7,8 @@ export interface AuthUser {
   email: string | null;
   isContributor: boolean;
   isAdmin: boolean;
+  /** Publish Firestore → site catalog cache (admin or catalog-sync role). */
+  canSyncCatalog?: boolean;
   defaultCludes?: string[];
   defaultSorts?: string[];
   defaultUnique?: uniqueType;

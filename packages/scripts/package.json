@@ -22,6 +22,7 @@
     "migrate-hellscube-db": "tsx src/migrate-hellscube-db.ts",
     "migrate-firestore-tags": "tsx src/migrate-firestore-tags.ts",
     "export-hellscube-db": "tsx src/export-hellscube-db.ts",
+    "export-unwind-sheet-rows": "tsx src/export-unwind-sheet-rows.ts",
     "circular-check": "tsx src/check-circular-deps.mts"
   }
 }
