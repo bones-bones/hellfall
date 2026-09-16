@@ -1,9 +1,6 @@
 import { HCCard, isSetCode, SetCode } from '@hellfall/shared/types';
-import { getCollectorNumSets, getGroupSets, splitCardName } from '../setDateHandling';
-import { fixName } from '../textHandling';
-import { getAllNames, getClosestName } from './nameHandling';
+import { getCollectorNumSets, getGroupSets } from '../setDateHandling';
 import { deleteFromMap, pushToMap } from '../listHandling';
-import { isInteger } from '../numHandling';
 
 /**
  * A cache for a {@linkcode CardLookupObject}
@@ -42,7 +39,7 @@ export class CardLookupObject {
   constructor(card: HCCard.Any | lookupCache) {
     if ('object' in card) {
       this.defaultId = card.id;
-      this.set(card);
+      this.set(card, true);
       return;
     }
     this.defaultId = card.defaultId;
@@ -98,8 +95,12 @@ export class CardLookupObject {
   /**
    * Adds a new card to the CardLookupObject.
    * @param card {@linkcode HCCard.Any} to set
+   * @param shouldChangeDefault whether to change the default id
    */
-  set(card: HCCard.Any) {
+  set(card: HCCard.Any, shouldChangeDefault: boolean) {
+    if (shouldChangeDefault) {
+      this.defaultId = card.id;
+    }
     getCollectorNumSets(card.set).forEach(code => {
       const oldMap = this.setNumMap.get(code);
       if (oldMap) {
@@ -173,7 +174,7 @@ export class CardLookupObject {
 /**
  * A version of a `Map<string,string>()` that alows direct deletion of and access to values.
  */
-class DoubleMap {
+export class DoubleMap {
   protected forwardMap = new Map<string, string>();
   protected reverseMap = new Map<string, Set<string>>();
 
@@ -261,188 +262,5 @@ class DoubleMap {
     for (const [key, value] of this.forwardMap.entries()) {
       yield [key, value];
     }
-  }
-}
-
-/**
- * A cache for a {@linkcode CardLookupMap}
- */
-export type lookupMapCache = {
-  nameMap: Record<string, lookupCache>;
-  aliasMap: Record<string, string>;
-  hcidMap: Record<string, string>;
-};
-
-/**
- * Maps a card's names to the ids that it should use. Only for use in CardMap.
- */
-export class CardLookupMap {
-  /**
-   * This maps a name to its individual maps
-   */
-  protected nameMap = new Map<string, CardLookupObject>();
-
-  /**
-   * This maps an alias to the name that it is associated with
-   */
-  protected aliasMap = new DoubleMap();
-
-  /**
-   * This maps a hcid to the preferred id to use
-   */
-  protected hcidMap = new DoubleMap();
-
-  /**
-   * Creates a new CardLookupMap
-   * @param cache the {@linkcode lookupMapCache} to use, if any
-   */
-  constructor(cache?: lookupMapCache) {
-    if (!cache) return;
-    for (const [name, card] of Object.entries(cache.nameMap)) {
-      this.nameMap.set(name, new CardLookupObject(card));
-    }
-    this.aliasMap = new DoubleMap(cache.aliasMap);
-    this.hcidMap = new DoubleMap(cache.hcidMap);
-  }
-
-  /**
-   * Returns the correct id for a name, a set code, and a collector number
-   * @param name the name of the card to get
-   * @param code the set code to use, if any
-   * @param collector_number the collector number to use, if any
-   * @param noDefault whether to return undefined if the set isn't specified (used for random land handling)
-   */
-  getBySetAndNumber = (
-    name: string,
-    code?: SetCode,
-    collector_number?: string,
-    noDefault?: boolean
-  ) => {
-    if (!name) return;
-    if (!code && this.hcidMap.has(name) && name != '3' && name != '1984') {
-      return this.hcidMap.get(name);
-    }
-    const lookup = this.nameMap.get(name) ?? this.nameMap.get(this.aliasMap.get(name) ?? '');
-    if (!lookup) return;
-    return lookup.get(code, collector_number, noDefault);
-  };
-
-  /**
-   * Returns the correct id for a card name.
-   * Can handle masterpiece prefixes, set suffixes, and collector numbers.
-   * @param text the name of the card to get
-   */
-  get = (text: string) => {
-    const { name, code, collector_number } = splitCardName(fixName(text));
-    return this.getBySetAndNumber(name, code, collector_number);
-  };
-
-  /**
-   * Returns the correct id for a card name, going with the best possible match if nothing is an exact match.
-   * @param text the name of the card to get
-   */
-  getFuzzy = (text: string) => {
-    const fixed = fixName(text);
-    const { name, code, collector_number } = splitCardName(fixed);
-    const exact = this.getBySetAndNumber(name, code, collector_number);
-    if (exact) return exact;
-    const closest = getClosestName(this.names(), fixed);
-    return this.getBySetAndNumber(closest, code, collector_number);
-  };
-
-  /**
-   * Returns the correct id for a card hcid.
-   * @param hcid the hcid of the card to get
-   */
-  getFromHCID = (hcid: string) => this.hcidMap.get(fixName(hcid));
-
-  /**
-   * Adds a new card to the CardLookupMap.
-   * @param card {@linkcode HCCard.Any} to set
-   */
-  set = (card: HCCard.Any) => {
-    const name = fixName(card.name);
-    const existing = this.nameMap.get(name);
-    const fixed = fixName(card.hcid);
-    this.hcidMap.set(fixed, card.id);
-    if (existing) {
-      existing.set(card);
-    } else {
-      this.nameMap.set(name, new CardLookupObject(card));
-      if (this.aliasMap.has(name)) {
-        this.aliasMap.delete(name);
-      }
-    }
-    const names = getAllNames(card).filter(
-      n => !this.nameMap.has(n) && !this.aliasMap.has(n) && !this.hcidMap.has(n)
-    );
-    names.forEach(n => this.aliasMap.set(n, name));
-  };
-  /**
-   * @param card the card to delete
-   * @returns true if the last version of this card has been deleted
-   */
-  delete = (card: HCCard.Any) => {
-    const fixed = fixName(card.name);
-    const lookup = this.nameMap.get(fixed);
-    if (!lookup) return false;
-    this.hcidMap.deleteKeys(card.id);
-    if (lookup.delete(card.id)) {
-      this.nameMap.delete(fixed);
-      this.aliasMap.deleteKeys(fixed);
-      return true;
-    }
-    return false;
-  };
-  /**
-   * Checks if a card with the specified name exists.
-   * Can handle masterpiece prefixes, set suffixes, and collector numbers.
-   * @param text the name of the card to check
-   */
-  has = (text: string) => {
-    const { name, code, collector_number } = splitCardName(fixName(text));
-    if (!name) return false;
-    return this.nameMap.has(name) || this.aliasMap.has(name);
-  };
-  /**
-   * Checks if a card with the specified hcid exists.
-   * @param hcid the hcid of the card to check
-   */
-  hasHCID = (hcid: string) => this.hcidMap.has(fixName(hcid));
-  /**
-   * Removes all elements from the CardLookupMap.
-   */
-  clear = () => {
-    this.nameMap.clear();
-    this.aliasMap.clear();
-    this.hcidMap.clear();
-  };
-  *names(): IterableIterator<string> {
-    for (const name of this.nameMap.keys()) {
-      yield name;
-    }
-    for (const name of this.aliasMap.keys()) {
-      yield name;
-    }
-    for (const name of this.hcidMap.keys()) {
-      if (!isInteger(name)) {
-        yield name;
-      }
-    }
-  }
-  toJSON() {
-    const nameMap: Record<string, CardLookupObject> = {};
-    for (const [name, lookup] of this.nameMap) {
-      nameMap[name] = lookup;
-    }
-    const aliasMap: Record<string, string> = {};
-    for (const [alias, name] of this.aliasMap) {
-      aliasMap[alias] = name;
-    }
-    const hcidMap: Record<string, string> = {};
-    for (const [hcid, id] of this.hcidMap) {
-      hcidMap[hcid] = id;
-    }
-    return { nameMap, aliasMap, hcidMap };
   }
 }

@@ -21,6 +21,7 @@ export const commands = [
   'fuzzy',
   'multiple_fuzzy',
   'fuzzy_prints',
+  'info',
   'all_exist',
   'get_cache',
 ] as const;
@@ -63,6 +64,7 @@ const nameRequiredCommands: commandType[] = [
   'exact_prints',
   'fuzzy',
   'fuzzy_prints',
+  'info',
 ];
 const nameListRequiredCommands: commandType[] = [
   'multiple_uuid',
@@ -76,6 +78,7 @@ const allPrintsCommands: commandType[] = [
   'oracle_id_prints',
   'exact_prints',
   'fuzzy_prints',
+  'info',
 ];
 
 type displayOptions = {
@@ -174,7 +177,12 @@ export async function morkHandler(req: HandlerRequest, res: HandlerResponse) {
       }
       if (allPrintsCommands.includes(body.command)) {
         res.statusCode = 200;
-        res.end(JSON.stringify({ data: cardMap.getAllPrints(card.oracle_id) }));
+        const out: any = { data: cardMap.getAllPrints(card.oracle_id) };
+        if (body.command == 'info') {
+          const dbCard = await firestoreDocRefToCard(cardsCol.doc(card.id));
+          out.card = dbCard ?? card;
+        }
+        res.end(JSON.stringify(out));
         return;
       }
       const dbCard = await firestoreDocRefToCard(cardsCol.doc(card.id));
