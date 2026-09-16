@@ -51,14 +51,14 @@ export const cardIsDefault = (card: HCCard.Any) => !cardIsAtypical(card);
  * @param value2 second card to sort
  * @param dirMult whether to reverse the direction (if `-1`)
  */
-const atypicalSort = createSortFunc(cardIsDefault, reverseDateSort);
+const atypicalSort = createSortFunc(cardIsDefault, dateSort);
 
 const typicalSort = (value1: HCCard.Any, value2: HCCard.Any) => atypicalSort(value1, value2, -1);
 
-const setTypeIsNonNonExtra = (setType?: SetType) =>
+const setTypeIsExtra = (setType?: SetType) =>
   setType && [SetType.Land, SetType.Main, SetType.Side].includes(setType);
 
-const outCube = (card: HCCard.Any) => !setTypeIsNonNonExtra(getSet(card.set)?.set_type);
+const outCube = (card: HCCard.Any) => !setTypeIsExtra(getSet(card.set)?.set_type);
 
 /**
  * Necessary props:
@@ -69,7 +69,7 @@ const outCube = (card: HCCard.Any) => !setTypeIsNonNonExtra(getSet(card.set)?.se
  * @param value2 second card to sort
  * @param dirMult whether to reverse the direction (if `-1`)
  */
-const defaultSort = createSortFunc(outCube, cardIsAtypical, reverseDateSort);
+const defaultSort = createSortFunc(outCube, cardIsAtypical, dateSort);
 
 const exoticSort = (value1: HCCard.Any, value2: HCCard.Any) => defaultSort(value1, value2, -1);
 
