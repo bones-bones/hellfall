@@ -11,10 +11,16 @@ import { HCCard } from '@hellfall/shared/types';
 export const commands = [
   'uuid',
   'multiple_uuid',
+  'uuid_prints',
+  'oracle_id',
+  'multiple_oracle_id',
+  'oracle_id_prints',
   'exact',
   'multiple_exact',
+  'exact_prints',
   'fuzzy',
   'multiple_fuzzy',
+  'fuzzy_prints',
   'all_exist',
   'get_cache',
 ] as const;
@@ -44,14 +50,32 @@ const jsonHeaders = (req: HandlerRequest): Record<string, string> => {
   return withCors({ 'Content-Type': 'application/json' }, req);
 };
 
-const exactCommands: commandType[] = ['exact', 'multiple_exact', 'all_exist'];
-const uuidRequiredCommands: commandType[] = ['uuid', 'multiple_uuid'];
-const nameRequiredCommands: commandType[] = ['uuid', 'exact', 'fuzzy'];
+const exactCommands: commandType[] = ['exact', 'multiple_exact', 'exact_prints', 'all_exist'];
+const uuidRequiredCommands: commandType[] = ['uuid', 'multiple_uuid', 'uuid_prints'];
+const oracleIdRequiredCommands: commandType[] = [
+  'oracle_id',
+  'multiple_oracle_id',
+  'oracle_id_prints',
+];
+const nameRequiredCommands: commandType[] = [
+  'uuid',
+  'exact',
+  'exact_prints',
+  'fuzzy',
+  'fuzzy_prints',
+];
 const nameListRequiredCommands: commandType[] = [
   'multiple_uuid',
+  'multiple_oracle_id',
   'multiple_exact',
   'multiple_fuzzy',
   'all_exist',
+];
+const allPrintsCommands: commandType[] = [
+  'uuid_prints',
+  'oracle_id_prints',
+  'exact_prints',
+  'fuzzy_prints',
 ];
 
 type displayOptions = {
@@ -89,9 +113,12 @@ export async function morkHandler(req: HandlerRequest, res: HandlerResponse) {
     }
     const getCard = uuidRequiredCommands.includes(body.command)
       ? cardMap.get
+      : oracleIdRequiredCommands.includes(body.command)
+      ? cardMap.getPreferredByOracleId
       : exactCommands.includes(body.command)
       ? cardMap.getFromName
       : cardMap.getFromFuzzyName;
+
     if (nameListRequiredCommands.includes(body.command)) {
       if (!body.card_names) {
         res.statusCode = 400;
@@ -143,6 +170,11 @@ export async function morkHandler(req: HandlerRequest, res: HandlerResponse) {
       if (!card) {
         res.statusCode = 404;
         res.end(JSON.stringify({ ok: false, reason: 'card_not_found' }));
+        return;
+      }
+      if (allPrintsCommands.includes(body.command)) {
+        res.statusCode = 200;
+        res.end(JSON.stringify({ data: cardMap.getAllPrints(card.oracle_id) }));
         return;
       }
       const dbCard = await firestoreDocRefToCard(cardsCol.doc(card.id));
