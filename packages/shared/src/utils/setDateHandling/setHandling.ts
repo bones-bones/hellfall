@@ -4,13 +4,14 @@ import {
   HCCard,
   HCObject,
   HCSet,
-  isSetCode,
+  // isSetCode,
   SetCode,
   setPageOrder,
   setPropOrder,
   SetType,
 } from '@hellfall/shared/types';
 import { cardDateMap } from './cardDateMap';
+import { isInteger } from '../numHandling';
 
 const sets = setsData.data;
 
@@ -34,6 +35,13 @@ export const setList = [...sets, allSetObject];
  */
 const setMap = new Map(sets.map(set => [set.code, set]));
 
+/**
+ * Checks if a value is a {@linkcode SetCode}
+ *
+ * Now requires exact use
+ * @param value the value to check
+ */
+export const isSetCode = (code: string): code is SetCode => setMap.has(code as SetCode);
 /**
  * The list of sets
  */
@@ -63,6 +71,51 @@ export const displaySetCode = <T extends string>(code: T) =>
  * @param code input to fix
  */
 export const fixSetCodeMaybe = <T extends string>(code?: T) => (code ? fixSetCode(code) : code);
+
+const numRegex = /^\d+$/;
+/**
+ * Converts a value to a {@linkcode SetCode} if possible
+ * @param value the value to convert
+ */
+export const toSetCode = (value: string): SetCode | undefined => {
+  const code = value.trim();
+  if (isSetCode(code)) {
+    return code;
+  }
+  if (code.includes(' ')) return;
+  const fixed = fixSetCode(value);
+  if (isSetCode(fixed)) {
+    return fixed;
+  }
+  // now the more aggressive matching starts
+  const splitCode = fixed.split('_');
+  if (splitCode[0].length == 1) {
+    // convert single chars at start to the appropriate set
+    splitCode[0] = `HC${splitCode[0]}`;
+  } else if (numRegex.test(splitCode[0])) {
+    // convert numbers at start to the appropriate set
+    splitCode[0] = `HC${parseInt(splitCode[0])}`;
+  }
+  const start = splitCode[0];
+  if (!isSetCode(start)) return;
+  if (splitCode.length == 1) {
+    return start;
+  }
+  if (splitCode[1].startsWith('HC')) {
+    splitCode[1] = splitCode[1].slice(2);
+  }
+  for (let i = 1; i < splitCode.length; i++) {
+    if (numRegex.test(splitCode[i])) {
+      if (i == 1 && start == 'SCL') {
+        splitCode[i] = `${parseInt(splitCode[i])}`.padStart(2, '0');
+      } else if (!isInteger(splitCode[i])) {
+        splitCode[i] = `${parseInt(splitCode[i])}`;
+      }
+    }
+  }
+  const joined = splitCode.join('_');
+  return isSetCode(joined) ? joined : undefined;
+};
 
 /**
  * The list of sets that should only be included if include:extras is used
