@@ -92,7 +92,7 @@ const tokenize = (
         continue;
       }
     }
-    if ((char === '"' || char === "'") && query.at(i - 1) != '\\') {
+    if ((char === '"' || char === "'" || char == '/') && query.at(i - 1) != '\\') {
       const quoteStart = i;
       let foundQuote = false;
       const quoteChar = char;
