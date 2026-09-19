@@ -409,6 +409,7 @@ export const setAsFix = (isSet?: boolean) => (isSet ? 'set' : 'fix');
 export const bothAsFix = (keepDashes?: boolean, isSet?: boolean) =>
   isSet ? 'set' : keepDashes ? 'keep' : 'fix';
 
+export type fixValueOption = 'upper' | 'lower' | 'fix' | 'keep' | 'set';
 /**
  * Fixes a value by unescaping all text; can go inside arrays, but not other objects
  * @template T type of the value to fix
@@ -416,10 +417,7 @@ export const bothAsFix = (keepDashes?: boolean, isSet?: boolean) =>
  * @param option how to fix the text; fix does unescape; keep keeps dashes;
  * others just do the corresponding text transformation
  */
-export const fixValue = <T>(
-  value: T,
-  option: 'upper' | 'lower' | 'fix' | 'keep' | 'set' = 'fix'
-): T => {
+export const fixValue = <T>(value: T, option: fixValueOption = 'fix'): T => {
   if (typeof value == 'string') {
     switch (option) {
       case 'fix':

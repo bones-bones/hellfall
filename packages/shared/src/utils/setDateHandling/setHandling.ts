@@ -127,16 +127,20 @@ export const toSetCode = (value: string): SetCode | undefined => {
     } else {
       splitCode[0] = `HC${parseInt(splitCode[0])}`;
     }
+  } else if (splitCode[0] == 'HC1') {
+    splitCode[0] = 'HLC';
   }
   const start = splitCode[0];
   if (!isSetCode(start)) return;
   if (splitCode.length == 1) {
     return start;
   }
-  if (splitCode[1].startsWith('HC')) {
-    splitCode[1] = splitCode[1].slice(2);
-  } else if (splitCode[1] == 'HLC') {
-    splitCode[1] = '1';
+  if (['HBB', 'HCV'].includes(start)) {
+    if (splitCode[1].startsWith('HC')) {
+      splitCode[1] = splitCode[1].slice(2);
+    } else if (splitCode[1] == 'HLC') {
+      splitCode[1] = '1';
+    }
   }
   for (let i = 1; i < splitCode.length; i++) {
     if (numRegex.test(splitCode[i])) {

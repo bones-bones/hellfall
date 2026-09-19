@@ -473,7 +473,8 @@ export const anyLayoutSummary = createCorrectedDoubleSummary(
 export const setSummary = createCorrectedSummary<string>(
   toDisplaySetCode,
   (operator, value) => `the set is ${opToNot(operator)} "${value}"`,
-  (operator, value) => `!Unknown set code "${value}"`
+  (operator, value) => `!Unknown set code "${value}"`,
+  'set'
 );
 /**
  * The summary for a block filter
@@ -484,7 +485,8 @@ export const setSummary = createCorrectedSummary<string>(
 export const blockSummary = createCorrectedSummary<string>(
   toDisplaySetCode,
   (operator, value) => `the block is ${opToNot(operator)} "${value}"`,
-  (operator, value) => `!Unknown set code "${value}"`
+  (operator, value) => `!Unknown set code "${value}"`,
+  'set'
 );
 /**
  * The summary for a group filter
@@ -495,7 +497,8 @@ export const blockSummary = createCorrectedSummary<string>(
 export const groupSummary = createCorrectedSummary<string>(
   toDisplaySetCode,
   (operator, value) => `the set is ${opToNot(operator)} from the "${value}" set group`,
-  (operator, value) => `!Unknown set code "${value}"`
+  (operator, value) => `!Unknown set code "${value}"`,
+  'set'
 );
 /**
  * The strings that can be converted to {@linkcode SetType} and their conversions
@@ -522,7 +525,7 @@ export const setTypeSummary = createCorrectedSummary<string>(
 );
 
 export const toIn = (value: string): SetType | SetCode[] | undefined => {
-  const set_type = toSetType(value);
+  const set_type = toSetType(fixValue(value));
   if (set_type) {
     return set_type;
   }
@@ -532,15 +535,26 @@ export const toIn = (value: string): SetType | SetCode[] | undefined => {
   }
 };
 
-const isIn = (value: string): boolean | undefined => Boolean(toSetType(value) || toSetCode(value));
+const toInSummary = (value: string): string | undefined => {
+  const set_type = toSetType(fixValue(value));
+  if (set_type) {
+    return value;
+  }
+  const code = toSetCode(value);
+  if (code) {
+    return code;
+  }
+};
+
 /**
  * The summary for a set inclusion filter
  * @param operator the operator to use
  * @param value the set/code from the search
  * @param invert dummy
  */
-export const inSummary = createSummary(
-  isIn,
+export const inSummary = createCorrectedSummary(
+  toInSummary,
   (operator, value) => `the card was ${opToNot(operator)} in "${value}"`,
-  (operator, value) => `!Unknown set code "${value}"`
+  (operator, value) => `!Unknown set code "${value}"`,
+  'keep'
 );

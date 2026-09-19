@@ -388,3 +388,17 @@ export type anyFilterNameType =
   | printsFilterNameType
   | 'devotion'
   | 'comp';
+
+/**
+ * The list of all the filter names for set queries (meaning that extras shouldn't be autofiltered)
+ *
+ * Only filter names that can actually be the `queryName` for a filter object need to be here
+ */
+export const setFilterNameList: anyFilterNameType[] = [
+  'set',
+  'block',
+  'group',
+  'settype',
+  'in',
+  'sets',
+];

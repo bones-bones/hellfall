@@ -27,7 +27,13 @@ import {
   summaryFunction,
   toDevotionFilterName,
 } from '../types';
-import { containsOp, createNumSummary, opAsBool, opToDont } from '../utils';
+import {
+  containsOp,
+  createComparisonSummary,
+  createNumSummary,
+  opAsBool,
+  opToDont,
+} from '../utils';
 import { numFilter, numSearchListFilter } from './filterBase';
 
 /**
@@ -78,7 +84,7 @@ export const manaSummary: summaryFunction<pipSearch> = (
       return `!Unknown pips ${invalids.map(s => `{${s}}`).join(', ')}`;
     }
   }
-  return createNumSummary('the mana cost is', true)(
+  return createComparisonSummary('the mana cost is')(
     operator,
     ensurePips(value)
       .map(p => `{${p.symbol}}`)

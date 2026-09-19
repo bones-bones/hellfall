@@ -7,6 +7,7 @@ import {
   xor,
   fixValue,
   xnor,
+  fixValueOption,
 } from '@hellfall/shared/utils';
 import { isFormat } from '@hellfall/shared/types';
 
@@ -110,13 +111,14 @@ export const createCorrectedSummary =
     correctValue: (value: T) => T | undefined,
     validSummary: summaryFunction<T>,
     invalidSummary: summaryFunction<T>,
-    noFix?: boolean
+    option: fixValueOption = 'fix'
   ): summaryFunction<T> =>
-  (operator: opType, value: T, invert?: boolean) =>
-    correctValue(noFix ? value : fixValue(value)) != undefined
-      ? validSummary(operator, correctValue(noFix ? value : fixValue(value)) as T, invert)
+  (operator: opType, value: T, invert?: boolean) => {
+    const correct = correctValue(fixValue(value, option));
+    return correct != undefined
+      ? validSummary(operator, correct, invert)
       : invalidSummary(operator, value, invert);
-
+  };
 /**
  * Creates a corrected {@linkcode summaryFunction<T>}
  * @template T the type of the value to use
@@ -146,26 +148,31 @@ export const createCorrectedDoubleSummary =
  * @param value value to use
  * @param invert whether to invert it
  */
-export const baseNumSummary: summaryFunction<numSearch> = (
+const baseNumSummary: summaryFunction<numSearch> = (
   operator: opType,
   value: numSearch,
   invert?: boolean
 ) => `${invert ? 'not ' : ''}${operator} ${value}`;
+
 /**
- * Creates a {@linkcode summaryFunction<numSearch>}
+ * Creates a {@linkcode summaryFunction<numSearch>} that's always valid (for non-number comparisons)
+ * @param summaryStart a string to be used at the start
+ */
+export const createComparisonSummary =
+  (summaryStart: string): summaryFunction<numSearch> =>
+  (operator: opType, value: numSearch, invert?: boolean) =>
+    `${summaryStart} ${baseNumSummary(operator, value, invert)}`;
+
+/**
+ * Creates a {@linkcode summaryFunction<numSearch>} (only for actual numbers)
  * @param validSummary a string to be used at the start when the value is valid
- * @param forceValid whether to force the valid string to be used
  * @param invalidSummary a string to be used when the value is invalid; if
  * omitted, defaults to `'!The value must be a number (or convertible to one)'`
  */
 export const createNumSummary =
-  (
-    validSummary: string,
-    forceValid?: boolean,
-    invalidSummary?: string
-  ): summaryFunction<numSearch> =>
+  (validSummary: string, invalidSummary?: string): summaryFunction<numSearch> =>
   (operator: opType, value: numSearch, invert?: boolean) =>
-    toNumber(value) != undefined || forceValid
+    toNumber(value) != undefined
       ? `${validSummary} ${baseNumSummary(operator, value, invert)}`
       : invalidSummary ?? `!The value must be a number (or convertible to one)`;
 /**
@@ -226,11 +233,10 @@ export const createColorSummary =
       return `!Unknown color "${value}"`;
     }
     const isNum = typeof value == 'number';
-    return createNumSummary(
+    return createComparisonSummary(
       `the ${isNum ? `number of ${numberSummary}` : colorSummary} ${
         shortSummary || isNum ? 'is' : 'are'
-      }`,
-      true
+      }`
     )(operator, isNum ? value : value.join(''), invert);
   };
 
@@ -247,10 +253,15 @@ export const createSummary =
   <T>(
     valueIsCorrect: (value: T) => boolean | undefined,
     validSummary: summaryFunction<T>,
-    invalidSummary: summaryFunction<T>
+    invalidSummary: summaryFunction<T>,
+    option: fixValueOption = 'fix'
   ): summaryFunction<T> =>
   (operator: opType, value: T, invert?: boolean) =>
-    (valueIsCorrect(fixValue(value)) ? validSummary : invalidSummary)(operator, value, invert);
+    (valueIsCorrect(fixValue(value, option)) ? validSummary : invalidSummary)(
+      operator,
+      value,
+      invert
+    );
 
 /**
  * Creates a {@linkcode summaryFunction<string>} for use in a legality filter
