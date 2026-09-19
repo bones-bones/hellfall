@@ -1,5 +1,5 @@
-import { HCCard, isSetCode, SetCode } from '@hellfall/shared/types';
-import { getCollectorNumSets, getGroupSets } from '../setDateHandling';
+import { HCCard, SetCode } from '@hellfall/shared/types';
+import { getCollectorNumSets, getGroupSets, toSetCode } from '../setDateHandling';
 import { deleteFromMap, pushToMap } from '../listHandling';
 
 /**
@@ -44,13 +44,15 @@ export class CardLookupObject {
     }
     this.defaultId = card.defaultId;
     for (const [set, ids] of Object.entries(card.setMap)) {
-      if (isSetCode(set)) {
-        this.setMap.set(set, new Set(ids));
+      const code = toSetCode(set);
+      if (code) {
+        this.setMap.set(code, new Set(ids));
       }
     }
     for (const [set, numIds] of Object.entries(card.setNumMap)) {
-      if (isSetCode(set)) {
-        this.setNumMap.set(set, new Map<string, string>(Object.entries(numIds)));
+      const code = toSetCode(set);
+      if (code) {
+        this.setNumMap.set(code, new Map<string, string>(Object.entries(numIds)));
       }
     }
   }

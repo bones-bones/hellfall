@@ -25,10 +25,10 @@ import {
   isValidV4UUID,
   landInvariantMap,
   CardMap,
-  fixSetCode,
   getParentSetCode,
   semiSplit,
   convertNamesToColors,
+  toSetCode,
 } from '@hellfall/shared/utils';
 import { hcjAoToCNMap } from './hcjCNMap.ts';
 
@@ -156,9 +156,9 @@ export const fetchCards = async (usingApproved: boolean = false) => {
           image: entryAt('image'),
           image_status: HCImageStatus.HighRes,
           creators: semiSplit(entryAt('creators')),
-          set: fixSetCode(entryAt('set')) as SetCode,
+          set: toSetCode(entryAt('set')) ?? (entryAt('set') as SetCode),
           collector_number:
-            fixSetCode(entryAt('set')) == 'HCJ'
+            toSetCode(entryAt('set')) == 'HCJ'
               ? hcjAoToCNMap.get(entryAt('accepted_order'))
               : entryAt('accepted_order'),
           accepted_order: entryAt('accepted_order'),

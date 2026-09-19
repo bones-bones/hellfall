@@ -177,6 +177,12 @@ export const setPageOrder = [
  */
 export type SetCode = (typeof allSetsList)[number];
 
+type ReplaceUnderscoreWithDot<T extends string> = T extends `${infer Before}_${infer After}`
+  ? `${Before}.${ReplaceUnderscoreWithDot<After>}`
+  : T;
+
+export type displaySetCode = ReplaceUnderscoreWithDot<SetCode>;
+
 /**
  * A stored link.
  */

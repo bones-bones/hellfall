@@ -9,6 +9,8 @@ import {
   getSetAndDirectChildSets,
   xor,
   fixValue,
+  toDisplaySetCode,
+  toSetCode,
 } from '@hellfall/shared/utils';
 import {
   opType,
@@ -35,9 +37,9 @@ import {
   HCLayout,
   isKind,
   HCBorderColor,
-  isSetCode,
   SetType,
   isSetType,
+  SetCode,
 } from '@hellfall/shared/types';
 import {
   frameEffectNames,
@@ -468,8 +470,8 @@ export const anyLayoutSummary = createCorrectedDoubleSummary(
  * @param value the set from the search
  * @param invert dummy
  */
-export const setSummary = createSummary(
-  isSetCode,
+export const setSummary = createCorrectedSummary<string>(
+  toDisplaySetCode,
   (operator, value) => `the set is ${opToNot(operator)} "${value}"`,
   (operator, value) => `!Unknown set code "${value}"`
 );
@@ -479,8 +481,8 @@ export const setSummary = createSummary(
  * @param value the set from the search
  * @param invert dummy
  */
-export const blockSummary = createSummary(
-  isSetCode,
+export const blockSummary = createCorrectedSummary<string>(
+  toDisplaySetCode,
   (operator, value) => `the block is ${opToNot(operator)} "${value}"`,
   (operator, value) => `!Unknown set code "${value}"`
 );
@@ -490,8 +492,8 @@ export const blockSummary = createSummary(
  * @param value the set from the search
  * @param invert dummy
  */
-export const groupSummary = createSummary(
-  isSetCode,
+export const groupSummary = createCorrectedSummary<string>(
+  toDisplaySetCode,
   (operator, value) => `the set is ${opToNot(operator)} from the "${value}" set group`,
   (operator, value) => `!Unknown set code "${value}"`
 );
@@ -519,10 +521,18 @@ export const setTypeSummary = createCorrectedSummary<string>(
   (operator, value) => `!Unknown set type "${value}"`
 );
 
-export const toIn = (value: string): string | string[] | undefined =>
-  toSetType(value) ?? (isSetCode(value) ? getSetAndDirectChildSets(value) : undefined);
+export const toIn = (value: string): SetType | SetCode[] | undefined => {
+  const set_type = toSetType(value);
+  if (set_type) {
+    return set_type;
+  }
+  const code = toSetCode(value);
+  if (code) {
+    return getSetAndDirectChildSets(code);
+  }
+};
 
-const isIn = (value: string): boolean | undefined => Boolean(toSetType(value) || isSetCode(value));
+const isIn = (value: string): boolean | undefined => Boolean(toSetType(value) || toSetCode(value));
 /**
  * The summary for a set inclusion filter
  * @param operator the operator to use

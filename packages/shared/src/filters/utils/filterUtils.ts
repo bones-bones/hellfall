@@ -116,6 +116,7 @@ export const createCorrectedSummary =
     correctValue(noFix ? value : fixValue(value)) != undefined
       ? validSummary(operator, correctValue(noFix ? value : fixValue(value)) as T, invert)
       : invalidSummary(operator, value, invert);
+
 /**
  * Creates a corrected {@linkcode summaryFunction<T>}
  * @template T the type of the value to use
@@ -127,7 +128,6 @@ export const createCorrectedSummary =
  * @param invalidSummary a {@linkcode summaryFunction<T>} to be used when the value
  * is invalid; make sure that the first character is `!`
  */
-
 export const createCorrectedDoubleSummary =
   <T>(
     correctValue: (value: T) => T | undefined,

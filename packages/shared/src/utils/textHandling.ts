@@ -1,3 +1,5 @@
+import { toSetCode } from './setDateHandling';
+
 /**
  * Normalize text (remove accents and replace smart quotes with normal quotes)
  * @param text text to normalize
@@ -405,7 +407,7 @@ export const unescapeText = (text: string, isSet?: boolean, keepDashes?: boolean
 export const dashAsFix = (keepDashes?: boolean) => (keepDashes ? 'keep' : 'fix');
 export const setAsFix = (isSet?: boolean) => (isSet ? 'set' : 'fix');
 export const bothAsFix = (keepDashes?: boolean, isSet?: boolean) =>
-  keepDashes ? 'keep' : isSet ? 'set' : 'fix';
+  isSet ? 'set' : keepDashes ? 'keep' : 'fix';
 
 /**
  * Fixes a value by unescaping all text; can go inside arrays, but not other objects
@@ -425,7 +427,7 @@ export const fixValue = <T>(
       case 'keep':
         return unescapeText(value, undefined, true) as T;
       case 'set':
-        return unescapeText(value, true) as T;
+        return (toSetCode(value) ?? '') as T;
       case 'upper':
         return value.toUpperCase() as T;
       case 'lower':

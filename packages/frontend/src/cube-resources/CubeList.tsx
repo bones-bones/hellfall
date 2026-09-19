@@ -30,7 +30,7 @@ const cubeNameForCode = (setCode: SetCode, fallback: string) => getSet(setCode)?
 
 export const CubeList = () => {
   const { setCode: setCodeParam } = useParams<{ setCode: SetCode }>();
-  const setCode = (setCodeParam ?? 'HC8') as SetCode;
+  const setCode: SetCode = setCodeParam ?? 'HC8';
   const cardMap = useAtomValue(cardsAtom).filterToMap(isPlayableCubeCard);
   const setActiveCard = useSetAtom(activeCardAtom);
 
@@ -68,7 +68,7 @@ export const CubeList = () => {
           </div>
           <TopLinks>
             <BackLink to="/hellscubes">cube resources</BackLink>
-            <BackLink to={`/?q=set:${setCode}`}>search this set</BackLink>
+            <BackLink to={encodeURIComponent(`/?q=set:${setCode}`)}>search this set</BackLink>
           </TopLinks>
         </TopBar>
 

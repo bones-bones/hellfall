@@ -8,7 +8,6 @@ import {
   HCToTTSDeck,
   CardMap,
   getRandom,
-  displaySetCode,
 } from '@hellfall/shared/utils';
 import { cardMap } from './cardMap.ts';
 

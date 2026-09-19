@@ -1,10 +1,10 @@
 import { setsData } from '@hellfall/shared/data';
 import {
   allSetsList,
+  displaySetCode,
   HCCard,
   HCObject,
   HCSet,
-  // isSetCode,
   SetCode,
   setPageOrder,
   setPropOrder,
@@ -42,6 +42,16 @@ const setMap = new Map(sets.map(set => [set.code, set]));
  * @param value the value to check
  */
 export const isSetCode = (code: string): code is SetCode => setMap.has(code as SetCode);
+
+/**
+ * Checks if a value is a {@linkcode SetCode}
+ *
+ * Now requires exact use
+ * @param value the value to check
+ */
+export const isDisplaySetCode = (code: string): code is displaySetCode =>
+  !code.includes('_') && isSetCode(code.replaceAll('.', '_'));
+
 /**
  * The list of sets
  */
@@ -58,21 +68,34 @@ export const getSetPosition = (set: HCSet) => setPageOrder.indexOf(set.code);
  * Fixes valid set code input to actually work
  * @param code input to fix
  */
-export const fixSetCode = <T extends string>(code: T) =>
-  code?.toUpperCase().replaceAll('.', '_') as T;
+export const fixSetCodeInput = (code: string) => code?.toUpperCase().replaceAll('.', '_');
+
+/**
+ * Gets the backend version of a set code
+ * @param code input to fix
+ */
+export const displayToBackendSetCode = (code: displaySetCode) =>
+  code?.replaceAll('.', '_') as SetCode;
 /**
  * Gets the display version of a set code
  * @param code input to fix
  */
-export const displaySetCode = <T extends string>(code: T) =>
-  code.toUpperCase().replaceAll('_', '.') as T;
+export const backendToDisplaySetCode = (code: SetCode) =>
+  code.replaceAll('_', '.') as displaySetCode;
+/**
+ * Gets the display version of a set code
+ * @param code input to fix
+ */
+export const backendToDisplaySetCodeMaybe = (code?: SetCode) =>
+  code ? (code.replaceAll('_', '.') as displaySetCode) : undefined;
 /**
  * Fixes valid set code input to actually work
  * @param code input to fix
  */
-export const fixSetCodeMaybe = <T extends string>(code?: T) => (code ? fixSetCode(code) : code);
+export const fixSetCodeInputMaybe = (code?: string) => (code ? fixSetCodeInput(code) : code);
 
 const numRegex = /^\d+$/;
+
 /**
  * Converts a value to a {@linkcode SetCode} if possible
  * @param value the value to convert
@@ -83,7 +106,7 @@ export const toSetCode = (value: string): SetCode | undefined => {
     return code;
   }
   if (code.includes(' ')) return;
-  const fixed = fixSetCode(value);
+  const fixed = fixSetCodeInput(value);
   if (isSetCode(fixed)) {
     return fixed;
   }
@@ -91,10 +114,19 @@ export const toSetCode = (value: string): SetCode | undefined => {
   const splitCode = fixed.split('_');
   if (splitCode[0].length == 1) {
     // convert single chars at start to the appropriate set
-    splitCode[0] = `HC${splitCode[0]}`;
+    if (splitCode[0] == '1') {
+      splitCode[0] = 'HLC';
+    } else {
+      splitCode[0] = `HC${splitCode[0]}`;
+    }
   } else if (numRegex.test(splitCode[0])) {
     // convert numbers at start to the appropriate set
-    splitCode[0] = `HC${parseInt(splitCode[0])}`;
+    const num = parseInt(splitCode[0]);
+    if (num == 1) {
+      splitCode[0] = 'HLC';
+    } else {
+      splitCode[0] = `HC${parseInt(splitCode[0])}`;
+    }
   }
   const start = splitCode[0];
   if (!isSetCode(start)) return;
@@ -103,6 +135,8 @@ export const toSetCode = (value: string): SetCode | undefined => {
   }
   if (splitCode[1].startsWith('HC')) {
     splitCode[1] = splitCode[1].slice(2);
+  } else if (splitCode[1] == 'HLC') {
+    splitCode[1] = '1';
   }
   for (let i = 1; i < splitCode.length; i++) {
     if (numRegex.test(splitCode[i])) {
@@ -117,6 +151,8 @@ export const toSetCode = (value: string): SetCode | undefined => {
   return isSetCode(joined) ? joined : undefined;
 };
 
+export const toDisplaySetCode = (value: string): displaySetCode | undefined =>
+  backendToDisplaySetCodeMaybe(toSetCode(value));
 /**
  * The list of sets that should only be included if include:extras is used
  */
@@ -142,7 +178,14 @@ export const allExceptNormal = allSetsList.filter(set => set != 'NRM');
  * Gets the set object given a set code
  * @param code the set code to get the set for
  */
-export const getSet = (code: SetCode): HCSet | undefined => setMap.get(fixSetCode(code));
+export const getSet = (code: SetCode): HCSet | undefined => setMap.get(code);
+
+/**
+ * Gets the set object given a set code (is more permissive)
+ * @param code the set code to get the set for
+ */
+export const getSetPermissive = (code: string): HCSet | undefined =>
+  setMap.get(toSetCode(code) ?? ('' as SetCode));
 
 /**
  * Gets the filename of a set symbol image
@@ -194,7 +237,7 @@ export const getParentSet = (code: SetCode): HCSet | undefined => {
     set = getSet(set.parent_set_code);
     if (!set) return;
   }
-  if (set.code == fixSetCode(code)) return;
+  if (set.code == code) return;
   return set;
 };
 
@@ -285,27 +328,24 @@ export const getDirectChildSets = (code: SetCode): SetCode[] | undefined =>
  * @param code Set code to get the direct children of
  */
 export const getSetAndChildSets = (code: SetCode): SetCode[] =>
-  isSetCode(code) ? [fixSetCode(code), ...(getChildSets(code) ?? [])] : [];
+  isSetCode(code) ? [code, ...(getChildSets(code) ?? [])] : [];
 
 /**
  * Gets the result of {@linkcode getDirectChildSets} except including the set itself
  * @param code Set code to get the direct children of
  */
 export const getSetAndDirectChildSets = (code: SetCode): SetCode[] =>
-  isSetCode(code) ? [fixSetCode(code), ...(getDirectChildSets(code) ?? [])] : [];
+  isSetCode(code) ? [code, ...(getDirectChildSets(code) ?? [])] : [];
 
 /**
  * Gets the sets that are in the same block as another set (i.e. are its group and have the same set type)
  * @param code Set code to get the block sets of
  */
 export const getBlockSets = (code: SetCode): SetCode[] => [
-  fixSetCode(code),
+  code,
   ...(getDirectChildSets(code) ?? []),
   ...sets
-    .filter(
-      set =>
-        getChildSets(set.code)?.includes(fixSetCode(code)) && set.set_type == getSet(code)?.set_type
-    )
+    .filter(set => getChildSets(set.code)?.includes(code) && set.set_type == getSet(code)?.set_type)
     .flatMap(set => getSetAndDirectChildSets(set.code)),
 ];
 /**
@@ -313,10 +353,10 @@ export const getBlockSets = (code: SetCode): SetCode[] => [
  * @param code Set code to get the group sets of
  */
 export const getGroupSets = (code: SetCode): SetCode[] => [
-  fixSetCode(code),
+  code,
   ...(getChildSets(code) ?? []),
   ...sets
-    .filter(set => getChildSets(set.code)?.includes(fixSetCode(code)))
+    .filter(set => getChildSets(set.code)?.includes(code))
     .flatMap(set => getSetAndChildSets(set.code)),
 ];
 
@@ -329,7 +369,7 @@ export const getCollectorNumSets = (code: SetCode): SetCode[] =>
   getParentSet(code)?.use_color_order ||
   getSet(code)?.set_type == 'lair'
     ? getBlockSets(code)
-    : [fixSetCode(code)];
+    : [code];
 
 /**
  * Gets the set that a set uses for collector number sorting
@@ -337,7 +377,7 @@ export const getCollectorNumSets = (code: SetCode): SetCode[] =>
  */
 export const getCollectorOrderSet = (code: SetCode): SetCode => {
   const parent = getParentSet(code);
-  return parent?.use_color_order || parent?.set_type == 'lair' ? parent.code : fixSetCode(code);
+  return parent?.use_color_order || parent?.set_type == 'lair' ? parent.code : code;
 };
 
 /**
@@ -350,11 +390,11 @@ export const getAcceptedOrderSet = (code: SetCode): SetCode => {
     return parent.code;
   }
   if (parent?.code.startsWith('HCV_')) {
-    const [set, subset] = fixSetCode(code).split('_').slice(1);
+    const [set, subset] = code.split('_').slice(1);
     const acceptedSet = `${set == '1' ? 'HLC' : `HC${set}`}_${subset}`;
-    return isSetCode(acceptedSet) ? acceptedSet : fixSetCode(code);
+    return isSetCode(acceptedSet) ? acceptedSet : code;
   }
-  return fixSetCode(code);
+  return code;
 };
 
 /**
@@ -363,7 +403,7 @@ export const getAcceptedOrderSet = (code: SetCode): SetCode => {
  * @param value2 the set in whose direct children to look
  */
 export const inDirectChildSets = (value1: SetCode, value2: SetCode) =>
-  getDirectChildSets(value2)?.some(code => code == fixSetCode(value1)) ?? false;
+  getDirectChildSets(value2)?.some(code => code == value1) ?? false;
 
 /**
  * Checks if one set is equal to another set or is included in that set's direct children
@@ -371,7 +411,7 @@ export const inDirectChildSets = (value1: SetCode, value2: SetCode) =>
  * @param value2 the set in whose direct children to look
  */
 export const inSetOrDirectChildren = (value1: SetCode, value2: SetCode) =>
-  getSetAndDirectChildSets(value2).some(code => code == fixSetCode(value1));
+  getSetAndDirectChildSets(value2).some(code => code == value1);
 
 /**
  * Checks if one set is included in another set's block
@@ -379,7 +419,7 @@ export const inSetOrDirectChildren = (value1: SetCode, value2: SetCode) =>
  * @param value2 the set in whose block to look
  */
 export const inSetBlock = (value1: SetCode, value2: SetCode) =>
-  getBlockSets(value2).some(code => code == fixSetCode(value1));
+  getBlockSets(value2).some(code => code == value1);
 
 /**
  * Checks if one set is included in another set's group
@@ -387,24 +427,27 @@ export const inSetBlock = (value1: SetCode, value2: SetCode) =>
  * @param value2 the set in whose group to look
  */
 export const inSetGroup = (value1: SetCode, value2: SetCode) =>
-  getGroupSets(value2).some(code => code == fixSetCode(value1));
+  getGroupSets(value2).some(code => code == value1);
 
 const collNumRegex = /^\d+[A-Za-z]?$/;
 const isCollectorNum = (text?: string) => text && collNumRegex.test(text);
 
 const angleSetCodeRegex = /^(.*) <([^>]+)>$/;
+
+export type angleSetCode = SetCode | 'HC';
+
 /**
  * Splits a name that ends with a set code into the name and the set code.
  * Can handle lowercase set codes.
  * Only for use with `<HCX>` type notation for dealing with card names
  * @param text text to split
  */
-export const splitAngleSetCode = (text: string): { name: string; code?: string } => {
+export const splitAngleSetCode = (text: string): { name: string; code?: angleSetCode } => {
   const match = text.match(angleSetCodeRegex)?.slice(1);
   if (match) {
     const [name, _code] = match.map(t => t.trim());
-    if (_code.toUpperCase() == 'HC' || isSetCode(_code)) {
-      const code = fixSetCode(_code);
+    const code = _code.toUpperCase() == 'HC' ? 'HC' : toSetCode(_code);
+    if (code) {
       return { name, code };
     }
   }
@@ -427,8 +470,8 @@ const splitMasterpiece = (
     const numMatch = text.match(masterpieceNumRegex)?.slice(1);
     if (numMatch) {
       const [_code, name, _collector_number] = numMatch.map(t => t.trim());
-      if (isCollectorNum(_collector_number) && isSetCode(_code)) {
-        const code = fixSetCode(_code);
+      const code = toSetCode(_code);
+      if (isCollectorNum(_collector_number) && code) {
         const collector_number = _collector_number.toLowerCase();
         return { name, code, collector_number };
       }
@@ -437,8 +480,8 @@ const splitMasterpiece = (
   const match = text.match(masterpieceRegex)?.slice(1);
   if (match) {
     const [_code, name] = match.map(t => t.trim());
-    if (isSetCode(_code)) {
-      const code = fixSetCode(_code);
+    const code = toSetCode(_code);
+    if (code) {
       return { name, code };
     }
   }
@@ -449,7 +492,7 @@ const splitMasterpiece = (
  * Can handle lowercase set codes.
  * @param text text to split
  */
-export const splitMasterpiecePostcard = (text: string): { name: string; code?: string } =>
+export const splitMasterpiecePostcard = (text: string): { name: string; code?: SetCode } =>
   splitMasterpiece(text, true) ?? { name: text };
 
 const setCodeNumRegex = /^(.*)(?:\|\s*\(|[(|])\s*([^\s)|]+)\s*(?:\)\s*\||[\s)|])\s*(\d+[A-Za-z]?)$/;
@@ -469,8 +512,8 @@ const splitSetCode = (
     const numMatch = text.match(setCodeNumRegex)?.slice(1);
     if (numMatch) {
       const [name, _code, _collector_number] = numMatch.map(t => t.trim());
-      if (isCollectorNum(_collector_number) && isSetCode(_code)) {
-        const code = fixSetCode(_code);
+      const code = toSetCode(_code);
+      if (isCollectorNum(_collector_number) && code) {
         const collector_number = _collector_number.toLowerCase();
         return { name, code, collector_number };
       }
@@ -479,8 +522,8 @@ const splitSetCode = (
   const match = text.match(setCodeRegex)?.slice(1);
   if (match) {
     const [name, _code] = match.map(t => t.trim());
-    if (isSetCode(_code)) {
-      const code = fixSetCode(_code);
+    const code = toSetCode(_code);
+    if (code) {
       return { name, code };
     }
   }

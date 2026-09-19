@@ -1,5 +1,5 @@
 import { HCCard, HCRelatedCard, SetCode } from '@hellfall/shared/types';
-import { fixSetCodeMaybe, splitCardName } from '../setDateHandling';
+import { splitCardName } from '../setDateHandling';
 // import { CardLookupMap, lookupCache, lookupMapCache } from './cardLookupMap';
 import { fixName } from '../textHandling';
 import { isInteger } from '../numHandling';
@@ -167,7 +167,7 @@ export class CardMap extends LightCardMap {
     this.idMap.get(
       this.getIDFromNameSetAndNumber(
         fixName(name),
-        fixSetCodeMaybe(code),
+        code,
         collector_number && fixName(collector_number)
       ) ?? fixName(name)
     );

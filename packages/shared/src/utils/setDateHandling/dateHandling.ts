@@ -1,5 +1,3 @@
-import { unescapeText } from '../textHandling';
-
 /* We're not using direct validation on this because we want to save overhead */
 export type IsoDate = string;
 
