@@ -791,7 +791,7 @@
 				"SCL_09",
 				"SCL_01"
 			],
-			"card_count": 54,
+			"card_count": 49,
 			"filename": "scl.svg"
 		},
 		{
@@ -1013,7 +1013,7 @@
 			"name": "Tokens",
 			"description": "Custom tokens for Hellscube cards.",
 			"set_type": "token",
-			"card_count": 2067,
+			"card_count": 2101,
 			"filename": "hct.svg"
 		},
 		{
@@ -1104,7 +1104,7 @@
 			"name": "Scryfall Tokens",
 			"description": "Tokens from Scryfall for cards that need tokens but haven't had custom tokens made yet.",
 			"set_type": "token",
-			"card_count": 316,
+			"card_count": 296,
 			"filename": "sft.svg"
 		}
 	]

@@ -130,6 +130,7 @@ export const createCorrectedSummary =
  * @param invalidSummary a {@linkcode summaryFunction<T>} to be used when the value
  * is invalid; make sure that the first character is `!`
  */
+
 export const createCorrectedDoubleSummary =
   <T>(
     correctValue: (value: T) => T | undefined,

@@ -79,9 +79,21 @@ const mergeDatabases = (
     const existingCard = existingTokens.get(id);
     if (existingCard) {
       return mergeFromSheet(existingCard, newCard);
+    } else if (newCard.kind == 'token' && existingTokens.hasHCID(newCard.hcid)) {
+      const existingCard = existingTokens.getFromHCID(newCard.hcid)!;
+      if (
+        existingCard.kind == 'scryfall' &&
+        (NO_SCRYFALL || newTokens.get(existingCard.id)?.kind != 'scryfall')
+      ) {
+        existingTokens.delete(existingCard.id);
+        existingCard.id = newCard.id;
+
+        return mergeFromSheet(existingCard, newCard);
+      }
     } else if (newCard.kind == 'token' && existingTokens.hasOracleId(newCard.oracle_id)) {
       const cardCopy = structuredClone(existingTokens.getPreferredByOracleId(newCard.oracle_id))!;
       cardCopy.id = newCard.id;
+
       return mergeFromSheet(cardCopy, newCard);
     }
     // setDerivedProps(newCard);
