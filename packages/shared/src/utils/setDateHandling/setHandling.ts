@@ -71,29 +71,31 @@ export const getSetPosition = (set: HCSet) => setPageOrder.indexOf(set.code);
 export const fixSetCodeInput = (code: string) => code?.toUpperCase().replaceAll('.', '_');
 
 /**
- * Gets the backend version of a set code
- * @param code input to fix
- */
-export const displayToBackendSetCode = (code: displaySetCode) =>
-  code?.replaceAll('.', '_') as SetCode;
-/**
- * Gets the display version of a set code
- * @param code input to fix
- */
-export const backendToDisplaySetCode = (code: SetCode) =>
-  code.replaceAll('_', '.') as displaySetCode;
-/**
- * Gets the display version of a set code
- * @param code input to fix
- */
-export const backendToDisplaySetCodeMaybe = (code?: SetCode) =>
-  code ? (code.replaceAll('_', '.') as displaySetCode) : undefined;
-/**
  * Fixes valid set code input to actually work
  * @param code input to fix
  */
 export const fixSetCodeInputMaybe = (code?: string) => (code ? fixSetCodeInput(code) : code);
 
+/**
+ * Gets the backend version of a set code
+ * @param code set code to convert
+ */
+export const displayToBackendSetCode = (code: displaySetCode) =>
+  code?.replaceAll('.', '_') as SetCode;
+
+/**
+ * Gets the display version of a set code
+ * @param code set code to convert
+ */
+export const backendToDisplaySetCode = (code: SetCode) =>
+  code.replaceAll('_', '.') as displaySetCode;
+
+/**
+ * Gets the display version of a set code
+ * @param code set code to convert
+ */
+export const backendToDisplaySetCodeMaybe = (code?: SetCode) =>
+  code ? (code.replaceAll('_', '.') as displaySetCode) : undefined;
 const numRegex = /^\d+$/;
 
 /**
@@ -114,19 +116,11 @@ export const toSetCode = (value: string): SetCode | undefined => {
   const splitCode = fixed.split('_');
   if (splitCode[0].length == 1) {
     // convert single chars at start to the appropriate set
-    if (splitCode[0] == '1') {
-      splitCode[0] = 'HLC';
-    } else {
-      splitCode[0] = `HC${splitCode[0]}`;
-    }
+    splitCode[0] = splitCode[0] == '1' ? 'HLC' : `HC${splitCode[0]}`;
   } else if (numRegex.test(splitCode[0])) {
     // convert numbers at start to the appropriate set
     const num = parseInt(splitCode[0]);
-    if (num == 1) {
-      splitCode[0] = 'HLC';
-    } else {
-      splitCode[0] = `HC${parseInt(splitCode[0])}`;
-    }
+    splitCode[0] = num == 1 ? 'HLC' : `HC${num}`;
   } else if (splitCode[0] == 'HC1') {
     splitCode[0] = 'HLC';
   }
