@@ -50,7 +50,8 @@ export async function publishCatalogSnapshot(): Promise<CatalogPublishResult> {
     cardCount = uploaded.cardCount;
     bytes = uploaded.bytes;
     version = uploaded.manifest.version;
-    // Leave cache empty — seeding gzip (~14MB) next to CardMap is what OOMs 512Mi.
+    // Leave cache empty — seeding gzip (~14MB) next to resident CardMap OOMs 512Mi.
+    // Publish streams fullCache (idMap + light maps) without buffering gzip / toJSON().
     // Next Origin /api/cards/load downloads from GCS lazily.
     console.log(
       `[catalog/publish] gcs version=${version} cards=${cardCount} gzip=${bytes} cache=empty ${heapMb()}`
