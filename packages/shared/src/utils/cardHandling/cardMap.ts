@@ -5,7 +5,7 @@ import { fixName } from '../textHandling';
 import { isInteger } from '../numHandling';
 import { pushToMap, stringIterable } from '../listHandling';
 import { shouldSwap } from './preferenceHandling';
-import { CardLookupObject, DoubleMap } from './cardLookupMap';
+import { CardLookupObject, DoubleMap } from './cardLookupUtils';
 import { LightCardMap } from './lightCardMap';
 import { getAllNames, getClosestName } from './nameHandling';
 /**
