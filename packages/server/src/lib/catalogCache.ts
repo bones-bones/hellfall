@@ -35,7 +35,7 @@ export function seedCatalogCacheGzip(gzipBody: Buffer): void {
   cache = makeCacheEntry(gzipBody);
 }
 
-/** Seed cache from an already-serialized `{ data: HCCard[] }` JSON string. */
+/** Seed cache from already-serialized catalog JSON (fullCache or `{ data }`). */
 export function seedCatalogCacheBody(body: string, gzipBody?: Buffer): void {
   if (!body) return;
   seedCatalogCacheGzip(gzipBody ?? gzipSync(body));
@@ -44,6 +44,7 @@ export function seedCatalogCacheBody(body: string, gzipBody?: Buffer): void {
 /** Reuse cards already loaded at server startup (avoids a second full Firestore read). */
 export function seedCatalogCache(cards: HCCard.Any[]): void {
   if (cards.length === 0) return;
+  // Prefer array wrapper here — callers already hold cards; fullCache would rebuild maps.
   seedCatalogCacheBody(JSON.stringify({ data: cards }));
 }
 
@@ -77,7 +78,7 @@ async function buildCatalogGzip(): Promise<Buffer> {
   return gzipBody;
 }
 
-/** Cached `{ data: HCCard[] }` JSON (lazy) and pre-gzipped bytes for `/api/cards/load`. */
+/** Cached catalog JSON (lazy) and pre-gzipped bytes for `/api/cards/load`. */
 export async function getCatalogResponse(): Promise<{ body: string; gzipBody: Buffer }> {
   const t0 = Date.now();
   const now = Date.now();

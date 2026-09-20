@@ -75,7 +75,7 @@ export const DeckBuilder = () => {
   );
   const [cardMap, setCardMap] = useState<CardMap>(() => new CardMap());
   useEffect(() => {
-    loadCardsData().then(data => setCardMap(new CardMap(data.data)));
+    loadCardsData().then(data => setCardMap(new CardMap(data)));
   }, []);
   // const [cards, setCards] = useState<HCCard.Any[]>([]);
   const [toRender, setToRender] = useState<string[] | undefined>();

@@ -3,6 +3,8 @@ import { once } from 'node:events';
 import { pipeline } from 'node:stream/promises';
 import { Writable } from 'node:stream';
 import { FieldPath, type QueryDocumentSnapshot } from '@google-cloud/firestore';
+import type { HCCard } from '@hellfall/shared/types';
+import { CardLookupMap, pushToMap } from '@hellfall/shared/utils';
 import { getFirestore, resolveCardsCollectionName } from '@hellfall/shared/utils/firestore';
 import { firestoreToCard } from '@hellfall/shared/utils/firestore';
 import type { firestoreCard } from '@hellfall/shared/utils/firestore';
@@ -51,7 +53,20 @@ async function writeWithBackpressure(dest: Writable, data: string): Promise<void
   if (!dest.write(data)) await once(dest, 'drain');
 }
 
-/** JSON `{ data: [...] }` → gzip into `dest`. Does not buffer the gzip. */
+function isCatalogCard(card: unknown): card is HCCard.Any {
+  return (
+    typeof card === 'object' &&
+    card !== null &&
+    typeof (card as HCCard.Any).id === 'string' &&
+    typeof (card as HCCard.Any).oracle_id === 'string'
+  );
+}
+
+/**
+ * JSON fullCache (`idMap` + lookup/oracle maps) → gzip into `dest`.
+ * Streams `idMap` card-by-card; keeps only lightweight lookup maps in RAM.
+ * Does not buffer the gzip or materialize `CardMap.toJSON()`.
+ */
 export async function gzipCatalogCardsToStream(
   cards: AsyncIterable<unknown>,
   dest: Writable,
@@ -60,18 +75,39 @@ export async function gzipCatalogCardsToStream(
   const gzipStream = createGzip();
   const pipeDone = pipeline(gzipStream, dest);
 
+  const lookupMap = new CardLookupMap();
+  const oracleMap = new Map<string, Set<string>>();
   let cardCount = 0;
+
   try {
-    await writeWithBackpressure(gzipStream, '{"data":[');
+    await writeWithBackpressure(gzipStream, '{"idMap":{');
     let first = true;
-    for await (const card of cards) {
+    for await (const raw of cards) {
+      if (!isCatalogCard(raw)) {
+        throw new Error('catalog stream received a card without id/oracle_id');
+      }
       if (!first) await writeWithBackpressure(gzipStream, ',');
-      await writeWithBackpressure(gzipStream, JSON.stringify(card));
+      await writeWithBackpressure(gzipStream, `${JSON.stringify(raw.id)}:${JSON.stringify(raw)}`);
       first = false;
+      lookupMap.set(raw);
+      pushToMap(oracleMap, raw.oracle_id, raw.id);
       cardCount++;
       if (onProgress && cardCount % 500 === 0) onProgress(cardCount);
     }
-    await writeWithBackpressure(gzipStream, ']}');
+    await writeWithBackpressure(gzipStream, '}');
+
+    const { nameMap, aliasMap, hcidMap } = lookupMap.toJSON();
+    const oracleObj: Record<string, string[]> = {};
+    for (const [oracleId, ids] of oracleMap) {
+      oracleObj[oracleId] = Array.from(ids);
+    }
+
+    await writeWithBackpressure(gzipStream, `,"nameMap":${JSON.stringify(nameMap)}`);
+    await writeWithBackpressure(gzipStream, `,"aliasMap":${JSON.stringify(aliasMap)}`);
+    await writeWithBackpressure(gzipStream, `,"hcidMap":${JSON.stringify(hcidMap)}`);
+    await writeWithBackpressure(gzipStream, `,"oracleMap":${JSON.stringify(oracleObj)}`);
+    await writeWithBackpressure(gzipStream, '}');
+
     gzipStream.end();
     await pipeDone;
   } catch (err) {
@@ -82,7 +118,7 @@ export async function gzipCatalogCardsToStream(
 }
 
 /**
- * Firestore cards → JSON `{ data: [...] }` → gzip into `dest`.
+ * Firestore cards → fullCache JSON → gzip into `dest`.
  * Does not buffer the gzip; callers must honor Writable backpressure.
  */
 export async function streamCatalogGzipFromFirestore(
