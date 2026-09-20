@@ -56,9 +56,9 @@ const atypicalSort = createSortFunc(cardIsDefault, dateSort);
 const typicalSort = (value1: HCCard.Any, value2: HCCard.Any) => atypicalSort(value1, value2, -1);
 
 const setTypeIsExtra = (setType?: SetType) =>
-  setType && [SetType.Land, SetType.Main, SetType.Side].includes(setType);
+  setType && ![SetType.Land, SetType.Main, SetType.Side].includes(setType);
 
-const outCube = (card: HCCard.Any) => !setTypeIsExtra(getSet(card.set)?.set_type);
+const outCube = (card: HCCard.Any) => setTypeIsExtra(getSet(card.set)?.set_type);
 
 /**
  * Necessary props:

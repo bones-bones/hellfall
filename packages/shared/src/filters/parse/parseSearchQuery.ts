@@ -176,7 +176,7 @@ const tokenize = (
       continue;
     }
   }
-  return { tokens, sortList, unique, display };
+  return { tokens, sortList, unique, display, prefer };
 };
 
 const parseClude = (text: string) => {

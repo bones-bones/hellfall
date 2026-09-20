@@ -58,7 +58,7 @@ export const searchCards = (
     includeList.push(defaultInclude);
   }
   const uMode = unique ?? uniqueMode ?? 'cards';
-  const pMode = prefer ?? preferMode ?? 'oldest';
+  const pMode = prefer ?? preferMode ?? 'none';
   const modeToUse = uMode == 'cards' ? pMode : undefined;
   return cardMap.filterForSearch(
     card =>
