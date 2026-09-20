@@ -313,9 +313,9 @@ export class CardMap extends LightCardMap {
     pushToMap(this.oracleMap, card.oracle_id, card.id);
     pushToMap(this.setMap, card.set, card.id);
     const name = fixName(card.name);
-    const existing = this.nameMap.get(name);
     const fixed = fixName(card.hcid);
     this.hcidMap.set(fixed, card.id);
+    const existing = this.nameMap.get(name);
     if (existing) {
       existing.set(card, shouldSwap(card, this.get(existing.defaultId)));
     } else {
