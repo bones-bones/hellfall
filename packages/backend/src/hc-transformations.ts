@@ -470,6 +470,8 @@ const main = async () => {
     }
   });
 
+  finalCards.rebuildDefaultIdProps();
+
   finalCards.forEach(entry => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
       [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(

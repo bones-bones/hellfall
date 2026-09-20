@@ -4,7 +4,12 @@ import { pipeline } from 'node:stream/promises';
 import { Writable } from 'node:stream';
 import { FieldPath, type QueryDocumentSnapshot } from '@google-cloud/firestore';
 import type { HCCard } from '@hellfall/shared/types';
-import { CardLookupMap, pushToMap } from '@hellfall/shared/utils';
+import {
+  addCardToLookup,
+  CardLookupObject,
+  LookupCacheObject,
+  lookupCacheToJSON,
+} from '@hellfall/shared/utils';
 import { getFirestore, resolveCardsCollectionName } from '@hellfall/shared/utils/firestore';
 import { firestoreToCard } from '@hellfall/shared/utils/firestore';
 import type { firestoreCard } from '@hellfall/shared/utils/firestore';
@@ -74,9 +79,12 @@ export async function gzipCatalogCardsToStream(
 ): Promise<{ cardCount: number }> {
   const gzipStream = createGzip();
   const pipeDone = pipeline(gzipStream, dest);
-
-  const lookupMap = new CardLookupMap();
-  const oracleMap = new Map<string, Set<string>>();
+  const lookupObject: LookupCacheObject = {
+    oracleMap: new Map<string, Set<string>>(),
+    aliasMap: new Map<string, string>(),
+    hcidMap: new Map<string, string>(),
+    nameMap: new Map<string, CardLookupObject>(),
+  };
   let cardCount = 0;
 
   try {
@@ -89,23 +97,19 @@ export async function gzipCatalogCardsToStream(
       if (!first) await writeWithBackpressure(gzipStream, ',');
       await writeWithBackpressure(gzipStream, `${JSON.stringify(raw.id)}:${JSON.stringify(raw)}`);
       first = false;
-      lookupMap.set(raw);
-      pushToMap(oracleMap, raw.oracle_id, raw.id);
+      addCardToLookup(raw, lookupObject, (card, lookup) => !!card.has_default_id);
+
       cardCount++;
       if (onProgress && cardCount % 500 === 0) onProgress(cardCount);
     }
     await writeWithBackpressure(gzipStream, '}');
 
-    const { nameMap, aliasMap, hcidMap } = lookupMap.toJSON();
-    const oracleObj: Record<string, string[]> = {};
-    for (const [oracleId, ids] of oracleMap) {
-      oracleObj[oracleId] = Array.from(ids);
-    }
+    const { oracleMap, nameMap, aliasMap, hcidMap } = lookupCacheToJSON(lookupObject);
 
     await writeWithBackpressure(gzipStream, `,"nameMap":${JSON.stringify(nameMap)}`);
     await writeWithBackpressure(gzipStream, `,"aliasMap":${JSON.stringify(aliasMap)}`);
     await writeWithBackpressure(gzipStream, `,"hcidMap":${JSON.stringify(hcidMap)}`);
-    await writeWithBackpressure(gzipStream, `,"oracleMap":${JSON.stringify(oracleObj)}`);
+    await writeWithBackpressure(gzipStream, `,"oracleMap":${JSON.stringify(oracleMap)}`);
     await writeWithBackpressure(gzipStream, '}');
 
     gzipStream.end();

@@ -4,8 +4,14 @@ import { splitCardName } from '../setDateHandling';
 import { fixName } from '../textHandling';
 import { isInteger } from '../numHandling';
 import { pushToMap, stringIterable } from '../listHandling';
-import { shouldSwap } from './preferenceHandling';
-import { CardLookupObject, DoubleMap } from './cardLookupUtils';
+import { getPreference, shouldSwap } from './preferenceHandling';
+import {
+  addCardToLookup,
+  CardLookupObject,
+  DoubleMap,
+  LookupCacheObject,
+  lookupCacheToJSON,
+} from './cardLookupUtils';
 import { LightCardMap } from './lightCardMap';
 import { getAllNames, getClosestName } from './nameHandling';
 /**
@@ -310,24 +316,12 @@ export class CardMap extends LightCardMap {
    */
   set = (card: HCCard.Any) => {
     this.idMap.set(card.id, card);
-    pushToMap(this.oracleMap, card.oracle_id, card.id);
     pushToMap(this.setMap, card.set, card.id);
-    const name = fixName(card.name);
-    const fixed = fixName(card.hcid);
-    this.hcidMap.set(fixed, card.id);
-    const existing = this.nameMap.get(name);
-    if (existing) {
-      existing.set(card, shouldSwap(card, this.get(existing.defaultId)));
-    } else {
-      this.nameMap.set(name, new CardLookupObject(card));
-      if (this.aliasMap.has(name)) {
-        this.aliasMap.delete(name);
-      }
-    }
-    const names = getAllNames(card).filter(
-      n => !this.nameMap.has(n) && !this.aliasMap.has(n) && !this.hcidMap.has(n)
+    addCardToLookup(
+      card,
+      this.toLookupCacheObject(),
+      (card: HCCard.Any, lookup: CardLookupObject) => shouldSwap(card, this.get(lookup.defaultId))
     );
-    names.forEach(n => this.aliasMap.set(n, name));
   };
 
   /**
@@ -387,6 +381,34 @@ export class CardMap extends LightCardMap {
     this.hcidMap.clear();
   };
 
+  /**
+   * Resets the default ids. Use this before setting `has_default_id` props on cards.
+   */
+  resetDefaultIds = () => {
+    for (const [name, lookup] of this.nameMap) {
+      lookup.defaultId = getPreference(this.getMultiple(lookup.getAllIds())).id;
+    }
+  };
+
+  /**
+   * Rebuilds `has_default_id` props on cards.
+   */
+  rebuildDefaultIdProps = () => {
+    for (const lookup of this.nameMap.values()) {
+      for (const id of lookup.getAllIds()) {
+        const card = this.get(id);
+        if (!card) {
+          continue;
+        }
+        if (id == lookup.defaultId) {
+          card.has_default_id = true;
+        } else {
+          delete card.has_default_id;
+        }
+      }
+    }
+  };
+
   *names(): IterableIterator<string> {
     for (const name of this.nameMap.keys()) {
       yield name;
@@ -401,6 +423,20 @@ export class CardMap extends LightCardMap {
     }
   }
 
+  *lookups(): IterableIterator<CardLookupObject> {
+    for (const lookup of this.nameMap.values()) {
+      yield lookup;
+    }
+  }
+
+  protected toLookupCacheObject(): LookupCacheObject {
+    return {
+      oracleMap: this.oracleMap,
+      nameMap: this.nameMap,
+      hcidMap: this.hcidMap,
+      aliasMap: this.aliasMap,
+    };
+  }
   /**
    * Returns a full cache from this `cardMap` for database lookups.
    */
@@ -409,22 +445,7 @@ export class CardMap extends LightCardMap {
     for (const [id, card] of this.idMap) {
       idMap[id] = card;
     }
-    const oracleMap: Record<string, string[]> = {};
-    for (const [oracle_id, ids] of this.oracleMap) {
-      oracleMap[oracle_id] = Array.from(ids);
-    }
-    const nameMap: Record<string, CardLookupObject> = {};
-    for (const [name, lookup] of this.nameMap) {
-      nameMap[name] = lookup;
-    }
-    const aliasMap: Record<string, string> = {};
-    for (const [alias, name] of this.aliasMap) {
-      aliasMap[alias] = name;
-    }
-    const hcidMap: Record<string, string> = {};
-    for (const [hcid, id] of this.hcidMap) {
-      hcidMap[hcid] = id;
-    }
+    const { oracleMap, nameMap, aliasMap, hcidMap } = lookupCacheToJSON(this.toLookupCacheObject());
     return { idMap, oracleMap, nameMap, aliasMap, hcidMap };
   }
 }

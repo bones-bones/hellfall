@@ -1,6 +1,8 @@
 import { HCCard, SetCode } from '@hellfall/shared/types';
 import { getCollectorNumSets, getGroupSets, toSetCode } from '../setDateHandling';
-import { deleteFromMap, pushToMap } from '../listHandling';
+import { combineSets, deleteFromMap, pushToMap } from '../listHandling';
+import { fixName } from '../textHandling';
+import { getAllNames } from './nameHandling';
 
 /**
  * A cache for a {@linkcode CardLookupObject}
@@ -94,6 +96,13 @@ export class CardLookupObject {
     return defaultId;
   }
 
+  getAllIds() {
+    const ids = new Set<string>();
+    for (const [code, setIds] of this.setMap) {
+      combineSets(ids, setIds);
+    }
+    return ids;
+  }
   /**
    * Adds a new card to the CardLookupObject.
    * @param card {@linkcode HCCard.Any} to set
@@ -266,3 +275,66 @@ export class DoubleMap {
     }
   }
 }
+
+export type LookupCacheObject = {
+  oracleMap: Map<string, Set<string>>;
+  nameMap: Map<string, CardLookupObject>;
+  hcidMap: DoubleMap | Map<string, string>;
+  aliasMap: DoubleMap | Map<string, string>;
+};
+
+/**
+ * Adds a card to lookup maps. This is here rather than inside `CardMap`
+ * in order to be accessible to `gzipCatalogCardsToStream`
+ * @param card the card to use
+ * @param lookOb an object with lookup maps
+ * @param shouldChangeDefault a method to determine whether the current card has the default id
+ */
+export const addCardToLookup = (
+  card: HCCard.Any,
+  lookOb: LookupCacheObject,
+  shouldChangeDefault: (card: HCCard.Any, lookup: CardLookupObject) => boolean
+) => {
+  pushToMap(lookOb.oracleMap, card.oracle_id, card.id);
+  const name = fixName(card.name);
+  const fixed = fixName(card.hcid);
+  lookOb.hcidMap.set(fixed, card.id);
+  const existing = lookOb.nameMap.get(name);
+  if (existing) {
+    existing.set(card, shouldChangeDefault(card, existing));
+  } else {
+    lookOb.nameMap.set(name, new CardLookupObject(card));
+    if (lookOb.aliasMap.has(name)) {
+      lookOb.aliasMap.delete(name);
+    }
+  }
+  const names = getAllNames(card).filter(
+    n => !lookOb.nameMap.has(n) && !lookOb.aliasMap.has(n) && !lookOb.hcidMap.has(n)
+  );
+  names.forEach(n => lookOb.aliasMap.set(n, name));
+};
+
+/**
+ * Converts a lookup cache object to a json. This is here rather than inside `CardMap`
+ * in order to be accessible to `gzipCatalogCardsToStream`
+ * @param lookOb an object with lookup maps
+ */
+export const lookupCacheToJSON = (lookOb: LookupCacheObject) => {
+  const oracleMap: Record<string, string[]> = {};
+  for (const [oracle_id, ids] of lookOb.oracleMap) {
+    oracleMap[oracle_id] = Array.from(ids);
+  }
+  const nameMap: Record<string, CardLookupObject> = {};
+  for (const [name, lookup] of lookOb.nameMap) {
+    nameMap[name] = lookup;
+  }
+  const aliasMap: Record<string, string> = {};
+  for (const [alias, name] of lookOb.aliasMap) {
+    aliasMap[alias] = name;
+  }
+  const hcidMap: Record<string, string> = {};
+  for (const [hcid, id] of lookOb.hcidMap) {
+    hcidMap[hcid] = id;
+  }
+  return { oracleMap, nameMap, aliasMap, hcidMap };
+};
