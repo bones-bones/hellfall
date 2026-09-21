@@ -21,14 +21,14 @@ import { getPrimaryImageUrl, previewCardWithChanges } from './cardImage';
 
 export function ChangesetCard({
   cs,
-  isAdmin,
+  canApprove,
   onAction,
   selectable,
   selected,
   onToggleSelect,
 }: {
   cs: Changeset;
-  isAdmin: boolean;
+  canApprove: boolean;
   onAction: (id: string, action: 'accept' | 'reject') => Promise<void>;
   selectable?: boolean;
   selected?: boolean;
@@ -129,7 +129,7 @@ export function ChangesetCard({
                 )}
               </tbody>
             </ChangesTable>
-            {cs.status === 'pending' && isAdmin && (
+            {cs.status === 'pending' && canApprove && (
               <ActionRow>
                 <AcceptButton disabled={busy} onClick={() => handle('accept')}>
                   Accept

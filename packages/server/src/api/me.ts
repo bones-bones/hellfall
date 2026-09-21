@@ -6,7 +6,7 @@ import {
   HandlerRequest,
   HandlerResponse,
 } from './lib';
-import { CATALOG_SYNC_ROLE, DATABASE_CONTRIBUTOR } from './discord';
+import { CATALOG_SYNC_ROLE, DATABASE_CONTRIBUTOR, hasChangesetApproverRole } from './discord';
 
 export const meHandler = async (req: HandlerRequest, res: HandlerResponse): Promise<void> => {
   const headers = withCors({ 'Content-Type': 'application/json' }, req);
@@ -34,11 +34,15 @@ export const meHandler = async (req: HandlerRequest, res: HandlerResponse): Prom
 
   const contributorRoleId = env.DISCORD_TAG_ROLE_ID ?? DATABASE_CONTRIBUTOR;
   const syncRoleId = env.DISCORD_CATALOG_SYNC_ROLE_ID ?? CATALOG_SYNC_ROLE;
-  const isContributor = guild?.roles.includes(contributorRoleId) ?? false;
-  const isAdmin =
-    Boolean(env.DISCORD_ADMIN_ROLE_ID) &&
-    (guild?.roles.includes(env.DISCORD_ADMIN_ROLE_ID) ?? false);
-  const canSyncCatalog = isAdmin || (guild?.roles.includes(syncRoleId) ?? false);
+  const roles = guild?.roles ?? [];
+  const isContributor = roles.includes(contributorRoleId);
+  const isAdmin = Boolean(env.DISCORD_ADMIN_ROLE_ID) && roles.includes(env.DISCORD_ADMIN_ROLE_ID);
+  const canSyncCatalog = isAdmin || roles.includes(syncRoleId);
+  const canApproveChangesets = hasChangesetApproverRole(
+    roles,
+    env.DISCORD_ADMIN_ROLE_ID,
+    syncRoleId
+  );
 
   res.statusCode = 200;
   res.end(
@@ -50,6 +54,7 @@ export const meHandler = async (req: HandlerRequest, res: HandlerResponse): Prom
         isContributor,
         isAdmin,
         canSyncCatalog,
+        canApproveChangesets,
       },
       guild: guild ?? undefined,
     })
