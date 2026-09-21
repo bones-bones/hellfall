@@ -9,6 +9,8 @@ export interface AuthUser {
   isAdmin: boolean;
   /** Publish Firestore → site catalog cache (admin or catalog-sync role). */
   canSyncCatalog?: boolean;
+  /** Accept/reject pending changesets (admin or catalog-sync role). */
+  canApproveChangesets?: boolean;
   defaultCludes?: string[];
   defaultSorts?: string[];
   defaultUnique?: uniqueType;

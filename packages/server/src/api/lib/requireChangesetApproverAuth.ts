@@ -1,20 +1,20 @@
 import type { HandlerRequest, HandlerResponse } from './types.ts';
 import { env } from './env.ts';
 import { getSession, resolveGuildRoles } from './session.ts';
-import { CATALOG_SYNC_ROLE, DATABASE_CONTRIBUTOR } from '../discord/constants.ts';
+import { CATALOG_SYNC_ROLE, hasChangesetApproverRole } from '../discord/constants.ts';
 
-export type ReviewerAuthUser = {
+export type ChangesetApproverAuthUser = {
   userId: string;
   username: string;
   discord_access_token: string;
 };
 
-/** Verifies session and admin, catalog-sync, or DATABASE_CONTRIBUTOR role for viewing changesets. */
-export async function requireReviewerAuth(
+/** Verifies session and admin or catalog-sync role for accept/reject changesets. */
+export async function requireChangesetApproverAuth(
   req: HandlerRequest,
   res: HandlerResponse,
   failSilently?: boolean
-): Promise<ReviewerAuthUser | null> {
+): Promise<ChangesetApproverAuthUser | null> {
   const payload = await getSession(req);
   if (!payload) {
     if (!failSilently) {
@@ -48,15 +48,11 @@ export async function requireReviewerAuth(
     return null;
   }
 
-  const contributorRoleId = env.DISCORD_TAG_ROLE_ID ?? DATABASE_CONTRIBUTOR;
-  const isContributor = guild.roles.includes(contributorRoleId);
-  const isAdmin = guild.roles.includes(env.DISCORD_ADMIN_ROLE_ID);
   const syncRoleId = env.DISCORD_CATALOG_SYNC_ROLE_ID ?? CATALOG_SYNC_ROLE;
-  const isCatalogSync = guild.roles.includes(syncRoleId);
-  if (!isContributor && !isAdmin && !isCatalogSync) {
+  if (!hasChangesetApproverRole(guild.roles, env.DISCORD_ADMIN_ROLE_ID, syncRoleId)) {
     if (!failSilently) {
       res.statusCode = 403;
-      res.end(JSON.stringify({ ok: false, reason: 'missing_role' }));
+      res.end(JSON.stringify({ ok: false, reason: 'missing_admin_role' }));
     }
     return null;
   }

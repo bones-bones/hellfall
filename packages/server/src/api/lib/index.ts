@@ -3,6 +3,7 @@ export * from './cors';
 export * from './env';
 export * from './jwt';
 export * from './requireAdminAuth';
+export * from './requireChangesetApproverAuth';
 export * from './requirePostcardAuth';
 export * from './requireReviewerAuth';
 export * from './requireDatabaseRoleAuth';

@@ -5,7 +5,7 @@ import {
   HandlerRequest,
   HandlerResponse,
   requireDatabaseRoleAuth,
-  requireAdminAuth,
+  requireChangesetApproverAuth,
   requireReviewerAuth,
 } from './lib';
 import {} from './lib/requireDatabaseRoleAuth.ts';
@@ -250,7 +250,7 @@ async function acceptChangeset(
   res: HandlerResponse,
   changesetId: string
 ): Promise<void> {
-  const auth = await requireAdminAuth(req, res);
+  const auth = await requireChangesetApproverAuth(req, res);
   if (!auth) return;
 
   const csSnap = await changesetsCol.doc(changesetId).get();
@@ -302,7 +302,7 @@ async function rejectChangeset(
   res: HandlerResponse,
   changesetId: string
 ): Promise<void> {
-  const auth = await requireAdminAuth(req, res, true);
+  const auth = await requireChangesetApproverAuth(req, res, true);
   const limAuth = await requireDatabaseRoleAuth(req, res);
   if (!auth && !limAuth) return;
 
