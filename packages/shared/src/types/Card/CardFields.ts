@@ -72,6 +72,11 @@ export namespace HCCardFields.Core {
      * the old unique ID for this card in HC's database.
      */
     hcid: string;
+    /**
+     * Whether this card has the default id for its name.
+     * This is specifically to make streaming easier.
+     */
+    has_default_id?: boolean;
     // layout: HCLayout;
     /**
      * All rulings for the card.

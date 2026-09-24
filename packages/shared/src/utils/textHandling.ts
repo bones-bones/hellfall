@@ -1,3 +1,5 @@
+import { toSetCode } from './setDateHandling';
+
 /**
  * Normalize text (remove accents and replace smart quotes with normal quotes)
  * @param text text to normalize
@@ -405,8 +407,9 @@ export const unescapeText = (text: string, isSet?: boolean, keepDashes?: boolean
 export const dashAsFix = (keepDashes?: boolean) => (keepDashes ? 'keep' : 'fix');
 export const setAsFix = (isSet?: boolean) => (isSet ? 'set' : 'fix');
 export const bothAsFix = (keepDashes?: boolean, isSet?: boolean) =>
-  keepDashes ? 'keep' : isSet ? 'set' : 'fix';
+  isSet ? 'set' : keepDashes ? 'keep' : 'fix';
 
+export type fixValueOption = 'upper' | 'lower' | 'fix' | 'keep' | 'set';
 /**
  * Fixes a value by unescaping all text; can go inside arrays, but not other objects
  * @template T type of the value to fix
@@ -414,10 +417,7 @@ export const bothAsFix = (keepDashes?: boolean, isSet?: boolean) =>
  * @param option how to fix the text; fix does unescape; keep keeps dashes;
  * others just do the corresponding text transformation
  */
-export const fixValue = <T>(
-  value: T,
-  option: 'upper' | 'lower' | 'fix' | 'keep' | 'set' = 'fix'
-): T => {
+export const fixValue = <T>(value: T, option: fixValueOption = 'fix'): T => {
   if (typeof value == 'string') {
     switch (option) {
       case 'fix':
@@ -425,7 +425,7 @@ export const fixValue = <T>(
       case 'keep':
         return unescapeText(value, undefined, true) as T;
       case 'set':
-        return unescapeText(value, true) as T;
+        return (toSetCode(value) ?? '') as T;
       case 'upper':
         return value.toUpperCase() as T;
       case 'lower':

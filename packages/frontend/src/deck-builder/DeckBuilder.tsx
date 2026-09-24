@@ -77,7 +77,6 @@ export const DeckBuilder = () => {
   useEffect(() => {
     loadCardsData().then(data => setCardMap(new CardMap(data)));
   }, []);
-  // const [cards, setCards] = useState<HCCard.Any[]>([]);
   const [toRender, setToRender] = useState<string[] | undefined>();
   const [deckName, setNameOfDeck] = useState(searchparms.get('name') ?? '');
   const [idList, setIdList] = useState<string[]>([]);
@@ -158,7 +157,7 @@ export const DeckBuilder = () => {
         placeholder="4 Strict Improvement
 Swamp
 Cock and Balls to Torture and Abuse
-2 Island L18
+2 Island (HBB.0) 18
 %1984"
       />
       <br />

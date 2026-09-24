@@ -1,5 +1,5 @@
 import {
-  displaySetCode,
+  backendToDisplaySetCode,
   formatTypeLine,
   getFromFaces,
   listsAreExactlyEqual,
@@ -83,7 +83,7 @@ export const Checklist = ({ cards }: { cards: HCCard.Any[] }) => {
       <GridBody>
         {cards.map(card => (
           <CardRow key={card.id}>
-            <SetCell key={`${card.id}-set`}>{displaySetCode(card.set)}</SetCell>
+            <SetCell key={`${card.id}-set`}>{backendToDisplaySetCode(card.set)}</SetCell>
             <NumCell key={`${card.id}-num`}>{card.collector_number}</NumCell>
             <NameCell key={`${card.id}-name`}>
               <NameCellLink

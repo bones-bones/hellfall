@@ -23,12 +23,11 @@ import {
   pipMap,
   parseRelatedReferenceName,
   isValidV4UUID,
-  landInvariantMap,
   CardMap,
-  fixSetCode,
   getParentSetCode,
   semiSplit,
   convertNamesToColors,
+  toSetCode,
 } from '@hellfall/shared/utils';
 import { hcjAoToCNMap } from './hcjCNMap.ts';
 
@@ -137,9 +136,14 @@ export const fetchCards = async (usingApproved: boolean = false) => {
       const cardIsMulti = entry
         .slice(keys.indexOf('1mana_cost'), keys.indexOf('id'))
         .some(value => value);
-      const oracle_id =
-        landInvariantMap.getOracleId(entryAt('oracle_id') || entryAt('name')) ??
-        entryAt('oracle_id');
+      const id = entryAt('id');
+      if (!id) {
+        throw new Error(`Missing uuid on card with hcid: ${entryAt('hcid')}`);
+      }
+      if (!isValidV4UUID(id)) {
+        throw new Error(`Invalid uuid: ${id} on card with hcid: ${entryAt('hcid')}`);
+      }
+      const oracle_id = entryAt('oracle_id');
       if (!oracle_id) {
         throw new Error(`Missing oracle id on card with hcid: ${entryAt('hcid')}`);
       }
@@ -150,15 +154,15 @@ export const fetchCards = async (usingApproved: boolean = false) => {
         HCKind.Card,
         cardIsMulti,
         {
-          id: entryAt('id'),
+          id,
           oracle_id,
           hcid: entryAt('hcid'),
           image: entryAt('image'),
           image_status: HCImageStatus.HighRes,
           creators: semiSplit(entryAt('creators')),
-          set: fixSetCode(entryAt('set')) as SetCode,
+          set: toSetCode(entryAt('set')) ?? (entryAt('set') as SetCode),
           collector_number:
-            fixSetCode(entryAt('set')) == 'HCJ'
+            toSetCode(entryAt('set')) == 'HCJ'
               ? hcjAoToCNMap.get(entryAt('accepted_order'))
               : entryAt('accepted_order'),
           accepted_order: entryAt('accepted_order'),

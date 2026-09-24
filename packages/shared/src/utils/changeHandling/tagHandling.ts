@@ -73,6 +73,7 @@ export const anyFrameEffectTags: Record<string, HCFrameEffect> = {
   'miracle-frame': HCFrameEffect.Miracle,
   'nyx-frame': HCFrameEffect.Enchantment,
   'draft-frame': HCFrameEffect.Draft,
+  'world-frame': HCFrameEffect.World,
   'sand-frame': HCFrameEffect.Sand,
   'devoid-frame': HCFrameEffect.Devoid,
   tombstone: HCFrameEffect.Tombstone,
@@ -634,6 +635,21 @@ const subKeywords: Record<string, string | string[]> = {
   gneathtouch: 'touch',
   rain: 'storm',
   'draft your engines': 'start your engines',
+  'draft exhaust': 'exhaust',
+  'descend into madness': ['descend', 'madness'],
+  'escape from jail': 'escape',
+  'collect draft chaff': 'collect',
+  invest: 'extort',
+  accessorize: 'spree',
+  motorcycling: 'typecycling',
+  evilgraft: 'graft',
+  'level up brain': 'level up',
+  'slow deathtouch': 'deathtouch',
+  'storm but better': 'storm',
+  blitztouch: 'touch',
+  multispreeker: 'spree',
+  eheheh: 'embalm',
+  fast: ['haste', 'flash'],
 };
 
 const keywordTags = [
@@ -1018,6 +1034,7 @@ const changesForAnyTag = <K extends allPropType>(
 const flagTags = [
   'missing-legend-frame',
   'legend-frame',
+  'world-frame',
   'missing-snow-frame',
   'missing-lesson-frame',
   'missing-vehicle-frame',

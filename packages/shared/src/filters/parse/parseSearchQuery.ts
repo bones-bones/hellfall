@@ -1,5 +1,11 @@
 import { HCCard } from '@hellfall/shared/types';
-import { FilterNode, allPrintsGetterType, displayType, uniqueType } from '../types';
+import {
+  FilterNode,
+  allPrintsGetterType,
+  displayType,
+  setFilterNameList,
+  uniqueType,
+} from '../types';
 import { parseFilter } from './parseFilter';
 import { CardMap, preferType, unescapeText } from '@hellfall/shared/utils';
 import { isSortFilter, parseSorts, sortIsValid, winnowSortObjects } from './parseSorts';
@@ -86,7 +92,7 @@ const tokenize = (
         continue;
       }
     }
-    if ((char === '"' || char === "'") && query.at(i - 1) != '\\') {
+    if ((char === '"' || char === "'" || char == '/') && query.at(i - 1) != '\\') {
       const quoteStart = i;
       let foundQuote = false;
       const quoteChar = char;
@@ -170,7 +176,7 @@ const tokenize = (
       continue;
     }
   }
-  return { tokens, sortList, unique, display };
+  return { tokens, sortList, unique, display, prefer };
 };
 
 const parseClude = (text: string) => {
@@ -340,9 +346,6 @@ export const parseSearchQuery = (
 
       // Regular filter term
       const filter = parseFilter(token, undefined, getOtherPrints);
-      if (['set', 'tokenset', 'block', 'in', 'sets'].includes(filter.queryName)) {
-        autoFilterExtras = false;
-      }
       i++;
       const summary = filter.toSummary();
       if (summary.at(0) == '!' || filter.queryName.startsWith('invalid')) {
@@ -351,6 +354,9 @@ export const parseSearchQuery = (
         //   summaries.pop()
         // }
         return null;
+      }
+      if (setFilterNameList.includes(filter.queryName)) {
+        autoFilterExtras = false;
       }
       if (filter.queryName == 'include') {
         // autoFilterExtras = false;

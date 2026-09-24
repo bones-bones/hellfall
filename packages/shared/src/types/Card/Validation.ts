@@ -1,5 +1,5 @@
 import { HCObject } from '../Object';
-import { isSetCode } from '../Set';
+import { allSetsList, SetCode } from '../Set';
 import { HCCardFace } from './CardFace';
 import { getPartEntries, partPropType, facePropType, getFaceEntries } from './Props';
 import { HCRelatedCard, isComponent } from './RelatedCard';
@@ -22,7 +22,7 @@ export const isRelatedCard = (value: any): value is HCRelatedCard => {
         case 'object':
           return value == HCObject.ObjectType.RelatedCard;
         case 'set':
-          return isSetCode(value) || value === '';
+          return allSetsList.includes(value) || value == ('' as SetCode);
         case 'image':
           return typeof value == 'string' && (value.startsWith('https://') || value === '');
         case 'component':

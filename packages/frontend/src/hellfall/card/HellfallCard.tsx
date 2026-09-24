@@ -1,6 +1,6 @@
 import { Box, ButtonColors, Card } from '@workday/canvas-kit-react';
 import { SetLegality } from './visual-components/SetLegality';
-import { displaySetCode, toFaces, toPlainText } from '@hellfall/shared/utils';
+import { backendToDisplaySetCode, toFaces, toPlainText } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
 import { system } from '@workday/canvas-tokens-web';
 
@@ -237,7 +237,7 @@ export const HellfallCard = ({
                 <>
                   <MediumText>
                     Set:{' '}
-                    {`${displaySetCode(displayCard.set)} #${displayCard.collector_number}${
+                    {`${backendToDisplaySetCode(displayCard.set)} #${displayCard.collector_number}${
                       displayCard.collector_number != displayCard.accepted_order
                         ? ` (AO: ${displayCard.accepted_order})`
                         : ''

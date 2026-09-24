@@ -79,9 +79,21 @@ const mergeDatabases = (
     const existingCard = existingTokens.get(id);
     if (existingCard) {
       return mergeFromSheet(existingCard, newCard);
+    } else if (newCard.kind == 'token' && existingTokens.hasHCID(newCard.hcid)) {
+      const existingCard = existingTokens.getFromHCID(newCard.hcid)!;
+      if (
+        existingCard.kind == 'scryfall' &&
+        (NO_SCRYFALL || newTokens.get(existingCard.id)?.kind != 'scryfall')
+      ) {
+        existingTokens.delete(existingCard.id);
+        existingCard.id = newCard.id;
+
+        return mergeFromSheet(existingCard, newCard);
+      }
     } else if (newCard.kind == 'token' && existingTokens.hasOracleId(newCard.oracle_id)) {
       const cardCopy = structuredClone(existingTokens.getPreferredByOracleId(newCard.oracle_id))!;
       cardCopy.id = newCard.id;
+
       return mergeFromSheet(cardCopy, newCard);
     }
     // setDerivedProps(newCard);
@@ -458,6 +470,8 @@ const main = async () => {
     }
   });
 
+  finalCards.rebuildDefaultIdProps();
+
   finalCards.forEach(entry => {
     ('card_faces' in entry ? entry.card_faces : [entry]).forEach(face => {
       [...(face.supertypes || []), ...(face.types || []), ...(face.subtypes || [])].forEach(
@@ -509,7 +523,13 @@ const main = async () => {
 
   fs.writeFileSync(
     '../shared/src/data/types.json',
-    JSON.stringify({ data: reducedTypes }, null, '\t')
+    JSON.stringify(
+      {
+        data: reducedTypes.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' })),
+      },
+      null,
+      '\t'
+    )
   );
   fs.writeFileSync(
     '../shared/src/data/tokens.json',
@@ -550,7 +570,7 @@ const main = async () => {
     '../shared/src/data/artists.json',
     JSON.stringify(
       {
-        data: artists.sort(),
+        data: artists.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' })),
       },
       null,
       '\t'

@@ -6,6 +6,7 @@ import {
   semiSplit,
   setDerivedProps,
   splitMasterpiecePostcard,
+  toSetCode,
 } from '@hellfall/shared/utils';
 import { cardToFirestore, cardsCollection, firestoreCard } from '@hellfall/shared/utils/firestore';
 import { withCors, env, requirePostcardAuth, HandlerRequest, HandlerResponse } from './lib';
@@ -110,7 +111,7 @@ function buildStubCard(
   body: Required<Pick<PostcardBody, 'name' | 'image' | 'creators'>> & PostcardBody
 ): HCCard.Any {
   const kind = body.kind === 'token' ? HCKind.Token : HCKind.Card;
-  const set = (kind === HCKind.Token ? 'HCT' : body.set) as SetCode;
+  const set = (kind === HCKind.Token ? 'HCT' : toSetCode(body.set ?? '') ?? body.set) as SetCode;
   const hcid = body.hcid?.trim() || body.name;
 
   const { name } = splitMasterpiecePostcard(body.name);

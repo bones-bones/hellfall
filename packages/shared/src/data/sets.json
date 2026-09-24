@@ -737,7 +737,7 @@
 				"HC9_1",
 				"HCV_9"
 			],
-			"card_count": 450,
+			"card_count": 591,
 			"filename": "hc9.svg"
 		},
 		{
@@ -759,7 +759,7 @@
 			"description": "The last 360 cards of Hellscube 9.",
 			"set_type": "main",
 			"parent_set_code": "HC9",
-			"card_count": 74
+			"card_count": 215
 		},
 		{
 			"object": "set",
@@ -769,7 +769,7 @@
 			"description": "Cards vetoed or slotsed from HC9.",
 			"set_type": "veto",
 			"parent_set_code": "HCV",
-			"card_count": 81
+			"card_count": 110
 		},
 		{
 			"object": "set",
@@ -780,24 +780,24 @@
 			"set_type": "lair",
 			"child_set_codes": [
 				"HCV_SCL",
-				"SCL_1",
-				"SCL_2",
-				"SCL_3",
-				"SCL_4",
-				"SCL_5",
-				"SCL_6",
-				"SCL_7",
-				"SCL_8",
-				"SCL_9",
-				"SCL_10"
+				"SCL_01",
+				"SCL_02",
+				"SCL_03",
+				"SCL_04",
+				"SCL_05",
+				"SCL_06",
+				"SCL_07",
+				"SCL_08",
+				"SCL_09",
+				"SCL_01"
 			],
-			"card_count": 54,
+			"card_count": 49,
 			"filename": "scl.svg"
 		},
 		{
 			"object": "set",
 			"id": "18dc5033-3f45-4be7-ae04-ced7362b01d0",
-			"code": "SCL_1",
+			"code": "SCL_01",
 			"name": "Scube Lair Drop: Iconic Hellscube Cards",
 			"description": "Iconic Hellscube Cards to Celebrate 5,000 Hellscube Members!",
 			"set_type": "lair",
@@ -808,7 +808,7 @@
 		{
 			"object": "set",
 			"id": "a88f00da-cd24-4747-b54b-fd284b2f6b74",
-			"code": "SCL_2",
+			"code": "SCL_02",
 			"name": "Scube Lair Drop: Hellscube 1 All-Stars",
 			"description": "Hellscube 1 All-Stars",
 			"set_type": "lair",
@@ -819,7 +819,7 @@
 		{
 			"object": "set",
 			"id": "35c775f8-7e6a-436f-8a76-924b58eff7cf",
-			"code": "SCL_3",
+			"code": "SCL_03",
 			"name": "Scube Lair Drop: Pride Month",
 			"description": "Pride Month Celebration!",
 			"set_type": "lair",
@@ -863,7 +863,7 @@
 		{
 			"object": "set",
 			"id": "9ca79db9-2757-4f8f-9205-0245a24269aa",
-			"code": "SCL_4",
+			"code": "SCL_04",
 			"name": "Scube Lair Drop: Basic Land Box 1",
 			"description": "Basic Land Box 1",
 			"set_type": "lair",
@@ -874,7 +874,7 @@
 		{
 			"object": "set",
 			"id": "75c224b2-4bdf-4923-9f1a-3e1b0279152a",
-			"code": "SCL_5",
+			"code": "SCL_05",
 			"name": "Scube Lair Drop: Hellscube 2 All-Stars",
 			"description": "Hellscube 2 All-Stars",
 			"set_type": "lair",
@@ -925,7 +925,7 @@
 		{
 			"object": "set",
 			"id": "f3913747-9c4a-4ef7-9346-57b34d75708c",
-			"code": "SCL_6",
+			"code": "SCL_06",
 			"name": "Scube Lair Drop: Pro Tour: Hellscube 8",
 			"description": "Cards from nobroam's Pro Tour: Hellscube 8 winning decklist.",
 			"set_type": "lair",
@@ -936,7 +936,7 @@
 		{
 			"object": "set",
 			"id": "2e8202c5-2c80-46b0-9033-87f5eb081bdb",
-			"code": "SCL_7",
+			"code": "SCL_07",
 			"name": "Scube Lair Drop: Hellscube 3 All-Stars",
 			"description": "Hellscube 3 All-Stars",
 			"set_type": "lair",
@@ -947,7 +947,7 @@
 		{
 			"object": "set",
 			"id": "9b0cf62a-0cb7-415f-9206-a3c46317f06d",
-			"code": "SCL_8",
+			"code": "SCL_08",
 			"name": "Scube Lair Drop: Summer Vacation",
 			"description": "Summer Vacation",
 			"set_type": "lair",
@@ -958,7 +958,7 @@
 		{
 			"object": "set",
 			"id": "357f4ebd-7df6-4c44-90aa-aa78e1a3736c",
-			"code": "SCL_9",
+			"code": "SCL_09",
 			"name": "Scube Lair Drop: Back to School",
 			"description": "Back to School",
 			"set_type": "lair",
@@ -1003,7 +1003,7 @@
 				"HCV_HDH",
 				"HCV_SOH"
 			],
-			"card_count": 847,
+			"card_count": 876,
 			"filename": "hcv.svg"
 		},
 		{
@@ -1013,7 +1013,7 @@
 			"name": "Tokens",
 			"description": "Custom tokens for Hellscube cards.",
 			"set_type": "token",
-			"card_count": 2067,
+			"card_count": 2120,
 			"filename": "hct.svg"
 		},
 		{
@@ -1104,7 +1104,7 @@
 			"name": "Scryfall Tokens",
 			"description": "Tokens from Scryfall for cards that need tokens but haven't had custom tokens made yet.",
 			"set_type": "token",
-			"card_count": 316,
+			"card_count": 293,
 			"filename": "sft.svg"
 		}
 	]
