@@ -523,7 +523,13 @@ const main = async () => {
 
   fs.writeFileSync(
     '../shared/src/data/types.json',
-    JSON.stringify({ data: reducedTypes }, null, '\t')
+    JSON.stringify(
+      {
+        data: reducedTypes.sort(/* (a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }) */),
+      },
+      null,
+      '\t'
+    )
   );
   fs.writeFileSync(
     '../shared/src/data/tokens.json',
@@ -564,7 +570,7 @@ const main = async () => {
     '../shared/src/data/artists.json',
     JSON.stringify(
       {
-        data: artists.sort(),
+        data: artists.sort(/* (a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }) */),
       },
       null,
       '\t'

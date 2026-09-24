@@ -76,6 +76,8 @@ export const isFilterName = (value: any): value is filterNameType => filterNames
 
 export const equivSortAndFilterNames: Record<string, filterNameType & sortType> = {
   s: 'set',
+  e: 'set',
+  edition: 'set',
   cn: 'number',
   num: 'number',
   collector: 'number',

@@ -2645,6 +2645,18 @@
       "hybrid": true
     },
     {
+      "filename": "hybrid/two/misc/PinkG.svg",
+      "symbol": "Pink/G",
+      "english": "one pink or Green mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "Pink",
+        "G"
+      ],
+      "hybrid": true
+    },
+    {
       "filename": "hybrid/two/misc/BDoge.svg",
       "symbol": "B/Doge",
       "english": "one black mana or one-tenth colorless mana",
