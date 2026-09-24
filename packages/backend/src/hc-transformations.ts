@@ -525,7 +525,7 @@ const main = async () => {
     '../shared/src/data/types.json',
     JSON.stringify(
       {
-        data: reducedTypes.sort(/* (a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }) */),
+        data: reducedTypes.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' })),
       },
       null,
       '\t'
@@ -570,7 +570,7 @@ const main = async () => {
     '../shared/src/data/artists.json',
     JSON.stringify(
       {
-        data: artists.sort(/* (a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }) */),
+        data: artists.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' })),
       },
       null,
       '\t'
