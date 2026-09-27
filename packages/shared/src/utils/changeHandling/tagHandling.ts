@@ -650,6 +650,22 @@ const subKeywords: Record<string, string | string[]> = {
   multispreeker: 'spree',
   eheheh: 'embalm',
   fast: ['haste', 'flash'],
+  islandhome: 'landhome',
+  mountainhome: 'landhome',
+  shrimpwalk: 'walk',
+  'giddy up your horses': 'start your engines',
+  horsemanshipcycling: 'cycling',
+  'global station': 'station',
+  devoke: 'evoke',
+  'manifest joy': 'manifest',
+  flasheverywhere: 'flashback',
+  herocycling: 'typecycling',
+  legendarycycling: 'typecycling',
+  'tag-along-jutsu': 'ninjutsu',
+  mutatejutsu: ['mutate', 'ninjutsu'],
+  'war flashback': 'flashback',
+  rejutsu: 'ninjutsu',
+  'mandatory cumulative upkeep': 'cumulative upkeep',
 };
 
 const keywordTags = [

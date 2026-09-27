@@ -198,3 +198,4 @@ Write a script to transform the database
 - have scl collector numbers reflect rankings but accepted orders reflect dates
 - add rotation buttons for flip/aftermath cards
 - figure out why sengir's rock gives sengir's tower in draftmancer
+- make draftpartner not automatically give the draftpartner keyword (do this after sorting out other keywords)

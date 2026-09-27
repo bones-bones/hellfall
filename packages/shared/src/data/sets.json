@@ -1013,7 +1013,7 @@
 			"name": "Tokens",
 			"description": "Custom tokens for Hellscube cards.",
 			"set_type": "token",
-			"card_count": 2120,
+			"card_count": 2148,
 			"filename": "hct.svg"
 		},
 		{
@@ -1104,7 +1104,7 @@
 			"name": "Scryfall Tokens",
 			"description": "Tokens from Scryfall for cards that need tokens but haven't had custom tokens made yet.",
 			"set_type": "token",
-			"card_count": 293,
+			"card_count": 292,
 			"filename": "sft.svg"
 		}
 	]
