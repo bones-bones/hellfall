@@ -13,6 +13,7 @@ const DEFAULT_DEV_USER: AuthUser = {
   isContributor: true,
   isAdmin: true,
   canSyncCatalog: true,
+  canApproveChangesets: true,
   defaultCludes: ['include:extras'],
   defaultSorts: ['set,desc', 'number,asc'],
 };

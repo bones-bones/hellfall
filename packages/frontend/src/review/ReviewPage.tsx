@@ -115,7 +115,9 @@ export const ReviewPage = () => {
   const [bulkError, setBulkError] = useState<string | null>(null);
   const syncTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const canViewChangesets = Boolean(user?.isAdmin || user?.isContributor);
+  const canViewChangesets = Boolean(
+    user?.isAdmin || user?.isContributor || user?.canApproveChangesets
+  );
   const canSyncCatalog = Boolean(user?.canSyncCatalog || user?.isAdmin);
   const canAccessPage = canViewChangesets || canSyncCatalog;
 
@@ -190,7 +192,8 @@ export const ReviewPage = () => {
   };
 
   const pendingChangesets = changesets.filter(cs => cs.status === 'pending' && cs.id);
-  const canBulkApprove = user?.isAdmin && filter === 'pending' && pendingChangesets.length > 0;
+  const canBulkApprove =
+    user?.canApproveChangesets && filter === 'pending' && pendingChangesets.length > 0;
   const allPendingSelected =
     canBulkApprove && pendingChangesets.every(cs => selectedIds.has(cs.id!));
 
@@ -413,9 +416,9 @@ export const ReviewPage = () => {
             <ChangesetCard
               key={cs.id}
               cs={cs}
-              isAdmin={user.isAdmin || cs.submittedBy.userId == user.id}
+              canApprove={Boolean(user?.canApproveChangesets) || cs.submittedBy.userId === user.id}
               onAction={handleAction}
-              selectable={user.isAdmin && cs.status === 'pending'}
+              selectable={canBulkApprove}
               selected={cs.id ? selectedIds.has(cs.id) : false}
               onToggleSelect={cs.id ? () => toggleSelect(cs.id!) : undefined}
             />
