@@ -2449,5 +2449,7 @@ export const numDateRecord: Partial<Record<SetCode, Record<number, string>>> = {
     2105: '2026-09-21',
     2110: '2026-09-22',
     2115: '2026-09-23',
+    2125: '2026-09-24',
+    2130: '2026-09-25',
   },
 };

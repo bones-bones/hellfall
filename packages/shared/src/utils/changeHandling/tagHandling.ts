@@ -666,6 +666,10 @@ const subKeywords: Record<string, string | string[]> = {
   'war flashback': 'flashback',
   rejutsu: 'ninjutsu',
   'mandatory cumulative upkeep': 'cumulative upkeep',
+  'dastardly plot': 'plot',
+  exaggerate: 'escalate',
+  'wrong warp': 'warp',
+  historystorm: 'storm',
 };
 
 const keywordTags = [
