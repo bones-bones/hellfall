@@ -4,14 +4,15 @@ import {
   getRandom,
   listsAreLooselyEqual,
   listsAreLooselyEqualLower,
-  listsShare,
   stringIterable,
 } from '../listHandling';
 import { orderColors } from './orderColors';
 
 const fixPip = (text: string) => unescapeText(text, true).replaceAll(' ', '');
 
-const escapeRegex = (text: string) => text.replaceAll(/([./?$-])/g, '\\$1');
+const escapeRegexRegex = /([./?$-])/g;
+
+const escapeRegex = (text: string) => text.replace(escapeRegexRegex, '\\$1');
 const doubleable = ['W', 'U', 'P', 'B', 'R', 'G'];
 
 const hybridBaseRegex =

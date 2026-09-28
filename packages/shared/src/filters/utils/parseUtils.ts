@@ -47,11 +47,13 @@ export const splitOnFirstOp = (
   }
   return { keyword: 'name', op: ':', term: text };
 };
+
+const tagRegex = /[/\\'"\- _.]/g;
 /**
  * Fixes a tag so that it can be used in comparisons
  * @param tag tag to prep
  */
-export const prepTag = (tag: string) => tag.replaceAll(/[/\\'"\- _.]/g, '').toLowerCase();
+export const prepTag = (tag: string) => tag.replace(tagRegex, '').toLowerCase();
 // /**
 //  * Fixes tag filter values
 //  * @param node the root node of the AST

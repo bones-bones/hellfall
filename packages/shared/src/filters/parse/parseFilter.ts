@@ -25,6 +25,7 @@ import { colorFilters, filters, printsFilters } from './parseMaps';
 import { parseDevotion } from './parseDevotion';
 import { FilterObject } from '../makerLib';
 
+const quoteRegex = /^['"/]/;
 // make sure the thing doesn't strip quotes when passing text in to this from start and end of string when
 /**
  * Parses text into a filter object
@@ -50,7 +51,7 @@ export const parseFilter = (
   if (text[0] == '-') {
     return parseFilter(text.slice(1), !invert, getAllPrints);
   }
-  if (/^['"/]/.test(text) || !looseOpList.some(op => text.includes(op))) {
+  if (quoteRegex.test(text) || !looseOpList.some(op => text.includes(op))) {
     return correctOp(makeNameFilter(text, ':'));
   }
   const { keyword, op, term } = splitOnFirstOp(text);
