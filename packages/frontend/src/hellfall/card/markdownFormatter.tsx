@@ -23,6 +23,13 @@ const isEscaped = (source: string, index: number): boolean => {
   }
   return backslashCount % 2 === 1;
 };
+const boldRegex = /^\*\*([\s\S]+?)\*\*(?!\*)/;
+const underlineRegex = /^__([\s\S]+?)__(?!_)/;
+const strikethroughRegex = /^~~([\s\S]+?)~~/;
+const plaintextRegex = /^[\s\S]+?(?=(?<!\\)(?:[*_~]|$))/;
+const captureRegex = /\\([*_~])/g;
+const italicStarRegex = /^\*([\s\S]+?)\*(?!\*)/;
+const italicUndercoreRegex = /^_([\s\S]+?)_(?!_)/;
 
 // Create rules with escaped character support
 const createRules = (invertedItalics: boolean = false): Record<string, Rule> => {
@@ -32,7 +39,7 @@ const createRules = (invertedItalics: boolean = false): Record<string, Rule> => 
       order: 1,
       match: (source: string) => {
         // Check for **
-        const match = /^\*\*([\s\S]+?)\*\*(?!\*)/.exec(source);
+        const match = boldRegex.exec(source);
         if (match && !isEscaped(source, match.index)) {
           return match;
         }
@@ -53,7 +60,7 @@ const createRules = (invertedItalics: boolean = false): Record<string, Rule> => 
       order: 1,
       match: (source: string) => {
         // Check for __
-        const match = /^__([\s\S]+?)__(?!_)/.exec(source);
+        const match = underlineRegex.exec(source);
         if (match && !isEscaped(source, match.index)) {
           return match;
         }
@@ -73,7 +80,7 @@ const createRules = (invertedItalics: boolean = false): Record<string, Rule> => 
     del: {
       order: 3,
       match: (source: string) => {
-        const match = /^~~([\s\S]+?)~~/.exec(source);
+        const match = strikethroughRegex.exec(source);
         if (match && !isEscaped(source, match.index)) {
           return match;
         }
@@ -101,13 +108,13 @@ const createRules = (invertedItalics: boolean = false): Record<string, Rule> => 
       order: 999,
       match: (source: string) => {
         // Match until we hit a formatting character that's not escaped
-        const match = /^[\s\S]+?(?=(?<!\\)(?:[*_~]|$))/.exec(source);
+        const match = plaintextRegex.exec(source);
         return match;
       },
       parse: (capture: RegExpExecArray): ParsedNode => {
         // Unescape any escaped characters
         let content = capture[0];
-        content = content.replace(/\\([*_~])/g, '$1');
+        content = content.replace(captureRegex, '$1');
         return {
           content,
         };
@@ -136,12 +143,12 @@ const createRules = (invertedItalics: boolean = false): Record<string, Rule> => 
         order: 2,
         match: (source: string) => {
           // Check for *
-          let match = /^\*([\s\S]+?)\*(?!\*)/.exec(source);
+          let match = italicStarRegex.exec(source);
           if (match && !isEscaped(source, match.index)) {
             return match;
           }
           // Check for _
-          match = /^_([\s\S]+?)_(?!_)/.exec(source);
+          match = italicUndercoreRegex.exec(source);
           if (match && !isEscaped(source, match.index)) {
             return match;
           }
@@ -174,12 +181,12 @@ const createRules = (invertedItalics: boolean = false): Record<string, Rule> => 
         order: 2,
         match: (source: string) => {
           // Check for *
-          let match = /^\*([\s\S]+?)\*(?!\*)/.exec(source);
+          let match = italicStarRegex.exec(source);
           if (match && !isEscaped(source, match.index)) {
             return match;
           }
           // Check for _
-          match = /^_([\s\S]+?)_(?!_)/.exec(source);
+          match = italicUndercoreRegex.exec(source);
           if (match && !isEscaped(source, match.index)) {
             return match;
           }

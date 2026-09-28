@@ -27,7 +27,13 @@ const MISC_BULLSHIT = 'Misc';
  * @param names names to convert
  */
 export const convertNamesToColors = (names: string[]): HCColors =>
-  names.map(color => HCColor[color as keyof typeof HCColor]);
+  names.map(color => {
+    const c = HCColor[color as keyof typeof HCColor];
+    if (c == null) {
+      throw new Error('null color');
+    }
+    return c;
+  });
 
 /**
  * Gets all subsets of a given length from a set

@@ -21,7 +21,7 @@ import { useEffect, useState } from 'react';
 import { HCSearchColors } from '@hellfall/shared/types';
 import { looseOpList, looseOpType } from '@hellfall/shared/filters';
 import { ControlBar } from '../search-controls/ControlBar.tsx';
-import { displaySetCode, extraSetList, normalizeText } from '@hellfall/shared/utils';
+import { backendToDisplaySetCode, extraSetList, normalizeText } from '@hellfall/shared/utils';
 import { creatorsData, pipsData, tagsData, typesData } from '@hellfall/shared/data';
 import { createStyles } from '@workday/canvas-kit-styling';
 import {
@@ -460,7 +460,7 @@ export const AdvancedSearch = () => {
                   <BoxlessCheckboxGroup
                     value={extraSets}
                     label={'Extra Sets'}
-                    values={extraSetList.map(displaySetCode)}
+                    values={extraSetList.map(backendToDisplaySetCode)}
                     onChange={setExtraSets}
                   />
                 </StyledComponentHolder>

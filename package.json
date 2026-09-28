@@ -57,7 +57,7 @@
     "madge": "^8.0.0",
     "tsx": "^4.21.0"
   },
-  "packageManager": "yarn@4.17.0",
+  "packageManager": "yarn@4.18.0",
   "resolutions": {
     "@workday/canvas-kit-react@npm:^15.0.14": "patch:@workday/canvas-kit-react@npm%3A15.0.14#~/.yarn/patches/@workday-canvas-kit-react-npm-15.0.14-47b4c50911.patch"
   }

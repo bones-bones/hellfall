@@ -249,7 +249,10 @@ export const ScryfallToHC = (entry: fixedScryfall, asToken: boolean = true): HCC
       );
       card.keywords.forEach(keyword => {
         if (keyword in subKeywords) {
-          pushPropToRoot(card, prop, subKeywords[keyword]);
+          const sub = subKeywords[keyword];
+          if (!card.keywords.includes(sub)) {
+            pushPropToRoot(card, prop, sub);
+          }
         }
       });
     } else if (prop == 'frame') {

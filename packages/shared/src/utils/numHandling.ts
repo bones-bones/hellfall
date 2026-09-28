@@ -1,5 +1,5 @@
 /**
- * Checks whether a string is an integer
+ * Checks whether a string is an integer (leading zeroes => return false)
  * @param num string to check
  */
 export const isInteger = (num: string) => {

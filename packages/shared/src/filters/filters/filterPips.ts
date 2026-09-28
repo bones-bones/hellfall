@@ -8,7 +8,6 @@ import {
   pipsContainPipsGeneric,
   pipSearch,
   splitCostIntoPips,
-  // pipsEqualPipsNongeneric,
   textContains,
   textListIncludes,
   textListsShare,
@@ -27,7 +26,13 @@ import {
   summaryFunction,
   toDevotionFilterName,
 } from '../types';
-import { containsOp, createNumSummary, opAsBool, opToDont } from '../utils';
+import {
+  containsOp,
+  createComparisonSummary,
+  createNumSummary,
+  opAsBool,
+  opToDont,
+} from '../utils';
 import { numFilter, numSearchListFilter } from './filterBase';
 
 /**
@@ -78,7 +83,7 @@ export const manaSummary: summaryFunction<pipSearch> = (
       return `!Unknown pips ${invalids.map(s => `{${s}}`).join(', ')}`;
     }
   }
-  return createNumSummary('the mana cost is', true)(
+  return createComparisonSummary('the mana cost is')(
     operator,
     ensurePips(value)
       .map(p => `{${p.symbol}}`)
@@ -121,11 +126,6 @@ const devotionToDreadmaw = (card: HCCard.Any, dropFaces?: boolean): number[] => 
 };
 const pipIsGray = (pip: string) =>
   pipMap.colorlessSymbolRegex.test(pip) || pipMap.genericSymbolRegex.test(pip);
-// const textIsGray = (text: string) =>
-//   (isNumber(text) && text != '0') ||
-//   ['C', 'X', 'Y', '1/2', '∞', 'XIV', 'TREEX', 'HC'].includes(text);
-// const pipIsGray = (pip: HCCardSymbol) => pip.symbol.split('/').every(textIsGray);
-// const pipIsColored = (pip: HCCardSymbol) => pip.colors?.some(c => c != 'C');
 
 const isFatAss = (face: faceType) => {
   const pow = toNumber(face.power);
@@ -133,8 +133,6 @@ const isFatAss = (face: faceType) => {
   if (pow == undefined || tou == undefined) return false;
   return tou - pow >= 2;
 };
-// const textIsHybrid = (text: string) => /^(?!H\/)[^/]+\//.test(text) || /^H\/[^/]+\//.test(text);
-// const pipIsHybrid = (pip: HCCardSymbol) => textIsHybrid(pip.symbol);
 
 const getDevotionFromCard = (
   card: HCCard.Any,

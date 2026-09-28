@@ -26,6 +26,24 @@ export type changeLocation = (typeof changeLocationList)[number];
 export const isChangeLocation = (value: any): value is changeLocation =>
   changeLocationList.includes(value);
 
+/**
+ * These props are either derived from other props or handled automatically by the backend
+ * and should not be user-modifiable. Some of them are still in other arrays for compatibility
+ * reasons, but they still shouldn't be directly changeable by users.
+ */
+const rootDerivedOnlyProps: rootPropType[] = [
+  'has_default_id',
+  'export_name',
+  'released_at',
+  'type_line',
+  'color_identity',
+  'color_identity_hybrid',
+  'not_directly_draftable',
+  'has_draft_partners',
+  'tags',
+  'tag_notes',
+];
+
 const rootAddProps = [
   'hcid',
   'id_is_scryfall',
@@ -197,6 +215,13 @@ export const createRootChange = <T extends changeType, K extends rootChangeableP
   }
   return change;
 };
+
+/**
+ * These props are either derived from other props or handled automatically by the backend
+ * and should not be user-modifiable. Some of them are still in other arrays for compatibility
+ * reasons, but they still shouldn't be directly changeable by users.
+ */
+const faceDerivedOnlyProps: facePropType[] = ['export_name', 'type_line'];
 
 const faceAddProps = [
   'name',

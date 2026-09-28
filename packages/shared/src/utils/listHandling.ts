@@ -648,6 +648,12 @@ export const filterSet = <T>(set: Set<T>, predicate: (item: T) => any): Set<T> =
   return ret;
 };
 
+export const combineSets = <T>(set1: Set<T>, set2: Set<T>) => {
+  for (const item of set2) {
+    set1.add(item);
+  }
+};
+
 type sortable = boolean | number | string | string[] | undefined;
 
 /**

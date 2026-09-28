@@ -1,0 +1,340 @@
+import { HCCard, SetCode } from '@hellfall/shared/types';
+import { getCollectorNumSets, getGroupSets, toSetCode } from '../setDateHandling';
+import { combineSets, deleteFromMap, pushToMap } from '../listHandling';
+import { fixName } from '../textHandling';
+import { getAllNames } from './nameHandling';
+
+/**
+ * A cache for a {@linkcode CardLookupObject}
+ */
+export type lookupCache = {
+  setNumMap: Record<SetCode, Record<string, string>>;
+  setMap: Record<SetCode, string[]>;
+  defaultId: string;
+};
+
+/**
+ * Maps a card's names to the ids that it should use. Only for use in CardMap.
+ *
+ * We won't worry about oracle ids here. That can get caught by specifying the set/number
+ */
+export class CardLookupObject {
+  /**
+   * Maps a set to the collector numbers that the card has prints in, which map to ids
+   */
+  setNumMap = new Map<SetCode, Map<string, string>>();
+  /**
+   * Maps a set to the ids that are in that set
+   */
+  setMap = new Map<SetCode, Set<string>>();
+  defaultId: string;
+  /**
+   * Creates a new CardLookupObject
+   * @param card The initial card to use
+   */
+  constructor(card: HCCard.Any);
+  /**
+   * Creates a new CardLookupObject
+   * @param card The {@linkcode lookupCache} to use
+   */
+  constructor(card: lookupCache);
+  constructor(card: HCCard.Any | lookupCache) {
+    if ('object' in card) {
+      this.defaultId = card.id;
+      this.set(card, true);
+      return;
+    }
+    this.defaultId = card.defaultId;
+    for (const [set, ids] of Object.entries(card.setMap)) {
+      const code = toSetCode(set);
+      if (code) {
+        this.setMap.set(code, new Set(ids));
+      }
+    }
+    for (const [set, numIds] of Object.entries(card.setNumMap)) {
+      const code = toSetCode(set);
+      if (code) {
+        this.setNumMap.set(code, new Map<string, string>(Object.entries(numIds)));
+      }
+    }
+  }
+
+  /**
+   * Returns the correct id for a set code and a collector number
+   * @param code the set code to use
+   * @param collector_number the collector number to use, if any
+   * @param noDefault whether to return undefined if the set isn't specified (used for random land handling)
+   */
+  get(code?: SetCode, collector_number?: string, noDefault?: boolean): string | undefined {
+    const defaultId = noDefault ? undefined : this.defaultId;
+    if (!code) {
+      return defaultId;
+    }
+    if (!collector_number) {
+      const ids = this.setMap.get(code);
+      if (ids?.size) {
+        return Array.from(ids.values())[0];
+      }
+      const numIds = this.setNumMap.get(code)?.values();
+      if (numIds) {
+        const id = Array.from(numIds)[0];
+        if (id) return id;
+      }
+      return defaultId;
+    }
+    const numMap = this.setNumMap.get(code);
+    if (numMap) {
+      const id = numMap.get(collector_number);
+      if (id) return id;
+      const fallback = Array.from(numMap.values())[0];
+      if (fallback) return fallback;
+    }
+    const ids = this.setMap.get(code);
+    if (ids?.size) {
+      return Array.from(ids.values())[0];
+    }
+    return defaultId;
+  }
+
+  getAllIds() {
+    const ids = new Set<string>();
+    for (const [code, setIds] of this.setMap) {
+      combineSets(ids, setIds);
+    }
+    return ids;
+  }
+  /**
+   * Adds a new card to the CardLookupObject.
+   * @param card {@linkcode HCCard.Any} to set
+   * @param shouldChangeDefault whether to change the default id
+   */
+  set(card: HCCard.Any, shouldChangeDefault: boolean) {
+    if (shouldChangeDefault) {
+      this.defaultId = card.id;
+    }
+    getCollectorNumSets(card.set).forEach(code => {
+      const oldMap = this.setNumMap.get(code);
+      if (oldMap) {
+        oldMap.set(card.collector_number.toLowerCase(), card.id);
+      } else {
+        const map = new Map<string, string>();
+        map.set(card.collector_number.toLowerCase(), card.id);
+        this.setNumMap.set(code, map);
+      }
+    });
+    getGroupSets(card.set).forEach(code => {
+      const oldSet = this.setMap.get(code);
+      if (oldSet) {
+        oldSet.add(card.id);
+      } else {
+        const set = new Set<string>();
+        set.add(card.id);
+        this.setMap.set(code, set);
+      }
+    });
+  }
+  /**
+   * @param id the id to delete
+   * @returns true if the last version of this card has been deleted
+   */
+  delete(id: string) {
+    this.setMap.forEach((set, code) => {
+      if (set.has(id)) {
+        set.delete(id);
+      }
+      if (!set.size) {
+        this.setMap.delete(code);
+      }
+    });
+    if (!this.setMap.size) {
+      return true;
+    }
+    if (this.defaultId == id) {
+      this.defaultId = Array.from(Array.from(this.setMap.values())[0])[0];
+    }
+    this.setNumMap.forEach((map, code) => {
+      map.forEach((num_id, num) => {
+        if (num_id == id) {
+          map.delete(num);
+        }
+      });
+      if (!map.size) {
+        this.setNumMap.delete(code);
+      }
+    });
+    return false;
+  }
+  toJSON() {
+    const setNumMap: Record<string, Record<string, string>> = {};
+    for (const [set, map] of this.setNumMap) {
+      const numIDMap: Record<string, string> = {};
+      for (const [num, id] of map) {
+        numIDMap[num] = id;
+      }
+      setNumMap[set] = numIDMap;
+    }
+    const setMap: Record<string, string[]> = {};
+    for (const [set, ids] of this.setMap) {
+      setMap[set] = Array.from(ids);
+    }
+    const defaultId = this.defaultId;
+    return { setNumMap, setMap, defaultId };
+  }
+}
+
+/**
+ * A version of a `Map<string,string>()` that alows direct deletion of and access to values.
+ */
+export class DoubleMap {
+  protected forwardMap = new Map<string, string>();
+  protected reverseMap = new Map<string, Set<string>>();
+
+  /**
+   * Creates a new DoubleMap
+   * @param initRecord the initial record to use, if any
+   */
+  constructor(initRecord?: Record<string, string>) {
+    if (!initRecord) return;
+    this.forwardMap = new Map(Object.entries(initRecord));
+    for (const [key, value] of this.forwardMap) {
+      pushToMap(this.reverseMap, value, key);
+    }
+  }
+
+  /**
+   * Gets the specified value.
+   * @param key key of the value to get
+   */
+  get = (key: string) => this.forwardMap.get(key);
+
+  /**
+   * Gets the specified keys.
+   * @param value value of the keys to get
+   */
+  getKeys = (value: string) => this.reverseMap.get(value);
+
+  /**
+   * Adds a new element with a specified key and value to the Map.
+   * If an element with the same key already exists, the element will be updated.
+   * @param key key to set
+   * @param value value to set
+   */
+  set = (key: string, value: string) => {
+    this.forwardMap.set(key, value);
+    pushToMap(this.reverseMap, value, key);
+  };
+
+  /**
+   * @param key the key to delete
+   * @returns true if the value was deleted
+   */
+  delete = (key: string) => {
+    const value = this.forwardMap.get(key);
+    if (!value) return false;
+    deleteFromMap(this.reverseMap, value, key);
+    this.forwardMap.delete(key);
+    return true;
+  };
+  /**
+   * @param value the value to delete
+   * @returns true if the keys were deleted
+   */
+  deleteKeys = (value: string) => {
+    const keys = this.reverseMap.get(value);
+    if (!keys) return false;
+    keys.forEach(key => this.forwardMap.delete(key));
+    this.reverseMap.delete(value);
+  };
+  /**
+   * Checks if the specified value exists.
+   * @param key key of the value to check
+   */
+  has = (key: string) => this.forwardMap.has(key);
+
+  /**
+   * Checks if the specified keys exist.
+   * @param value value of the keys to check
+   */
+  hasKeys = (value: string) => this.reverseMap.has(value);
+
+  /**
+   * Removes all elements from the DoubleMap.
+   */
+  clear = () => {
+    this.forwardMap.clear();
+    this.reverseMap.clear();
+  };
+  *keys(): IterableIterator<string> {
+    for (const key of this.forwardMap.keys()) {
+      yield key;
+    }
+  }
+  *[Symbol.iterator](): Iterator<[string, string]> {
+    for (const [key, value] of this.forwardMap.entries()) {
+      yield [key, value];
+    }
+  }
+}
+
+export type LookupCacheObject = {
+  oracleMap: Map<string, Set<string>>;
+  nameMap: Map<string, CardLookupObject>;
+  hcidMap: DoubleMap | Map<string, string>;
+  aliasMap: DoubleMap | Map<string, string>;
+};
+
+/**
+ * Adds a card to lookup maps. This is here rather than inside `CardMap`
+ * in order to be accessible to `gzipCatalogCardsToStream`
+ * @param card the card to use
+ * @param lookOb an object with lookup maps
+ * @param shouldChangeDefault a method to determine whether the current card has the default id
+ */
+export const addCardToLookup = (
+  card: HCCard.Any,
+  lookOb: LookupCacheObject,
+  shouldChangeDefault: (card: HCCard.Any, lookup: CardLookupObject) => boolean
+) => {
+  pushToMap(lookOb.oracleMap, card.oracle_id, card.id);
+  const name = fixName(card.name);
+  const fixed = fixName(card.hcid);
+  lookOb.hcidMap.set(fixed, card.id);
+  const existing = lookOb.nameMap.get(name);
+  if (existing) {
+    existing.set(card, shouldChangeDefault(card, existing));
+  } else {
+    lookOb.nameMap.set(name, new CardLookupObject(card));
+    if (lookOb.aliasMap.has(name)) {
+      lookOb.aliasMap.delete(name);
+    }
+  }
+  const names = getAllNames(card).filter(
+    n => !lookOb.nameMap.has(n) && !lookOb.aliasMap.has(n) && !lookOb.hcidMap.has(n)
+  );
+  names.forEach(n => lookOb.aliasMap.set(n, name));
+};
+
+/**
+ * Converts a lookup cache object to a json. This is here rather than inside `CardMap`
+ * in order to be accessible to `gzipCatalogCardsToStream`
+ * @param lookOb an object with lookup maps
+ */
+export const lookupCacheToJSON = (lookOb: LookupCacheObject) => {
+  const oracleMap: Record<string, string[]> = {};
+  for (const [oracle_id, ids] of lookOb.oracleMap) {
+    oracleMap[oracle_id] = Array.from(ids);
+  }
+  const nameMap: Record<string, CardLookupObject> = {};
+  for (const [name, lookup] of lookOb.nameMap) {
+    nameMap[name] = lookup;
+  }
+  const aliasMap: Record<string, string> = {};
+  for (const [alias, name] of lookOb.aliasMap) {
+    aliasMap[alias] = name;
+  }
+  const hcidMap: Record<string, string> = {};
+  for (const [hcid, id] of lookOb.hcidMap) {
+    hcidMap[hcid] = id;
+  }
+  return { oracleMap, nameMap, aliasMap, hcidMap };
+};

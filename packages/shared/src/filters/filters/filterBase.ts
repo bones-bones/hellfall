@@ -23,8 +23,8 @@ import {
   textListsFilterFunction,
 } from '../types';
 import {
+  createComparisonSummary,
   createCorrectedSummary,
-  createNumSummary,
   includeEqualsOp,
   invertOpStrict,
   opAsBool,
@@ -138,9 +138,9 @@ export const dateShareFilter: textListsFilterFunction = <T extends string>(
  */
 export const dateSummary = createCorrectedSummary(
   toIsoDate,
-  createNumSummary('the date'),
+  createComparisonSummary('the date'),
   (operator, value) => `!Unknown date "${value}"`,
-  true
+  'keep'
 );
 
 /**

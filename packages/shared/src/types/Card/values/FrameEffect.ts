@@ -26,6 +26,8 @@ export enum HCFrameEffect {
   Meld = 'meld',
   /** The cards have a legendary crown */
   Legendary = 'legendary',
+  /** The cards have a world crown */
+  World = 'world',
   /** The cards have a companion frame */
   Companion = 'companion',
   /** The cards have the snowy frame effect */

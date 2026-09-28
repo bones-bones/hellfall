@@ -15,8 +15,9 @@ const svgContext = require.context(
 ) as unknown as RawSvgContext;
 
 const svgByName: Record<string, string> = {};
+const keyStripRegex = /^\.\/|\.svg$/g;
 for (const key of svgContext.keys()) {
-  const name = key.replace(/^\.\//, '').replace(/\.svg$/, '');
+  const name = key.replace(keyStripRegex, '');
   const mod = svgContext(key);
   svgByName[name] = typeof mod === 'string' ? mod : (mod as any).default;
 }
@@ -25,7 +26,7 @@ export function getSetSvg(filename?: string): string | null {
   if (!filename) {
     return null;
   }
-  const name = filename.replace(/\.svg$/, '');
+  const name = filename.replace(keyStripRegex, '');
   const svg = svgByName[name];
   if (svg == null) {
     throw new Error(`SVG "${filename}" not found. Available: ${Object.keys(svgByName).join(', ')}`);

@@ -62,22 +62,23 @@ export const allSetsList = [
   'HBB_9',
   'HCV_9',
   'SCL',
-  'SCL_1',
-  'SCL_2',
-  'SCL_3',
+  'SCL_01',
+  'SCL_02',
+  'SCL_03',
   'HCV_SCL',
   'HDH',
   'HCV_HDH',
-  'SCL_4',
+  'SCL_04',
   'HBB_SCL',
-  'SCL_5',
+  'SCL_05',
   'SOH',
   'HCV_SOH',
-  'SCL_6',
-  'SCL_7',
-  'SCL_8',
+  'SCL_06',
+  'SCL_07',
+  'SCL_08',
   'HC9_1',
-  'SCL_9',
+  'SCL_09',
+  'SCL_10',
   'HCV',
   'HCT',
   'HBB',
@@ -148,15 +149,16 @@ export const setPageOrder = [
   'HKL',
   'HCV_SCL',
   'HBB_SCL',
-  'SCL_9',
-  'SCL_8',
-  'SCL_7',
-  'SCL_6',
-  'SCL_5',
-  'SCL_4',
-  'SCL_3',
-  'SCL_2',
-  'SCL_1',
+  'SCL_10',
+  'SCL_09',
+  'SCL_08',
+  'SCL_07',
+  'SCL_06',
+  'SCL_05',
+  'SCL_04',
+  'SCL_03',
+  'SCL_02',
+  'SCL_01',
   'SCL',
   'HCV_HDH',
   'HDH',
@@ -175,13 +177,11 @@ export const setPageOrder = [
  */
 export type SetCode = (typeof allSetsList)[number];
 
-/**
- * Checks if a value is a {@linkcode SetCode}
- * @param value the value to check
- */
-export const isSetCode = (value: any): value is SetCode =>
-  typeof value == 'string' &&
-  allSetsList.includes(value.toUpperCase().replaceAll('.', '_') as SetCode);
+type ReplaceUnderscoreWithDot<T extends string> = T extends `${infer Before}_${infer After}`
+  ? `${Before}.${ReplaceUnderscoreWithDot<After>}`
+  : T;
+
+export type displaySetCode = ReplaceUnderscoreWithDot<SetCode>;
 
 /**
  * A stored link.

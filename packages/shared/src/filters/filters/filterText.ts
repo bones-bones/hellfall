@@ -9,6 +9,8 @@ import {
   getSetAndDirectChildSets,
   xor,
   fixValue,
+  toDisplaySetCode,
+  toSetCode,
 } from '@hellfall/shared/utils';
 import {
   opType,
@@ -35,9 +37,9 @@ import {
   HCLayout,
   isKind,
   HCBorderColor,
-  isSetCode,
   SetType,
   isSetType,
+  SetCode,
 } from '@hellfall/shared/types';
 import {
   frameEffectNames,
@@ -468,10 +470,11 @@ export const anyLayoutSummary = createCorrectedDoubleSummary(
  * @param value the set from the search
  * @param invert dummy
  */
-export const setSummary = createSummary(
-  isSetCode,
+export const setSummary = createCorrectedSummary<string>(
+  toDisplaySetCode,
   (operator, value) => `the set is ${opToNot(operator)} "${value}"`,
-  (operator, value) => `!Unknown set code "${value}"`
+  (operator, value) => `!Unknown set code "${value}"`,
+  'set'
 );
 /**
  * The summary for a block filter
@@ -479,10 +482,11 @@ export const setSummary = createSummary(
  * @param value the set from the search
  * @param invert dummy
  */
-export const blockSummary = createSummary(
-  isSetCode,
+export const blockSummary = createCorrectedSummary<string>(
+  toDisplaySetCode,
   (operator, value) => `the block is ${opToNot(operator)} "${value}"`,
-  (operator, value) => `!Unknown set code "${value}"`
+  (operator, value) => `!Unknown set code "${value}"`,
+  'set'
 );
 /**
  * The summary for a group filter
@@ -490,10 +494,11 @@ export const blockSummary = createSummary(
  * @param value the set from the search
  * @param invert dummy
  */
-export const groupSummary = createSummary(
-  isSetCode,
+export const groupSummary = createCorrectedSummary<string>(
+  toDisplaySetCode,
   (operator, value) => `the set is ${opToNot(operator)} from the "${value}" set group`,
-  (operator, value) => `!Unknown set code "${value}"`
+  (operator, value) => `!Unknown set code "${value}"`,
+  'set'
 );
 /**
  * The strings that can be converted to {@linkcode SetType} and their conversions
@@ -519,18 +524,37 @@ export const setTypeSummary = createCorrectedSummary<string>(
   (operator, value) => `!Unknown set type "${value}"`
 );
 
-export const toIn = (value: string): string | string[] | undefined =>
-  toSetType(value) ?? (isSetCode(value) ? getSetAndDirectChildSets(value) : undefined);
+export const toIn = (value: string): SetType | SetCode[] | undefined => {
+  const set_type = toSetType(fixValue(value));
+  if (set_type) {
+    return set_type;
+  }
+  const code = toSetCode(value);
+  if (code) {
+    return getSetAndDirectChildSets(code);
+  }
+};
 
-const isIn = (value: string): boolean | undefined => Boolean(toSetType(value) || isSetCode(value));
+const toInSummary = (value: string): string | undefined => {
+  const set_type = toSetType(fixValue(value));
+  if (set_type) {
+    return value;
+  }
+  const code = toSetCode(value);
+  if (code) {
+    return code;
+  }
+};
+
 /**
  * The summary for a set inclusion filter
  * @param operator the operator to use
  * @param value the set/code from the search
  * @param invert dummy
  */
-export const inSummary = createSummary(
-  isIn,
+export const inSummary = createCorrectedSummary(
+  toInSummary,
   (operator, value) => `the card was ${opToNot(operator)} in "${value}"`,
-  (operator, value) => `!Unknown set code "${value}"`
+  (operator, value) => `!Unknown set code "${value}"`,
+  'keep'
 );

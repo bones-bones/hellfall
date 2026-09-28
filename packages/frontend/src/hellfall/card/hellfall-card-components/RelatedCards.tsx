@@ -11,7 +11,7 @@ import {
 } from '../../../styling';
 import { system } from '@workday/canvas-tokens-web';
 import { useCallback } from 'react';
-import { getCollectorOrderSet, getSet } from '@hellfall/shared/utils';
+import { getCollectorOrderSet, getSetPermissive } from '@hellfall/shared/utils';
 import { useAtom } from 'jotai';
 import { mouseXAtom, mouseYAtom, tooltipSrcAtom } from '../../atoms/tooltipAtom';
 
@@ -96,7 +96,7 @@ export const RelatedCards = ({
       const setToUse = getCollectorOrderSet(entry.set);
       if (entry.object == 'related_card') {
         return `${entry.name}${
-          getSet(entry.set)?.set_type == 'token' &&
+          getSetPermissive(entry.set)?.set_type == 'token' &&
           entry.type_line.toLowerCase().startsWith('Token')
             ? ' Token'
             : ''
@@ -105,7 +105,9 @@ export const RelatedCards = ({
         const shouldUseNum = allPrints.some(
           print => print.id != entry.id && getCollectorOrderSet(print.set) == setToUse
         );
-        return `${getSet(setToUse)?.name!}${shouldUseNum ? ` #${entry.collector_number}` : ''}`;
+        return `${getSetPermissive(setToUse)?.name!}${
+          shouldUseNum ? ` #${entry.collector_number}` : ''
+        }`;
       }
     },
     [relatedCards, allPrints, sourceCardId]

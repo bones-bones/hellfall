@@ -1,6 +1,6 @@
 import { Box, ButtonColors, Card } from '@workday/canvas-kit-react';
 import { SetLegality } from './visual-components/SetLegality';
-import { displaySetCode, toFaces, toPlainText } from '@hellfall/shared/utils';
+import { backendToDisplaySetCode, toFaces, toPlainText } from '@hellfall/shared/utils';
 import { HCCard } from '@hellfall/shared/types';
 import { system } from '@workday/canvas-tokens-web';
 
@@ -93,6 +93,7 @@ export const HellfallCard = ({
     error: tagsError,
     changesetSubmitted,
     pendingTagStaging,
+    baseUrl,
   } = useCardTagOverrides(data);
   const [activeImageSide, setActiveImageSide] = useState(0);
   const [imageOverrides, setImageOverrides] = useState<Record<number, string>>({});
@@ -237,7 +238,7 @@ export const HellfallCard = ({
                 <>
                   <MediumText>
                     Set:{' '}
-                    {`${displaySetCode(displayCard.set)} #${displayCard.collector_number}${
+                    {`${backendToDisplaySetCode(displayCard.set)} #${displayCard.collector_number}${
                       displayCard.collector_number != displayCard.accepted_order
                         ? ` (AO: ${displayCard.accepted_order})`
                         : ''
@@ -331,13 +332,13 @@ export const HellfallCard = ({
               <br />
               <LinkButton
                 colors={inputButtonColors}
-                to={`/api/cards/${encodeURIComponent(displayCard.id)}?format=text`}
+                to={`${baseUrl}/api/cards/${encodeURIComponent(displayCard.id)}?format=text`}
               >
                 Copy-pasteable Text
               </LinkButton>
               <LinkButton
                 colors={inputButtonColors}
-                to={`/api/cards/${encodeURIComponent(displayCard.id)}?format=json`}
+                to={`${baseUrl}/api/cards/${encodeURIComponent(displayCard.id)}?format=json`}
               >
                 Copy-pasteable JSON
               </LinkButton>

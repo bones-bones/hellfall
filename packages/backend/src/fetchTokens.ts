@@ -21,6 +21,7 @@ import {
   tokenInvariantMap,
   isValidV4UUID,
   semiSplit,
+  listsShareLower,
 } from '@hellfall/shared/utils';
 
 export const fetchTokens = async (NO_SCRYFALL: boolean) => {
@@ -68,9 +69,14 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
 
   const HCTokens = rest.map(entry => {
     const entryAt = (key: keyType) => entry[keys.indexOf(key)];
-    const oracle_id =
-      tokenInvariantMap.getOracleId(entryAt('oracle_id') || entryAt('name')) ??
-      entryAt('oracle_id');
+    const id = entryAt('id');
+    if (!id) {
+      throw new Error(`Missing uuid on token with hcid: ${entryAt('name')}`);
+    }
+    if (!isValidV4UUID(id)) {
+      throw new Error(`Invalid uuid: ${id} on token with hcid: ${entryAt('name')}`);
+    }
+    const oracle_id = entryAt('oracle_id');
     if (!oracle_id) {
       throw new Error(`Missing oracle id on token with hcid: ${entryAt('name')}`);
     }
@@ -82,7 +88,7 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
       HCKind.Token,
       splitKeys.some(key => entry[keys.indexOf(key)].includes(' // ')),
       {
-        id: entryAt('id'),
+        id,
         oracle_id,
         hcid: entryAt('name'),
         set: 'HCT',
@@ -106,7 +112,16 @@ export const fetchTokens = async (NO_SCRYFALL: boolean) => {
           entryList.forEach((value, index) => {
             if (keys[i] == 'name') {
               addPropToFace(token, 'name', value, index);
-              addPropToFace(token, 'subtypes', value.split(' '), index);
+              if (
+                !listsShareLower(entryAt('types').split(' '), [
+                  'instant',
+                  'sorcery',
+                  'reminder',
+                  'emblem',
+                ])
+              ) {
+                addPropToFace(token, 'subtypes', value.split(' '), index);
+              }
             } else if (keys[i] == 'types') {
               const typesAndSupertypes = semiSplit(value);
               const superList: string[] = [];

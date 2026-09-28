@@ -1,3 +1,35 @@
+import { toSetCode } from './setDateHandling';
+
+/**
+ * This is all the precomposed characters that need special handling
+ */
+const specialLetters: Record<string, string> = {
+  ł: 'l',
+  Ł: 'L',
+  đ: 'd',
+  Đ: 'D',
+  ø: 'o',
+  Ø: 'O',
+  ħ: 'h',
+  Ħ: 'H',
+  æ: 'ae',
+  Æ: 'AE',
+  œ: 'oe',
+  Œ: 'OE',
+  ß: 'ss',
+  þ: 'th',
+  Þ: 'Th',
+  ð: 'd',
+  Ð: 'D',
+};
+
+const specialLetterRegex = new RegExp(`[${Object.keys(specialLetters).join('')}]`, 'g');
+
+const accentRegex = /[\u0300-\u036f]/g;
+const singleQuoteRegex = /[‘’]/g;
+const doubleQuoteRegex = /[“”]/g;
+const spaceRegex = / {2,}/g;
+
 /**
  * Normalize text (remove accents and replace smart quotes with normal quotes)
  * @param text text to normalize
@@ -5,11 +37,15 @@
 export const normalizeText = (text: string): string =>
   text
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replaceAll(/[‘’]/g, "'")
-    .replaceAll(/[“”]/g, '"')
-    .replaceAll(/ {2,}/g, ' ');
+    .replace(specialLetterRegex, c => specialLetters[c])
+    .replace(accentRegex, '')
+    .replaceAll(singleQuoteRegex, "'")
+    .replaceAll(doubleQuoteRegex, '"')
+    .replaceAll(spaceRegex, ' ');
 
+const openQuoteRegex = /[\s([{ “‘]/;
+const minusRegex = /[/([ ]/;
+const minusNumRegex = /[0-9]/;
 /**
  * Format smart quotes
  * @param text - The markdown text to convert to plaintext
@@ -24,7 +60,7 @@ export const formatQuotes = (text: string): string => {
     const nextChar = text[i + 1] ?? '';
     if (char === '"') {
       const isOpening =
-        i === 0 || /[\s([{ “‘]/.test(prevChar) || (prevChar == 'n' && result.at(-2) == '\\');
+        i === 0 || openQuoteRegex.test(prevChar) || (prevChar == 'n' && result.at(-2) == '\\');
       if (isOpening) {
         result.push('“');
       } else {
@@ -32,7 +68,7 @@ export const formatQuotes = (text: string): string => {
       }
     } else if (char === "'") {
       const isOpening =
-        i === 0 || /[\s([{ “‘]/.test(prevChar) || (prevChar == 'n' && result.at(-2) == '\\');
+        i === 0 || openQuoteRegex.test(prevChar) || (prevChar == 'n' && result.at(-2) == '\\');
       if (isOpening) {
         result.push('‘');
       } else {
@@ -41,9 +77,9 @@ export const formatQuotes = (text: string): string => {
     } else if (char === '-') {
       const isMinus =
         i === 0 ||
-        /[/([ ]/.test(prevChar) ||
+        minusRegex.test(prevChar) ||
         (prevChar == 'n' && result.at(-2) == '\\') ||
-        (/[0-9]/.test(prevChar) && /[0-9]/.test(nextChar));
+        (minusNumRegex.test(prevChar) && minusNumRegex.test(nextChar));
       if (isMinus) {
         result.push('–');
       } else {
@@ -63,6 +99,8 @@ const delimiterList = [
   '*', // italics
   '_', // italics
 ];
+
+const delimiterRegex = /[*_~()\\]/;
 /**
  * Convert markdown text to plaintext by stripping formatting characters
  * @param text - The markdown text to convert to plaintext
@@ -89,7 +127,7 @@ export const textPrep = (text: string, preserveCaps: boolean = false): string =>
     return true;
   };
   while (i < len) {
-    if (i == 0 && !/[*_~()\\]/.test(text)) {
+    if (i == 0 && !delimiterRegex.test(text)) {
       break;
     }
     // Check for escaped characters
@@ -356,11 +394,12 @@ export const isValidV4UUID = (uuid: string): boolean => uuidRegex.test(uuid);
 export const unescapeBase64 = (text: string) =>
   text.replace(/%([0-9A-F]{2})/g, (match, p1) => String.fromCharCode(parseInt(p1, 16)));
 
+const quoteTestRegex = /^(['"/]).*\1$/;
 /**
  * Checks if text is a quoted string (i.e. starts and ends with quotation marks or slashes)
  * @param text text to check
  */
-export const textIsQuote = (text: string) => /^(['"/]).*\1$/.test(text) && text.at(-2) != '\\';
+export const textIsQuote = (text: string) => quoteTestRegex.test(text) && text.at(-2) != '\\';
 
 /**
  * Strips quotes from start and end of text if it's a quoted string (i.e. starts and ends with quotation marks)
@@ -375,6 +414,10 @@ const regexTest = /^\/.*\/$/;
  */
 export const isRegexText = (text: string) => regexTest.test(text);
 
+const quoteStartRegex = /^['"]/;
+const quoteStripRegex = /(?<!\\)['"]/g;
+const escapeStripRegex = /\\(['"])/g;
+const dashRegex = /[_\-–]/g;
 /**
  * Unescapes and strips text so that it can be used in comparisons
  * @param text text to unescape
@@ -389,24 +432,25 @@ export const unescapeText = (text: string, isSet?: boolean, keepDashes?: boolean
     return text
       .toUpperCase()
       .replaceAll('.', '_')
-      .replaceAll(/^['"]/g, '')
-      .replaceAll(/(?<!\\)['"]/g, '')
-      .replaceAll(/\\(['"])/g, '$1');
+      .replace(quoteStartRegex, '')
+      .replace(quoteStripRegex, '')
+      .replace(escapeStripRegex, '$1');
   }
   const strippedText =
-    textIsQuote(text) || keepDashes ? text.replaceAll('–', '-') : text.replaceAll(/[_\-–]/g, '');
+    textIsQuote(text) || keepDashes ? text.replaceAll('–', '-') : text.replace(dashRegex, '');
   return strippedText
     .toLowerCase()
-    .replaceAll(/^['"]/g, '')
-    .replaceAll(/(?<!\\)['"]/g, '')
-    .replaceAll(/\\(['"])/g, '$1');
+    .replace(quoteStartRegex, '')
+    .replace(quoteStripRegex, '')
+    .replace(escapeStripRegex, '$1');
 };
 
 export const dashAsFix = (keepDashes?: boolean) => (keepDashes ? 'keep' : 'fix');
 export const setAsFix = (isSet?: boolean) => (isSet ? 'set' : 'fix');
 export const bothAsFix = (keepDashes?: boolean, isSet?: boolean) =>
-  keepDashes ? 'keep' : isSet ? 'set' : 'fix';
+  isSet ? 'set' : keepDashes ? 'keep' : 'fix';
 
+export type fixValueOption = 'upper' | 'lower' | 'fix' | 'keep' | 'set';
 /**
  * Fixes a value by unescaping all text; can go inside arrays, but not other objects
  * @template T type of the value to fix
@@ -414,10 +458,7 @@ export const bothAsFix = (keepDashes?: boolean, isSet?: boolean) =>
  * @param option how to fix the text; fix does unescape; keep keeps dashes;
  * others just do the corresponding text transformation
  */
-export const fixValue = <T>(
-  value: T,
-  option: 'upper' | 'lower' | 'fix' | 'keep' | 'set' = 'fix'
-): T => {
+export const fixValue = <T>(value: T, option: fixValueOption = 'fix'): T => {
   if (typeof value == 'string') {
     switch (option) {
       case 'fix':
@@ -425,7 +466,7 @@ export const fixValue = <T>(
       case 'keep':
         return unescapeText(value, undefined, true) as T;
       case 'set':
-        return unescapeText(value, true) as T;
+        return (toSetCode(value) ?? '') as T;
       case 'upper':
         return value.toUpperCase() as T;
       case 'lower':

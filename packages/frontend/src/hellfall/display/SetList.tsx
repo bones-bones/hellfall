@@ -1,6 +1,6 @@
 import {
   CardMap,
-  displaySetCode,
+  backendToDisplaySetCode,
   getRelatedsFromSet,
   HCToTTSDeck,
   listsAreExactlyEqual,
@@ -102,7 +102,7 @@ export const SetList = ({ sets }: { sets: HCSet[] }) => {
         {sets.map(set => (
           <SetRow key={set.code}>
             <NameCell key={`${set.code}-name`} set={set} shouldUseArrows={shouldUseArrows} />
-            <CodeCell key={`${set.code}-code`}>{displaySetCode(set.code)}</CodeCell>
+            <CodeCell key={`${set.code}-code`}>{backendToDisplaySetCode(set.code)}</CodeCell>
             <NumCell key={`${set.code}-num`}>{set.card_count}</NumCell>
             <DateCell key={`${set.code}-date`}>{set.released_at ?? 'ongoing'}</DateCell>
             <LinkCell key={`${set.code}-link`}>
