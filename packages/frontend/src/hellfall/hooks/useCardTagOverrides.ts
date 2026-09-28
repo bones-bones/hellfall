@@ -37,6 +37,7 @@ export function useCardTagOverrides(card: HCCard.Any): {
   persistEnabled: boolean;
   changesetSubmitted: boolean;
   pendingTagStaging: PendingTagStaging | null;
+  baseUrl: string;
 } {
   const baseUrl = getAuthApiUrl();
   const displayCard = structuredClone(card);
@@ -147,5 +148,6 @@ export function useCardTagOverrides(card: HCCard.Any): {
     persistEnabled,
     changesetSubmitted,
     pendingTagStaging,
+    baseUrl,
   };
 }

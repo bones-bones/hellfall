@@ -93,6 +93,7 @@ export const HellfallCard = ({
     error: tagsError,
     changesetSubmitted,
     pendingTagStaging,
+    baseUrl,
   } = useCardTagOverrides(data);
   const [activeImageSide, setActiveImageSide] = useState(0);
   const [imageOverrides, setImageOverrides] = useState<Record<number, string>>({});
@@ -331,13 +332,13 @@ export const HellfallCard = ({
               <br />
               <LinkButton
                 colors={inputButtonColors}
-                to={`/api/cards/${encodeURIComponent(displayCard.id)}?format=text`}
+                to={`${baseUrl}/api/cards/${encodeURIComponent(displayCard.id)}?format=text`}
               >
                 Copy-pasteable Text
               </LinkButton>
               <LinkButton
                 colors={inputButtonColors}
-                to={`/api/cards/${encodeURIComponent(displayCard.id)}?format=json`}
+                to={`${baseUrl}/api/cards/${encodeURIComponent(displayCard.id)}?format=json`}
               >
                 Copy-pasteable JSON
               </LinkButton>
