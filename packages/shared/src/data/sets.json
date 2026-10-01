@@ -769,7 +769,7 @@
 			"description": "Cards vetoed or slotsed from HC9.",
 			"set_type": "veto",
 			"parent_set_code": "HCV",
-			"card_count": 110
+			"card_count": 109
 		},
 		{
 			"object": "set",
@@ -789,9 +789,11 @@
 				"SCL_07",
 				"SCL_08",
 				"SCL_09",
-				"SCL_01"
+				"SCL_10",
+				"SCL_11",
+				"SCL_12"
 			],
-			"card_count": 49,
+			"card_count": 59,
 			"filename": "scl.svg"
 		},
 		{
@@ -835,7 +837,7 @@
 			"description": "Cards from SCL that didn't make it into the top 5 but got enough upvotes.",
 			"set_type": "veto",
 			"parent_set_code": "HCV",
-			"card_count": 76
+			"card_count": 86
 		},
 		{
 			"object": "set",
@@ -979,6 +981,28 @@
 		},
 		{
 			"object": "set",
+			"id": "a9b4869d-849a-4988-a1e9-f0d7058a7d00",
+			"code": "SCL_11",
+			"name": "Scube Lair Drop: Hellscube 4 All-Stars",
+			"description": "Hellscube 4 All-Stars",
+			"set_type": "lair",
+			"released_at": "2026-09-30",
+			"parent_set_code": "SCL",
+			"card_count": 5
+		},
+		{
+			"object": "set",
+			"id": "cc0c8aa5-994c-4dd2-b7fc-d2146a5b4fcb",
+			"code": "SCL_12",
+			"name": "Scube Lair Drop: MS Paint",
+			"description": "MS Paint",
+			"set_type": "lair",
+			"released_at": "2026-10-07",
+			"parent_set_code": "SCL",
+			"card_count": 0
+		},
+		{
+			"object": "set",
 			"id": "b65627ea-38e8-4b8a-85cf-7a1997f8322b",
 			"code": "HCV",
 			"name": "Hellscube V(eto)",
@@ -1003,7 +1027,7 @@
 				"HCV_HDH",
 				"HCV_SOH"
 			],
-			"card_count": 876,
+			"card_count": 885,
 			"filename": "hcv.svg"
 		},
 		{

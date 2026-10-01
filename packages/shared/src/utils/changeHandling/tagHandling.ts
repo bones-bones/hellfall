@@ -670,6 +670,11 @@ const subKeywords: Record<string, string | string[]> = {
   exaggerate: 'escalate',
   'wrong warp': 'warp',
   historystorm: 'storm',
+  crimestorm: 'storm',
+  'escape from sideboard': 'escape',
+  'land casualty': 'casualty',
+  historicwalk: 'walk',
+  nontokenlandfall: 'landfall',
 };
 
 const keywordTags = [

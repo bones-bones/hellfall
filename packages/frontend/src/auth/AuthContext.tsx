@@ -18,7 +18,7 @@ const DEFAULT_DEV_USER: AuthUser = {
   defaultSorts: ['set,desc', 'number,asc'],
 };
 
-const DEV_LOGGED_IN = false;
+const DEV_LOGGED_IN = true;
 
 async function fetchMe(baseUrl: string): Promise<AuthUser | null> {
   if (baseUrl === 'http://localhost:3003') {

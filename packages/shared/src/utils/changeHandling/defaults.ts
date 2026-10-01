@@ -138,6 +138,9 @@ const subtypeLayouts: Record<string, HCLayoutGroup.FaceLayoutType> = {
 export const getDefaultTypeLayout = (card: HCCard.Any, index?: number): HCLayout | undefined => {
   const isTokenRoot = !('card_faces' in card) && card.kind == 'token';
   const face = toFaces(card)[index ?? 0];
+  if (!face) {
+    return;
+  }
   const tokenType = face.types?.find(type => type.toLowerCase() in tokenTypeLayouts)?.toLowerCase();
   if (tokenType) {
     return tokenTypeLayouts[tokenType];
