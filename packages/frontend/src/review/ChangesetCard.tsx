@@ -258,6 +258,7 @@ const Comment = createStyledIntrinsic('p', commentStyles, 'Comment');
 
 const changesTableStyles = createStyles({
   width: '100%',
+  display: 'table',
   borderCollapse: 'collapse',
   marginTop: 8,
   fontSize: 14,

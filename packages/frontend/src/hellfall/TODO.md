@@ -199,3 +199,6 @@ Write a script to transform the database
 - add rotation buttons for flip/aftermath cards
 - figure out why sengir's rock gives sengir's tower in draftmancer
 - make draftpartner not automatically give the draftpartner keyword (do this after sorting out other keywords)
+- add new regex/text handling stuff to mork?
+- improve change diff ui (especially for artists)
+- allow partial accept for changesets

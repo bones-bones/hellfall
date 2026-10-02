@@ -621,6 +621,16 @@
       ]
     },
     {
+      "filename": "mono/colors/SU.svg",
+      "symbol": "SU",
+      "english": "one blue snow mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "U"
+      ]
+    },
+    {
       "filename": "mono/alternate/upsidedownG.svg",
       "symbol": "upsidedownG",
       "english": "one upside down green mana",
