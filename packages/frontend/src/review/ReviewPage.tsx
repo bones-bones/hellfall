@@ -170,7 +170,7 @@ export const ReviewPage = () => {
     setSelectedIds(new Set());
   }, [filter, cardId]);
 
-  const handleAction = async (id: string, action: 'accept' | 'reject') => {
+  const handleAction = async (id: string, action: 'reject') => {
     if (!baseUrl) return;
     const res = await fetch(`${baseUrl}/api/changesets/${id}/${action}`, {
       method: 'POST',
