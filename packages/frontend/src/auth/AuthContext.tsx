@@ -18,11 +18,13 @@ const DEFAULT_DEV_USER: AuthUser = {
   defaultSorts: ['set,desc', 'number,asc'],
 };
 
-const DEV_LOGGED_IN = true;
+const getDevLoggedIn = (): boolean => {
+  return process.env.DEV_LOGGED_IN == 'true';
+};
 
 async function fetchMe(baseUrl: string): Promise<AuthUser | null> {
   if (baseUrl === 'http://localhost:3003') {
-    if (DEV_LOGGED_IN) {
+    if (getDevLoggedIn()) {
       console.log('🔧 Development mode: Using default dev user');
       return DEFAULT_DEV_USER;
     } else {
