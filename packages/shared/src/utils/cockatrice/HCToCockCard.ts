@@ -2,7 +2,7 @@ import { faceType, HCCard, HCLayout, HCRelatedCard } from '@hellfall/shared/type
 import { CockCardProps, CockFaceProps, CockPrintProps, CockRelatedProps } from './cockTypes';
 import { orderColors } from '../pipsAndColors';
 import { LightCardMap, mergeHCCardFaces, printInvariant, toFaces } from '../cardHandling';
-import { listIncludesValueLower } from '../listHandling';
+import { listIncludesValueLower, textListsShare } from '../listHandling';
 import { toTitleCase } from '../textHandling';
 
 const hcToCockLayout: Record<HCLayout, string> = {
@@ -192,6 +192,9 @@ const compressHCCardFaces = (card: HCCard.Any): HCCard.Any => {
     // compress down to 1 side and use front image if there are still too many sides
     if (goingToCompressAll || !newCard.card_faces[0].image) {
       newCard.card_faces[0].image = newCard.image;
+      if (newCard.still_image) {
+        newCard.card_faces[0].still_image = newCard.still_image;
+      }
     }
   }
   if (card.layout == HCLayout.Cube) {
@@ -221,17 +224,20 @@ export const invariantToCockProps = (
     const cockPrint: CockPrintProps = {
       hcid: print.hcid,
       uuid: print.id,
-      picurl: toFaces(print)[0].image!,
+      picurl: toFaces(print)[0].still_image ?? toFaces(print)[0].image!,
       set: print.set,
       collector_number: print.collector_number,
     };
-    const backPicurl = toFaces(print)[1]?.image;
+    const backPicurl = toFaces(print)[1]?.still_image ?? toFaces(print)[1]?.image;
     if (backPicurl) {
       cockPrint.backPicurl = backPicurl;
     }
     return cockPrint;
   });
-  if (invariant.kind != 'card' && !defaultPrint.tags?.includes('draftpartner')) {
+  if (
+    invariant.kind != 'card' &&
+    !textListsShare(defaultPrint.tags, ['draftpartner', 'can-be-in-decks'])
+  ) {
     cockCard.token = '1';
   }
   Object.entries(invariant.legalities!).forEach(([key, value]) => {
