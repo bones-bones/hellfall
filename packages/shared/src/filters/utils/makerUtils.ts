@@ -2,8 +2,10 @@ import {
   anyPropOrder,
   anyPropType,
   HCCard,
+  HCFormat,
   isAnyPropType,
   isFacePropType,
+  isFormat,
   isRootPropType,
 } from '@hellfall/shared/types';
 import {
@@ -18,7 +20,7 @@ import {
 } from '@hellfall/shared/utils';
 import { numSearch } from '../types';
 
-const otherPropList = ['showcase', 'settype', 'pt'] as const;
+const otherPropList = ['showcase', 'settype', 'pt', 'standard', 'commander', '4cb'] as const;
 type otherPropType = (typeof otherPropList)[number];
 /**
  * Any prop of type {@linkcode anyPropType} or {@linkcode otherPropType}
@@ -41,6 +43,7 @@ const shouldDropList: anyPropType[] = [
   'oracle_text',
   // 'flavor_text',
 ];
+
 const shouldDropFaces = (prop: anyPropType) => shouldDropList.includes(prop);
 /**
  * Gets the values from a prop
@@ -59,6 +62,9 @@ export const getValuesFromProp = <T extends queryPropType>(
   option: 'fix' | 'keep' | 'set' = 'fix'
 ): numSearch[] => {
   const values: numSearch[] = [];
+  if (isFormat(prop)) {
+    values.push(card.legalities[prop]);
+  }
   if (earlyProps.includes(prop)) {
     switch (prop) {
       case 'name':
@@ -167,11 +173,14 @@ export const queryNameToValue = (queryName: string): queryValueType => {
     props: [],
     location: 'any',
   };
+  if (!queryName) {
+    return queryValue;
+  }
   const queryProp = queryNamePropRecord[queryName];
   if (queryProp) {
     queryValue.props = ensureArray(queryProp);
   }
-  if (isAnyPropType(queryName) && !queryValue.props.length) {
+  if (!queryValue.props.length && isAnyPropType(queryName)) {
     queryValue.props = [queryName];
   }
   if (!queryValue.props.length) {

@@ -265,17 +265,6 @@ export const createSummary =
     );
 
 /**
- * Creates a {@linkcode summaryFunction<string>} for use in a legality filter
- * @param legality legality to check for
- */
-export const createLegalitySummary = (legality: string) =>
-  createSummary(
-    isFormat,
-    (operator, value) => `it's ${opToNot(operator)} ${legality} in ${value}`,
-    (operator, value) => `!Unknown format "${value}"`
-  );
-
-/**
  * Compares a value from a card with a value from a search
  * using an inclusion function and an equality function
  * @template T the type of the value from the card
