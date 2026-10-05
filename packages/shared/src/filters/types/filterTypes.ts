@@ -136,7 +136,7 @@ export interface setSortFilterFunction {
  * @template T the type of the value from the card
  * @template S the type of the search value
  */
-export interface cardFilterFunction<T = any, S = any> extends anyFilterFunction {
+export interface cardFilterFunction<T, S> extends anyFilterFunction {
   (value1: T, operator: opType, value2: S, ...args: any[]): boolean | undefined;
   // /**
   //  * How to handle inversion of this filter

@@ -1,4 +1,4 @@
-import { Firestore } from '@google-cloud/firestore';
+import { FieldValue, Firestore } from '@google-cloud/firestore';
 import { HCCard, HCKind, HCImageStatus, SetCode } from '@hellfall/shared/types';
 import {
   getDefaultCard,
@@ -8,7 +8,12 @@ import {
   splitMasterpiecePostcard,
   toSetCode,
 } from '@hellfall/shared/utils';
-import { cardToFirestore, cardsCollection, firestoreCard } from '@hellfall/shared/utils/firestore';
+import {
+  cardToFirestore,
+  cardUpdate,
+  cardsCollection,
+  firestoreCard,
+} from '@hellfall/shared/utils/firestore';
 import { withCors, env, requirePostcardAuth, HandlerRequest, HandlerResponse } from './lib';
 import { scheduleCatalogPublish } from '../lib/publishCatalog.ts';
 import { uploadImageBase64ToGcs } from '../lib/imageGcs.ts';
@@ -17,7 +22,7 @@ import { cardMap } from './cardMap.ts';
 const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
 const cardsCol: cardsCollection = db.collection(env.FIRESTORE_CARDS_COLLECTION);
 
-type PostcardKind = 'card' | 'token';
+type PostcardKind = Extract<HCKind, 'card' | 'token'>;
 
 type PostcardBody = {
   name?: string;
@@ -95,7 +100,7 @@ const newUnlessValid = (id?: string) => (id && isValidV4UUID(id) ? id : newCardI
 /** Resolve print UUID for GCS image keys — never use hcid as the object key. */
 function resolvePostcardCardId(
   body: PostcardBody,
-  existing: { id: string; data: () => firestoreCard | undefined } | null,
+  // existing: { id: string; data: () => firestoreCard | undefined } | null,
   previous: firestoreCard | null
 ): string {
   if (previous?.id) {
@@ -190,6 +195,8 @@ function validatePostcardBody(
   );
 }
 
+const deleteField = FieldValue.delete();
+
 async function resolveImageUrl(body: PostcardBody, cardId: string): Promise<string> {
   if (typeof body.imageBase64 === 'string' && body.imageBase64.trim()) {
     const name = body.name?.trim() || 'image';
@@ -219,18 +226,24 @@ async function upsertPostcard(body: PostcardBody) {
     throw new Error('invalid_body');
   }
 
-  const kind: PostcardKind = body.kind === 'token' ? 'token' : 'card';
+  const kind: PostcardKind = body.kind === 'token' ? HCKind.Token : HCKind.Card;
   const setId = kind === 'token' ? 'HCT' : body.set;
   const existing = await findByHcid(body.hcid.trim());
   const previous: firestoreCard | null = existing?.data() ?? null;
-  const cardId = resolvePostcardCardId(body, existing, previous);
+  const isReplacingScryfall =
+    !!previous &&
+    previous.kind == 'scryfall' &&
+    previous.set == 'SFT' &&
+    setId == 'HCT' &&
+    kind == 'token';
+  const cardId = isReplacingScryfall ? newCardId() : resolvePostcardCardId(body, previous);
   const oracle_id = resolvePostcardOracleId(body, previous);
 
   const imageUrl = await resolveImageUrl(body, cardId);
   const bodyWithImage = { ...body, image: imageUrl };
 
   if (existing?.exists && previous) {
-    const update: firestoreCard = {
+    const update: cardUpdate = {
       name: splitMasterpiecePostcard(body.name).name,
       image: imageUrl,
       image_status: HCImageStatus.HighRes,
@@ -238,14 +251,28 @@ async function upsertPostcard(body: PostcardBody) {
       set: setId as SetCode,
     };
     if (body.hcid?.trim()) update.hcid = body.hcid.trim();
-    if (cardId !== previous.id) update.id = cardId;
-    if (oracle_id !== previous.oracle_id) update.oracle_id = oracle_id;
+    if (cardId !== previous.id) {
+      update.id = cardId;
+      if (previous.id_is_scryfall) {
+        update.id_is_scryfall = deleteField;
+      }
+    }
+    if (kind !== previous.kind) {
+      update.kind = kind;
+    }
+    if (oracle_id !== previous.oracle_id) {
+      update.oracle_id = oracle_id;
+      if (previous.oracle_id_is_scryfall) {
+        update.oracle_id_is_scryfall = deleteField;
+      }
+    }
     await existing.ref.update(update);
     scheduleCatalogPublish();
     return {
       docId: existing.id,
       id: cardId,
       oracle_id,
+      isReplacingScryfall,
       wasCreate: false,
       previous,
       imageUrl,
@@ -266,6 +293,7 @@ async function upsertPostcard(body: PostcardBody) {
     id: stub.id,
     oracle_id,
     wasCreate: true,
+    isReplacingScryfall,
     previous: null,
     imageUrl,
   };
@@ -337,6 +365,7 @@ export const postcardHandler = async (
       id: result.id,
       oracle_id: result.oracle_id,
       wasCreate: result.wasCreate,
+      replacedScryfallToken: result.isReplacingScryfall,
       imageUrl: result.imageUrl,
     });
     res.statusCode = 200;

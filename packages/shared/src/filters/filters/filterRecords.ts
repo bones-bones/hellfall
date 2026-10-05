@@ -15,6 +15,8 @@ import {
   TokenFrames,
   HCLayout,
   HCLayoutGroup,
+  HCLegalitiesField,
+  HCFormat,
 } from '@hellfall/shared/types';
 
 /**
@@ -600,3 +602,20 @@ export const layoutNames: [HCLayout[], string][] = [
   [[HCLayout.MeldResult], 'the result of a meld'],
   [[HCLayout.Transform, HCLayout.Modal, HCLayout.MeldPart, HCLayout.Specialize], 'double-sided'],
 ];
+
+export const toFormatRecord: Record<string, HCFormat> = {
+  s: 'standard',
+  h: 'standard',
+  hellstructed: 'standard',
+  hellconstructed: 'standard',
+  c: 'commander',
+  hellmander: 'commander',
+  hellsmander: 'commander',
+  hellcommander: 'commander',
+  hellscommander: 'commander',
+  '4': '4cb',
+  four: '4cb',
+  fourcb: '4cb',
+  fourcardblind: '4cb',
+  '4cardblind': '4cb',
+};

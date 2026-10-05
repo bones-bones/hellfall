@@ -27,7 +27,6 @@ import {
   getActualOp,
   invertOp,
   createCorrectedSummary, // used for a link
-  createLegalitySummary,
   queryPropType,
   getValuesFromProp,
   queryNameToValue,
@@ -57,6 +56,8 @@ import {
   dateSummary,
   dateShareFilter,
   filterSetSort,
+  createLegalitySummary,
+  toFormat,
 } from '../filters';
 import {
   ensureArray,
@@ -498,6 +499,10 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
      * Whether to drop dashes in text
      */
     public dropDashes: boolean = true,
+    /**
+     * Whether the format of the query is inverted. Currently only used for legality
+     */
+    public queryFormatIsInverted?: boolean,
     defaultOp: opType = '=',
     invertOption: invertOptionType = 'flip'
   ) {
@@ -526,14 +531,19 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
     );
     this.summaryValue = stripQuotes(value);
     this.dropFaces = true;
-    ({ props: this.props, location: this.location } = queryNameToValue(queryName));
+    ({ props: this.props, location: this.location } = queryNameToValue(
+      this.queryFormatIsInverted ? this.value[0] : queryName
+    ));
   }
   cardPassesFilter = (card: HCCard.Any) =>
     xor(
       this.filter(
         this.getValueToCompare(card),
         this.getOp(),
-        fixValue(this.value, bothAsFix(!this.dropDashes, this.isSet))
+        fixValue<string[]>(
+          this.queryFormatIsInverted ? ensureArray(this.queryName) : this.value,
+          bothAsFix(!this.dropDashes, this.isSet)
+        )
       ),
       this.inverted
     );
@@ -542,6 +552,7 @@ export class PropConvertFilter<T extends string> extends FilterObject<string[], 
    */
   toSummary = () => (this.summary as any)(this.getOp(), this.summaryValue, this.inverted);
 }
+
 /**
  * A filter object that handles dates correctly
  */
@@ -550,6 +561,7 @@ export class DateFilter extends PropConvertFilter<string> {
     value: string,
     op: looseOpType,
     dropDashes: boolean = false,
+    queryFormatIsInverted?: boolean,
     defaultOp: opType = '=',
     invertOption: invertOptionType = 'flip'
   ) {
@@ -561,6 +573,7 @@ export class DateFilter extends PropConvertFilter<string> {
       toIsoDate,
       undefined,
       dropDashes,
+      queryFormatIsInverted,
       defaultOp,
       invertOption
     );
@@ -583,6 +596,7 @@ export class InFilter extends PropConvertFilter<string> {
      * Whether this is a set filter
      */
     isSet?: boolean,
+    queryFormatIsInverted?: boolean,
     defaultOp: opType = '=',
     invertOption: invertOptionType = 'flip'
   ) {
@@ -594,6 +608,7 @@ export class InFilter extends PropConvertFilter<string> {
       toIn,
       isSet,
       undefined,
+      queryFormatIsInverted,
       defaultOp,
       invertOption
     );
@@ -606,6 +621,33 @@ export class InFilter extends PropConvertFilter<string> {
           getValuesFromProp(c, p, this.location, this.dropFaces, setAsFix(this.isSet)) as string[]
       )
     );
+}
+
+/**
+ * A filter object that checks against a card's legality in a format
+ */
+export class LegalityFilter extends PropConvertFilter<string> {
+  constructor(
+    queryName: filterNameType,
+    value: string,
+    op: looseOpType,
+    dropDashes: boolean = true,
+    defaultOp: opType = '=',
+    invertOption: invertOptionType = 'flip'
+  ) {
+    super(
+      queryName,
+      createLegalitySummary(queryName),
+      value,
+      op,
+      toFormat,
+      undefined,
+      dropDashes,
+      true,
+      defaultOp,
+      invertOption
+    );
+  }
 }
 
 /**
@@ -755,32 +797,4 @@ export class StateFilter extends FilterObject<HCCard.Any, string> {
   ) {
     super(queryName, filter, summary, value, op, card => card, defaultOp, invertOption);
   }
-}
-/**
- * A filter object that checks against a card's legality in a format
- */
-export class LegalityFilter extends FilterObject<string, string> {
-  constructor(
-    queryName: filterNameType,
-    value: string,
-    op: looseOpType,
-    defaultOp: opType = '=',
-    invertOption: invertOptionType = 'flip'
-  ) {
-    super(
-      queryName,
-      textEqualsFilter,
-      createLegalitySummary(queryName),
-      value,
-      op,
-      card => card.legalities[this.value as HCFormat],
-      defaultOp,
-      invertOption
-    );
-  }
-  cardPassesFilter = (card: HCCard.Any) =>
-    xor(
-      this.filter(fixValue(this.getValueToCompare(card)), this.getOp(), this.queryName),
-      this.inverted
-    );
 }

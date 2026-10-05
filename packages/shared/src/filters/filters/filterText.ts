@@ -40,6 +40,8 @@ import {
   SetType,
   isSetType,
   SetCode,
+  isFormat,
+  HCFormat,
 } from '@hellfall/shared/types';
 import {
   frameEffectNames,
@@ -49,6 +51,7 @@ import {
   toCardFrameRecord,
   toCardLayoutRecord,
   toFaceLayoutRecord,
+  toFormatRecord,
   toFrameEffectRecord,
   toShowcaseFrameRecord,
 } from './filterRecords';
@@ -404,6 +407,7 @@ const getFaceLayoutName = (text: string) => {
   const description = layoutNames.find(layouts => listsAreLooselyEqual(layouts[0], layout))?.[1];
   return description ?? layout.map(e => `"${e.replaceAll('_', ' ')}"`).join(' or ');
 };
+
 /**
  * The summary for a face layout filter
  * @param operator the operator to use
@@ -558,3 +562,17 @@ export const inSummary = createCorrectedSummary(
   (operator, value) => `!Unknown set code "${value}"`,
   'keep'
 );
+
+export const toFormat = (value: string): HCFormat | undefined =>
+  toFormatRecord[value] ?? (isFormat(value) ? value : undefined);
+
+/**
+ * Creates a {@linkcode summaryFunction<string>} for use in a legality filter
+ * @param legality legality to check for
+ */
+export const createLegalitySummary = (legality: string) =>
+  createCorrectedSummary<string>(
+    toFormat,
+    (operator, value) => `it's ${opToNot(operator)} ${legality} in ${value}`,
+    (operator, value) => `!Unknown format "${value}"`
+  );
