@@ -26,7 +26,7 @@ import { join } from 'node:path';
 import { gzipSync } from 'node:zlib';
 import { loadCardsHandler } from './api/loadCards.ts';
 import { warmCatalogCache, seedCatalogCacheGzip } from './lib/catalogCache.ts';
-import { postcardHandler } from './api/postcard.ts';
+import { postcardHandler } from './api/postcard/index.ts';
 import { replaceImageHandler } from './api/replaceImage.ts';
 
 const PORT = Number(process.env.PORT) || 3003;

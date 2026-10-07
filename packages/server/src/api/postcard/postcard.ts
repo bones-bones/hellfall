@@ -14,35 +14,22 @@ import {
   cardsCollection,
   firestoreCard,
 } from '@hellfall/shared/utils/firestore';
-import { withCors, env, requirePostcardAuth, HandlerRequest, HandlerResponse } from './lib';
-import { scheduleCatalogPublish } from '../lib/publishCatalog.ts';
-import { uploadImageBase64ToGcs } from '../lib/imageGcs.ts';
-import { cardMap } from './cardMap.ts';
+import {
+  withCors,
+  env,
+  requirePostcardAuth,
+  HandlerRequest,
+  HandlerResponse,
+} from '../lib/index.ts';
+import { scheduleCatalogPublish } from '../../lib/publishCatalog.ts';
+import { uploadImageBase64ToGcs } from '../../lib/imageGcs.ts';
+import { cardMap } from '../cardMap.ts';
+import { respondPostcardError } from './errors.ts';
+import { resolvePostcardHcid } from './hcid.ts';
+import { PostcardBody, PostcardKind, RollbackBody } from './types.ts';
 
 const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
 const cardsCol: cardsCollection = db.collection(env.FIRESTORE_CARDS_COLLECTION);
-
-type PostcardKind = Extract<HCKind, 'card' | 'token'>;
-
-type PostcardBody = {
-  name?: string;
-  image?: string;
-  imageBase64?: string;
-  /** From mork; used with imageBase64 so GCS objects are not always `.png`. */
-  imageMimeType?: string;
-  creators?: string;
-  set?: string;
-  hcid?: string;
-  /** Hellfall print UUID (sheet BB). Used for GCS image keys; never use hcid for that. */
-  id?: string;
-  kind?: PostcardKind;
-};
-
-type RollbackBody = {
-  docId?: string;
-  wasCreate?: boolean;
-  previous?: firestoreCard | null;
-};
 
 function postcardBodyContext(
   body: PostcardBody | RollbackBody | undefined,
@@ -69,16 +56,6 @@ function postcardBodyContext(
     hasImageBase64: Boolean(postcard.imageBase64?.trim()),
     imageMimeType: postcard.imageMimeType,
   };
-}
-
-function clientErrorReason(err: unknown): string {
-  return err instanceof Error ? err.message : 'postcard_failed';
-}
-
-function isClientError(err: unknown): boolean {
-  if (err instanceof SyntaxError) return true;
-  const reason = clientErrorReason(err);
-  return reason === 'invalid_body' || reason === 'image_gcs_not_configured';
 }
 
 async function readJsonBody(req: HandlerRequest): Promise<unknown> {
@@ -144,22 +121,18 @@ function buildStubCard(
   return card;
 }
 
-async function findByHcid(hcid: string) {
-  const matches = await cardsCol.where('hcid', '==', hcid).limit(2).get();
-  if (matches.size > 1) {
-    throw new Error(`multiple Firestore cards share hcid ${hcid}`);
-  }
-  return matches.docs[0] ?? null;
-}
-
 /** Trailing `(Alias Name)` — only used when the paren text matches a real card. */
 function oracleIdFromTrailingParenAlias(name: string): string | undefined {
   const match = name.match(/\(([^()]+)\)\s*$/);
-  if (!match) return undefined;
-  const alias = match[1].trim();
-  if (!alias) return undefined;
+  if (!match) {
+    return undefined;
+  }
+  const alias = match[1];
+  if (!alias) {
+    return undefined;
+  }
   const oracleId = cardMap.getOracleIDFromName(alias);
-  return oracleId && isValidV4UUID(oracleId) ? oracleId : undefined;
+  return oracleId ? oracleId : undefined;
 }
 
 /** Reuse previous / catalog / Firestore oracle_id; mint only when truly new. */
@@ -172,7 +145,10 @@ function resolvePostcardOracleId(body: PostcardBody, previous: firestoreCard | n
   if (fromAlias) {
     return fromAlias;
   }
-  if (!body.set?.startsWith('SCL') && !code) {
+  const setCode: string = toSetCode(body.set ?? '') ?? body.set ?? '';
+  // SCL is weird because it can show up at the beginning of a set id, or the end (in case of veto)
+  const isSCL = setCode.split('_').includes('SCL');
+  if (!isSCL && !code) {
     return newCardId();
   }
   return newUnlessValid(cardMap.getOracleIDFromName(name));
@@ -180,15 +156,13 @@ function resolvePostcardOracleId(body: PostcardBody, previous: firestoreCard | n
 
 function validatePostcardBody(
   body: PostcardBody
-): body is Required<Pick<PostcardBody, 'name' | 'creators' | 'hcid'>> &
+): body is Required<Pick<PostcardBody, 'name' | 'creators'>> &
   PostcardBody & { set: string } & ({ image: string } | { imageBase64: string }) {
   const hasImageUrl = typeof body.image === 'string' && body.image.trim();
   const hasImageBase64 = typeof body.imageBase64 === 'string' && body.imageBase64.trim();
   return Boolean(
     typeof body.name === 'string' &&
       body.name.trim() &&
-      typeof body.hcid === 'string' &&
-      body.hcid.trim() &&
       (hasImageUrl || hasImageBase64) &&
       typeof body.creators === 'string' &&
       (body.kind === 'token' || (typeof body.set === 'string' && body.set.trim()))
@@ -228,8 +202,10 @@ async function upsertPostcard(body: PostcardBody) {
 
   const kind: PostcardKind = body.kind === 'token' ? HCKind.Token : HCKind.Card;
   const setId = kind === 'token' ? 'HCT' : body.set;
-  const existing = await findByHcid(body.hcid.trim());
+  const { hcid, existing } = await resolvePostcardHcid(body, kind, setId, cardsCol);
   const previous: firestoreCard | null = existing?.data() ?? null;
+
+  // Currently, for token completeness, scryfall tokens as pulled into the db. As more tokens get added, we can replace the scryfall ones.
   const isReplacingScryfall =
     !!previous &&
     previous.kind == 'scryfall' &&
@@ -250,7 +226,7 @@ async function upsertPostcard(body: PostcardBody) {
       creators: semiSplit(body.creators),
       set: setId as SetCode,
     };
-    if (body.hcid?.trim()) update.hcid = body.hcid.trim();
+    update.hcid = hcid;
     if (cardId !== previous.id) {
       update.id = cardId;
       if (previous.id_is_scryfall) {
@@ -272,6 +248,7 @@ async function upsertPostcard(body: PostcardBody) {
       docId: existing.id,
       id: cardId,
       oracle_id,
+      hcid,
       isReplacingScryfall,
       wasCreate: false,
       previous,
@@ -279,7 +256,7 @@ async function upsertPostcard(body: PostcardBody) {
     };
   }
 
-  const stub = buildStubCard({ ...bodyWithImage, kind, set: setId });
+  const stub = buildStubCard({ ...bodyWithImage, kind, set: setId, hcid });
   stub.id = cardId;
   stub.oracle_id = oracle_id;
   const fireDoc = cardToFirestore(stub);
@@ -292,6 +269,7 @@ async function upsertPostcard(body: PostcardBody) {
     docId: stub.id,
     id: stub.id,
     oracle_id,
+    hcid: stub.hcid,
     wasCreate: true,
     isReplacingScryfall,
     previous: null,
@@ -364,6 +342,7 @@ export const postcardHandler = async (
       docId: result.docId,
       id: result.id,
       oracle_id: result.oracle_id,
+      hcid: result.hcid,
       wasCreate: result.wasCreate,
       replacedScryfallToken: result.isReplacingScryfall,
       imageUrl: result.imageUrl,
@@ -371,20 +350,6 @@ export const postcardHandler = async (
     res.statusCode = 200;
     res.end(JSON.stringify({ ok: true, ...result }));
   } catch (err) {
-    const reason = clientErrorReason(err);
-    const status = isClientError(err) ? 400 : 500;
-    const log = status >= 500 ? console.error : console.warn;
-    log.call(
-      console,
-      '[postcard] failed',
-      {
-        ...postcardBodyContext(body, action),
-        status,
-        reason,
-      },
-      err
-    );
-    res.statusCode = status;
-    res.end(JSON.stringify({ ok: false, reason }));
+    respondPostcardError(err, res, postcardBodyContext(body, action));
   }
 };
