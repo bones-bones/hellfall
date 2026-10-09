@@ -29,7 +29,7 @@ export function ChangesetCard({
 }: {
   cs: Changeset;
   canApprove: boolean;
-  onAction: (id: string, action: 'accept' | 'reject') => Promise<void>;
+  onAction: (id: string, action: 'reject') => Promise<void>;
   selectable?: boolean;
   selected?: boolean;
   onToggleSelect?: () => void;
@@ -43,7 +43,7 @@ export function ChangesetCard({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handle = async (action: 'accept' | 'reject') => {
+  const handle = async (action: 'reject') => {
     if (!cs.id) {
       setError('Missing changeset id');
       return;
@@ -131,9 +131,6 @@ export function ChangesetCard({
             </ChangesTable>
             {cs.status === 'pending' && canApprove && (
               <ActionRow>
-                <AcceptButton disabled={busy} onClick={() => handle('accept')}>
-                  Accept
-                </AcceptButton>
                 <RejectButton disabled={busy} onClick={() => handle('reject')}>
                   Reject
                 </RejectButton>
@@ -299,13 +296,6 @@ const buttonBase = createStyles({
   fontSize: 14,
   '&:disabled': { opacity: 0.5, cursor: 'default' },
 });
-
-const acceptButtonStyles = createStyles(buttonBase, {
-  background: '#28a745',
-  color: '#fff',
-  '&:hover:not(:disabled)': { background: '#218838' },
-});
-const AcceptButton = createStyledButton(acceptButtonStyles, 'AcceptButton');
 
 const rejectButtonStyles = createStyles(buttonBase, {
   background: '#dc3545',
