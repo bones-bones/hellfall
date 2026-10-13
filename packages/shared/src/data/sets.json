@@ -737,7 +737,7 @@
 				"HC9_1",
 				"HCV_9"
 			],
-			"card_count": 591,
+			"card_count": 690,
 			"filename": "hc9.svg"
 		},
 		{
@@ -759,7 +759,7 @@
 			"description": "The last 360 cards of Hellscube 9.",
 			"set_type": "main",
 			"parent_set_code": "HC9",
-			"card_count": 215
+			"card_count": 314
 		},
 		{
 			"object": "set",
@@ -769,7 +769,7 @@
 			"description": "Cards vetoed or slotsed from HC9.",
 			"set_type": "veto",
 			"parent_set_code": "HCV",
-			"card_count": 109
+			"card_count": 137
 		},
 		{
 			"object": "set",
@@ -793,7 +793,7 @@
 				"SCL_11",
 				"SCL_12"
 			],
-			"card_count": 59,
+			"card_count": 64,
 			"filename": "scl.svg"
 		},
 		{
@@ -837,7 +837,7 @@
 			"description": "Cards from SCL that didn't make it into the top 5 but got enough upvotes.",
 			"set_type": "veto",
 			"parent_set_code": "HCV",
-			"card_count": 86
+			"card_count": 104
 		},
 		{
 			"object": "set",
@@ -999,7 +999,7 @@
 			"set_type": "lair",
 			"released_at": "2026-10-07",
 			"parent_set_code": "SCL",
-			"card_count": 0
+			"card_count": 5
 		},
 		{
 			"object": "set",
@@ -1027,7 +1027,7 @@
 				"HCV_HDH",
 				"HCV_SOH"
 			],
-			"card_count": 885,
+			"card_count": 931,
 			"filename": "hcv.svg"
 		},
 		{
@@ -1037,7 +1037,7 @@
 			"name": "Tokens",
 			"description": "Custom tokens for Hellscube cards.",
 			"set_type": "token",
-			"card_count": 2161,
+			"card_count": 2176,
 			"filename": "hct.svg"
 		},
 		{
