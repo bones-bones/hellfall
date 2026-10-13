@@ -606,6 +606,7 @@ export const layoutNames: [HCLayout[], string][] = [
 export const toFormatRecord: Record<string, HCFormat> = {
   s: 'standard',
   h: 'standard',
+  constructed: 'standard',
   hellstructed: 'standard',
   hellconstructed: 'standard',
   c: 'commander',

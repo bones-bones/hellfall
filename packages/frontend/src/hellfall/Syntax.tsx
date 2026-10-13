@@ -292,8 +292,8 @@ export const Syntax = () => {
         </div>
         <br />
         <div>
-          The current supported formats are: <code>standard</code>, <code>4cb</code>, and{' '}
-          <code>commander</code>.
+          The current supported formats are: <code>constructed</code> (alias <code>standard</code>),{' '}
+          <code>4cb</code>, and <code>commander</code>.
         </div>
         <br />
         <div>
