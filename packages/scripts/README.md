@@ -70,7 +70,7 @@ Bulk migrate does not write per-card audit rows (use Firestore/console logs for 
 From the repo root:
 
 ```bash
-# Stats only (includes orphan count, hcid collisions, doc id mismatches)
+# Stats only
 yarn migrate-hellscube-db --report
 
 # Preview
