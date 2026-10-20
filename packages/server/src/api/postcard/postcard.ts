@@ -171,6 +171,48 @@ function validatePostcardBody(
 
 const deleteField = FieldValue.delete();
 
+type PostcardUpsertResult = {
+  docId: string;
+  /** Hellfall print UUID (card ``id`` field) — use for Mork veto ``uuid:`` line and sheet BB. */
+  id: string;
+  printId: string;
+  oracle_id: string;
+  hcid: string;
+  wasCreate: boolean;
+  imageUrl: string;
+  previous: firestoreCard | null;
+  isReplacingScryfall: boolean;
+};
+
+function buildPostcardUpsertResult(params: {
+  firestoreDocId: string;
+  printId: string;
+  oracle_id: string;
+  hcid: string;
+  wasCreate: boolean;
+  imageUrl: string;
+  previous: firestoreCard | null;
+  isReplacingScryfall: boolean;
+}): PostcardUpsertResult {
+  if (!isValidV4UUID(params.printId)) {
+    throw new Error('failed_to_generate_card_id');
+  }
+  if (!isValidV4UUID(params.firestoreDocId)) {
+    throw new Error('failed_to_generate_card_id');
+  }
+  return {
+    docId: params.firestoreDocId,
+    id: params.printId,
+    printId: params.printId,
+    oracle_id: params.oracle_id,
+    hcid: params.hcid,
+    wasCreate: params.wasCreate,
+    imageUrl: params.imageUrl,
+    previous: params.previous,
+    isReplacingScryfall: params.isReplacingScryfall,
+  };
+}
+
 async function resolveImageUrl(body: PostcardBody, cardId: string): Promise<string> {
   if (typeof body.imageBase64 === 'string' && body.imageBase64.trim()) {
     const name = body.name?.trim() || 'image';
@@ -244,16 +286,16 @@ async function upsertPostcard(body: PostcardBody) {
     }
     await existing.ref.update(update);
     scheduleCatalogPublish();
-    return {
-      docId: existing.id,
-      id: cardId,
+    return buildPostcardUpsertResult({
+      firestoreDocId: existing.id,
+      printId: cardId,
       oracle_id,
       hcid,
-      isReplacingScryfall,
       wasCreate: false,
-      previous,
       imageUrl,
-    };
+      previous,
+      isReplacingScryfall,
+    });
   }
 
   const stub = buildStubCard({ ...bodyWithImage, kind, set: setId, hcid });
@@ -265,16 +307,16 @@ async function upsertPostcard(body: PostcardBody) {
   }
   await cardsCol.doc(stub.id).set(fireDoc);
   scheduleCatalogPublish();
-  return {
-    docId: stub.id,
-    id: stub.id,
+  return buildPostcardUpsertResult({
+    firestoreDocId: stub.id,
+    printId: stub.id,
     oracle_id,
-    hcid: stub.hcid,
+    hcid: String(stub.hcid),
     wasCreate: true,
-    isReplacingScryfall,
-    previous: null,
     imageUrl,
-  };
+    previous: null,
+    isReplacingScryfall,
+  });
 }
 
 async function rollbackPostcard(body: RollbackBody) {
