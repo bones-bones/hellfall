@@ -165,7 +165,7 @@ export const TagSection = ({
           </button>
         </TagAddRow>
       )}
-      {changesetSubmitted && <SubmittedText>Change submitted for review.</SubmittedText>}
+      {changesetSubmitted && <SubmittedText>Saved.</SubmittedText>}
     </>
   );
 };

@@ -307,7 +307,12 @@ export const HellfallCard = ({
               )}
               {
                 isContributor && (
-                  <PendingChanges cardId={displayCard.id} />
+                  <>
+                    <PendingChanges cardId={displayCard.id} />
+                    <SmallText>
+                      <Link to={`/audit/${encodeURIComponent(displayCard.id)}`}>Audit</Link>
+                    </SmallText>
+                  </>
                 ) /* todo: move isContributor into the component */
               }
               {!editing && (

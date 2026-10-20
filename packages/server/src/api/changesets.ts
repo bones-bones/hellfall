@@ -9,6 +9,7 @@ import {
   requireReviewerAuth,
 } from './lib';
 import {} from './lib/requireDatabaseRoleAuth.ts';
+import { applyCardEdit } from '../lib/applyCardEdit.ts';
 import { recardCardChangeset } from '../lib/cardAudit.ts';
 import {
   anyChange,
@@ -21,12 +22,9 @@ import {
 } from '@hellfall/shared/utils';
 import type { HCCard } from '@hellfall/shared/types';
 import {
-  applyFromCollection,
   cardsCollection,
-  cardToFirestore,
   changesetCollection,
   firestoreToCard,
-  getUpdateObject,
 } from '@hellfall/shared/utils/firestore';
 
 const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
@@ -118,7 +116,7 @@ async function listChangesets(req: HandlerRequest, res: HandlerResponse): Promis
   res.end(JSON.stringify({ ok: true, changesets: items }));
 }
 
-/** POST /api/changesets — submit a new changeset */
+/** POST /api/changesets — apply a card edit and record an audit entry. */
 async function createChangeset(req: HandlerRequest, res: HandlerResponse): Promise<void> {
   const auth = await requireDatabaseRoleAuth(req, res);
   if (!auth) {
@@ -167,27 +165,30 @@ async function createChangeset(req: HandlerRequest, res: HandlerResponse): Promi
     res.end(JSON.stringify({ ok: false, reason: 'invalid_changes' }));
     return;
   }
-  const id = crypto.randomUUID();
-  const docRef = await changesetsCol.doc(id).set({
-    id,
+  const changes = body.changes as anyChange[];
+  const comment = typeof body.comment === 'string' ? body.comment.trim() || null : null;
+  try {
+    await applyCardEdit(cardsCol, cardId, changes);
+  } catch (err) {
+    if (err instanceof Error && err.message === 'card_not_found') {
+      res.statusCode = 404;
+      res.end(JSON.stringify({ ok: false, reason: 'card not found' }));
+      return;
+    }
+    throw err;
+  }
+
+  await recardCardChangeset({
     cardId,
-    status: 'pending',
-    createdAt: FieldValue.serverTimestamp(),
-    resolvedAt: null,
-    submittedBy: { userId: auth.userId, username: auth.username },
-    resolvedBy: null,
-    changes: body.changes as anyChange[],
-    comment: typeof body.comment === 'string' ? body.comment.trim() || null : null,
+    action: 'field_edit',
+    field: null,
+    tag: null,
+    user: { userId: auth.userId, username: auth.username },
+    changes: { before: null, after: { changes, comment } },
   });
 
-  const snap = await changesetsCol.doc(id).get();
-  res.statusCode = 201;
-  res.end(
-    JSON.stringify({
-      ok: true,
-      changeset: serializeChangeset(snap.data() as Changeset, id),
-    })
-  );
+  res.statusCode = 200;
+  res.end(JSON.stringify({ ok: true, applied: true }));
 }
 
 /** GET /api/changesets/:id — get single changeset */
@@ -267,19 +268,21 @@ async function acceptChangeset(
     return;
   }
 
-  const cardRef = cardsCol.doc(cs.cardId);
-  const fire = (await cardRef.get()).data();
-  const card = firestoreToCard(fire!);
-  const newCard = structuredClone(card);
   if (!Array.isArray(cs.changes)) {
     res.statusCode = 400;
     res.end(JSON.stringify({ ok: false, reason: 'invalid_changes_format' }));
     return;
   }
-  await applyFromCollection(newCard, cs.changes, cardsCol);
-  const update = getUpdateObject(fire!, cardToFirestore(newCard));
-  update.last_modified = FieldValue.serverTimestamp();
-  await cardRef.update(update);
+  try {
+    await applyCardEdit(cardsCol, cs.cardId, cs.changes);
+  } catch (err) {
+    if (err instanceof Error && err.message === 'card_not_found') {
+      res.statusCode = 404;
+      res.end(JSON.stringify({ ok: false, reason: 'card not found' }));
+      return;
+    }
+    throw err;
+  }
 
   await recardCardChangeset({
     cardId: cs.cardId,

@@ -11,6 +11,7 @@ import { doneHandler } from './api/discord/done.ts';
 import { cardTagsHandler } from './api/cardTags.ts';
 import { searchHandler } from './api/search.ts';
 import { changesetsHandler } from './api/changesets.ts';
+import { auditHandler } from './api/audit.ts';
 import {
   catalogSyncHandler,
   catalogSyncStatusHandler,
@@ -46,6 +47,7 @@ const routes: Record<string, (req: HandlerRequest, res: HandlerResponse) => void
 
 const CARD_API_PREFIX = '/api/cards/';
 const CHANGESETS_PREFIX = '/api/changesets';
+const AUDIT_PREFIX = '/api/audit';
 const CATALOG_SYNC_PREFIX = '/api/admin/catalog/sync';
 
 function parseCatalogSyncPath(path: string): { jobId: string; action: 'status' | 'run' } | null {
@@ -118,6 +120,11 @@ createServer(async (incoming: IncomingMessage, res: ServerResponse) => {
       Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
       res.statusCode = 204;
       res.end();
+      return;
+    }
+
+    if (path === AUDIT_PREFIX) {
+      await auditHandler(req, res as HandlerResponse);
       return;
     }
 

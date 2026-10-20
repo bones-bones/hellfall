@@ -1,4 +1,9 @@
-import { FieldValue, Firestore, type Timestamp } from '@google-cloud/firestore';
+import {
+  FieldValue,
+  Firestore,
+  type QueryDocumentSnapshot,
+  type Timestamp,
+} from '@google-cloud/firestore';
 import { env } from '../api/lib/env.ts';
 // import { tagState } from '@hellfall/shared/types';
 // import type { CardTagState } from '@hellfall/shared/cardTags/cardTagMerge';
@@ -17,6 +22,7 @@ export type AuditActor = {
 
 export type CardAuditEntry = {
   id: string;
+  cardId: string;
   at: string | null;
   action: AuditAction;
   field: string | null;
@@ -49,6 +55,7 @@ export async function recardCardChangeset(params: {
 }): Promise<void> {
   try {
     await auditCollection(params.cardId).add({
+      cardId: params.cardId,
       at: FieldValue.serverTimestamp(),
       action: params.action,
       field: params.field,
@@ -62,25 +69,46 @@ export async function recardCardChangeset(params: {
   }
 }
 
-/** Convenience wrapper for tag add/remove — keeps cardTags.ts callsites clean. */
+function cardIdFromDoc(doc: QueryDocumentSnapshot): string {
+  const stored = doc.get('cardId');
+  if (typeof stored === 'string' && stored) return stored;
+  return doc.ref.parent.parent?.id ?? '';
+}
 
+function toAuditEntry(doc: QueryDocumentSnapshot, cardId: string): CardAuditEntry {
+  const data = doc.data();
+  return {
+    id: doc.id,
+    cardId,
+    at: timestampToIso(data.at as Timestamp | undefined),
+    action: (data.action ?? 'field_edit') as AuditAction,
+    field: data.field != null ? String(data.field) : null,
+    tag: data.tag != null ? String(data.tag) : null,
+    username: String(data.username ?? ''),
+    userId: String(data.userId ?? ''),
+    changes: {
+      before: data.changes?.before ?? data.before ?? null,
+      after: data.changes?.after ?? data.after ?? null,
+    },
+  };
+}
+
+/** Per-card audit trail, newest first. */
 export async function listCardChangesets(cardId: string, limit = 50): Promise<CardAuditEntry[]> {
   const snap = await auditCollection(cardId).orderBy('at', 'desc').limit(limit).get();
+  return snap.docs.map(doc => toAuditEntry(doc, cardId));
+}
 
-  return snap.docs.map(doc => {
-    const data = doc.data();
-    return {
-      id: doc.id,
-      at: timestampToIso(data.at as Timestamp | undefined),
-      action: (data.action ?? 'field_edit') as AuditAction,
-      field: data.field != null ? String(data.field) : null,
-      tag: data.tag != null ? String(data.tag) : null,
-      username: String(data.username ?? ''),
-      userId: String(data.userId ?? ''),
-      changes: {
-        before: data.before ?? null,
-        after: data.after ?? null,
-      },
-    };
-  });
+/** Recent audits. Pass `cardId` for one card; omit it for a collection-group feed. */
+export async function listAudits(
+  cardId: string | undefined,
+  limit: number
+): Promise<CardAuditEntry[]> {
+  if (cardId) return listCardChangesets(cardId, limit);
+  const snap = await db
+    .collectionGroup(env.FIRESTORE_AUDIT_SUBCOLLECTION)
+    .orderBy('at', 'desc')
+    .limit(limit)
+    .get();
+  return snap.docs.map(doc => toAuditEntry(doc, cardIdFromDoc(doc)));
 }

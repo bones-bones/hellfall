@@ -144,7 +144,7 @@ export const CardEditPanel = ({
       <Panel>
         <Card>
           <Card.Body>
-            <SuccessMessage size="small">Change submitted for review.</SuccessMessage>
+            <SuccessMessage size="small">Saved.</SuccessMessage>
             <CloseButton onClick={onClose}>Close</CloseButton>
           </Card.Body>
         </Card>

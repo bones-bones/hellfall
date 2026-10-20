@@ -42,7 +42,7 @@ export const Header = () => {
               </span>
               {(user.isAdmin || user.isContributor || user.canSyncCatalog) && (
                 <>
-                  , <Link to="/review">changes</Link>
+                  , <Link to="/review">changes</Link>, <Link to="/audit">audit</Link>
                 </>
               )}
               , <a href={logoutUrl}>logout</a>

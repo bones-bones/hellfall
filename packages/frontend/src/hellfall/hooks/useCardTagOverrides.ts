@@ -26,7 +26,7 @@ async function fetchOverrides(baseUrl: string, cardId: string): Promise<FetchRes
  * Loads tag overrides when `authApiUrl` + `cardId` are set.
  * Uses Firestore `tags` from the API when present (post-migrate); otherwise merges JSON base + overrides.
  *
- * Add/remove now submit changesets for admin review instead of mutating directly.
+ * Add/remove write the card immediately. The audit log keeps the record.
  */
 export function useCardTagOverrides(card: HCCard.Any): {
   displayCard: HCCard.Any;
@@ -104,7 +104,7 @@ export function useCardTagOverrides(card: HCCard.Any): {
           change_type: 'add',
         }),
       });
-      if (!res.ok) throw new Error('Failed to submit changeset');
+      if (!res.ok) throw new Error('Failed to save tag');
       const base = (await res.json()).base_tags;
       if (base) {
         applyChangesFromNewBase(displayCard, base);
@@ -128,7 +128,7 @@ export function useCardTagOverrides(card: HCCard.Any): {
           change_type: 'delete',
         }),
       });
-      if (!res.ok) throw new Error('Failed to submit changeset');
+      if (!res.ok) throw new Error('Failed to save tag');
       const base = (await res.json()).base_tags;
       if (base) {
         applyChangesFromNewBase(displayCard, base);
