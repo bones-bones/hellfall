@@ -737,7 +737,7 @@
 				"HC9_1",
 				"HCV_9"
 			],
-			"card_count": 709,
+			"card_count": 710,
 			"filename": "hc9.svg"
 		},
 		{
@@ -759,7 +759,7 @@
 			"description": "The last 360 cards of Hellscube 9.",
 			"set_type": "main",
 			"parent_set_code": "HC9",
-			"card_count": 333
+			"card_count": 334
 		},
 		{
 			"object": "set",
@@ -769,7 +769,7 @@
 			"description": "Cards vetoed or slotsed from HC9.",
 			"set_type": "veto",
 			"parent_set_code": "HCV",
-			"card_count": 143
+			"card_count": 142
 		},
 		{
 			"object": "set",
@@ -837,7 +837,7 @@
 			"description": "Cards from SCL that didn't make it into the top 5 but got enough upvotes.",
 			"set_type": "veto",
 			"parent_set_code": "HCV",
-			"card_count": 104
+			"card_count": 108
 		},
 		{
 			"object": "set",
@@ -1027,7 +1027,7 @@
 				"HCV_HDH",
 				"HCV_SOH"
 			],
-			"card_count": 937,
+			"card_count": 940,
 			"filename": "hcv.svg"
 		},
 		{
@@ -1037,7 +1037,7 @@
 			"name": "Tokens",
 			"description": "Custom tokens for Hellscube cards.",
 			"set_type": "token",
-			"card_count": 2181,
+			"card_count": 2217,
 			"filename": "hct.svg"
 		},
 		{
@@ -1128,7 +1128,7 @@
 			"name": "Scryfall Tokens",
 			"description": "Tokens from Scryfall for cards that need tokens but haven't had custom tokens made yet.",
 			"set_type": "token",
-			"card_count": 284,
+			"card_count": 283,
 			"filename": "sft.svg"
 		}
 	]

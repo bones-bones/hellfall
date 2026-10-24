@@ -14581,6 +14581,18 @@
 				},
 				{
 					"object": "related_card",
+					"id": "a55f005f-e345-4a3e-98cc-634f06c20326",
+					"oracle_id": "d57d9f6e-4ea8-4ec7-9a9b-4fcd969a131b",
+					"hcid": "Rainbow1",
+					"name": "Rainbow",
+					"set": "HCT",
+					"collector_number": "2185",
+					"image": "https://storage.googleapis.com/hellscube-images/a55f005f-e345-4a3e-98cc-634f06c20326%20-%20Rainbow1.png",
+					"type_line": "Rainbow",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
 					"id": "c814ac58-8826-48cd-8209-4af6803866e3",
 					"oracle_id": "e48b8d78-3f8b-4bf8-853a-76c435bc31f0",
 					"hcid": "Magic Missile1",
@@ -56720,7 +56732,6 @@
 			"object": "card",
 			"kind": "card",
 			"id": "82f90d57-15b3-4964-ba06-6ea674cefff0",
-			"has_default_id": true,
 			"oracle_id": "98d4bc75-0054-41d6-a4a6-ea9dca8e4e62",
 			"hcid": "721",
 			"name": "Hidden Temple of Legends",
@@ -68153,7 +68164,6 @@
 			"object": "card",
 			"kind": "card",
 			"id": "65c50442-e011-488a-a6a5-9ef6371c6662",
-			"has_default_id": true,
 			"oracle_id": "4d79fb79-cbd6-41b8-be58-61b4b63260d7",
 			"hcid": "860",
 			"name": "Really Scary Monster",
@@ -73461,7 +73471,7 @@
 			"creators": [
 				"u/Bolt_Fried_Bird"
 			],
-			"rulings": "",
+			"rulings": "<Cell R928C8 None>\nIf you return Brazil to its owner’s hand to pay the cost of its ability, the usual rule of Aftermath permanents exiling themselves is ignored.- the_cooler_yellowpie 2026-10-22",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
@@ -73641,11 +73651,16 @@
 			"frame": "2015",
 			"tags": [
 				"silver-border",
-				"mse"
+				"mse",
+				"wotc-spy"
 			],
+			"tag_notes": {
+				"wotc-spy": "Animate Graveyard"
+			},
 			"base_tags": [
 				"silver-border",
-				"mse"
+				"mse",
+				"wotc-spy<Animate Graveyard>"
 			]
 		},
 		{
@@ -76156,6 +76171,33 @@
 				"hand-token-self",
 				"repeatable-persistent-copy-self",
 				"mse"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "5869dc0a-9fe3-4807-8b7d-3a2096ced367",
+					"oracle_id": "8c048c4f-bfad-437c-97a2-90d955ad5f48",
+					"hcid": "Monkey4",
+					"name": "Monkey",
+					"set": "HCT",
+					"collector_number": "2199",
+					"image": "https://storage.googleapis.com/hellscube-images/5869dc0a-9fe3-4807-8b7d-3a2096ced367%20-%20Monkey4.png",
+					"type_line": "Monkey",
+					"component": "token",
+					"persistent": true
+				},
+				{
+					"object": "related_card",
+					"id": "fdc017cc-994e-4169-a9aa-319fadb82fbd",
+					"oracle_id": "211e654d-eb66-4dc4-97ee-b1a967857a90",
+					"hcid": "959",
+					"name": "Monkey",
+					"set": "HC2_0",
+					"collector_number": "355",
+					"image": "https://lh3.googleusercontent.com/d/1n2SmPzbQQmnc0Na0wjBq20oUKyU3iWZj",
+					"type_line": "Creature — Monkey",
+					"component": "self"
+				}
 			]
 		},
 		{
@@ -86493,7 +86535,7 @@
 				"Instant"
 			],
 			"type_line": "Instant",
-			"oracle_text": "You may pay {0} rather than pay this spell's mana cost if it is the only card in your hand.\nOut of spell slots deals damage to target creature or player equal to the number of tapped lands you control.",
+			"oracle_text": "You may pay {0} rather than pay this spell's mana cost if it is the only card in your hand.\nOut of spell slots deals damage to target creature or planeswalker equal to the number of tapped lands you control.",
 			"flavor_text": "\"I'm glad you changed your last name, you son of a bitch.\"\n—Avatar",
 			"colors": [
 				"R"
@@ -101862,7 +101904,7 @@
 			"creators": [
 				"Alethiolet"
 			],
-			"rulings": "",
+			"rulings": "<Cell R1275C8 None>\nCreatures with lethal damage are destroyed as a SBA- mweepigeon 2026-10-21",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
@@ -120370,7 +120412,6 @@
 			"object": "card",
 			"kind": "card",
 			"id": "933b1489-781b-47c4-90f0-08dfbfccebd5",
-			"has_default_id": true,
 			"oracle_id": "864ea388-66ef-4c47-a0e2-a0d27250f759",
 			"hcid": "1494",
 			"name": "Literal Brainstorm",
@@ -125620,6 +125661,18 @@
 					"collector_number": "386",
 					"image": "https://lh3.googleusercontent.com/d/1h5F-PF2LRV807UJB5enhZZ_plRzOEIzE",
 					"type_line": "Token Artifact Land",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "03d0c96a-f868-4c0f-97a7-04073ef98a2f",
+					"oracle_id": "df23a2da-2662-4429-b638-aead2a82d5cd",
+					"hcid": "Beast10",
+					"name": "Beast",
+					"set": "HCT",
+					"collector_number": "2213",
+					"image": "https://storage.googleapis.com/hellscube-images/03d0c96a-f868-4c0f-97a7-04073ef98a2f%20-%20Beast10.png",
+					"type_line": "Beast",
 					"component": "token"
 				},
 				{
@@ -154348,6 +154401,18 @@
 					"collector_number": "39",
 					"image": "https://lh3.googleusercontent.com/d/1N8l337Ec74gzX3q1cQyS8u9hmjGPDwGK",
 					"type_line": "Token Creature — Human",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "2a341b57-714e-4aae-8638-65f6cd9ffacc",
+					"oracle_id": "dd77963e-85f9-4d85-8399-687ffdf7b38e",
+					"hcid": "Tea1",
+					"name": "Tea",
+					"set": "HCT",
+					"collector_number": "2211",
+					"image": "https://storage.googleapis.com/hellscube-images/2a341b57-714e-4aae-8638-65f6cd9ffacc%20-%20Tea1.png",
+					"type_line": "Tea",
 					"component": "token"
 				},
 				{
@@ -200524,18 +200589,6 @@
 				},
 				{
 					"object": "related_card",
-					"id": "18f01273-c100-48ef-8528-f912652bbb36",
-					"oracle_id": "84647654-8e5a-41f2-aa45-e0e663c5820b",
-					"hcid": "Raptor1",
-					"name": "Raptor",
-					"set": "HCT",
-					"collector_number": "1663",
-					"image": "https://lh3.googleusercontent.com/d/1xuUy4AvdhTOPligSDmUNcQK3R7EcDTqc",
-					"type_line": "Token Creature — Raptor",
-					"component": "token"
-				},
-				{
-					"object": "related_card",
 					"id": "0959e8b3-404e-4bbb-b69e-b83d6bde3127",
 					"oracle_id": "13780506-428a-4dce-9965-7287337e52ec",
 					"hcid": "2478",
@@ -213326,6 +213379,18 @@
 					"collector_number": "385",
 					"image": "https://lh3.googleusercontent.com/d/1ZrOk0Kr2kvRztDKjiWdL5TrXp7VfQvQW",
 					"type_line": "Token Creature — Beast",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "03d0c96a-f868-4c0f-97a7-04073ef98a2f",
+					"oracle_id": "df23a2da-2662-4429-b638-aead2a82d5cd",
+					"hcid": "Beast10",
+					"name": "Beast",
+					"set": "HCT",
+					"collector_number": "2213",
+					"image": "https://storage.googleapis.com/hellscube-images/03d0c96a-f868-4c0f-97a7-04073ef98a2f%20-%20Beast10.png",
+					"type_line": "Beast",
 					"component": "token"
 				},
 				{
@@ -298273,7 +298338,6 @@
 			"object": "card",
 			"kind": "card",
 			"id": "fe1294ec-1a83-4f63-b175-f9cc0796925e",
-			"has_default_id": true,
 			"oracle_id": "08d0937f-4602-4aa3-900f-8e9960e292a0",
 			"hcid": "3622",
 			"name": "wither storm",
@@ -358115,9 +358179,9 @@
 			],
 			"keywords": [],
 			"legalities": {
-				"standard": "not_legal",
-				"4cb": "not_legal",
-				"commander": "not_legal"
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
 			},
 			"creators": [
 				"Juri"
@@ -399912,6 +399976,32 @@
 				"missing-token",
 				"no-set-symbol",
 				"keyword<flying>"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "ec24f7cf-058f-4adc-ab54-33407fcf1a33",
+					"oracle_id": "f6650679-5677-4e24-bad0-30c6e4ec0124",
+					"hcid": "Bee3",
+					"name": "Bee",
+					"set": "HCT",
+					"collector_number": "2210",
+					"image": "https://storage.googleapis.com/hellscube-images/ec24f7cf-058f-4adc-ab54-33407fcf1a33%20-%20Bee3.png",
+					"type_line": "Bee",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "6875cbfc-20fe-480f-9abf-089937a70484",
+					"oracle_id": "b8582e19-cdab-4ee3-b1ca-7a6cca4d18c9",
+					"hcid": "4834",
+					"name": "Beeza, the Beending Spring",
+					"set": "HC7_1",
+					"collector_number": "29",
+					"image": "https://lh3.googleusercontent.com/d/1pUSyU0vlI60mROF-WeKAsWhWnRKVqHNK",
+					"type_line": "Legendary Creature — Elemental Insect Bee",
+					"component": "self"
+				}
 			]
 		},
 		{
@@ -410665,6 +410755,32 @@
 				"real-place",
 				"missing-token",
 				"mse"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "e3a773e7-735c-4b53-822e-27716d3ab30b",
+					"oracle_id": "229b183c-553c-4923-8d7f-e0f1117d2b0e",
+					"hcid": "Peach1",
+					"name": "Peach",
+					"set": "HCT",
+					"collector_number": "2203",
+					"image": "https://storage.googleapis.com/hellscube-images/e3a773e7-735c-4b53-822e-27716d3ab30b%20-%20Peach1.png",
+					"type_line": "Peach",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "b8b10696-2e72-4084-bf91-bd4a26c91ef6",
+					"oracle_id": "42225163-f5a7-49ba-9fcc-8b41fe974eeb",
+					"hcid": "4955",
+					"name": "Savannah, Georgia",
+					"set": "HC7_1",
+					"collector_number": "717",
+					"image": "https://lh3.googleusercontent.com/d/1QuoroIWRkunByEVG2RxOUS4pjTPdco-w",
+					"type_line": "Land",
+					"component": "self"
+				}
 			]
 		},
 		{
@@ -421778,6 +421894,18 @@
 			"all_parts": [
 				{
 					"object": "related_card",
+					"id": "eb2d115f-c05d-4073-a4e9-e7464b9ae64b",
+					"oracle_id": "741b9f0d-8c0d-4865-b177-fb64b687ad11",
+					"hcid": "Faerie Rogue1",
+					"name": "Faerie Rogue",
+					"set": "HCT",
+					"collector_number": "2191",
+					"image": "https://storage.googleapis.com/hellscube-images/eb2d115f-c05d-4073-a4e9-e7464b9ae64b%20-%20Faerie%20Rogue1.png",
+					"type_line": "Faerie Rogue",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
 					"id": "55998d0d-b169-4e1b-a9e2-a2ea75b4bbf0",
 					"oracle_id": "741b9f0d-8c0d-4865-b177-fb64b687ad11",
 					"hcid": "Faerie Rogue1",
@@ -426856,6 +426984,32 @@
 				"1997-frame",
 				"white-border",
 				"mse"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "265176d9-25c6-441f-99ac-7842ec3156a1",
+					"oracle_id": "eb31bd68-8c3d-4560-9ef2-64d4bd511841",
+					"hcid": "Goblin Weezer Fan1",
+					"name": "Goblin Weezer Fan",
+					"set": "HCT",
+					"collector_number": "2195",
+					"image": "https://storage.googleapis.com/hellscube-images/265176d9-25c6-441f-99ac-7842ec3156a1%20-%20Goblin%20Weezer%20Fan1.png",
+					"type_line": "Goblin Weezer Fan",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "12860dc0-1ace-4258-a02d-899f3a8e2485",
+					"oracle_id": "12d93116-e61d-4214-ba22-170f9fce090c",
+					"hcid": "5148",
+					"name": "Squeezer's \"Red Album\"",
+					"set": "HCK",
+					"collector_number": "167",
+					"image": "https://lh3.googleusercontent.com/d/1IbJ-Qd0MrMBzguxHNxNuzHN2zD1Fcftb",
+					"type_line": "Sorcery",
+					"component": "self"
+				}
 			]
 		},
 		{
@@ -427047,9 +427201,9 @@
 			],
 			"keywords": [],
 			"legalities": {
-				"standard": "not_legal",
-				"4cb": "not_legal",
-				"commander": "not_legal"
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
 			},
 			"creators": [
 				"devious_nekomancer"
@@ -428976,6 +429130,32 @@
 				"white-border",
 				"1993-frame",
 				"anachronistic<PTK used the 1997 frame.>"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "b0c82a48-425a-4bad-9d2f-d2e3b715ad7c",
+					"oracle_id": "5c9d7c81-1cc5-4c24-815c-b440c71f8431",
+					"hcid": "Bureaucrat token1",
+					"name": "Bureaucrat token",
+					"set": "HCT",
+					"collector_number": "2189",
+					"image": "https://storage.googleapis.com/hellscube-images/b0c82a48-425a-4bad-9d2f-d2e3b715ad7c%20-%20Bureaucrat%20token1.png",
+					"type_line": "Bureaucrat token",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "7bc7b10f-9134-4e8e-b223-73414cbfd4ab",
+					"oracle_id": "2c4f564d-6f16-47bd-a63c-08f67b300839",
+					"hcid": "5179",
+					"name": "Passed the Civil Service Exam",
+					"set": "HCK",
+					"collector_number": "33",
+					"image": "https://lh3.googleusercontent.com/d/1raC49VziCVMU7YFtxEoZ9UKTKI1eTZYd",
+					"type_line": "Sorcery",
+					"component": "self"
+				}
 			]
 		},
 		{
@@ -429399,6 +429579,32 @@
 				"square-set-symbol",
 				"mse",
 				"keyword<horsemanship>"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "6b11a683-31d4-4cab-8086-03aa2464c16a",
+					"oracle_id": "a1de0541-d85e-431b-88c4-db8eb108b143",
+					"hcid": "Bird14",
+					"name": "Bird",
+					"set": "HCT",
+					"collector_number": "2190",
+					"image": "https://storage.googleapis.com/hellscube-images/6b11a683-31d4-4cab-8086-03aa2464c16a%20-%20Bird14.png",
+					"type_line": "Bird",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "6dc93b6b-7041-4033-9e9a-ec89e9703901",
+					"oracle_id": "1803d4fc-03e0-4f93-8c80-b1e9f9232796",
+					"hcid": "5185",
+					"name": "General Tso",
+					"set": "HCK",
+					"collector_number": "23",
+					"image": "https://lh3.googleusercontent.com/d/1l9Dc_-tnfFg96IGpdaycLeiX19nQaSYQ",
+					"type_line": "Legendary Creature",
+					"component": "self"
+				}
 			]
 		},
 		{
@@ -430147,6 +430353,18 @@
 					"collector_number": "1034",
 					"image": "https://lh3.googleusercontent.com/d/1BSDcgmI8X8qgXtK5hNC406Bzzch7e1IA",
 					"type_line": "Token Creature — Human",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "8f64b44d-bc15-4ddc-906d-33a23bc4414f",
+					"oracle_id": "593670ff-e7d1-4e5d-97c1-1d117060c81d",
+					"hcid": "Human11",
+					"name": "Human",
+					"set": "HCT",
+					"collector_number": "2197",
+					"image": "https://storage.googleapis.com/hellscube-images/8f64b44d-bc15-4ddc-906d-33a23bc4414f%20-%20Human11.png",
+					"type_line": "Human",
 					"component": "token"
 				},
 				{
@@ -432906,6 +433124,32 @@
 				"summon",
 				"missing-token",
 				"1997-frame"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "48b2cf61-83a6-4659-9952-715bf8e1d49a",
+					"oracle_id": "783e727a-4cd1-4bf9-ad8e-711df63e6afc",
+					"hcid": "Saproling Decoy1",
+					"name": "Saproling Decoy",
+					"set": "HCT",
+					"collector_number": "2196",
+					"image": "https://storage.googleapis.com/hellscube-images/48b2cf61-83a6-4659-9952-715bf8e1d49a%20-%20Saproling%20Decoy1.png",
+					"type_line": "Saproling Decoy",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "db264d15-b70b-4be6-b029-a9d01cbb0286",
+					"oracle_id": "17660584-6dd4-4cdb-b3d1-bca12b3dbc9d",
+					"hcid": "5235",
+					"name": "Thallid Ninja",
+					"set": "HCK",
+					"collector_number": "208",
+					"image": "https://lh3.googleusercontent.com/d/1erOc8D7DYr1cKtMqPgrui8o7xqNDFWpj",
+					"type_line": "Creature — Fungus Ninja",
+					"component": "self"
+				}
 			]
 		},
 		{
@@ -435297,6 +435541,18 @@
 					"collector_number": "553",
 					"image": "https://lh3.googleusercontent.com/d/1TD31IT4T5NyPKaFw3vX7v_3pK0mUVjji",
 					"type_line": "Token Creature — Plant",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "9060e3a1-74bd-49bf-8223-45c60843b419",
+					"oracle_id": "222b3834-7c74-4ac0-b5df-8f1cd73b64da",
+					"hcid": "Plant4",
+					"name": "Plant",
+					"set": "HCT",
+					"collector_number": "2198",
+					"image": "https://storage.googleapis.com/hellscube-images/9060e3a1-74bd-49bf-8223-45c60843b419%20-%20Plant4.png",
+					"type_line": "Plant",
 					"component": "token"
 				},
 				{
@@ -496368,6 +496624,18 @@
 				},
 				{
 					"object": "related_card",
+					"id": "84006310-a36b-45ca-856d-a469428a7da4",
+					"oracle_id": "fafedfb3-982c-4549-a919-740b32d0efa7",
+					"hcid": "Clue9",
+					"name": "Clue",
+					"set": "HCT",
+					"collector_number": "2202",
+					"image": "https://storage.googleapis.com/hellscube-images/84006310-a36b-45ca-856d-a469428a7da4%20-%20Clue9.png",
+					"type_line": "Clue",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
 					"id": "715149dc-7d52-436c-a06a-a43533a646bc",
 					"oracle_id": "491a4207-3e41-4e0e-8150-f270d34146e3",
 					"hcid": "fhcj-clues-pack",
@@ -497090,24 +497358,17 @@
 			"border_color": "black",
 			"frame": "2015",
 			"tags": [
-				"self-discard-pack"
+				"self-discard-pack",
+				"missing-token"
 			],
+			"tag_notes": {
+				"missing-token": "beast with trample"
+			},
 			"base_tags": [
-				"self-discard-pack"
+				"self-discard-pack",
+				"missing-token<beast with trample>"
 			],
 			"all_parts": [
-				{
-					"object": "related_card",
-					"id": "1f2c9241-9cba-4c99-85cc-7e74286d1dc1",
-					"oracle_id": "6bb61f34-5d57-4eaa-a02c-f5d08c1ee920",
-					"hcid": "Beast6",
-					"name": "Beast",
-					"set": "HCT",
-					"collector_number": "385",
-					"image": "https://lh3.googleusercontent.com/d/1ZrOk0Kr2kvRztDKjiWdL5TrXp7VfQvQW",
-					"type_line": "Token Creature — Beast",
-					"component": "token"
-				},
 				{
 					"object": "related_card",
 					"id": "8d486396-eca7-42e0-ac10-5643c1042d28",
@@ -500697,6 +500958,18 @@
 				"missing-token"
 			],
 			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "e799fe29-e84e-4b8a-9fdf-cf62e2743c4a",
+					"oracle_id": "bf477d0f-00a3-4646-9c40-99c9be7f57bb",
+					"hcid": "Sheep3",
+					"name": "Sheep",
+					"set": "HCT",
+					"collector_number": "2219",
+					"image": "https://storage.googleapis.com/hellscube-images/e799fe29-e84e-4b8a-9fdf-cf62e2743c4a%20-%20Sheep3.png",
+					"type_line": "Sheep",
+					"component": "token"
+				},
 				{
 					"object": "related_card",
 					"id": "d4194fec-980a-406a-85df-08685bc3411d",
@@ -505457,7 +505730,6 @@
 			"object": "card",
 			"kind": "card",
 			"id": "464b0fb2-dfe7-47ce-aee7-1368bf78bdb6",
-			"has_default_id": true,
 			"oracle_id": "9f4d4913-e4ab-4b8a-9750-e5e0dc07eb59",
 			"hcid": "6055",
 			"name": "Bone",
@@ -506240,6 +506512,18 @@
 					"collector_number": "1999",
 					"image": "https://storage.googleapis.com/hellscube-images/caab1c34-a79c-4911-a13c-ec94b32db555%20-%20Emblem_%20Niv%20Mizzet1.png",
 					"type_line": "Emblem",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "a55f005f-e345-4a3e-98cc-634f06c20326",
+					"oracle_id": "d57d9f6e-4ea8-4ec7-9a9b-4fcd969a131b",
+					"hcid": "Rainbow1",
+					"name": "Rainbow",
+					"set": "HCT",
+					"collector_number": "2185",
+					"image": "https://storage.googleapis.com/hellscube-images/a55f005f-e345-4a3e-98cc-634f06c20326%20-%20Rainbow1.png",
+					"type_line": "Rainbow",
 					"component": "token"
 				},
 				{
@@ -514312,6 +514596,18 @@
 				},
 				{
 					"object": "related_card",
+					"id": "5869dc0a-9fe3-4807-8b7d-3a2096ced367",
+					"oracle_id": "8c048c4f-bfad-437c-97a2-90d955ad5f48",
+					"hcid": "Monkey4",
+					"name": "Monkey",
+					"set": "HCT",
+					"collector_number": "2199",
+					"image": "https://storage.googleapis.com/hellscube-images/5869dc0a-9fe3-4807-8b7d-3a2096ced367%20-%20Monkey4.png",
+					"type_line": "Monkey",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
 					"id": "e0b868f2-9bd0-4c37-b8eb-f7e725b1abb4",
 					"oracle_id": "211e654d-eb66-4dc4-97ee-b1a967857a90",
 					"hcid": "6140",
@@ -517757,6 +518053,18 @@
 			"all_parts": [
 				{
 					"object": "related_card",
+					"id": "04fc2b99-cd38-4dbc-b364-6c69ba75490b",
+					"oracle_id": "e8f6435b-c2a4-4d70-a83b-550d2f1c3f1c",
+					"hcid": "Dirt Bike1",
+					"name": "Dirt Bike",
+					"set": "HCT",
+					"collector_number": "2218",
+					"image": "https://storage.googleapis.com/hellscube-images/04fc2b99-cd38-4dbc-b364-6c69ba75490b%20-%20Dirt%20Bike1.png",
+					"type_line": "Dirt Bike",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
 					"id": "8d486396-eca7-42e0-ac10-5643c1042d28",
 					"oracle_id": "23fa3e3b-2baf-4b8c-b4ba-35c4ef275a63",
 					"hcid": "fhcj-self-discard-pack",
@@ -519110,7 +519418,7 @@
 			"creators": [
 				"mamaclockie"
 			],
-			"rulings": "",
+			"rulings": "<Cell R6185C8 None>\nSick Ass Wizard Island imposes an additional cost of \"using your land drop\" when cast as a spell. If you don't have a land drop or have already used it, you can't cast it- mweepigeon 2026-10-20",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
@@ -551920,7 +552228,7 @@
 				"Salamander"
 			],
 			"type_line": "Creature — Salamander",
-			"oracle_text": "{T}: Hellbend 2 (Discard up to two cards, then add that much mana in any combination of colors and this creature deals that much damage to target player.)\nMadness (0)",
+			"oracle_text": "{T}: Hellbend 2 (Discard up to two cards, then add that much mana in any combination of colors and this creature deals that much damage to target player.)\nMadness {0}",
 			"flavor_text": "Sometimes a joke is as simple as a Hellbender gets your Hellbent.",
 			"power": "1",
 			"toughness": "2",
@@ -563794,6 +564102,18 @@
 					"collector_number": "385",
 					"image": "https://lh3.googleusercontent.com/d/1ZrOk0Kr2kvRztDKjiWdL5TrXp7VfQvQW",
 					"type_line": "Token Creature — Beast",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "03d0c96a-f868-4c0f-97a7-04073ef98a2f",
+					"oracle_id": "df23a2da-2662-4429-b638-aead2a82d5cd",
+					"hcid": "Beast10",
+					"name": "Beast",
+					"set": "HCT",
+					"collector_number": "2213",
+					"image": "https://storage.googleapis.com/hellscube-images/03d0c96a-f868-4c0f-97a7-04073ef98a2f%20-%20Beast10.png",
+					"type_line": "Beast",
 					"component": "token"
 				},
 				{
@@ -621193,6 +621513,32 @@
 			},
 			"base_tags": [
 				"missing-token<1/1 blue Fish creature tokens that are loyalty counters>"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "444a38d0-4121-4352-9940-3f455de2d600",
+					"oracle_id": "29f4cc47-d963-4e81-b0f5-6f593db269bf",
+					"hcid": "Fish36",
+					"name": "Fish",
+					"set": "HCT",
+					"collector_number": "2208",
+					"image": "https://storage.googleapis.com/hellscube-images/444a38d0-4121-4352-9940-3f455de2d600%20-%20Fish36.png",
+					"type_line": "Fish",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "907dca52-196d-4b22-90c8-02b3d29553f1",
+					"oracle_id": "01365126-6074-4373-8320-e76e06873b77",
+					"hcid": "7543",
+					"name": "Gilliana of the Whale",
+					"set": "HC9_0",
+					"collector_number": "124",
+					"image": "https://lh3.googleusercontent.com/d/1ZrAo0Wy6q9FZlyg3mm0a_R0LxZgBirKb",
+					"type_line": "Legendary Planeswalker — Gilliana",
+					"component": "self"
+				}
 			]
 		},
 		{
@@ -626821,6 +627167,18 @@
 			"all_parts": [
 				{
 					"object": "related_card",
+					"id": "d56eec09-62cb-4586-9be3-f95c7733179b",
+					"oracle_id": "bc948e19-816b-4c13-a36b-73b3e0472dca",
+					"hcid": "Sparring Construct1",
+					"name": "Sparring Construct",
+					"set": "HCT",
+					"collector_number": "2192",
+					"image": "https://storage.googleapis.com/hellscube-images/d56eec09-62cb-4586-9be3-f95c7733179b%20-%20Sparring%20Construct1.png",
+					"type_line": "Sparring Construct",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
 					"id": "badc7db8-386e-4fb6-aefa-591e99747eb2",
 					"oracle_id": "bc948e19-816b-4c13-a36b-73b3e0472dca",
 					"hcid": "Sparring Construct1",
@@ -627923,6 +628281,32 @@
 						"U"
 					],
 					"compress_face": true
+				}
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "9004f2fb-fbdd-4068-9539-47dcf97803b7",
+					"oracle_id": "6696a41d-b175-42c8-a58c-1ed58caca7ff",
+					"hcid": "Curiousity1",
+					"name": "Curiousity",
+					"set": "HCT",
+					"collector_number": "2193",
+					"image": "https://storage.googleapis.com/hellscube-images/9004f2fb-fbdd-4068-9539-47dcf97803b7%20-%20Curiousity1.png",
+					"type_line": "Curiousity",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "0c0d8dc4-01cf-4ad8-8d03-770ab97d06ee",
+					"oracle_id": "97a6d94b-0c1e-4886-8d56-a692a53a3cca",
+					"hcid": "7629",
+					"name": "George, PhD // Curiosity",
+					"set": "HC9_0",
+					"collector_number": "211",
+					"image": "https://lh3.googleusercontent.com/d/1AcETr2-5A4CQSw-tAU5hupAX54JGswCk",
+					"type_line": "Legendary Creature — Monkey // Enchantment — Aura",
+					"component": "self"
 				}
 			]
 		},
@@ -636823,6 +637207,32 @@
 				"missing-token",
 				"ransomnote",
 				"ransom-over-real-card"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "b471d816-b1fe-4bb3-a0b4-46a16841502a",
+					"oracle_id": "64696f5b-2453-4b22-b102-0c138aabc4c7",
+					"hcid": "Samurai1",
+					"name": "Samurai",
+					"set": "HCT",
+					"collector_number": "2204",
+					"image": "https://storage.googleapis.com/hellscube-images/b471d816-b1fe-4bb3-a0b4-46a16841502a%20-%20Samurai1.png",
+					"type_line": "Samurai",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "424e3cba-fd95-4a01-aa36-64bf9f2c288e",
+					"oracle_id": "83caaa64-2cbf-4035-b353-135839011f1e",
+					"hcid": "7747",
+					"name": "Eiganjo Uprising <HC>",
+					"set": "HC9_0",
+					"collector_number": "300",
+					"image": "https://lh3.googleusercontent.com/d/1HKmngMuTceQJs4JDEM1RenxwAtWBHi_z",
+					"type_line": "Sorcery",
+					"component": "self"
+				}
 			]
 		},
 		{
@@ -659684,7 +660094,7 @@
 					"set": "HCT",
 					"collector_number": "2163",
 					"image": "https://storage.googleapis.com/hellscube-images/d2e0b2a2-d0e1-4a49-9f48-0a922b6f64b8%20-%20Lush%20Oasis3.png",
-					"type_line": "Lush Oasis",
+					"type_line": "Token Land — Lush Oasis",
 					"component": "token"
 				},
 				{
@@ -684585,7 +684995,7 @@
 					"set": "HCT",
 					"collector_number": "2165",
 					"image": "https://storage.googleapis.com/hellscube-images/2345a3fb-2e2e-4994-8c8d-a7747d81bd85%20-%20Desert4.png",
-					"type_line": "Desert",
+					"type_line": "Token Land — Desert",
 					"component": "token"
 				},
 				{
@@ -689959,7 +690369,7 @@
 					"set": "HCT",
 					"collector_number": "2164",
 					"image": "https://storage.googleapis.com/hellscube-images/36625f82-8d2e-49c7-8d38-271ee330cfcd%20-%20Everywhere%20Reminder%20Card1.png",
-					"type_line": "Everywhere Reminder Card",
+					"type_line": "Land — Everywhere Reminder Card",
 					"component": "token"
 				}
 			]
@@ -718519,6 +718929,18 @@
 				},
 				{
 					"object": "related_card",
+					"id": "84006310-a36b-45ca-856d-a469428a7da4",
+					"oracle_id": "fafedfb3-982c-4549-a919-740b32d0efa7",
+					"hcid": "Clue9",
+					"name": "Clue",
+					"set": "HCT",
+					"collector_number": "2202",
+					"image": "https://storage.googleapis.com/hellscube-images/84006310-a36b-45ca-856d-a469428a7da4%20-%20Clue9.png",
+					"type_line": "Clue",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
 					"id": "67ae5edc-47c0-42b0-b44e-167f9d26c357",
 					"oracle_id": "ee20f370-00e8-4127-9aac-6e065f450ac4",
 					"hcid": "8675",
@@ -718646,6 +719068,32 @@
 			"base_tags": [
 				"1997-frame",
 				"missing-token"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "0e11a887-044a-4d2c-b313-cf42c6e53711",
+					"oracle_id": "b2e35abc-069c-438b-a978-129023205328",
+					"hcid": "Blood Pet1",
+					"name": "Blood Pet",
+					"set": "HCT",
+					"collector_number": "2186",
+					"image": "https://storage.googleapis.com/hellscube-images/0e11a887-044a-4d2c-b313-cf42c6e53711%20-%20Blood%20Pet1.png",
+					"type_line": "Blood Pet",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "25db7542-ef4d-433e-b968-adb499fddc8a",
+					"oracle_id": "ff685807-276e-4243-9887-0bc737e6f14b",
+					"hcid": "8677",
+					"name": "BLOOD PETCO",
+					"set": "HC9_1",
+					"collector_number": "20",
+					"image": "https://storage.googleapis.com/hellscube-images/25db7542-ef4d-433e-b968-adb499fddc8a%20-%20BLOOD%20PETCO.png",
+					"type_line": "Enchantment",
+					"component": "self"
+				}
 			]
 		},
 		{
@@ -719023,6 +719471,32 @@
 			],
 			"base_tags": [
 				"missing-token"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "f1721d2e-bcac-46b2-9e30-3b31f91242bc",
+					"oracle_id": "e3c2fad4-1e45-44f0-aed3-90886c7c77c6",
+					"hcid": "Canary1",
+					"name": "Canary",
+					"set": "HCT",
+					"collector_number": "2187",
+					"image": "https://storage.googleapis.com/hellscube-images/f1721d2e-bcac-46b2-9e30-3b31f91242bc%20-%20Canary1.png",
+					"type_line": "Canary",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "e43fcc5c-a2d6-4ac9-88b3-ee06292e4cd7",
+					"oracle_id": "eef28750-ca7e-4232-8976-6aca21ea1015",
+					"hcid": "8683",
+					"name": "Coalstone Caverns",
+					"set": "HC9_1",
+					"collector_number": "26",
+					"image": "https://storage.googleapis.com/hellscube-images/e43fcc5c-a2d6-4ac9-88b3-ee06292e4cd7%20-%20Coalstone%20Caverns.png",
+					"type_line": "Basic Land — Cave Mine",
+					"component": "self"
+				}
 			]
 		},
 		{
@@ -720049,12 +720523,8 @@
 				"366"
 			],
 			"artists": [
-				"Unsourceable",
 				"MSCHF"
 			],
-			"artist_notes": {
-				"Unsourceable": "Evil MSCHF doesn't credit the artists for the Zeta set"
-			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -720729,6 +721199,18 @@
 				},
 				{
 					"object": "related_card",
+					"id": "44555a69-579d-463e-a4ce-0a071fab912c",
+					"oracle_id": "44b5a846-2d17-4b09-8ff1-017e625b7c4d",
+					"hcid": "Blood5",
+					"name": "Blood",
+					"set": "HCT",
+					"collector_number": "2212",
+					"image": "https://storage.googleapis.com/hellscube-images/44555a69-579d-463e-a4ce-0a071fab912c%20-%20Blood5.png",
+					"type_line": "Blood",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
 					"id": "bfdff8f0-0b34-4c3c-89c1-704f5ecbc38d",
 					"oracle_id": "e819b23a-4aed-46e6-9d6d-b18706b2e882",
 					"hcid": "8707",
@@ -721377,6 +721859,42 @@
 					"collector_number": "385",
 					"image": "https://lh3.googleusercontent.com/d/1ZrOk0Kr2kvRztDKjiWdL5TrXp7VfQvQW",
 					"type_line": "Token Creature — Beast",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "03d0c96a-f868-4c0f-97a7-04073ef98a2f",
+					"oracle_id": "df23a2da-2662-4429-b638-aead2a82d5cd",
+					"hcid": "Beast10",
+					"name": "Beast",
+					"set": "HCT",
+					"collector_number": "2213",
+					"image": "https://storage.googleapis.com/hellscube-images/03d0c96a-f868-4c0f-97a7-04073ef98a2f%20-%20Beast10.png",
+					"type_line": "Beast",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "08af7f2d-f9c7-4b1a-b507-f2528f5cd915",
+					"oracle_id": "9e0fcf00-20af-4dcf-93f8-d393fcdf2aab",
+					"hcid": "3/3 Beast1",
+					"name": "3/3 Beast",
+					"set": "HCT",
+					"collector_number": "2216",
+					"image": "https://storage.googleapis.com/hellscube-images/08af7f2d-f9c7-4b1a-b507-f2528f5cd915%20-%203_3%20Beast1.png",
+					"type_line": "3/3 Beast",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "68b050c1-0092-4132-b723-3345306bcecc",
+					"oracle_id": "bcbeef83-8349-4086-85c4-276fc2b922d5",
+					"hcid": "4/4 Beast1",
+					"name": "4/4 Beast",
+					"set": "HCT",
+					"collector_number": "2217",
+					"image": "https://storage.googleapis.com/hellscube-images/68b050c1-0092-4132-b723-3345306bcecc%20-%204_4%20Beast1.png",
+					"type_line": "4/4 Beast",
 					"component": "token"
 				},
 				{
@@ -731526,6 +732044,32 @@
 				"missing-token",
 				"full-art",
 				"borderless"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "2cf17cf8-9594-47e7-9157-0106f548a0e4",
+					"oracle_id": "bde15a68-6f1b-41bd-b164-3136aa82622f",
+					"hcid": "Memories 1",
+					"name": "Memories ",
+					"set": "HCT",
+					"collector_number": "2207",
+					"image": "https://storage.googleapis.com/hellscube-images/2cf17cf8-9594-47e7-9157-0106f548a0e4%20-%20Memories%201.png",
+					"type_line": "Memories ",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "6870ab90-d32b-4d88-96de-adfc84dce28b",
+					"oracle_id": "5e8b8bfd-4b4b-48eb-b89b-47a5a81e13c0",
+					"hcid": "8861",
+					"name": "You Are A Saga",
+					"set": "HC9_1",
+					"collector_number": "141",
+					"image": "https://storage.googleapis.com/hellscube-images/6870ab90-d32b-4d88-96de-adfc84dce28b%20-%20You%20Are%20a%20Saga.png",
+					"type_line": "Enchantment",
+					"component": "self"
+				}
 			]
 		},
 		{
@@ -733538,7 +734082,8 @@
 			"has_default_id": true,
 			"oracle_id": "45ae79eb-cfe6-4f9a-a894-1b5703fc7922",
 			"hcid": "8890",
-			"name": "(I have your baby. Will you promote him to truck driver? the prettiest princess Urza Mines The Caba",
+			"name": "Calvin",
+			"flavor_name": "(I have your baby. Will you promote him to bus driver? the prettiest princess Urza Mines The Cabalcrusher Ridekoum) Mr. Sea Stimpy Lust (image of a mecha) いるsussys",
 			"set": "HC9_1",
 			"collector_number": "170",
 			"accepted_order": "170",
@@ -733624,11 +734169,13 @@
 			],
 			"tags": [
 				"inverted-text",
-				"borderless"
+				"borderless",
+				"flavor-name"
 			],
 			"base_tags": [
 				"inverted-text",
-				"borderless"
+				"borderless",
+				"flavor-name<(I have your baby. Will you promote him to bus driver? the prettiest princess Urza Mines The Cabalcrusher Ridekoum) Mr. Sea Stimpy Lust (image of a mecha) いるsussys>"
 			]
 		},
 		{
@@ -733714,6 +734261,18 @@
 					"collector_number": "195",
 					"image": "https://lh3.googleusercontent.com/d/1nkCEb0O6O3__QQygN5FDB5ebVRCL9Ljy",
 					"type_line": "Token Artifact — Food",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "c8e51d44-b5f6-4fd2-88a4-4224c46f7e16",
+					"oracle_id": "319ca764-1013-4028-9938-6d6f99ccbda9",
+					"hcid": "Food36",
+					"name": "Food",
+					"set": "HCT",
+					"collector_number": "2205",
+					"image": "https://storage.googleapis.com/hellscube-images/c8e51d44-b5f6-4fd2-88a4-4224c46f7e16%20-%20Food36.png",
+					"type_line": "Food",
 					"component": "token"
 				},
 				{
@@ -734269,9 +734828,9 @@
 					"oracle_id": "f255492e-4e12-48b4-9c19-8a2a2780a1b7",
 					"hcid": "Sneaky Snacker1",
 					"name": "Sneaky Snacker",
-					"set": "SFT",
-					"collector_number": "327",
-					"image": "https://cards.scryfall.io/large/front/0/e/0e3aedae-e4bb-48e3-9f8b-bea0430df306.jpg",
+					"set": "HCT",
+					"collector_number": "2162",
+					"image": "https://storage.googleapis.com/hellscube-images/0e3aedae-e4bb-48e3-9f8b-bea0430df306%20-%20Sneaky%20Snacker1.png",
 					"type_line": "Creature — Faerie Rogue",
 					"component": "token"
 				},
@@ -734662,6 +735221,32 @@
 				"gif",
 				"no-art",
 				"missing-token"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "cc514b27-2563-4640-ae32-04046c02f1a2",
+					"oracle_id": "349e347e-3ee4-4ec3-a3a2-99f3eb6b8274",
+					"hcid": "Black Lotus Conjure1",
+					"name": "Black Lotus Conjure",
+					"set": "HCT",
+					"collector_number": "2206",
+					"image": "https://storage.googleapis.com/hellscube-images/cc514b27-2563-4640-ae32-04046c02f1a2%20-%20Black%20Lotus%20Conjure1.png",
+					"type_line": "Black Lotus Conjure",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "c9d26dc9-373b-4421-9c59-17b039fc2e4d",
+					"oracle_id": "d0a52fd7-1fa6-4321-9fa9-af52033ffd0e",
+					"hcid": "8904",
+					"name": "Attention",
+					"set": "HC9_1",
+					"collector_number": "184",
+					"image": "https://storage.googleapis.com/hellscube-images/c9d26dc9-373b-4421-9c59-17b039fc2e4d%20-%20Attention.gif",
+					"type_line": "Instant",
+					"component": "self"
+				}
 			]
 		},
 		{
@@ -734963,6 +735548,32 @@
 			],
 			"base_tags": [
 				"missing-token"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "f098de79-a4df-4f87-a046-a52346d5f5dc",
+					"oracle_id": "ec28dadf-2cb9-4972-8207-40caefcb5c76",
+					"hcid": "Jace1",
+					"name": "Jace",
+					"set": "HCT",
+					"collector_number": "2201",
+					"image": "https://storage.googleapis.com/hellscube-images/f098de79-a4df-4f87-a046-a52346d5f5dc%20-%20Jace1.png",
+					"type_line": "Jace",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "908ecab7-6059-44bf-947a-21de98134c3e",
+					"oracle_id": "91f78a14-cb45-4f08-a65a-0ce1602fc23e",
+					"hcid": "8908",
+					"name": "Jace's Dream House",
+					"set": "HC9_1",
+					"collector_number": "188",
+					"image": "https://storage.googleapis.com/hellscube-images/908ecab7-6059-44bf-947a-21de98134c3e%20-%20Jace_s%20Dream%20House.png",
+					"type_line": "Land — Forest Island",
+					"component": "self"
+				}
 			]
 		},
 		{
@@ -735858,6 +736469,42 @@
 				},
 				{
 					"object": "related_card",
+					"id": "6b3e0660-c49d-4cfb-83e1-5c04d82b9d99",
+					"oracle_id": "85a6007e-1080-402d-974a-61e6064a62a1",
+					"hcid": "Markiplier1",
+					"name": "Markiplier",
+					"set": "HCT",
+					"collector_number": "2194",
+					"image": "https://storage.googleapis.com/hellscube-images/6b3e0660-c49d-4cfb-83e1-5c04d82b9d99%20-%20Markiplier1.png",
+					"type_line": "Markiplier",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "305bdbd0-8e4b-4755-ba67-1c1a0c347050",
+					"oracle_id": "fe4c14fb-2d5e-4669-abc1-519977c0004d",
+					"hcid": "Markiplier2",
+					"name": "Markiplier",
+					"set": "HCT",
+					"collector_number": "2214",
+					"image": "https://storage.googleapis.com/hellscube-images/305bdbd0-8e4b-4755-ba67-1c1a0c347050%20-%20Markiplier2.png",
+					"type_line": "Markiplier",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "20d4ca9f-e4a7-465f-a4ff-452c00b815ec",
+					"oracle_id": "7a1d893a-84a7-4afb-9520-41e8802f3fc2",
+					"hcid": "Blood6",
+					"name": "Blood",
+					"set": "HCT",
+					"collector_number": "2215",
+					"image": "https://storage.googleapis.com/hellscube-images/20d4ca9f-e4a7-465f-a4ff-452c00b815ec%20-%20Blood6.png",
+					"type_line": "Blood",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
 					"id": "ad24f3e0-8fe2-4427-a92a-6284e8fff115",
 					"oracle_id": "be09c917-b7c8-41d6-9ed6-e8242e16a122",
 					"hcid": "8920",
@@ -736373,6 +737020,32 @@
 				"ransom-over-real-card<Gardenize>",
 				"missing-token",
 				"nyx-frame"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "b5257ba5-d592-43d0-a2fb-5dc5d6459ada",
+					"oracle_id": "4b01cb6e-a531-41c0-ae56-2ff8cce7036c",
+					"hcid": "Island 1",
+					"name": "Island ",
+					"set": "HCT",
+					"collector_number": "2188",
+					"image": "https://storage.googleapis.com/hellscube-images/b5257ba5-d592-43d0-a2fb-5dc5d6459ada%20-%20Island%201.png",
+					"type_line": "Island ",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "fab54081-5292-4201-891b-dda0c763885d",
+					"oracle_id": "6afe28f7-153f-47f2-9dca-a56f2f942a60",
+					"hcid": "8927",
+					"name": "Bongus GreenWhite Does Your Bottom Surgery",
+					"set": "HC9_1",
+					"collector_number": "207",
+					"image": "https://storage.googleapis.com/hellscube-images/fab54081-5292-4201-891b-dda0c763885d%20-%20Bongus%20Greenwhite%20Does%20Your%20Bottom%20Surgery.png",
+					"type_line": "Instant",
+					"component": "self"
+				}
 			]
 		},
 		{
@@ -736553,6 +737226,32 @@
 			],
 			"base_tags": [
 				"missing-token"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "458f8749-3164-4b38-8189-d77473f785f6",
+					"oracle_id": "1f917c15-1955-47c0-954d-053f25e578a4",
+					"hcid": "Ducky Offspring1",
+					"name": "Ducky Offspring",
+					"set": "HCT",
+					"collector_number": "2184",
+					"image": "https://storage.googleapis.com/hellscube-images/458f8749-3164-4b38-8189-d77473f785f6%20-%20Ducky%20Offspring1.png",
+					"type_line": "Ducky Offspring",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "5c123310-1e95-4558-b81b-382120c3c2f9",
+					"oracle_id": "d3b9ef76-6fed-4332-a523-64845dee90eb",
+					"hcid": "8930",
+					"name": "Ducky",
+					"set": "HC9_1",
+					"collector_number": "210",
+					"image": "https://storage.googleapis.com/hellscube-images/5c123310-1e95-4558-b81b-382120c3c2f9%20-%20Ducky.png",
+					"type_line": "Creature — Duck",
+					"component": "self"
+				}
 			]
 		},
 		{
@@ -737913,10 +738612,10 @@
 			"oracle_id": "333ce7f3-9500-473b-96d2-cf84a727ee62",
 			"hcid": "8951",
 			"name": "Rewrite History // Change the Timeline",
-			"set": "HCV_9",
+			"set": "HC9_1",
 			"collector_number": "100",
 			"accepted_order": "100",
-			"released_at": "2026-09-12",
+			"released_at": "2026-09-03",
 			"layout": "inset",
 			"image_status": "highres",
 			"image": "https://storage.googleapis.com/hellscube-images/1da37219-85a6-4449-b05c-31eb01326dfa%20-%20Rewrite%20History%20_%20Change%20the%20Timeline.png",
@@ -737937,7 +738636,7 @@
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
-				"4cb": "not_legal",
+				"4cb": "legal",
 				"commander": "not_legal"
 			},
 			"creators": [
@@ -740826,6 +741525,32 @@
 					"colors": [
 						"W"
 					]
+				}
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "70ed00b8-913f-4f55-8036-56ea28f117d9",
+					"oracle_id": "e5b752aa-e03d-435c-b905-a180e95ea10a",
+					"hcid": "Mouse3",
+					"name": "Mouse",
+					"set": "HCT",
+					"collector_number": "2200",
+					"image": "https://storage.googleapis.com/hellscube-images/70ed00b8-913f-4f55-8036-56ea28f117d9%20-%20Mouse3.png",
+					"type_line": "Mouse",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "98805b3b-7347-425a-ae1b-cb380ce2769c",
+					"oracle_id": "9e677f3e-c1b5-4a41-8634-8ffca38b4d82",
+					"hcid": "8990",
+					"name": "Mire // Mice",
+					"set": "HC9_1",
+					"collector_number": "225",
+					"image": "https://storage.googleapis.com/hellscube-images/98805b3b-7347-425a-ae1b-cb380ce2769c%20-%20Mire%20_%20Mice.webp",
+					"type_line": "Instant // Instant",
+					"component": "self"
 				}
 			]
 		},
@@ -746169,10 +746894,9 @@
 			"object": "card",
 			"kind": "card",
 			"id": "e3d0cc19-9163-47a2-a3c4-6db10a7ff823",
-			"oracle_id": "d45bc42c-8f59-4c62-b4f8-e41721614d2d",
+			"oracle_id": "157d83d5-3ff9-4f50-ac45-ce2c93ba4cd8",
 			"hcid": "9075",
 			"name": "Will Smith",
-			"export_name": "Will Smith_",
 			"set": "HCV_SCL",
 			"collector_number": "89",
 			"accepted_order": "89",
@@ -746238,10 +746962,9 @@
 			"object": "card",
 			"kind": "card",
 			"id": "32040236-df4b-402b-b3ae-04b8eaff65af",
-			"oracle_id": "ea5897c1-98f5-4ddb-bdb4-d0b8bc5e1aa9",
+			"oracle_id": "91e0d510-e32c-4b01-ad97-3b4b93d50184",
 			"hcid": "9076",
 			"name": "Omnath, Locus of Eternity",
-			"export_name": "Omnath, Locus of Eternity_",
 			"set": "HCV_SCL",
 			"collector_number": "90",
 			"accepted_order": "90",
@@ -746330,10 +747053,9 @@
 			"object": "card",
 			"kind": "card",
 			"id": "9e1ae13b-02ed-4451-b1e4-ea9e1251251f",
-			"oracle_id": "2e33e84e-c7db-48c1-808c-90a42a871c88",
+			"oracle_id": "79d61a91-5a67-40f0-8adf-d30d8724653a",
 			"hcid": "9077",
 			"name": "geier at the beginning of each upkeep, if no spells were cast last turn, transform this creature. bandit",
-			"export_name": "geier at the beginning of each upkeep, if no spells were cast last turn, transform this creature. bandit_",
 			"set": "HCV_SCL",
 			"collector_number": "91",
 			"accepted_order": "91",
@@ -746366,7 +747088,10 @@
 					"R"
 				]
 			],
-			"keywords": [],
+			"keywords": [
+				"haste",
+				"reach"
+			],
 			"legalities": {
 				"standard": "legal",
 				"4cb": "legal",
@@ -746393,10 +747118,9 @@
 			"object": "card",
 			"kind": "card",
 			"id": "3ea958bc-0845-4dcd-89a1-86320c36e990",
-			"oracle_id": "a0710271-d3a0-41b0-92d7-8d1f8531096a",
+			"oracle_id": "b5384091-cb17-49a9-b722-3921a1ce1de5",
 			"hcid": "9078",
 			"name": "Bird That Is Good In Draft",
-			"export_name": "Bird That Is Good In Draft_",
 			"set": "HCV_SCL",
 			"collector_number": "92",
 			"accepted_order": "92",
@@ -746519,10 +747243,9 @@
 			"object": "card",
 			"kind": "card",
 			"id": "27a73f37-a412-4d0d-a0ec-7e0119a8984e",
-			"oracle_id": "04293ab4-4718-4b09-987b-28a9c8a0b4c3",
+			"oracle_id": "9f4d4913-e4ab-4b8a-9750-e5e0dc07eb59",
 			"hcid": "9080",
 			"name": "Bone",
-			"export_name": "Bone_",
 			"set": "HCV_SCL",
 			"collector_number": "94",
 			"accepted_order": "94",
@@ -746553,7 +747276,10 @@
 					"W"
 				]
 			],
-			"keywords": [],
+			"keywords": [
+				"plot",
+				"first strike"
+			],
 			"legalities": {
 				"standard": "legal",
 				"4cb": "legal",
@@ -746574,16 +747300,41 @@
 			],
 			"base_tags": [
 				"masterpiece"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "f07677af-88a4-4ff5-b591-e1e3ac05235d",
+					"oracle_id": "d431678e-003d-4c5d-a605-28600995bbda",
+					"hcid": "Plot1",
+					"name": "Plot",
+					"set": "SFT",
+					"collector_number": "1",
+					"image": "https://cards.scryfall.io/large/front/f/0/f07677af-88a4-4ff5-b591-e1e3ac05235d.jpg",
+					"type_line": "Reminder Card",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "27a73f37-a412-4d0d-a0ec-7e0119a8984e",
+					"oracle_id": "9f4d4913-e4ab-4b8a-9750-e5e0dc07eb59",
+					"hcid": "9080",
+					"name": "Bone",
+					"set": "HCV_SCL",
+					"collector_number": "94",
+					"image": "https://storage.googleapis.com/hellscube-images/27a73f37-a412-4d0d-a0ec-7e0119a8984e%20-%20Bone.png",
+					"type_line": "Creature",
+					"component": "self"
+				}
 			]
 		},
 		{
 			"object": "card",
 			"kind": "card",
 			"id": "ad8b0771-8355-4a3b-ba99-ab1a25acbca8",
-			"oracle_id": "d763e0ae-7f68-4c98-b604-d3ca704e7ee9",
+			"oracle_id": "a89b24d5-278c-4b49-aba7-c8ac54f08036",
 			"hcid": "9081",
 			"name": "boneless saw",
-			"export_name": "boneless saw_",
 			"set": "HCV_SCL",
 			"collector_number": "95",
 			"accepted_order": "95",
@@ -746627,10 +747378,9 @@
 			"object": "card",
 			"kind": "card",
 			"id": "ee300ca9-f3c6-49fb-b10d-3456a909dfec",
-			"oracle_id": "fcb5c43d-a242-4cd9-ab86-36954f900e97",
+			"oracle_id": "9a8b26df-732b-4a95-b878-781accb57b29",
 			"hcid": "9082",
 			"name": "Wishcoin Crab <HC>",
-			"export_name": "Wishcoin Crab <HC>_",
 			"set": "HCV_SCL",
 			"collector_number": "96",
 			"accepted_order": "96",
@@ -746690,10 +747440,9 @@
 			"object": "card",
 			"kind": "card",
 			"id": "ccfc22b5-dfae-4d78-b40b-3dbad11b75cb",
-			"oracle_id": "39f448fb-9344-413e-93c5-56274ff4e7ab",
+			"oracle_id": "b1e594af-6cc3-4848-849c-c9064147e222",
 			"hcid": "9083",
 			"name": "I FUCKING HATE THE GOVERNMENT!!!",
-			"export_name": "I FUCKING HATE THE GOVERNMENT!!!_",
 			"set": "HCV_SCL",
 			"collector_number": "97",
 			"accepted_order": "97",
@@ -746740,16 +747489,41 @@
 			],
 			"base_tags": [
 				"masterpiece"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "0844c635-7623-4c48-a692-f7e2c230fc13",
+					"oracle_id": "f31b4ede-99c1-4f9b-8f00-babffc9a6c7a",
+					"hcid": "Brick2",
+					"name": "Brick",
+					"set": "HCT",
+					"collector_number": "1752",
+					"image": "https://lh3.googleusercontent.com/d/1QrFOZ6g_3WfD7i1zHgPpOmHlL6MwES5v",
+					"type_line": "Token Artifact — Brick",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "ccfc22b5-dfae-4d78-b40b-3dbad11b75cb",
+					"oracle_id": "b1e594af-6cc3-4848-849c-c9064147e222",
+					"hcid": "9083",
+					"name": "I FUCKING HATE THE GOVERNMENT!!!",
+					"set": "HCV_SCL",
+					"collector_number": "97",
+					"image": "https://storage.googleapis.com/hellscube-images/ccfc22b5-dfae-4d78-b40b-3dbad11b75cb%20-%20I%20FUCKING%20HATE%20THE%20GOVERNMENT_.png",
+					"type_line": "Sorcery",
+					"component": "self"
+				}
 			]
 		},
 		{
 			"object": "card",
 			"kind": "card",
 			"id": "ecd2c5a8-07e7-4c24-b098-ea4f652c3fd8",
-			"oracle_id": "5900d2c7-2ea3-4309-a7b5-def6ed8061fe",
+			"oracle_id": "8c3834fa-e01f-4c63-a2bf-f2993b13b0af",
 			"hcid": "9084",
 			"name": "Wrath of Thassa",
-			"export_name": "Wrath of Thassa_",
 			"set": "HCV_SCL",
 			"collector_number": "98",
 			"accepted_order": "98",
@@ -746802,10 +747576,9 @@
 			"object": "card",
 			"kind": "card",
 			"id": "496bc36c-c346-440e-a413-d6b598960f74",
-			"oracle_id": "76056b4c-3fa2-4d95-b0a7-470260630700",
+			"oracle_id": "80f2b9c2-dc3a-412b-b3ea-4f2b829f7e2a",
 			"hcid": "9085",
 			"name": "Art Smella",
-			"export_name": "Art Smella_",
 			"set": "HCV_SCL",
 			"collector_number": "99",
 			"accepted_order": "99",
@@ -746864,10 +747637,9 @@
 			"object": "card",
 			"kind": "card",
 			"id": "4079804a-0b87-4b10-8c4f-c6f8dc2a9cc1",
-			"oracle_id": "749327d2-c781-41fa-98b5-d5ae9a79ee43",
+			"oracle_id": "d962eee3-bda9-4650-b6c3-35a8cd9aebbd",
 			"hcid": "9086",
 			"name": "Swords to Dwards",
-			"export_name": "Swords to Dwards_",
 			"set": "HCV_SCL",
 			"collector_number": "100",
 			"accepted_order": "100",
@@ -746908,7 +747680,7 @@
 			"artists": [
 				"Mia"
 			],
-			"rulings": "",
+			"rulings": "<Cell R7601C8 None>\nThis is a text-changing effect, not an ability-removing one- mweepigeon 2026-10-18",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
@@ -746917,16 +747689,41 @@
 			],
 			"base_tags": [
 				"masterpiece"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "a05b1f88-3775-4209-8432-2bd00ed6ecca",
+					"oracle_id": "74278015-79cb-4ee4-a1a1-d0635c71f042",
+					"hcid": "Illegible1",
+					"name": "Illegible",
+					"set": "HCT",
+					"collector_number": "1919",
+					"image": "https://lh3.googleusercontent.com/d/1oigPfKHiflAYYPMewEpko9v-GBH4K9GO",
+					"type_line": "Reminder Card",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "4079804a-0b87-4b10-8c4f-c6f8dc2a9cc1",
+					"oracle_id": "d962eee3-bda9-4650-b6c3-35a8cd9aebbd",
+					"hcid": "9086",
+					"name": "Swords to Dwards",
+					"set": "HCV_SCL",
+					"collector_number": "100",
+					"image": "https://storage.googleapis.com/hellscube-images/4079804a-0b87-4b10-8c4f-c6f8dc2a9cc1%20-%20Swords%20to%20Dwards.png",
+					"type_line": "Instant",
+					"component": "self"
+				}
 			]
 		},
 		{
 			"object": "card",
 			"kind": "card",
 			"id": "21c63399-7dd3-429c-8c12-85a2e6233227",
-			"oracle_id": "d432e869-e88a-40cf-a2f3-564f632ec9e8",
+			"oracle_id": "9e4b310d-c8e6-4658-8d4c-678c57b43885",
 			"hcid": "9087",
 			"name": "Soul of Muraganda",
-			"export_name": "Soul of Muraganda_",
 			"set": "HCV_SCL",
 			"collector_number": "101",
 			"accepted_order": "101",
@@ -746984,10 +747781,9 @@
 			"object": "card",
 			"kind": "card",
 			"id": "a3febf9a-2cbb-455f-8ac4-4d57e3a3d54d",
-			"oracle_id": "7e61c040-e58b-4608-b0fa-5d2c083ba9e2",
+			"oracle_id": "093225a3-6c8f-48ce-a6de-012cbe25bf41",
 			"hcid": "9088",
 			"name": "Bird That Is",
-			"export_name": "Bird That Is_",
 			"set": "HCV_SCL",
 			"collector_number": "102",
 			"accepted_order": "102",
@@ -747048,10 +747844,9 @@
 			"object": "card",
 			"kind": "card",
 			"id": "2643d346-96bb-4e56-8af0-65821ec597a7",
-			"oracle_id": "d9516fcb-b2bc-4799-87d0-7aeb7928cac1",
+			"oracle_id": "ccefab66-77eb-4ad7-9cf1-d5ede859343a",
 			"hcid": "9089",
 			"name": "Grunch",
-			"export_name": "Grunch__",
 			"set": "HCV_SCL",
 			"collector_number": "103",
 			"accepted_order": "103",
@@ -747097,7 +747892,7 @@
 			"artists": [
 				"mimp"
 			],
-			"rulings": "",
+			"rulings": "If ? has not yet been defined, Grunch does not die to toughness-related SBAs (is immune to 208.5). This also means that no amount of damage marked will cause a Grunch with undefined ? to die due to SBAs.- mweepigeon 2025-10-24",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
@@ -747114,10 +747909,9 @@
 			"object": "card",
 			"kind": "card",
 			"id": "a2d387f2-cd24-444d-920f-ba21c502d352",
-			"oracle_id": "84e3a4f9-5727-4881-8778-6b296ac2e97d",
+			"oracle_id": "a9c18d4c-c483-4e43-b1d0-2ce3e7ac1922",
 			"hcid": "9090",
 			"name": "Bi-Curiosity",
-			"export_name": "Bi-Curiosity_",
 			"set": "HCV_SCL",
 			"collector_number": "104",
 			"accepted_order": "104",
@@ -747180,10 +747974,9 @@
 			"object": "card",
 			"kind": "card",
 			"id": "1161273c-4f26-4267-a45a-760c86446515",
-			"oracle_id": "d8b9df6b-844d-4f7b-9d96-35caf97ecf6a",
+			"oracle_id": "18231e9d-4776-42b7-b66d-1e6d4254b9c8",
 			"hcid": "9091",
 			"name": "Blonk",
-			"export_name": "Blonk_",
 			"set": "HCV_SCL",
 			"collector_number": "105",
 			"accepted_order": "105",
@@ -747222,7 +748015,7 @@
 			"artists": [
 				"okuyasu"
 			],
-			"rulings": "",
+			"rulings": "Blonk can do what is implied by his reminder text. He can always attack (during your combat step), he can always block, and he can always resolve when cast (can't be countered)- mweepigeon 2024-11-26",
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015",
@@ -747237,9 +748030,9 @@
 			"object": "card",
 			"kind": "card",
 			"id": "0e8afb7d-dc06-47c1-93c2-e00f6d04c875",
-			"oracle_id": "dfced348-e3a3-42da-91c9-fa7f04eed69e",
+			"oracle_id": "36ba7736-ae5e-49ce-87f4-c1d530003320",
 			"hcid": "9092",
-			"name": "Bird That Will Be Good Next Year in A Bold New Format Called “Elder Dragon Legend Wars”",
+			"name": "Bird That Will Be Good Next Year in A Bold New Format Called \"Elder Dragon Legend Wars\"",
 			"set": "HCV_SCL",
 			"collector_number": "106",
 			"accepted_order": "106",
@@ -747317,6 +748110,32 @@
 			],
 			"base_tags": [
 				"masterpiece"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "5cb7ba7a-e04e-4f40-b4d1-55aa5f2fc9e1",
+					"oracle_id": "0da51097-fbfd-42be-80ab-bf5348d9e8f3",
+					"hcid": "Rhystic Study1",
+					"name": "Rhystic Study",
+					"set": "HCT",
+					"collector_number": "1584",
+					"image": "https://lh3.googleusercontent.com/d/10YQSA7ueMC7il7wP-cN2S02JWU8etfIt",
+					"type_line": "Token Enchantment",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "0e8afb7d-dc06-47c1-93c2-e00f6d04c875",
+					"oracle_id": "36ba7736-ae5e-49ce-87f4-c1d530003320",
+					"hcid": "9092",
+					"name": "Bird That Will Be Good Next Year in A Bold New Format Called \"Elder Dragon Legend Wars\"",
+					"set": "HCV_SCL",
+					"collector_number": "106",
+					"image": "https://storage.googleapis.com/hellscube-images/0e8afb7d-dc06-47c1-93c2-e00f6d04c875%20-%20Bird%20That%20Will%20Be%20Good%20Next%20Year%20in%20A%20Bold%20New%20Format%20Called%20_Elder%20Dragon%20Legend%20Wars_.png",
+					"type_line": "Legendary Creature — Bird",
+					"component": "self"
+				}
 			]
 		},
 		{
@@ -749681,11 +750500,33 @@
 			"image": "https://storage.googleapis.com/hellscube-images/47bf0570-4170-40fa-89a8-199f3b85d0ff%20-%20Meditation%20Realm%20UNDER%20NEW%20MANAGEMENT.png",
 			"mana_cost": "",
 			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Island",
+				"Swamp",
+				"Mountain"
+			],
+			"type_line": "Land — Island Swamp Mountain",
+			"oracle_text": "({T}: Add {U}, {B}, or {R}.)\nThis land enters tapped unless you control a permanent with loyalty.\n{1}{U}{B}{R}, {T}: Amass Jaces 2. (You make a 0/0 Jace Army if you don't have one, then put two +1/+1s on an Army... wait, shouldn't this be empower...?)",
 			"colors": [],
-			"color_identity": [],
-			"color_identity_hybrid": [],
+			"color_identity": [
+				"U",
+				"B",
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				],
+				[
+					"B"
+				],
+				[
+					"R"
+				]
+			],
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
@@ -749694,6 +750535,10 @@
 			},
 			"creators": [
 				"eldoradonights"
+			],
+			"artists": [
+				"Anna Steinbauer",
+				"Magali Villeneuve"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -749715,13 +750560,24 @@
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://storage.googleapis.com/hellscube-images/bed9d2fd-4e17-4d11-a57a-0e8f9f5182ca%20-%20Time%20Breach.png",
-			"mana_cost": "",
-			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
-			"colors": [],
-			"color_identity": [],
-			"color_identity_hybrid": [],
+			"mana_cost": "{2}{R}",
+			"mana_value": 3,
+			"types": [
+				"Sorcery"
+			],
+			"type_line": "Sorcery",
+			"oracle_text": "Take an extra turn after this one. During that turn, cards can be cast from your graveyard by also removing three other cards in your graveyard from the game. Remove Time Breach from the timeline. (It's gone.)",
+			"colors": [
+				"R"
+			],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
@@ -749731,10 +750587,20 @@
 			"creators": [
 				"Sultan"
 			],
+			"artists": [
+				"Amy Weber",
+				"Lie Setiawan"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"hc9-power-slot"
+			],
+			"base_tags": [
+				"hc9-power-slot"
+			]
 		},
 		{
 			"object": "card",
@@ -749743,7 +750609,7 @@
 			"has_default_id": true,
 			"oracle_id": "51d12b96-a104-4ab8-95a6-8325c66b2fc9",
 			"hcid": "9138",
-			"name": "tuaryMor goundUnder",
+			"name": "tuaryMor groundUnder",
 			"set": "HC9_1",
 			"collector_number": "318",
 			"accepted_order": "318",
@@ -749753,11 +750619,28 @@
 			"image": "https://storage.googleapis.com/hellscube-images/eaf60371-676e-440b-8177-4993e8443afa%20-%20tuaryMor%20goundUnder.png",
 			"mana_cost": "",
 			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest",
+				"Swamp"
+			],
+			"type_line": "Land — Forest Swamp",
+			"oracle_text": "({T}: Add {G} or {B}.)\nThis land enters tapped.\nWhen this land enters, veilsur 1.\n(Look at a random card in your graveyard. You may put it onto your library.)",
 			"colors": [],
-			"color_identity": [],
-			"color_identity_hybrid": [],
+			"color_identity": [
+				"B",
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				],
+				[
+					"G"
+				]
+			],
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
@@ -749766,6 +750649,9 @@
 			},
 			"creators": [
 				"heehee33"
+			],
+			"artists": [
+				"Sergey Glushakov"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -749779,21 +750665,28 @@
 			"has_default_id": true,
 			"oracle_id": "590bb21b-8498-4229-8904-fc891e742a61",
 			"hcid": "9139",
-			"name": "Charlie",
+			"name": "Charlie // Bite",
 			"set": "HC9_1",
 			"collector_number": "319",
 			"accepted_order": "319",
 			"released_at": "2026-09-20",
-			"layout": "normal",
+			"layout": "inset",
 			"image_status": "highres",
 			"image": "https://storage.googleapis.com/hellscube-images/5417caa1-6eb9-493e-ab1f-d5f2cf38a7e7%20-%20Charlie.png",
-			"mana_cost": "",
-			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
-			"colors": [],
-			"color_identity": [],
-			"color_identity_hybrid": [],
+			"mana_cost": "{G} // {G}",
+			"mana_value": 1,
+			"type_line": "Legendary Creature — Human Child // Instant",
+			"colors": [
+				"G"
+			],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
@@ -749803,10 +750696,68 @@
 			"creators": [
 				"oddvio"
 			],
+			"artists": [
+				"HarryAndCharlie"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"prepare",
+				"inset"
+			],
+			"base_tags": [
+				"prepare",
+				"inset"
+			],
+			"card_faces": [
+				{
+					"object": "card_face",
+					"name": "Charlie",
+					"layout": "normal",
+					"image_status": "front",
+					"mana_cost": "{G}",
+					"mana_value": 1,
+					"supertypes": [
+						"Legendary"
+					],
+					"types": [
+						"Creature"
+					],
+					"subtypes": [
+						"Human",
+						"Child"
+					],
+					"type_line": "Legendary Creature — Human Child",
+					"oracle_text": "Charlie enters prepared.\n{T}, Sacrifice another creature. Add {G}. Charlies becomes prepared.",
+					"power": "1",
+					"toughness": "1",
+					"colors": [
+						"G"
+					],
+					"frame_effects": [
+						"legendary"
+					]
+				},
+				{
+					"object": "card_face",
+					"name": "Bite",
+					"layout": "inset",
+					"image_status": "inset",
+					"mana_cost": "{G}",
+					"mana_value": 1,
+					"types": [
+						"Instant"
+					],
+					"type_line": "Instant",
+					"oracle_text": "Target creature you control deals damage equal to its power to target creature you don't control.",
+					"colors": [
+						"G"
+					],
+					"compress_face": true
+				}
+			]
 		},
 		{
 			"object": "card",
@@ -749825,11 +750776,28 @@
 			"image": "https://storage.googleapis.com/hellscube-images/095f0600-41ff-417c-9486-2f75c7f8873a%20-%20Weighted%20Scale.png",
 			"mana_cost": "",
 			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Plains",
+				"Swamp"
+			],
+			"type_line": "Land — Plains Swamp",
+			"oracle_text": "({T}: Add {W} or {B}.)\nThis land enters tapped.\nUpon this land entering, weigh the worth of the top two cards of your library. The card deemed lesser is damned to exile. (You choose.)",
 			"colors": [],
-			"color_identity": [],
-			"color_identity_hybrid": [],
+			"color_identity": [
+				"W",
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				],
+				[
+					"B"
+				]
+			],
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
@@ -749838,6 +750806,10 @@
 			},
 			"creators": [
 				"heehee33"
+			],
+			"artists": [
+				"Martina Pilcerova",
+				"Dietrich"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -749859,13 +750831,30 @@
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://storage.googleapis.com/hellscube-images/c89b6a86-de36-484b-88f0-7027aed29b97%20-%20The%20Tree%20Falling%20in%20the%20Forest%20That%20Makes%20Sure%20No%20One%20is%20Around%20to%20Hear.png",
-			"mana_cost": "",
-			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
-			"colors": [],
-			"color_identity": [],
-			"color_identity_hybrid": [],
+			"mana_cost": "{1}{G}{G}",
+			"mana_value": 3,
+			"types": [
+				"Creature"
+			],
+			"subtypes": [
+				"Treefolk"
+			],
+			"type_line": "Creature — Treefolk",
+			"oracle_text": "If you control a forest and no witnesses you may cast this spell without paying its mana cost. (A creature is a witness.)\nReach, deathtouch\nThis creature can block any number of creatures.",
+			"flavor_text": "You didn't hear shit.",
+			"power": "1",
+			"toughness": "3",
+			"colors": [
+				"G"
+			],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
@@ -749874,6 +750863,10 @@
 			},
 			"creators": [
 				"swagary"
+			],
+			"artists": [
+				"Igor Krstic",
+				"Loic Canavaggia"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -749895,10 +750888,13 @@
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://storage.googleapis.com/hellscube-images/8226f66d-03dd-457a-b0a5-e8297cbbbe31%20-%20Big%20Ass%20Isochron%20Scepter.png",
-			"mana_cost": "",
-			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
+			"mana_cost": "{6}",
+			"mana_value": 6,
+			"types": [
+				"Artifact"
+			],
+			"type_line": "Artifact",
+			"oracle_text": "*Imprint* — When this artifact enters and at the beginning of your upkeep, you may exile an instant or sorcery card from any non-sideboard zone visible to you. (This includes your hand, any graveyard, the stack, and face-up cards in exile.)\n{T}: You may coppy the exiled cards. If you do, you may cast any number without paying their mana cost.",
 			"colors": [],
 			"color_identity": [],
 			"color_identity_hybrid": [],
@@ -749910,6 +750906,9 @@
 			},
 			"creators": [
 				"doortoboiler"
+			],
+			"artists": [
+				"Chippy"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -749931,13 +750930,30 @@
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://storage.googleapis.com/hellscube-images/08dd5ba4-dd46-412d-af68-c7b8606f19e1%20-%20Young%20Copper%20Dragon.png",
-			"mana_cost": "",
-			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
-			"colors": [],
-			"color_identity": [],
-			"color_identity_hybrid": [],
+			"mana_cost": "{R}",
+			"mana_value": 1,
+			"types": [
+				"Creature"
+			],
+			"subtypes": [
+				"Dragon"
+			],
+			"type_line": "Creature — Dragon",
+			"oracle_text": "Flying\nWhenever this creature deals combat damage to a player, roll a d1, then create a number of Treasure tokens equal to the result. (One Treasure.)",
+			"flavor_text": "Every dragon's hoard starts as a slightly smaller hoard.",
+			"power": "1",
+			"toughness": "1",
+			"colors": [
+				"R"
+			],
+			"color_identity": [
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"R"
+				]
+			],
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
@@ -749947,6 +750963,9 @@
 			"creators": [
 				"jayconian",
 				"flypaper6"
+			],
+			"artists": [
+				"Jayconian"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -749968,13 +750987,25 @@
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://storage.googleapis.com/hellscube-images/11afbe40-5d0d-4a90-9d90-c6dd43e5c3ac%20-%20Imprisoned%20in%20the%20Son.png",
-			"mana_cost": "",
-			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
-			"colors": [],
-			"color_identity": [],
-			"color_identity_hybrid": [],
+			"mana_cost": "{1}{W}",
+			"mana_value": 2,
+			"types": [
+				"Sorcery"
+			],
+			"type_line": "Sorcery",
+			"oracle_text": "Offspring target creature or planeswalker\nOffspringed permanent is exiled until Baby leaves the battlefield. (To offspring, create a 1/1 creature token copy in addition to other types)",
+			"flavor_text": "Only one year old was greate enough to hold Emrakul.",
+			"colors": [
+				"W"
+			],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
@@ -749984,10 +751015,25 @@
 			"creators": [
 				"seabreezedreaming"
 			],
+			"artists": [
+				"Ryan Alexander Lee",
+				"Ksenia Kozlovskaya"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"ransomnote",
+				"ransom-over-real-card"
+			],
+			"tag_notes": {
+				"ransom-over-real-card": "Imprisoned in the Moon"
+			},
+			"base_tags": [
+				"ransomnote",
+				"ransom-over-real-card<Imprisoned in the Moon>"
+			]
 		},
 		{
 			"object": "card",
@@ -750004,13 +751050,36 @@
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://storage.googleapis.com/hellscube-images/b19a2faa-52fb-40b1-902c-6a3cd060383b%20-%20Mega%20Sable%20Eye%20ex.png",
-			"mana_cost": "",
-			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
-			"colors": [],
-			"color_identity": [],
-			"color_identity_hybrid": [],
+			"mana_cost": "{P}{R}",
+			"mana_value": 2,
+			"types": [
+				"Creature"
+			],
+			"subtypes": [
+				"Sable",
+				"Eye"
+			],
+			"type_line": "Creature — Sable Eye",
+			"oracle_text": "*Ability* Shadow, prowess\n(Can't be blocked by or block nonshadow.)\nSpells and abilities you control on the stack are also Treasure tokens on the battlefield.",
+			"flavor_text": "The Champion stood alone between the horde of the scalpers and the shelf of Pokémon packs, cutting down scores among hundreds. She would have been overcome if not for the Sable Eye she Mega Evolved.\nMega Evolution ex rules\nWhen your Mega Evolution Pokémon ex is Knocked Out, your opponent gets fucked lmao.\n(This is flavor text.)",
+			"power": "2",
+			"toughness": "1",
+			"colors": [
+				"P",
+				"R"
+			],
+			"color_identity": [
+				"P",
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"P"
+				],
+				[
+					"R"
+				]
+			],
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
@@ -750020,6 +751089,15 @@
 			"creators": [
 				"flypaper6"
 			],
+			"artists": [
+				"Jasper Sander",
+				"BEMOCS",
+				"Pokémon",
+				"Ken Sugimori"
+			],
+			"artist_notes": {
+				"Ken Sugimori": "not on card"
+			},
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
@@ -750040,10 +751118,16 @@
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://storage.googleapis.com/hellscube-images/adc2e316-5f90-439b-bc7f-d4a224c99432%20-%20Milk%20Stone.png",
-			"mana_cost": "",
-			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
+			"mana_cost": "{1}",
+			"mana_value": 1,
+			"types": [
+				"Artifact"
+			],
+			"subtypes": [
+				"Food"
+			],
+			"type_line": "Artifact — Food",
+			"oracle_text": "Milk Stone enters with two charge cownters on it. (Moo.)\n{T}, Remoove a charge cownter from this artifact: Add {C}{C}.\n{2}, {T}, Snackrifice Milk Stone: Add {Milk} and draw a card. (Milk is every color and can be drank instead of spent to gain 2 life.)",
 			"colors": [],
 			"color_identity": [],
 			"color_identity_hybrid": [],
@@ -750056,6 +751140,10 @@
 			"creators": [
 				"protectedwitness",
 				"infinitespin"
+			],
+			"artists": [
+				"Adam Rex",
+				"Volkan Baga"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -750077,14 +751165,36 @@
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://storage.googleapis.com/hellscube-images/24d0610f-6c1e-412b-910d-b6e71451f151%20-%20Esika_s%20Sick%20Ass%20Hot%20Rod.jpg",
-			"mana_cost": "",
-			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
-			"colors": [],
-			"color_identity": [],
-			"color_identity_hybrid": [],
-			"keywords": [],
+			"mana_cost": "{2}{G}{G}",
+			"mana_value": 4,
+			"supertypes": [
+				"Cool",
+				"Legendary"
+			],
+			"types": [
+				"Artifact"
+			],
+			"subtypes": [
+				"Vehicle"
+			],
+			"type_line": "Cool Legendary Artifact — Vehicle",
+			"oracle_text": "Haste\nWhen this Vehicle enters, create two 2/2 green Cool Cat creature tokens.\nWhenever one or more Cool creatures you control attack, populate. The token enters blitzed and attacking. (Make a copy of a creature token you control. It has haste, dies at end of turn, and draws a card when it dies.)\nCrew 4",
+			"power": "5",
+			"toughness": "3",
+			"colors": [
+				"G"
+			],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
+			"keywords": [
+				"crew"
+			],
 			"legalities": {
 				"standard": "not_legal",
 				"4cb": "not_legal",
@@ -750093,10 +751203,26 @@
 			"creators": [
 				"zachdavis"
 			],
+			"artists": [
+				"Wayne Reynolds"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"frame_effects": [
+				"legendary",
+				"vehicle"
+			],
+			"tags": [
+				"missing-token"
+			],
+			"tag_notes": {
+				"missing-token": "2/2 green Cool Cats"
+			},
+			"base_tags": [
+				"missing-token<2/2 green Cool Cats>"
+			]
 		},
 		{
 			"object": "card",
@@ -750105,21 +751231,36 @@
 			"has_default_id": true,
 			"oracle_id": "f8b2e928-59b8-40b8-9b58-96dd65bc54bb",
 			"hcid": "9148",
-			"name": "Robert Frost",
+			"name": "Robert Frost // Fire // Ice",
 			"set": "HC9_1",
 			"collector_number": "328",
 			"accepted_order": "328",
 			"released_at": "2026-09-20",
-			"layout": "normal",
+			"layout": "inset",
 			"image_status": "highres",
 			"image": "https://storage.googleapis.com/hellscube-images/50662bb6-27d1-4110-959b-801279930e89%20-%20Robert%20Frost.png",
-			"mana_cost": "",
-			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
-			"colors": [],
-			"color_identity": [],
-			"color_identity_hybrid": [],
+			"mana_cost": "{W} // {1}{R} // {1}{U}",
+			"mana_value": 1,
+			"type_line": "Legendary Creature — Human Poet // Instant — Adventure // Instant",
+			"colors": [
+				"W"
+			],
+			"color_identity": [
+				"U",
+				"R",
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				],
+				[
+					"R"
+				],
+				[
+					"W"
+				]
+			],
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
@@ -750129,10 +751270,90 @@
 			"creators": [
 				"leafbladefighter"
 			],
+			"artists": [
+				"Wikipedia"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"prepare",
+				"adventure",
+				"inset"
+			],
+			"base_tags": [
+				"prepare",
+				"adventure",
+				"inset"
+			],
+			"card_faces": [
+				{
+					"object": "card_face",
+					"name": "Robert Frost",
+					"layout": "normal",
+					"image_status": "front",
+					"mana_cost": "{W}",
+					"mana_value": 1,
+					"supertypes": [
+						"Legendary"
+					],
+					"types": [
+						"Creature"
+					],
+					"subtypes": [
+						"Human",
+						"Poet"
+					],
+					"type_line": "Legendary Creature — Human Poet",
+					"oracle_text": "Robert Frost enters prepared. (With Ice.)",
+					"power": "1",
+					"toughness": "2",
+					"colors": [
+						"W"
+					],
+					"frame_effects": [
+						"legendary"
+					]
+				},
+				{
+					"object": "card_face",
+					"name": "Fire",
+					"layout": "inset",
+					"image_status": "inset",
+					"mana_cost": "{1}{R}",
+					"mana_value": 2,
+					"types": [
+						"Instant"
+					],
+					"subtypes": [
+						"Adventure"
+					],
+					"type_line": "Instant — Adventure",
+					"oracle_text": "Fire deals 2 damage divided as you choose among one or two targets.",
+					"colors": [
+						"R"
+					],
+					"compress_face": true
+				},
+				{
+					"object": "card_face",
+					"name": "Ice",
+					"layout": "inset",
+					"image_status": "inset",
+					"mana_cost": "{1}{U}",
+					"mana_value": 2,
+					"types": [
+						"Instant"
+					],
+					"type_line": "Instant",
+					"oracle_text": "Tap target permanent.\nDraw a card.",
+					"colors": [
+						"U"
+					],
+					"compress_face": true
+				}
+			]
 		},
 		{
 			"object": "card",
@@ -750149,10 +751370,19 @@
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://storage.googleapis.com/hellscube-images/112b200b-72c1-4ccd-aee9-5361da072a4e%20-%20Skelion.png",
-			"mana_cost": "",
+			"mana_cost": "{X}",
 			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
+			"types": [
+				"Artifact",
+				"Creature"
+			],
+			"subtypes": [
+				"Skeleton"
+			],
+			"type_line": "Artifact Creature — Skeleton",
+			"oracle_text": "Fear (This creature can't be blocked except by artifact creatures and/or black creatures.)\nskelion enters the battlefield with X +1/+1 counters on it.\nRemove a +1/+1 counter from skelion: It deals 1 damage to target player.",
+			"power": "0",
+			"toughness": "0",
 			"colors": [],
 			"color_identity": [],
 			"color_identity_hybrid": [],
@@ -750165,10 +751395,24 @@
 			"creators": [
 				"mimp"
 			],
+			"artists": [
+				"Christopher Moeller"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"ransomnote",
+				"ransom-over-real-card"
+			],
+			"tag_notes": {
+				"ransom-over-real-card": "Triskelion"
+			},
+			"base_tags": [
+				"ransomnote",
+				"ransom-over-real-card<Triskelion>"
+			]
 		},
 		{
 			"object": "card",
@@ -750185,13 +751429,30 @@
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://storage.googleapis.com/hellscube-images/57eef496-9d17-4a09-873e-fd61e2cb0ac4%20-%20raptor.png",
-			"mana_cost": "",
-			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
-			"colors": [],
-			"color_identity": [],
-			"color_identity_hybrid": [],
+			"mana_cost": "{2}{G}{G}",
+			"mana_value": 4,
+			"types": [
+				"Creature"
+			],
+			"subtypes": [
+				"Dinosaur"
+			],
+			"type_line": "Creature — Dinosaur",
+			"oracle_text": "*rage* — Whenever raptor deal damage, create a token that's a raptor.",
+			"flavor_text": "A\nsingle raptor",
+			"power": "4",
+			"toughness": "4",
+			"colors": [
+				"G"
+			],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
@@ -750201,10 +751462,50 @@
 			"creators": [
 				"nefola"
 			],
+			"artists": [
+				"Mark Behm"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"ransomnote",
+				"ransom-over-real-card"
+			],
+			"tag_notes": {
+				"ransom-over-real-card": "Polyraptor"
+			},
+			"base_tags": [
+				"ransomnote",
+				"ransom-over-real-card<Polyraptor>"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "18f01273-c100-48ef-8528-f912652bbb36",
+					"oracle_id": "f0fe2695-9d90-4e4e-976f-1ad8c716560b",
+					"hcid": "raptor1",
+					"name": "raptor",
+					"set": "HCT",
+					"collector_number": "2209",
+					"image": "https://storage.googleapis.com/hellscube-images/18f01273-c100-48ef-8528-f912652bbb36%20-%20raptor1.png",
+					"type_line": "Raptor",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "57eef496-9d17-4a09-873e-fd61e2cb0ac4",
+					"oracle_id": "b44dc0d9-54a9-446f-9039-af3a45d377cc",
+					"hcid": "9150",
+					"name": "raptor",
+					"set": "HC9_1",
+					"collector_number": "330",
+					"image": "https://storage.googleapis.com/hellscube-images/57eef496-9d17-4a09-873e-fd61e2cb0ac4%20-%20raptor.png",
+					"type_line": "Creature — Dinosaur",
+					"component": "self"
+				}
+			]
 		},
 		{
 			"object": "card",
@@ -750221,13 +751522,25 @@
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://storage.googleapis.com/hellscube-images/e07b789d-7e91-47a2-bb56-34a377549042%20-%20Ignoring%20the%20Fine%20Print%20on%20Your%20Preapproved%20Blood%20Mortgage.png",
-			"mana_cost": "",
-			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
-			"colors": [],
-			"color_identity": [],
-			"color_identity_hybrid": [],
+			"mana_cost": "{3}{B}",
+			"mana_value": 4,
+			"types": [
+				"Instant"
+			],
+			"type_line": "Instant",
+			"oracle_text": "Draw five cards.*\n*You gain \"Cumulative upkeep — Pay 1 life.\"\n(You will be paying this off until you die.)",
+			"flavor_text": "\"They said it was a buyer's market, but it's really a die-er's market, amirite?\"",
+			"colors": [
+				"B"
+			],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
@@ -750236,6 +751549,9 @@
 			},
 			"creators": [
 				"eldoradonights"
+			],
+			"artists": [
+				"Sam White"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -750257,13 +751573,29 @@
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://storage.googleapis.com/hellscube-images/60efa86e-f214-4d0f-8c7a-e031264e6390%20-%20Kozilek_%20seal.png",
-			"mana_cost": "",
-			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
+			"mana_cost": "{3}{U}{U}",
+			"mana_value": 5,
+			"types": [
+				"Creature"
+			],
+			"subtypes": [
+				"Eldrazi",
+				"Seal"
+			],
+			"type_line": "Creature — Eldrazi Seal",
+			"oracle_text": "When you cast this spell, draw three cards.\nMenace Devoid\nDiscard a card with mana value X: Counter target spell with mana value X.",
+			"flavor_text": "A seal as cryptic as seality itself.",
+			"power": "5",
+			"toughness": "5",
 			"colors": [],
-			"color_identity": [],
-			"color_identity_hybrid": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
@@ -750273,10 +751605,24 @@
 			"creators": [
 				"flypaper6"
 			],
+			"artists": [
+				"Raph Lomotan"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"ransomnote",
+				"ransom-over-real-card"
+			],
+			"tag_notes": {
+				"ransom-over-real-card": "Kozilek's Unsealing"
+			},
+			"base_tags": [
+				"ransomnote",
+				"ransom-over-real-card<Kozilek's Unsealing>"
+			]
 		},
 		{
 			"object": "card",
@@ -750295,11 +751641,28 @@
 			"image": "https://storage.googleapis.com/hellscube-images/a650f611-5f0d-404a-ae16-aaf75c6d2ba1%20-%20Parkour%20Civilization.png",
 			"mana_cost": "",
 			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Forest",
+				"Plains"
+			],
+			"type_line": "Land — Forest Plains",
+			"oracle_text": "({T}: Add {G} or {W}.)\nThis land enters tapped.\nWhen this land enters, choose one:\n• *Go for the Chicken* — Create a Food token.\n• *Go for the Beef* — Flip a coin. If you win the flip, create two Food tokens and untap this land.",
 			"colors": [],
-			"color_identity": [],
-			"color_identity_hybrid": [],
+			"color_identity": [
+				"G",
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				],
+				[
+					"W"
+				]
+			],
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
@@ -750309,10 +751672,19 @@
 			"creators": [
 				"juliassicpark"
 			],
+			"artists": [
+				"evbo"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"minecraft"
+			],
+			"base_tags": [
+				"minecraft"
+			]
 		},
 		{
 			"object": "card",
@@ -750331,11 +751703,31 @@
 			"image": "https://storage.googleapis.com/hellscube-images/7fdc2818-15b5-48d4-9165-aada6d356f49%20-%20At%20the%20Mountains%20of%20Madness.png",
 			"mana_cost": "",
 			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
+			"supertypes": [
+				"Snow"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Nebula",
+				"Mountain"
+			],
+			"type_line": "Snow Land — Nebula Mountain",
+			"oracle_text": "({T}: Add {P} or {R}.)\nThis land enters tapped.\nWhen this land enters, you may discard a card. If you do, draw a card.\nMADNESS! {P/R} (Right now! Even if you played a land! It works!)",
 			"colors": [],
-			"color_identity": [],
-			"color_identity_hybrid": [],
+			"color_identity": [
+				"P",
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"P"
+				],
+				[
+					"R"
+				]
+			],
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
@@ -750345,19 +751737,25 @@
 			"creators": [
 				"ravensrun"
 			],
+			"artists": [
+				"H.P. Lovecraft"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"frame_effects": [
+				"snow"
+			]
 		},
 		{
 			"object": "card",
 			"kind": "card",
 			"id": "0fcd36e3-f7e3-429d-abbb-7aaca88c58f8",
 			"has_default_id": true,
-			"oracle_id": "a23d6085-ff29-4c0c-9458-ab8b85426f00",
+			"oracle_id": "f0bb43e3-5b99-452f-a6a4-0f96ac06b324",
 			"hcid": "9155",
-			"name": "(HC9) Guy Who Has Only Seen Dakmor Salvage Before, Looking at the Land Cards in Your Graveyard:",
+			"name": "Guy Who Has Only Seen Dakmor Salvage Before, Looking at the Land Cards in Your Graveyard:",
 			"set": "HCV_9",
 			"collector_number": "145",
 			"accepted_order": "145",
@@ -750365,26 +751763,57 @@
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://storage.googleapis.com/hellscube-images/0fcd36e3-f7e3-429d-abbb-7aaca88c58f8%20-%20_HC9_%20Guy%20Who%20Has%20Only%20Seen%20Dakmor%20Salvage%20Before_%20Looking%20at%20the%20Land%20Cards%20in%20Your%20Graveyard_.png",
-			"mana_cost": "",
-			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
-			"colors": [],
-			"color_identity": [],
-			"color_identity_hybrid": [],
+			"mana_cost": "{B}{G}",
+			"mana_value": 2,
+			"types": [
+				"Creature"
+			],
+			"subtypes": [
+				"Snake",
+				"Intellectual"
+			],
+			"type_line": "Creature — Snake Intellectual",
+			"oracle_text": "Looking at the Land Cards in Your Graveyard:\n\"Getting a lot of Dakmor Salvage vibes from this.\"\n(Land cards in your graveyard are Dakmor Salvage in addition to themselves.)",
+			"power": "1",
+			"toughness": "2",
+			"colors": [
+				"B",
+				"G"
+			],
+			"color_identity": [
+				"B",
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				],
+				[
+					"G"
+				]
+			],
 			"keywords": [],
 			"legalities": {
-				"standard": "not_legal",
-				"4cb": "not_legal",
-				"commander": "not_legal"
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
 			},
 			"creators": [
 				"jayconian"
 			],
+			"artists": [
+				"Jayconian"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"masterpiece"
+			],
+			"base_tags": [
+				"masterpiece"
+			]
 		},
 		{
 			"object": "card",
@@ -750401,10 +751830,20 @@
 			"layout": "normal",
 			"image_status": "highres",
 			"image": "https://storage.googleapis.com/hellscube-images/8d9709b4-08de-47e2-9d1e-3b77b701e8a7%20-%20Scalable.png",
-			"mana_cost": "",
+			"mana_cost": "{X}",
 			"mana_value": 0,
-			"type_line": "",
+			"types": [
+				"Artifact",
+				"Creature"
+			],
+			"subtypes": [
+				"Sable"
+			],
+			"type_line": "Artifact Creature — Sable",
 			"oracle_text": "",
+			"flavor_text": "There's always a bigger sable.",
+			"power": "2X",
+			"toughness": "X",
 			"colors": [],
 			"color_identity": [],
 			"color_identity_hybrid": [],
@@ -750416,6 +751855,9 @@
 			},
 			"creators": [
 				"goem"
+			],
+			"artists": [
+				"Jasper Sandner"
 			],
 			"rulings": "",
 			"finish": "nonfoil",
@@ -750434,17 +751876,35 @@
 			"collector_number": "147",
 			"accepted_order": "147",
 			"released_at": "2026-09-18",
-			"layout": "normal",
+			"layout": "meld_part",
 			"image_status": "highres",
 			"image": "https://storage.googleapis.com/hellscube-images/d5015f46-c974-482f-adab-64048c932c55%20-%20Half%20of%20a%20really%20big%20nebula.png",
 			"mana_cost": "",
 			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
+			"supertypes": [
+				"Legendary"
+			],
+			"types": [
+				"Land"
+			],
+			"subtypes": [
+				"Nebula"
+			],
+			"type_line": "Legendary Land — Nebula",
+			"oracle_text": "Draftpartner with The other half of a really big nebula.\n{T}: Add {P}.\nAt the beginning of your end step, if you own both and control Half of a really big nebula and a land named The other half of a really big nebula, exile them, then meld them into A really big nebula.",
 			"colors": [],
-			"color_identity": [],
-			"color_identity_hybrid": [],
-			"keywords": [],
+			"color_identity": [
+				"P"
+			],
+			"color_identity_hybrid": [
+				[
+					"P"
+				]
+			],
+			"keywords": [
+				"draftpartner",
+				"meld"
+			],
 			"legalities": {
 				"standard": "not_legal",
 				"4cb": "not_legal",
@@ -750456,7 +751916,20 @@
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"frame_effects": [
+				"legendary"
+			],
+			"tags": [
+				"draftpartner",
+				"meld",
+				"needs-to-be-fixed"
+			],
+			"base_tags": [
+				"draftpartner",
+				"meld",
+				"needs-to-be-fixed"
+			]
 		},
 		{
 			"object": "card",
@@ -750465,21 +751938,28 @@
 			"has_default_id": true,
 			"oracle_id": "278b2691-905f-48f5-b0c8-d21f26ea93d3",
 			"hcid": "9158",
-			"name": "Gandalf the Green",
+			"name": "Gandalf the Green // Gandalf's Big Naturalize",
 			"set": "HCV_9",
 			"collector_number": "148",
 			"accepted_order": "148",
 			"released_at": "2026-09-18",
-			"layout": "normal",
+			"layout": "inset",
 			"image_status": "highres",
 			"image": "https://storage.googleapis.com/hellscube-images/9eab84aa-8abd-41f4-b315-37fa8485d36e%20-%20Gandalf%20the%20Green.png",
-			"mana_cost": "",
-			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
-			"colors": [],
-			"color_identity": [],
-			"color_identity_hybrid": [],
+			"mana_cost": "{3}{G} // {1}{G}",
+			"mana_value": 4,
+			"type_line": "Legendary Creature — Avatar Wizard // Instant",
+			"colors": [
+				"G"
+			],
+			"color_identity": [
+				"G"
+			],
+			"color_identity_hybrid": [
+				[
+					"G"
+				]
+			],
 			"keywords": [],
 			"legalities": {
 				"standard": "not_legal",
@@ -750489,10 +751969,68 @@
 			"creators": [
 				"craftycreeper64"
 			],
+			"artists": [
+				"Gay-Pippin"
+			],
 			"rulings": "",
 			"finish": "nonfoil",
 			"border_color": "black",
-			"frame": "2015"
+			"frame": "2015",
+			"tags": [
+				"perpare",
+				"inset"
+			],
+			"base_tags": [
+				"perpare",
+				"inset"
+			],
+			"card_faces": [
+				{
+					"object": "card_face",
+					"name": "Gandalf the Green",
+					"layout": "normal",
+					"image_status": "front",
+					"mana_cost": "{3}{G}",
+					"mana_value": 4,
+					"supertypes": [
+						"Legendary"
+					],
+					"types": [
+						"Creature"
+					],
+					"subtypes": [
+						"Avatar",
+						"Wizard"
+					],
+					"type_line": "Legendary Creature — Avatar Wizard",
+					"oracle_text": "Prowess\nWhen Gandalf attacks, if her power is 4 or greater, she becomes preapred. If her power is 6 or greater, she becomes overprepared instead. (The prepared spell is overloaded.)",
+					"power": "2",
+					"toughness": "4",
+					"colors": [
+						"G"
+					],
+					"frame_effects": [
+						"legendary"
+					]
+				},
+				{
+					"object": "card_face",
+					"name": "Gandalf's Big Naturalize",
+					"layout": "inset",
+					"image_status": "inset",
+					"mana_cost": "{1}{G}",
+					"mana_value": 2,
+					"types": [
+						"Instant"
+					],
+					"type_line": "Instant",
+					"oracle_text": "Destroy target artifact or enchantment.",
+					"colors": [
+						"G"
+					],
+					"compress_face": true
+				}
+			]
 		},
 		{
 			"object": "card",
@@ -750511,8 +752049,11 @@
 			"image": "https://storage.googleapis.com/hellscube-images/a0b84b88-26ad-47a3-abb6-efcae1d84b94%20-%20Fatal%20Passage.png",
 			"mana_cost": "",
 			"mana_value": 0,
-			"type_line": "",
-			"oracle_text": "",
+			"types": [
+				"Land"
+			],
+			"type_line": "Land",
+			"oracle_text": "*Revolt* ",
 			"colors": [],
 			"color_identity": [],
 			"color_identity_hybrid": [],
@@ -750601,6 +752142,705 @@
 			"finish": "nonfoil",
 			"border_color": "black",
 			"frame": "2015"
+		},
+		{
+			"object": "card",
+			"kind": "card",
+			"id": "94ab197b-9811-4390-9aae-53d9d78bedc2",
+			"has_default_id": true,
+			"oracle_id": "98d4bc75-0054-41d6-a4a6-ea9dca8e4e62",
+			"hcid": "9163",
+			"name": "Hidden Temple of Legends",
+			"flavor_name": "The Pharaoh's Tomb!",
+			"set": "SCL.13",
+			"collector_number": "65",
+			"accepted_order": "65",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/94ab197b-9811-4390-9aae-53d9d78bedc2%20-%20The%20Pharaoh_s%20Tomb_.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"types": [
+				"Land"
+			],
+			"type_line": "Land",
+			"oracle_text": "{T}, Pay 1 life: Add {W} or {B}.\nCycling {1}{W/B}\nEternalize {4}{W/B}{W/B}",
+			"colors": [],
+			"color_identity": [
+				"W",
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				],
+				[
+					"B"
+				]
+			],
+			"keywords": [
+				"cycling",
+				"eternalize"
+			],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"oddvio"
+			],
+			"artists": [
+				"The Pharaoh's Tomb!"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"tags": [
+				"masterpiece",
+				"flavor-name"
+			],
+			"base_tags": [
+				"masterpiece",
+				"flavor-name<The Pharaoh's Tomb!>"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "5b0fb55f-9ae7-445b-ada8-a73c168169e9",
+					"oracle_id": "3e7242e8-ad36-437e-b4a5-04c2fb05b503",
+					"hcid": "Hidden Temple of Legends1",
+					"name": "Hidden Temple of Legends",
+					"set": "HCT",
+					"collector_number": "200",
+					"image": "https://lh3.googleusercontent.com/d/17Oq2-yH6ie88pJ-0GId-tM9-E0bcDgG3",
+					"type_line": "Token Creature — Zombie",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "94ab197b-9811-4390-9aae-53d9d78bedc2",
+					"oracle_id": "98d4bc75-0054-41d6-a4a6-ea9dca8e4e62",
+					"hcid": "9163",
+					"name": "Hidden Temple of Legends",
+					"set": "SCL.13",
+					"collector_number": "65",
+					"image": "https://storage.googleapis.com/hellscube-images/94ab197b-9811-4390-9aae-53d9d78bedc2%20-%20The%20Pharaoh_s%20Tomb_.png",
+					"type_line": "Land",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "card",
+			"id": "aaa31917-15a8-44fb-ba63-613606047340",
+			"oracle_id": "e886756a-298d-4f79-8699-8bfc9345352e",
+			"oracle_id_is_scryfall": true,
+			"hcid": "9164",
+			"name": "Barony Vampire",
+			"export_name": "Barony Vampire_",
+			"set": "HCV_SCL",
+			"collector_number": "107",
+			"accepted_order": "107",
+			"released_at": "2026-09-28",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/aaa31917-15a8-44fb-ba63-613606047340%20-%20SCARE-ony%20Vampire%20_Barony%20Vampire_.png",
+			"mana_cost": "{2}{B}",
+			"mana_value": 3,
+			"types": [
+				"Creature"
+			],
+			"subtypes": [
+				"Vampire"
+			],
+			"type_line": "Creature — Vampire",
+			"oracle_text": "",
+			"flavor_text": "Contrary to popular belief, Baron Sengir was only the second most fearsome denizen of Ulgrotha.",
+			"power": "3",
+			"toughness": "2",
+			"colors": [
+				"B"
+			],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"oddvio"
+			],
+			"artists": [
+				"mimp"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"tags": [
+				"real-card",
+				"vanilla",
+				"masterpiece",
+				"card-in-scryfallflavor-name",
+				"realcard"
+			],
+			"tag_notes": {
+				"card-in-scryfallflavor-name": "SCARE-ony Vampire"
+			},
+			"base_tags": [
+				"real-card",
+				"vanilla",
+				"masterpiece",
+				"card-in-scryfallflavor-name<SCARE-ony Vampire>",
+				"realcard"
+			]
+		},
+		{
+			"object": "card",
+			"kind": "card",
+			"id": "4be68485-d8ff-46cb-971d-dbca3b1672a6",
+			"oracle_id": "662755bd-9ee0-4127-8b4e-5760f90fbbca",
+			"hcid": "9165",
+			"name": "Sneaky Scary Spectre",
+			"set": "HCV_SCL",
+			"collector_number": "108",
+			"accepted_order": "108",
+			"released_at": "2026-09-28",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/4be68485-d8ff-46cb-971d-dbca3b1672a6%20-%20Sneaky%20Scary%20Spectre.png",
+			"mana_cost": "{U}",
+			"mana_value": 1,
+			"types": [
+				"Creature"
+			],
+			"subtypes": [
+				"Spirit"
+			],
+			"type_line": "Creature — Spirit",
+			"oracle_text": "Fear, flying, intimidate, menace, shadow, skulk\nHaunt\nReturn Sneaky Scary Spectre to its owner's graveyard from exile: Tap haunted creature.",
+			"power": "1",
+			"toughness": "1",
+			"colors": [
+				"U"
+			],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [
+				"fear",
+				"flying",
+				"intimidate",
+				"menace",
+				"shadow",
+				"skulk",
+				"haunt"
+			],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"pircival"
+			],
+			"artists": [
+				"Erik Nilsson"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"tags": [
+				"masterpiece"
+			],
+			"base_tags": [
+				"masterpiece"
+			]
+		},
+		{
+			"object": "card",
+			"kind": "card",
+			"id": "a00a38e4-f68d-48ac-ac03-88f71a3b040b",
+			"oracle_id": "4af85170-4f19-4a2a-a504-764fc8496baf",
+			"hcid": "9166",
+			"name": "Dackula",
+			"set": "HCV_SCL",
+			"collector_number": "109",
+			"accepted_order": "109",
+			"released_at": "2026-09-28",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/a00a38e4-f68d-48ac-ac03-88f71a3b040b%20-%20Dackula.png",
+			"mana_cost": "{1}{B}{R}",
+			"mana_value": 3,
+			"supertypes": [
+				"Legendary"
+			],
+			"types": [
+				"Kindred",
+				"Planeswalker"
+			],
+			"subtypes": [
+				"Vampire",
+				"Dack"
+			],
+			"type_line": "Legendary Kindred Planeswalker — Vampire Dack",
+			"oracle_text": "+1: Target player draws two cards, then discards two cards.\n-2: Gain control of target creature until end of turn. Untap that creature. It becomes a Vampire and gains haste until end of turn.\nUndying (When Dack dies, if he had no +1/+1 counters on him, return him to the battlefield under his owner's control with a +1/+1 counter on him.)",
+			"loyalty": "3",
+			"colors": [
+				"B",
+				"R"
+			],
+			"color_identity": [
+				"B",
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				],
+				[
+					"R"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"mimp"
+			],
+			"artists": [
+				"Josiah \"Jo\" Cameron"
+			],
+			"artist_notes": {
+				"Josiah \"Jo\" Cameron": "not on card"
+			},
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"tags": [
+				"masterpiece",
+				"movie-poster"
+			],
+			"base_tags": [
+				"masterpiece",
+				"movie-poster"
+			]
+		},
+		{
+			"object": "card",
+			"kind": "card",
+			"id": "f3f62afe-ba66-4c80-9334-b48c0366543c",
+			"oracle_id": "bee27c1c-0494-4167-98ce-5a314c8b2e00",
+			"hcid": "9167",
+			"name": "Spooky Brainstorm",
+			"set": "HCV_SCL",
+			"collector_number": "110",
+			"accepted_order": "110",
+			"released_at": "2026-09-28",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/f3f62afe-ba66-4c80-9334-b48c0366543c%20-%20Spooky%20Brainstorm.png",
+			"mana_cost": "{B}",
+			"mana_value": 1,
+			"types": [
+				"Sorcery"
+			],
+			"type_line": "Sorcery",
+			"oracle_text": "Put 3 cards from your graveyard to your hand, then discard 2 cards.",
+			"flavor_text": "\"I reeled from the blow, and then suddenly, I became a skeleton. Within Moments, victory was mine.\"\n—Gustha Ebbasdotter,\nKjeldoran Royal Skeleton",
+			"colors": [
+				"B"
+			],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "banned",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"mamaclockie"
+			],
+			"artists": [
+				"Christopher Rush",
+				"Jeff A. Menges"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"tags": [
+				"masterpiece"
+			],
+			"base_tags": [
+				"masterpiece"
+			]
+		},
+		{
+			"object": "card",
+			"kind": "card",
+			"id": "5d81f088-9615-45d4-b030-e10683b0f97b",
+			"has_default_id": true,
+			"oracle_id": "08d0937f-4602-4aa3-900f-8e9960e292a0",
+			"hcid": "9168",
+			"name": "Wither Storm",
+			"set": "SCL.13",
+			"collector_number": "66",
+			"accepted_order": "66",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/5d81f088-9615-45d4-b030-e10683b0f97b%20-%20Wither%20Storm.png",
+			"mana_cost": "{1}{B}{B}",
+			"mana_value": 3,
+			"types": [
+				"Creature"
+			],
+			"subtypes": [
+				"Horror"
+			],
+			"type_line": "Creature — Horror",
+			"oracle_text": "Wither\nStorm",
+			"power": "3",
+			"toughness": "3",
+			"colors": [
+				"B"
+			],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [
+				"wither",
+				"storm"
+			],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"jayconian"
+			],
+			"artists": [
+				"dragon62official"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"tags": [
+				"masterpiece"
+			],
+			"base_tags": [
+				"masterpiece"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "f52952bc-d4d4-4cc0-81cb-c7932dfa909a",
+					"oracle_id": "7c3e6783-808d-478e-8571-95eb59bc4bdf",
+					"hcid": "wither storm1",
+					"name": "wither storm",
+					"set": "HCT",
+					"collector_number": "875",
+					"image": "https://lh3.googleusercontent.com/d/1ZDj-OZt_EJjCXRlIxQjMbE5iieppevwd",
+					"type_line": "Token Creature — Horror",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "5d81f088-9615-45d4-b030-e10683b0f97b",
+					"oracle_id": "08d0937f-4602-4aa3-900f-8e9960e292a0",
+					"hcid": "9168",
+					"name": "Wither Storm",
+					"set": "SCL.13",
+					"collector_number": "66",
+					"image": "https://storage.googleapis.com/hellscube-images/5d81f088-9615-45d4-b030-e10683b0f97b%20-%20Wither%20Storm.png",
+					"type_line": "Creature — Horror",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "card",
+			"id": "60cfa744-0a80-46e7-9f4b-f0add9e8109c",
+			"has_default_id": true,
+			"oracle_id": "9f4d4913-e4ab-4b8a-9750-e5e0dc07eb59",
+			"hcid": "9169",
+			"name": "Bone",
+			"set": "SCL.13",
+			"collector_number": "67",
+			"accepted_order": "67",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/60cfa744-0a80-46e7-9f4b-f0add9e8109c%20-%20Bone.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"types": [
+				"Creature"
+			],
+			"type_line": "Creature",
+			"oracle_text": "Plot {W}\nFirst Strike",
+			"flavor_text": "bones fits him better than his skin.",
+			"power": "2",
+			"toughness": "1",
+			"colors": [
+				"W"
+			],
+			"color_indicator": [
+				"W"
+			],
+			"color_identity": [
+				"W"
+			],
+			"color_identity_hybrid": [
+				[
+					"W"
+				]
+			],
+			"keywords": [
+				"plot",
+				"first strike"
+			],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"multiloquent"
+			],
+			"artists": [
+				"Greg Staples"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"tags": [
+				"masterpiece",
+				"ransom-note",
+				"ransom-over-real-card"
+			],
+			"tag_notes": {
+				"ransom-over-real-card": "Surgical Extraction"
+			},
+			"base_tags": [
+				"masterpiece",
+				"ransom-note",
+				"ransom-over-real-card<Surgical Extraction>"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "f07677af-88a4-4ff5-b591-e1e3ac05235d",
+					"oracle_id": "d431678e-003d-4c5d-a605-28600995bbda",
+					"hcid": "Plot1",
+					"name": "Plot",
+					"set": "SFT",
+					"collector_number": "1",
+					"image": "https://cards.scryfall.io/large/front/f/0/f07677af-88a4-4ff5-b591-e1e3ac05235d.jpg",
+					"type_line": "Reminder Card",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "60cfa744-0a80-46e7-9f4b-f0add9e8109c",
+					"oracle_id": "9f4d4913-e4ab-4b8a-9750-e5e0dc07eb59",
+					"hcid": "9169",
+					"name": "Bone",
+					"set": "SCL.13",
+					"collector_number": "67",
+					"image": "https://storage.googleapis.com/hellscube-images/60cfa744-0a80-46e7-9f4b-f0add9e8109c%20-%20Bone.png",
+					"type_line": "Creature",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "card",
+			"id": "a37b0267-9b3e-4253-8531-3b5499897448",
+			"has_default_id": true,
+			"oracle_id": "864ea388-66ef-4c47-a0e2-a0d27250f759",
+			"hcid": "9170",
+			"name": "Literal Brainstorm",
+			"set": "SCL.13",
+			"collector_number": "68",
+			"accepted_order": "68",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/a37b0267-9b3e-4253-8531-3b5499897448%20-%20Literal%20Brainstorm.png",
+			"mana_cost": "{B/R}",
+			"mana_value": 1,
+			"types": [
+				"Instant"
+			],
+			"type_line": "Instant",
+			"oracle_text": "Create a Blood token.\nStorm",
+			"colors": [
+				"B",
+				"R"
+			],
+			"color_identity": [
+				"B",
+				"R"
+			],
+			"color_identity_hybrid": [
+				[
+					"B",
+					"R"
+				]
+			],
+			"keywords": [
+				"storm"
+			],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"eldoradonights"
+			],
+			"artists": [
+				"Kevin Gnutzmans",
+				"Nino Is",
+				"Mark Tedin",
+				"Simon Dominic",
+				"Alex Horley-Orlandelli"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"tags": [
+				"masterpiece"
+			],
+			"base_tags": [
+				"masterpiece"
+			],
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "2ff0c570-f4d5-432b-8fb9-091db99561e9",
+					"oracle_id": "03f45075-9423-454f-a256-94dcafb2a779",
+					"hcid": "Blood2",
+					"name": "Blood",
+					"set": "HCT",
+					"collector_number": "805",
+					"image": "https://lh3.googleusercontent.com/d/1Qm8YFWtMr7qFBzQC7-SHvAskn7Gyh1lR",
+					"type_line": "Token Artifact — Blood",
+					"component": "token"
+				},
+				{
+					"object": "related_card",
+					"id": "a37b0267-9b3e-4253-8531-3b5499897448",
+					"oracle_id": "864ea388-66ef-4c47-a0e2-a0d27250f759",
+					"hcid": "9170",
+					"name": "Literal Brainstorm",
+					"set": "SCL.13",
+					"collector_number": "68",
+					"image": "https://storage.googleapis.com/hellscube-images/a37b0267-9b3e-4253-8531-3b5499897448%20-%20Literal%20Brainstorm.png",
+					"type_line": "Instant",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "card",
+			"id": "48567839-f377-4b5b-9580-5a9553849ae5",
+			"has_default_id": true,
+			"oracle_id": "4d79fb79-cbd6-41b8-be58-61b4b63260d7",
+			"hcid": "9171",
+			"name": "Really Scary Monster",
+			"set": "SCL.13",
+			"collector_number": "69",
+			"accepted_order": "69",
+			"layout": "normal",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/48567839-f377-4b5b-9580-5a9553849ae5%20-%20Really%20Scary%20Monster.png",
+			"mana_cost": "{5}{B}{B}",
+			"mana_value": 7,
+			"types": [
+				"Creature"
+			],
+			"subtypes": [
+				"Horror",
+				"Nightmare"
+			],
+			"type_line": "Creature — Horror Nightmare",
+			"oracle_text": "*Count 'em* — This spell costs {1} less to cast for each different kind of counter among permanents you control.\nWhen Really Scary Monster enters the battlefield, distribute a fear counter, an intimidate counter, and a menace counter among any number of target creatures.",
+			"power": "4",
+			"toughness": "4",
+			"colors": [
+				"B"
+			],
+			"color_identity": [
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"B"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "legal",
+				"4cb": "legal",
+				"commander": "legal"
+			},
+			"creators": [
+				"oddvio"
+			],
+			"artists": [
+				"Oddvio"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "2015",
+			"tags": [
+				"masterpiece"
+			],
+			"base_tags": [
+				"masterpiece"
+			]
 		},
 		{
 			"object": "card",
@@ -802441,13 +804681,13 @@
 			"all_parts": [
 				{
 					"object": "related_card",
-					"id": "82f90d57-15b3-4964-ba06-6ea674cefff0",
+					"id": "94ab197b-9811-4390-9aae-53d9d78bedc2",
 					"oracle_id": "98d4bc75-0054-41d6-a4a6-ea9dca8e4e62",
-					"hcid": "721",
+					"hcid": "9163",
 					"name": "Hidden Temple of Legends",
-					"set": "HC2_0",
-					"collector_number": "694",
-					"image": "https://lh3.googleusercontent.com/d/1ZgwcztgJSjbs8gi-pa-hoBUqfa95-Csu",
+					"set": "SCL.13",
+					"collector_number": "65",
+					"image": "https://storage.googleapis.com/hellscube-images/94ab197b-9811-4390-9aae-53d9d78bedc2%20-%20The%20Pharaoh_s%20Tomb_.png",
 					"type_line": "Land",
 					"component": "token_maker"
 				},
@@ -846505,18 +848745,6 @@
 					"collector_number": "251",
 					"image": "https://lh3.googleusercontent.com/d/1NfHMGCPBZut62lXTa-XmvtcLL25x0_Mq",
 					"type_line": "Instant",
-					"component": "token_maker"
-				},
-				{
-					"object": "related_card",
-					"id": "ffbc94db-645e-4add-b848-b9a226d12075",
-					"oracle_id": "6b73509d-50b6-42d2-8ba9-334dd7c181ff",
-					"hcid": "5970",
-					"name": "Innocuous Woods (Don't Mind the Tree with an Axe)",
-					"set": "HCJ",
-					"collector_number": "285",
-					"image": "https://lh3.googleusercontent.com/d/1P02hQSh0BRCYZDOwmyrq45e4lQpB6rKF",
-					"type_line": "Land — Forest",
 					"component": "token_maker"
 				},
 				{
@@ -916883,13 +919111,13 @@
 				},
 				{
 					"object": "related_card",
-					"id": "933b1489-781b-47c4-90f0-08dfbfccebd5",
+					"id": "a37b0267-9b3e-4253-8531-3b5499897448",
 					"oracle_id": "864ea388-66ef-4c47-a0e2-a0d27250f759",
-					"hcid": "1494",
+					"hcid": "9170",
 					"name": "Literal Brainstorm",
-					"set": "HC3_0",
-					"collector_number": "541",
-					"image": "https://lh3.googleusercontent.com/d/14o-l_de-nQuBMbrGKq_AgE3DxpzUecLz",
+					"set": "SCL.13",
+					"collector_number": "68",
+					"image": "https://storage.googleapis.com/hellscube-images/a37b0267-9b3e-4253-8531-3b5499897448%20-%20Literal%20Brainstorm.png",
 					"type_line": "Instant",
 					"component": "token_maker"
 				},
@@ -932917,13 +935145,13 @@
 			"all_parts": [
 				{
 					"object": "related_card",
-					"id": "fe1294ec-1a83-4f63-b175-f9cc0796925e",
+					"id": "5d81f088-9615-45d4-b030-e10683b0f97b",
 					"oracle_id": "08d0937f-4602-4aa3-900f-8e9960e292a0",
-					"hcid": "3622",
-					"name": "wither storm",
-					"set": "HC6_1",
-					"collector_number": "313",
-					"image": "https://lh3.googleusercontent.com/d/1yF7tl9bWh36dHR5hfRDOp9Hn8D1sZJB5",
+					"hcid": "9168",
+					"name": "Wither Storm",
+					"set": "SCL.13",
+					"collector_number": "66",
+					"image": "https://storage.googleapis.com/hellscube-images/5d81f088-9615-45d4-b030-e10683b0f97b%20-%20Wither%20Storm.png",
 					"type_line": "Creature — Horror",
 					"component": "token_maker"
 				},
@@ -1073466,92 +1075694,6 @@
 		{
 			"object": "card",
 			"kind": "token",
-			"id": "18f01273-c100-48ef-8528-f912652bbb36",
-			"oracle_id": "84647654-8e5a-41f2-aa45-e0e663c5820b",
-			"hcid": "Raptor1",
-			"name": "Raptor",
-			"export_name": "Raptor Token",
-			"set": "HCT",
-			"collector_number": "1663",
-			"accepted_order": "1663",
-			"released_at": "2026-05-03",
-			"layout": "token",
-			"image_status": "highres",
-			"image": "https://lh3.googleusercontent.com/d/1xuUy4AvdhTOPligSDmUNcQK3R7EcDTqc",
-			"mana_cost": "",
-			"mana_value": 0,
-			"supertypes": [
-				"Token"
-			],
-			"types": [
-				"Creature"
-			],
-			"subtypes": [
-				"Raptor"
-			],
-			"type_line": "Token Creature — Raptor",
-			"oracle_text": "Double strike",
-			"power": "3",
-			"toughness": "3",
-			"colors": [
-				"R"
-			],
-			"color_identity": [],
-			"color_identity_hybrid": [],
-			"keywords": [],
-			"legalities": {
-				"standard": "not_legal",
-				"4cb": "not_legal",
-				"commander": "not_legal"
-			},
-			"creators": [
-				"doomclaw9"
-			],
-			"rulings": "",
-			"finish": "nonfoil",
-			"border_color": "black",
-			"frame": "token_2020",
-			"frame_effects": [
-				"fullart"
-			],
-			"tags": [
-				"ransomnote",
-				"full-art"
-			],
-			"base_tags": [
-				"ransomnote",
-				"full-art"
-			],
-			"all_parts": [
-				{
-					"object": "related_card",
-					"id": "0959e8b3-404e-4bbb-b69e-b83d6bde3127",
-					"oracle_id": "13780506-428a-4dce-9965-7287337e52ec",
-					"hcid": "2478",
-					"name": "Timmy's Revenge Fantasy",
-					"set": "HC4_0",
-					"collector_number": "391",
-					"image": "https://lh3.googleusercontent.com/d/1TJHf408ojWWHphyCRhDShMBSBt9RGRed",
-					"type_line": "Sorcery",
-					"component": "token_maker"
-				},
-				{
-					"object": "related_card",
-					"id": "18f01273-c100-48ef-8528-f912652bbb36",
-					"oracle_id": "84647654-8e5a-41f2-aa45-e0e663c5820b",
-					"hcid": "Raptor1",
-					"name": "Raptor",
-					"set": "HCT",
-					"collector_number": "1663",
-					"image": "https://lh3.googleusercontent.com/d/1xuUy4AvdhTOPligSDmUNcQK3R7EcDTqc",
-					"type_line": "Token Creature — Raptor",
-					"component": "self"
-				}
-			]
-		},
-		{
-			"object": "card",
-			"kind": "token",
 			"id": "dccd6a2d-e499-4b34-8201-f4e752c98834",
 			"oracle_id": "fae032c0-b70a-4e8a-833b-241d8967dcb4",
 			"hcid": "Sparkle2",
@@ -1126713,11 +1128855,99 @@
 		{
 			"object": "card",
 			"kind": "token",
+			"id": "0e3aedae-e4bb-48e3-9f8b-bea0430df306",
+			"has_default_id": true,
+			"oracle_id": "f255492e-4e12-48b4-9c19-8a2a2780a1b7",
+			"hcid": "Sneaky Snacker1",
+			"name": "Sneaky Snacker",
+			"export_name": "Sneaky Snacker_",
+			"set": "HCT",
+			"collector_number": "2162",
+			"accepted_order": "2162",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/0e3aedae-e4bb-48e3-9f8b-bea0430df306%20-%20Sneaky%20Snacker1.png",
+			"mana_cost": "{U}{B}",
+			"mana_value": 2,
+			"types": [
+				"Creature"
+			],
+			"subtypes": [
+				"Faerie",
+				"Rogue"
+			],
+			"type_line": "Creature — Faerie Rogue",
+			"oracle_text": "Flying\nWhen you draw your third card in a turn, return this card from your graveyard to the battlefield tapped.",
+			"flavor_text": "Though the High Fae gave explicit instructions not to tarry, she stayed in Sweettooth Village for seconds, thirds, and then dessert.",
+			"power": "2",
+			"toughness": "1",
+			"colors": [
+				"U",
+				"B"
+			],
+			"color_identity": [
+				"U",
+				"B"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				],
+				[
+					"B"
+				]
+			],
+			"keywords": [
+				"flying"
+			],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"genericplayer_"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "5470dca7-bb62-4bf8-a156-4dddcea3b431",
+					"oracle_id": "70ca7dc4-f3d9-4918-bc86-e5d86d03cd0c",
+					"hcid": "8899",
+					"name": "Introduction to Pauper",
+					"set": "HC9_1",
+					"collector_number": "179",
+					"image": "https://storage.googleapis.com/hellscube-images/5470dca7-bb62-4bf8-a156-4dddcea3b431%20-%20Introduction%20to%20Pauper.png",
+					"type_line": "Conspiracy",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "0e3aedae-e4bb-48e3-9f8b-bea0430df306",
+					"oracle_id": "f255492e-4e12-48b4-9c19-8a2a2780a1b7",
+					"hcid": "Sneaky Snacker1",
+					"name": "Sneaky Snacker",
+					"set": "HCT",
+					"collector_number": "2162",
+					"image": "https://storage.googleapis.com/hellscube-images/0e3aedae-e4bb-48e3-9f8b-bea0430df306%20-%20Sneaky%20Snacker1.png",
+					"type_line": "Creature — Faerie Rogue",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
 			"id": "d2e0b2a2-d0e1-4a49-9f48-0a922b6f64b8",
 			"oracle_id": "42261437-8790-4f90-ace9-b8b5ecf2dd06",
 			"hcid": "Lush Oasis3",
 			"name": "Lush Oasis",
-			"export_name": "Lush Oasis__",
+			"export_name": "Lush Oasis Token",
 			"set": "HCT",
 			"collector_number": "2163",
 			"accepted_order": "2163",
@@ -1126727,11 +1128957,17 @@
 			"image": "https://storage.googleapis.com/hellscube-images/d2e0b2a2-d0e1-4a49-9f48-0a922b6f64b8%20-%20Lush%20Oasis3.png",
 			"mana_cost": "",
 			"mana_value": 0,
+			"supertypes": [
+				"Token"
+			],
+			"types": [
+				"Land"
+			],
 			"subtypes": [
 				"Lush",
 				"Oasis"
 			],
-			"type_line": "Lush Oasis",
+			"type_line": "Token Land — Lush Oasis",
 			"oracle_text": "",
 			"colors": [],
 			"color_identity": [
@@ -1126777,7 +1129013,7 @@
 					"set": "HCT",
 					"collector_number": "2163",
 					"image": "https://storage.googleapis.com/hellscube-images/d2e0b2a2-d0e1-4a49-9f48-0a922b6f64b8%20-%20Lush%20Oasis3.png",
-					"type_line": "Lush Oasis",
+					"type_line": "Token Land — Lush Oasis",
 					"component": "self"
 				}
 			]
@@ -1126799,12 +1129035,15 @@
 			"image": "https://storage.googleapis.com/hellscube-images/36625f82-8d2e-49c7-8d38-271ee330cfcd%20-%20Everywhere%20Reminder%20Card1.png",
 			"mana_cost": "",
 			"mana_value": 0,
+			"types": [
+				"Land"
+			],
 			"subtypes": [
 				"Everywhere",
 				"Reminder",
 				"Card"
 			],
-			"type_line": "Everywhere Reminder Card",
+			"type_line": "Land — Everywhere Reminder Card",
 			"oracle_text": "",
 			"colors": [],
 			"color_identity": [],
@@ -1126844,7 +1129083,7 @@
 					"set": "HCT",
 					"collector_number": "2164",
 					"image": "https://storage.googleapis.com/hellscube-images/36625f82-8d2e-49c7-8d38-271ee330cfcd%20-%20Everywhere%20Reminder%20Card1.png",
-					"type_line": "Everywhere Reminder Card",
+					"type_line": "Land — Everywhere Reminder Card",
 					"component": "self"
 				}
 			]
@@ -1126856,7 +1129095,7 @@
 			"oracle_id": "1d4466ce-e59b-457b-82ae-69033f0f13c9",
 			"hcid": "Desert4",
 			"name": "Desert",
-			"export_name": "Desert__",
+			"export_name": "Desert Token_",
 			"set": "HCT",
 			"collector_number": "2165",
 			"accepted_order": "2165",
@@ -1126866,10 +1129105,16 @@
 			"image": "https://storage.googleapis.com/hellscube-images/2345a3fb-2e2e-4994-8c8d-a7747d81bd85%20-%20Desert4.png",
 			"mana_cost": "",
 			"mana_value": 0,
+			"supertypes": [
+				"Token"
+			],
+			"types": [
+				"Land"
+			],
 			"subtypes": [
 				"Desert"
 			],
-			"type_line": "Desert",
+			"type_line": "Token Land — Desert",
 			"oracle_text": "",
 			"colors": [],
 			"color_identity": [],
@@ -1126909,7 +1129154,7 @@
 					"set": "HCT",
 					"collector_number": "2165",
 					"image": "https://storage.googleapis.com/hellscube-images/2345a3fb-2e2e-4994-8c8d-a7747d81bd85%20-%20Desert4.png",
-					"type_line": "Desert",
+					"type_line": "Token Land — Desert",
 					"component": "self"
 				}
 			]
@@ -1128325,6 +1130570,2414 @@
 					"collector_number": "2183",
 					"image": "https://storage.googleapis.com/hellscube-images/3c60e3eb-3ae2-4c03-9a70-cfe33e4b13a0%20-%20Updog1.png",
 					"type_line": "Updog",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "458f8749-3164-4b38-8189-d77473f785f6",
+			"has_default_id": true,
+			"oracle_id": "1f917c15-1955-47c0-954d-053f25e578a4",
+			"hcid": "Ducky Offspring1",
+			"name": "Ducky Offspring",
+			"set": "HCT",
+			"collector_number": "2184",
+			"accepted_order": "2184",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/458f8749-3164-4b38-8189-d77473f785f6%20-%20Ducky%20Offspring1.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Ducky",
+				"Offspring"
+			],
+			"type_line": "Ducky Offspring",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"mimp"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "5c123310-1e95-4558-b81b-382120c3c2f9",
+					"oracle_id": "d3b9ef76-6fed-4332-a523-64845dee90eb",
+					"hcid": "8930",
+					"name": "Ducky",
+					"set": "HC9_1",
+					"collector_number": "210",
+					"image": "https://storage.googleapis.com/hellscube-images/5c123310-1e95-4558-b81b-382120c3c2f9%20-%20Ducky.png",
+					"type_line": "Creature — Duck",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "458f8749-3164-4b38-8189-d77473f785f6",
+					"oracle_id": "1f917c15-1955-47c0-954d-053f25e578a4",
+					"hcid": "Ducky Offspring1",
+					"name": "Ducky Offspring",
+					"set": "HCT",
+					"collector_number": "2184",
+					"image": "https://storage.googleapis.com/hellscube-images/458f8749-3164-4b38-8189-d77473f785f6%20-%20Ducky%20Offspring1.png",
+					"type_line": "Ducky Offspring",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "a55f005f-e345-4a3e-98cc-634f06c20326",
+			"has_default_id": true,
+			"oracle_id": "d57d9f6e-4ea8-4ec7-9a9b-4fcd969a131b",
+			"hcid": "Rainbow1",
+			"name": "Rainbow",
+			"set": "HCT",
+			"collector_number": "2185",
+			"accepted_order": "2185",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/a55f005f-e345-4a3e-98cc-634f06c20326%20-%20Rainbow1.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Rainbow"
+			],
+			"type_line": "Rainbow",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"sinergy_pilled"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "93053978-c9c0-4646-ba07-47677dca3908",
+					"oracle_id": "240e43c5-99aa-4242-b94b-034cfcf0604f",
+					"hcid": "183",
+					"name": "Wild Magic Surge <HC>",
+					"set": "HLC_0",
+					"collector_number": "403",
+					"image": "https://lh3.googleusercontent.com/d/1V9QaFNbaFlqEcvuJxe4riKSy91_Dp4E3",
+					"type_line": "Instant",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "a55f005f-e345-4a3e-98cc-634f06c20326",
+					"oracle_id": "d57d9f6e-4ea8-4ec7-9a9b-4fcd969a131b",
+					"hcid": "Rainbow1",
+					"name": "Rainbow",
+					"set": "HCT",
+					"collector_number": "2185",
+					"image": "https://storage.googleapis.com/hellscube-images/a55f005f-e345-4a3e-98cc-634f06c20326%20-%20Rainbow1.png",
+					"type_line": "Rainbow",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "0e11a887-044a-4d2c-b313-cf42c6e53711",
+			"has_default_id": true,
+			"oracle_id": "b2e35abc-069c-438b-a978-129023205328",
+			"hcid": "Blood Pet1",
+			"name": "Blood Pet",
+			"export_name": "Blood Pet_",
+			"set": "HCT",
+			"collector_number": "2186",
+			"accepted_order": "2186",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/0e11a887-044a-4d2c-b313-cf42c6e53711%20-%20Blood%20Pet1.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Blood",
+				"Pet"
+			],
+			"type_line": "Blood Pet",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"somejname"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "25db7542-ef4d-433e-b968-adb499fddc8a",
+					"oracle_id": "ff685807-276e-4243-9887-0bc737e6f14b",
+					"hcid": "8677",
+					"name": "BLOOD PETCO",
+					"set": "HC9_1",
+					"collector_number": "20",
+					"image": "https://storage.googleapis.com/hellscube-images/25db7542-ef4d-433e-b968-adb499fddc8a%20-%20BLOOD%20PETCO.png",
+					"type_line": "Enchantment",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "0e11a887-044a-4d2c-b313-cf42c6e53711",
+					"oracle_id": "b2e35abc-069c-438b-a978-129023205328",
+					"hcid": "Blood Pet1",
+					"name": "Blood Pet",
+					"set": "HCT",
+					"collector_number": "2186",
+					"image": "https://storage.googleapis.com/hellscube-images/0e11a887-044a-4d2c-b313-cf42c6e53711%20-%20Blood%20Pet1.png",
+					"type_line": "Blood Pet",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "f1721d2e-bcac-46b2-9e30-3b31f91242bc",
+			"has_default_id": true,
+			"oracle_id": "e3c2fad4-1e45-44f0-aed3-90886c7c77c6",
+			"hcid": "Canary1",
+			"name": "Canary",
+			"set": "HCT",
+			"collector_number": "2187",
+			"accepted_order": "2187",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/f1721d2e-bcac-46b2-9e30-3b31f91242bc%20-%20Canary1.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Canary"
+			],
+			"type_line": "Canary",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"somejname"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "e43fcc5c-a2d6-4ac9-88b3-ee06292e4cd7",
+					"oracle_id": "eef28750-ca7e-4232-8976-6aca21ea1015",
+					"hcid": "8683",
+					"name": "Coalstone Caverns",
+					"set": "HC9_1",
+					"collector_number": "26",
+					"image": "https://storage.googleapis.com/hellscube-images/e43fcc5c-a2d6-4ac9-88b3-ee06292e4cd7%20-%20Coalstone%20Caverns.png",
+					"type_line": "Basic Land — Cave Mine",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "f1721d2e-bcac-46b2-9e30-3b31f91242bc",
+					"oracle_id": "e3c2fad4-1e45-44f0-aed3-90886c7c77c6",
+					"hcid": "Canary1",
+					"name": "Canary",
+					"set": "HCT",
+					"collector_number": "2187",
+					"image": "https://storage.googleapis.com/hellscube-images/f1721d2e-bcac-46b2-9e30-3b31f91242bc%20-%20Canary1.png",
+					"type_line": "Canary",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "b5257ba5-d592-43d0-a2fb-5dc5d6459ada",
+			"oracle_id": "4b01cb6e-a531-41c0-ae56-2ff8cce7036c",
+			"hcid": "Island 1",
+			"name": "Island ",
+			"set": "HCT",
+			"collector_number": "2188",
+			"accepted_order": "2188",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/b5257ba5-d592-43d0-a2fb-5dc5d6459ada%20-%20Island%201.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Island",
+				""
+			],
+			"type_line": "Island ",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [
+				"U"
+			],
+			"color_identity_hybrid": [
+				[
+					"U"
+				]
+			],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"somejname"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "fab54081-5292-4201-891b-dda0c763885d",
+					"oracle_id": "6afe28f7-153f-47f2-9dca-a56f2f942a60",
+					"hcid": "8927",
+					"name": "Bongus GreenWhite Does Your Bottom Surgery",
+					"set": "HC9_1",
+					"collector_number": "207",
+					"image": "https://storage.googleapis.com/hellscube-images/fab54081-5292-4201-891b-dda0c763885d%20-%20Bongus%20Greenwhite%20Does%20Your%20Bottom%20Surgery.png",
+					"type_line": "Instant",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "b5257ba5-d592-43d0-a2fb-5dc5d6459ada",
+					"oracle_id": "4b01cb6e-a531-41c0-ae56-2ff8cce7036c",
+					"hcid": "Island 1",
+					"name": "Island ",
+					"set": "HCT",
+					"collector_number": "2188",
+					"image": "https://storage.googleapis.com/hellscube-images/b5257ba5-d592-43d0-a2fb-5dc5d6459ada%20-%20Island%201.png",
+					"type_line": "Island ",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "b0c82a48-425a-4bad-9d2f-d2e3b715ad7c",
+			"has_default_id": true,
+			"oracle_id": "5c9d7c81-1cc5-4c24-815c-b440c71f8431",
+			"hcid": "Bureaucrat token1",
+			"name": "Bureaucrat token",
+			"set": "HCT",
+			"collector_number": "2189",
+			"accepted_order": "2189",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/b0c82a48-425a-4bad-9d2f-d2e3b715ad7c%20-%20Bureaucrat%20token1.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Bureaucrat",
+				"token"
+			],
+			"type_line": "Bureaucrat token",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"somejname"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "7bc7b10f-9134-4e8e-b223-73414cbfd4ab",
+					"oracle_id": "2c4f564d-6f16-47bd-a63c-08f67b300839",
+					"hcid": "5179",
+					"name": "Passed the Civil Service Exam",
+					"set": "HCK",
+					"collector_number": "33",
+					"image": "https://lh3.googleusercontent.com/d/1raC49VziCVMU7YFtxEoZ9UKTKI1eTZYd",
+					"type_line": "Sorcery",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "b0c82a48-425a-4bad-9d2f-d2e3b715ad7c",
+					"oracle_id": "5c9d7c81-1cc5-4c24-815c-b440c71f8431",
+					"hcid": "Bureaucrat token1",
+					"name": "Bureaucrat token",
+					"set": "HCT",
+					"collector_number": "2189",
+					"image": "https://storage.googleapis.com/hellscube-images/b0c82a48-425a-4bad-9d2f-d2e3b715ad7c%20-%20Bureaucrat%20token1.png",
+					"type_line": "Bureaucrat token",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "6b11a683-31d4-4cab-8086-03aa2464c16a",
+			"oracle_id": "a1de0541-d85e-431b-88c4-db8eb108b143",
+			"hcid": "Bird14",
+			"name": "Bird",
+			"set": "HCT",
+			"collector_number": "2190",
+			"accepted_order": "2190",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/6b11a683-31d4-4cab-8086-03aa2464c16a%20-%20Bird14.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Bird"
+			],
+			"type_line": "Bird",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"JamDonut"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "6dc93b6b-7041-4033-9e9a-ec89e9703901",
+					"oracle_id": "1803d4fc-03e0-4f93-8c80-b1e9f9232796",
+					"hcid": "5185",
+					"name": "General Tso",
+					"set": "HCK",
+					"collector_number": "23",
+					"image": "https://lh3.googleusercontent.com/d/1l9Dc_-tnfFg96IGpdaycLeiX19nQaSYQ",
+					"type_line": "Legendary Creature",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "6b11a683-31d4-4cab-8086-03aa2464c16a",
+					"oracle_id": "a1de0541-d85e-431b-88c4-db8eb108b143",
+					"hcid": "Bird14",
+					"name": "Bird",
+					"set": "HCT",
+					"collector_number": "2190",
+					"image": "https://storage.googleapis.com/hellscube-images/6b11a683-31d4-4cab-8086-03aa2464c16a%20-%20Bird14.png",
+					"type_line": "Bird",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "eb2d115f-c05d-4073-a4e9-e7464b9ae64b",
+			"oracle_id": "741b9f0d-8c0d-4865-b177-fb64b687ad11",
+			"hcid": "Faerie Rogue1",
+			"name": "Faerie Rogue",
+			"set": "HCT",
+			"collector_number": "2191",
+			"accepted_order": "2191",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/eb2d115f-c05d-4073-a4e9-e7464b9ae64b%20-%20Faerie%20Rogue1.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Faerie",
+				"Rogue"
+			],
+			"type_line": "Faerie Rogue",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [
+				"flying"
+			],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"JamDonut"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "b360a7bf-551e-42bc-8115-14bfac126373",
+					"oracle_id": "eac26759-830f-4b06-86bb-ec69b613edb1",
+					"hcid": "5075",
+					"name": "Bitter",
+					"set": "HCK",
+					"collector_number": "95",
+					"image": "https://lh3.googleusercontent.com/d/1P9E-XMIFFFvPINwtNq5jfP_RhiXXcB3F",
+					"type_line": "Kindred Sorcery — Faerie",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "80f88df1-4e1a-4557-bb7a-1ac86641043e",
+					"oracle_id": "fb868840-09fa-49b1-85cb-b08ad065e972",
+					"hcid": "4536",
+					"name": "Bitterblossom",
+					"set": "NRM",
+					"collector_number": "326",
+					"image": "https://storage.googleapis.com/hellscube-images/4536.jpg",
+					"type_line": "Kindred Enchantment — Faerie",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "eb2d115f-c05d-4073-a4e9-e7464b9ae64b",
+					"oracle_id": "741b9f0d-8c0d-4865-b177-fb64b687ad11",
+					"hcid": "Faerie Rogue1",
+					"name": "Faerie Rogue",
+					"set": "HCT",
+					"collector_number": "2191",
+					"image": "https://storage.googleapis.com/hellscube-images/eb2d115f-c05d-4073-a4e9-e7464b9ae64b%20-%20Faerie%20Rogue1.png",
+					"type_line": "Faerie Rogue",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "d56eec09-62cb-4586-9be3-f95c7733179b",
+			"oracle_id": "bc948e19-816b-4c13-a36b-73b3e0472dca",
+			"hcid": "Sparring Construct1",
+			"name": "Sparring Construct",
+			"export_name": "Sparring Construct_",
+			"set": "HCT",
+			"collector_number": "2192",
+			"accepted_order": "2192",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/d56eec09-62cb-4586-9be3-f95c7733179b%20-%20Sparring%20Construct1.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Sparring",
+				"Construct"
+			],
+			"type_line": "Sparring Construct",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"BaconBasedGod"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "97cf0d35-7591-4607-ba4d-37035d1adca8",
+					"oracle_id": "b7e7b84a-06b8-4357-aab1-95e44beb1005",
+					"hcid": "7615",
+					"name": "MMO Aspirant",
+					"set": "HC9_0",
+					"collector_number": "196",
+					"image": "https://lh3.googleusercontent.com/d/1QQ3WmTQswH6XWyz5KuHWSQb2zxqfWN7S",
+					"type_line": "Creature — Human Priest // Token Artifact Creature — Construct",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "d56eec09-62cb-4586-9be3-f95c7733179b",
+					"oracle_id": "bc948e19-816b-4c13-a36b-73b3e0472dca",
+					"hcid": "Sparring Construct1",
+					"name": "Sparring Construct",
+					"set": "HCT",
+					"collector_number": "2192",
+					"image": "https://storage.googleapis.com/hellscube-images/d56eec09-62cb-4586-9be3-f95c7733179b%20-%20Sparring%20Construct1.png",
+					"type_line": "Sparring Construct",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "9004f2fb-fbdd-4068-9539-47dcf97803b7",
+			"has_default_id": true,
+			"oracle_id": "6696a41d-b175-42c8-a58c-1ed58caca7ff",
+			"hcid": "Curiousity1",
+			"name": "Curiousity",
+			"set": "HCT",
+			"collector_number": "2193",
+			"accepted_order": "2193",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/9004f2fb-fbdd-4068-9539-47dcf97803b7%20-%20Curiousity1.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Curiousity"
+			],
+			"type_line": "Curiousity",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"BaconBasedGod"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "0c0d8dc4-01cf-4ad8-8d03-770ab97d06ee",
+					"oracle_id": "97a6d94b-0c1e-4886-8d56-a692a53a3cca",
+					"hcid": "7629",
+					"name": "George, PhD // Curiosity",
+					"set": "HC9_0",
+					"collector_number": "211",
+					"image": "https://lh3.googleusercontent.com/d/1AcETr2-5A4CQSw-tAU5hupAX54JGswCk",
+					"type_line": "Legendary Creature — Monkey // Enchantment — Aura",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "9004f2fb-fbdd-4068-9539-47dcf97803b7",
+					"oracle_id": "6696a41d-b175-42c8-a58c-1ed58caca7ff",
+					"hcid": "Curiousity1",
+					"name": "Curiousity",
+					"set": "HCT",
+					"collector_number": "2193",
+					"image": "https://storage.googleapis.com/hellscube-images/9004f2fb-fbdd-4068-9539-47dcf97803b7%20-%20Curiousity1.png",
+					"type_line": "Curiousity",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "6b3e0660-c49d-4cfb-83e1-5c04d82b9d99",
+			"has_default_id": true,
+			"oracle_id": "85a6007e-1080-402d-974a-61e6064a62a1",
+			"hcid": "Markiplier1",
+			"name": "Markiplier",
+			"set": "HCT",
+			"collector_number": "2194",
+			"accepted_order": "2194",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/6b3e0660-c49d-4cfb-83e1-5c04d82b9d99%20-%20Markiplier1.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Markiplier"
+			],
+			"type_line": "Markiplier",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"BaconBasedGod"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "ad24f3e0-8fe2-4427-a92a-6284e8fff115",
+					"oracle_id": "be09c917-b7c8-41d6-9ed6-e8242e16a122",
+					"hcid": "8920",
+					"name": "Summon the Entire Cast of **Iron Lung**",
+					"set": "HC9_1",
+					"collector_number": "200",
+					"image": "https://storage.googleapis.com/hellscube-images/ad24f3e0-8fe2-4427-a92a-6284e8fff115%20-%20Summon%20the%20Entire%20Cast%20of%20_Iron%20Lung_.webp",
+					"type_line": "Enchantment — Saga",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "6b3e0660-c49d-4cfb-83e1-5c04d82b9d99",
+					"oracle_id": "85a6007e-1080-402d-974a-61e6064a62a1",
+					"hcid": "Markiplier1",
+					"name": "Markiplier",
+					"set": "HCT",
+					"collector_number": "2194",
+					"image": "https://storage.googleapis.com/hellscube-images/6b3e0660-c49d-4cfb-83e1-5c04d82b9d99%20-%20Markiplier1.png",
+					"type_line": "Markiplier",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "265176d9-25c6-441f-99ac-7842ec3156a1",
+			"has_default_id": true,
+			"oracle_id": "eb31bd68-8c3d-4560-9ef2-64d4bd511841",
+			"hcid": "Goblin Weezer Fan1",
+			"name": "Goblin Weezer Fan",
+			"set": "HCT",
+			"collector_number": "2195",
+			"accepted_order": "2195",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/265176d9-25c6-441f-99ac-7842ec3156a1%20-%20Goblin%20Weezer%20Fan1.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Goblin",
+				"Weezer",
+				"Fan"
+			],
+			"type_line": "Goblin Weezer Fan",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"eldoradonights"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "12860dc0-1ace-4258-a02d-899f3a8e2485",
+					"oracle_id": "12d93116-e61d-4214-ba22-170f9fce090c",
+					"hcid": "5148",
+					"name": "Squeezer's \"Red Album\"",
+					"set": "HCK",
+					"collector_number": "167",
+					"image": "https://lh3.googleusercontent.com/d/1IbJ-Qd0MrMBzguxHNxNuzHN2zD1Fcftb",
+					"type_line": "Sorcery",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "265176d9-25c6-441f-99ac-7842ec3156a1",
+					"oracle_id": "eb31bd68-8c3d-4560-9ef2-64d4bd511841",
+					"hcid": "Goblin Weezer Fan1",
+					"name": "Goblin Weezer Fan",
+					"set": "HCT",
+					"collector_number": "2195",
+					"image": "https://storage.googleapis.com/hellscube-images/265176d9-25c6-441f-99ac-7842ec3156a1%20-%20Goblin%20Weezer%20Fan1.png",
+					"type_line": "Goblin Weezer Fan",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "48b2cf61-83a6-4659-9952-715bf8e1d49a",
+			"has_default_id": true,
+			"oracle_id": "783e727a-4cd1-4bf9-ad8e-711df63e6afc",
+			"hcid": "Saproling Decoy1",
+			"name": "Saproling Decoy",
+			"set": "HCT",
+			"collector_number": "2196",
+			"accepted_order": "2196",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/48b2cf61-83a6-4659-9952-715bf8e1d49a%20-%20Saproling%20Decoy1.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Saproling",
+				"Decoy"
+			],
+			"type_line": "Saproling Decoy",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"somejname"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "db264d15-b70b-4be6-b029-a9d01cbb0286",
+					"oracle_id": "17660584-6dd4-4cdb-b3d1-bca12b3dbc9d",
+					"hcid": "5235",
+					"name": "Thallid Ninja",
+					"set": "HCK",
+					"collector_number": "208",
+					"image": "https://lh3.googleusercontent.com/d/1erOc8D7DYr1cKtMqPgrui8o7xqNDFWpj",
+					"type_line": "Creature — Fungus Ninja",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "48b2cf61-83a6-4659-9952-715bf8e1d49a",
+					"oracle_id": "783e727a-4cd1-4bf9-ad8e-711df63e6afc",
+					"hcid": "Saproling Decoy1",
+					"name": "Saproling Decoy",
+					"set": "HCT",
+					"collector_number": "2196",
+					"image": "https://storage.googleapis.com/hellscube-images/48b2cf61-83a6-4659-9952-715bf8e1d49a%20-%20Saproling%20Decoy1.png",
+					"type_line": "Saproling Decoy",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "8f64b44d-bc15-4ddc-906d-33a23bc4414f",
+			"oracle_id": "593670ff-e7d1-4e5d-97c1-1d117060c81d",
+			"hcid": "Human11",
+			"name": "Human",
+			"set": "HCT",
+			"collector_number": "2197",
+			"accepted_order": "2197",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/8f64b44d-bc15-4ddc-906d-33a23bc4414f%20-%20Human11.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Human"
+			],
+			"type_line": "Human",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"somejname"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "ced1236c-7264-4742-b20b-2288f4341e40",
+					"oracle_id": "cbe859e7-423a-4fee-b64b-b15e1190bae3",
+					"hcid": "5195",
+					"name": "Summon: the Forebears",
+					"set": "HCK",
+					"collector_number": "43",
+					"image": "https://lh3.googleusercontent.com/d/1VlW7vRQhc7u2ga_T201TEy8KbHE0EwnX",
+					"type_line": "Creature — Human Saga",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "8f64b44d-bc15-4ddc-906d-33a23bc4414f",
+					"oracle_id": "593670ff-e7d1-4e5d-97c1-1d117060c81d",
+					"hcid": "Human11",
+					"name": "Human",
+					"set": "HCT",
+					"collector_number": "2197",
+					"image": "https://storage.googleapis.com/hellscube-images/8f64b44d-bc15-4ddc-906d-33a23bc4414f%20-%20Human11.png",
+					"type_line": "Human",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "9060e3a1-74bd-49bf-8223-45c60843b419",
+			"oracle_id": "222b3834-7c74-4ac0-b5df-8f1cd73b64da",
+			"hcid": "Plant4",
+			"name": "Plant",
+			"set": "HCT",
+			"collector_number": "2198",
+			"accepted_order": "2198",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/9060e3a1-74bd-49bf-8223-45c60843b419%20-%20Plant4.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Plant"
+			],
+			"type_line": "Plant",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"JamDonut"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "28f8c371-664b-4f30-927f-77b86c2b3cca",
+					"oracle_id": "8dc15e01-dba4-4742-b4d2-3ace7f781092",
+					"hcid": "5270",
+					"name": "The Retrobloom",
+					"set": "HCK",
+					"collector_number": "211",
+					"image": "https://lh3.googleusercontent.com/d/1NmwTn4rFQtc3Y3j1TevK9qx3hzNMwAhj",
+					"type_line": "Legendary Creature — Plant",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "9060e3a1-74bd-49bf-8223-45c60843b419",
+					"oracle_id": "222b3834-7c74-4ac0-b5df-8f1cd73b64da",
+					"hcid": "Plant4",
+					"name": "Plant",
+					"set": "HCT",
+					"collector_number": "2198",
+					"image": "https://storage.googleapis.com/hellscube-images/9060e3a1-74bd-49bf-8223-45c60843b419%20-%20Plant4.png",
+					"type_line": "Plant",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "5869dc0a-9fe3-4807-8b7d-3a2096ced367",
+			"oracle_id": "8c048c4f-bfad-437c-97a2-90d955ad5f48",
+			"hcid": "Monkey4",
+			"name": "Monkey",
+			"export_name": "Monkey_",
+			"set": "HCT",
+			"collector_number": "2199",
+			"accepted_order": "2199",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/5869dc0a-9fe3-4807-8b7d-3a2096ced367%20-%20Monkey4.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Monkey"
+			],
+			"type_line": "Monkey",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"JamDonut"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "fdc017cc-994e-4169-a9aa-319fadb82fbd",
+					"oracle_id": "211e654d-eb66-4dc4-97ee-b1a967857a90",
+					"hcid": "959",
+					"name": "Monkey",
+					"set": "HC2_0",
+					"collector_number": "355",
+					"image": "https://lh3.googleusercontent.com/d/1n2SmPzbQQmnc0Na0wjBq20oUKyU3iWZj",
+					"type_line": "Creature — Monkey",
+					"component": "token_maker",
+					"persistent": true
+				},
+				{
+					"object": "related_card",
+					"id": "5869dc0a-9fe3-4807-8b7d-3a2096ced367",
+					"oracle_id": "8c048c4f-bfad-437c-97a2-90d955ad5f48",
+					"hcid": "Monkey4",
+					"name": "Monkey",
+					"set": "HCT",
+					"collector_number": "2199",
+					"image": "https://storage.googleapis.com/hellscube-images/5869dc0a-9fe3-4807-8b7d-3a2096ced367%20-%20Monkey4.png",
+					"type_line": "Monkey",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "70ed00b8-913f-4f55-8036-56ea28f117d9",
+			"oracle_id": "e5b752aa-e03d-435c-b905-a180e95ea10a",
+			"hcid": "Mouse3",
+			"name": "Mouse",
+			"set": "HCT",
+			"collector_number": "2200",
+			"accepted_order": "2200",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/70ed00b8-913f-4f55-8036-56ea28f117d9%20-%20Mouse3.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Mouse"
+			],
+			"type_line": "Mouse",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"BaconBasedGod"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "98805b3b-7347-425a-ae1b-cb380ce2769c",
+					"oracle_id": "9e677f3e-c1b5-4a41-8634-8ffca38b4d82",
+					"hcid": "8990",
+					"name": "Mire // Mice",
+					"set": "HC9_1",
+					"collector_number": "225",
+					"image": "https://storage.googleapis.com/hellscube-images/98805b3b-7347-425a-ae1b-cb380ce2769c%20-%20Mire%20_%20Mice.webp",
+					"type_line": "Instant // Instant",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "70ed00b8-913f-4f55-8036-56ea28f117d9",
+					"oracle_id": "e5b752aa-e03d-435c-b905-a180e95ea10a",
+					"hcid": "Mouse3",
+					"name": "Mouse",
+					"set": "HCT",
+					"collector_number": "2200",
+					"image": "https://storage.googleapis.com/hellscube-images/70ed00b8-913f-4f55-8036-56ea28f117d9%20-%20Mouse3.png",
+					"type_line": "Mouse",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "f098de79-a4df-4f87-a046-a52346d5f5dc",
+			"oracle_id": "ec28dadf-2cb9-4972-8207-40caefcb5c76",
+			"hcid": "Jace1",
+			"name": "Jace",
+			"export_name": "Jace_",
+			"set": "HCT",
+			"collector_number": "2201",
+			"accepted_order": "2201",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/f098de79-a4df-4f87-a046-a52346d5f5dc%20-%20Jace1.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Jace"
+			],
+			"type_line": "Jace",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"BaconBasedGod"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "908ecab7-6059-44bf-947a-21de98134c3e",
+					"oracle_id": "91f78a14-cb45-4f08-a65a-0ce1602fc23e",
+					"hcid": "8908",
+					"name": "Jace's Dream House",
+					"set": "HC9_1",
+					"collector_number": "188",
+					"image": "https://storage.googleapis.com/hellscube-images/908ecab7-6059-44bf-947a-21de98134c3e%20-%20Jace_s%20Dream%20House.png",
+					"type_line": "Land — Forest Island",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "f098de79-a4df-4f87-a046-a52346d5f5dc",
+					"oracle_id": "ec28dadf-2cb9-4972-8207-40caefcb5c76",
+					"hcid": "Jace1",
+					"name": "Jace",
+					"set": "HCT",
+					"collector_number": "2201",
+					"image": "https://storage.googleapis.com/hellscube-images/f098de79-a4df-4f87-a046-a52346d5f5dc%20-%20Jace1.png",
+					"type_line": "Jace",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "84006310-a36b-45ca-856d-a469428a7da4",
+			"oracle_id": "fafedfb3-982c-4549-a919-740b32d0efa7",
+			"hcid": "Clue9",
+			"name": "Clue",
+			"set": "HCT",
+			"collector_number": "2202",
+			"accepted_order": "2202",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/84006310-a36b-45ca-856d-a469428a7da4%20-%20Clue9.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Clue"
+			],
+			"type_line": "Clue",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"BaconBasedGod"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "4842470a-2bfc-4e95-900e-94c624ea86c3",
+					"oracle_id": "ee20f370-00e8-4127-9aac-6e065f450ac4",
+					"hcid": "5962",
+					"name": "Optigate",
+					"set": "HCJ",
+					"collector_number": "90",
+					"image": "https://lh3.googleusercontent.com/d/1OWLHJ8QRjnIOec3yxBf3beT0dzUBcaLS",
+					"type_line": "Instant",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "84006310-a36b-45ca-856d-a469428a7da4",
+					"oracle_id": "fafedfb3-982c-4549-a919-740b32d0efa7",
+					"hcid": "Clue9",
+					"name": "Clue",
+					"set": "HCT",
+					"collector_number": "2202",
+					"image": "https://storage.googleapis.com/hellscube-images/84006310-a36b-45ca-856d-a469428a7da4%20-%20Clue9.png",
+					"type_line": "Clue",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "e3a773e7-735c-4b53-822e-27716d3ab30b",
+			"has_default_id": true,
+			"oracle_id": "229b183c-553c-4923-8d7f-e0f1117d2b0e",
+			"hcid": "Peach1",
+			"name": "Peach",
+			"set": "HCT",
+			"collector_number": "2203",
+			"accepted_order": "2203",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/e3a773e7-735c-4b53-822e-27716d3ab30b%20-%20Peach1.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Peach"
+			],
+			"type_line": "Peach",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"BaconBasedGod"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "b8b10696-2e72-4084-bf91-bd4a26c91ef6",
+					"oracle_id": "42225163-f5a7-49ba-9fcc-8b41fe974eeb",
+					"hcid": "4955",
+					"name": "Savannah, Georgia",
+					"set": "HC7_1",
+					"collector_number": "717",
+					"image": "https://lh3.googleusercontent.com/d/1QuoroIWRkunByEVG2RxOUS4pjTPdco-w",
+					"type_line": "Land",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "e3a773e7-735c-4b53-822e-27716d3ab30b",
+					"oracle_id": "229b183c-553c-4923-8d7f-e0f1117d2b0e",
+					"hcid": "Peach1",
+					"name": "Peach",
+					"set": "HCT",
+					"collector_number": "2203",
+					"image": "https://storage.googleapis.com/hellscube-images/e3a773e7-735c-4b53-822e-27716d3ab30b%20-%20Peach1.png",
+					"type_line": "Peach",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "b471d816-b1fe-4bb3-a0b4-46a16841502a",
+			"has_default_id": true,
+			"oracle_id": "64696f5b-2453-4b22-b102-0c138aabc4c7",
+			"hcid": "Samurai1",
+			"name": "Samurai",
+			"set": "HCT",
+			"collector_number": "2204",
+			"accepted_order": "2204",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/b471d816-b1fe-4bb3-a0b4-46a16841502a%20-%20Samurai1.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Samurai"
+			],
+			"type_line": "Samurai",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"somejname"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "424e3cba-fd95-4a01-aa36-64bf9f2c288e",
+					"oracle_id": "83caaa64-2cbf-4035-b353-135839011f1e",
+					"hcid": "7747",
+					"name": "Eiganjo Uprising <HC>",
+					"set": "HC9_0",
+					"collector_number": "300",
+					"image": "https://lh3.googleusercontent.com/d/1HKmngMuTceQJs4JDEM1RenxwAtWBHi_z",
+					"type_line": "Sorcery",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "b471d816-b1fe-4bb3-a0b4-46a16841502a",
+					"oracle_id": "64696f5b-2453-4b22-b102-0c138aabc4c7",
+					"hcid": "Samurai1",
+					"name": "Samurai",
+					"set": "HCT",
+					"collector_number": "2204",
+					"image": "https://storage.googleapis.com/hellscube-images/b471d816-b1fe-4bb3-a0b4-46a16841502a%20-%20Samurai1.png",
+					"type_line": "Samurai",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "c8e51d44-b5f6-4fd2-88a4-4224c46f7e16",
+			"oracle_id": "319ca764-1013-4028-9938-6d6f99ccbda9",
+			"hcid": "Food36",
+			"name": "Food",
+			"set": "HCT",
+			"collector_number": "2205",
+			"accepted_order": "2205",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/c8e51d44-b5f6-4fd2-88a4-4224c46f7e16%20-%20Food36.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Food"
+			],
+			"type_line": "Food",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"somejname"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "d75ade45-2f38-4821-8ad6-a72abdf7b3f6",
+					"oracle_id": "d3d97236-de9d-4145-9a3e-35200fab0933",
+					"hcid": "8891",
+					"name": "Homer, the Simpson",
+					"set": "HC9_1",
+					"collector_number": "171",
+					"image": "https://storage.googleapis.com/hellscube-images/d75ade45-2f38-4821-8ad6-a72abdf7b3f6%20-%20Homer_%20the%20Simpson.png",
+					"type_line": "Legendary Creature — Human Simpson",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "c8e51d44-b5f6-4fd2-88a4-4224c46f7e16",
+					"oracle_id": "319ca764-1013-4028-9938-6d6f99ccbda9",
+					"hcid": "Food36",
+					"name": "Food",
+					"set": "HCT",
+					"collector_number": "2205",
+					"image": "https://storage.googleapis.com/hellscube-images/c8e51d44-b5f6-4fd2-88a4-4224c46f7e16%20-%20Food36.png",
+					"type_line": "Food",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "cc514b27-2563-4640-ae32-04046c02f1a2",
+			"has_default_id": true,
+			"oracle_id": "349e347e-3ee4-4ec3-a3a2-99f3eb6b8274",
+			"hcid": "Black Lotus Conjure1",
+			"name": "Black Lotus Conjure",
+			"set": "HCT",
+			"collector_number": "2206",
+			"accepted_order": "2206",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/cc514b27-2563-4640-ae32-04046c02f1a2%20-%20Black%20Lotus%20Conjure1.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Black",
+				"Lotus",
+				"Conjure"
+			],
+			"type_line": "Black Lotus Conjure",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"somejname"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "c9d26dc9-373b-4421-9c59-17b039fc2e4d",
+					"oracle_id": "d0a52fd7-1fa6-4321-9fa9-af52033ffd0e",
+					"hcid": "8904",
+					"name": "Attention",
+					"set": "HC9_1",
+					"collector_number": "184",
+					"image": "https://storage.googleapis.com/hellscube-images/c9d26dc9-373b-4421-9c59-17b039fc2e4d%20-%20Attention.gif",
+					"type_line": "Instant",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "cc514b27-2563-4640-ae32-04046c02f1a2",
+					"oracle_id": "349e347e-3ee4-4ec3-a3a2-99f3eb6b8274",
+					"hcid": "Black Lotus Conjure1",
+					"name": "Black Lotus Conjure",
+					"set": "HCT",
+					"collector_number": "2206",
+					"image": "https://storage.googleapis.com/hellscube-images/cc514b27-2563-4640-ae32-04046c02f1a2%20-%20Black%20Lotus%20Conjure1.png",
+					"type_line": "Black Lotus Conjure",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "2cf17cf8-9594-47e7-9157-0106f548a0e4",
+			"has_default_id": true,
+			"oracle_id": "bde15a68-6f1b-41bd-b164-3136aa82622f",
+			"hcid": "Memories 1",
+			"name": "Memories ",
+			"set": "HCT",
+			"collector_number": "2207",
+			"accepted_order": "2207",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/2cf17cf8-9594-47e7-9157-0106f548a0e4%20-%20Memories%201.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Memories",
+				""
+			],
+			"type_line": "Memories ",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"somejname"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "6870ab90-d32b-4d88-96de-adfc84dce28b",
+					"oracle_id": "5e8b8bfd-4b4b-48eb-b89b-47a5a81e13c0",
+					"hcid": "8861",
+					"name": "You Are A Saga",
+					"set": "HC9_1",
+					"collector_number": "141",
+					"image": "https://storage.googleapis.com/hellscube-images/6870ab90-d32b-4d88-96de-adfc84dce28b%20-%20You%20Are%20a%20Saga.png",
+					"type_line": "Enchantment",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "2cf17cf8-9594-47e7-9157-0106f548a0e4",
+					"oracle_id": "bde15a68-6f1b-41bd-b164-3136aa82622f",
+					"hcid": "Memories 1",
+					"name": "Memories ",
+					"set": "HCT",
+					"collector_number": "2207",
+					"image": "https://storage.googleapis.com/hellscube-images/2cf17cf8-9594-47e7-9157-0106f548a0e4%20-%20Memories%201.png",
+					"type_line": "Memories ",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "444a38d0-4121-4352-9940-3f455de2d600",
+			"oracle_id": "29f4cc47-d963-4e81-b0f5-6f593db269bf",
+			"hcid": "Fish36",
+			"name": "Fish",
+			"export_name": "Fish_",
+			"set": "HCT",
+			"collector_number": "2208",
+			"accepted_order": "2208",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/444a38d0-4121-4352-9940-3f455de2d600%20-%20Fish36.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Fish"
+			],
+			"type_line": "Fish",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"andrea52"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "907dca52-196d-4b22-90c8-02b3d29553f1",
+					"oracle_id": "01365126-6074-4373-8320-e76e06873b77",
+					"hcid": "7543",
+					"name": "Gilliana of the Whale",
+					"set": "HC9_0",
+					"collector_number": "124",
+					"image": "https://lh3.googleusercontent.com/d/1ZrAo0Wy6q9FZlyg3mm0a_R0LxZgBirKb",
+					"type_line": "Legendary Planeswalker — Gilliana",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "444a38d0-4121-4352-9940-3f455de2d600",
+					"oracle_id": "29f4cc47-d963-4e81-b0f5-6f593db269bf",
+					"hcid": "Fish36",
+					"name": "Fish",
+					"set": "HCT",
+					"collector_number": "2208",
+					"image": "https://storage.googleapis.com/hellscube-images/444a38d0-4121-4352-9940-3f455de2d600%20-%20Fish36.png",
+					"type_line": "Fish",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "18f01273-c100-48ef-8528-f912652bbb36",
+			"oracle_id": "f0fe2695-9d90-4e4e-976f-1ad8c716560b",
+			"hcid": "raptor1",
+			"name": "raptor",
+			"export_name": "raptor_",
+			"set": "HCT",
+			"collector_number": "2209",
+			"accepted_order": "2209",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/18f01273-c100-48ef-8528-f912652bbb36%20-%20raptor1.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Raptor"
+			],
+			"type_line": "Raptor",
+			"oracle_text": "Double strike",
+			"colors": [
+				"R"
+			],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"nefola"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "57eef496-9d17-4a09-873e-fd61e2cb0ac4",
+					"oracle_id": "b44dc0d9-54a9-446f-9039-af3a45d377cc",
+					"hcid": "9150",
+					"name": "raptor",
+					"set": "HC9_1",
+					"collector_number": "330",
+					"image": "https://storage.googleapis.com/hellscube-images/57eef496-9d17-4a09-873e-fd61e2cb0ac4%20-%20raptor.png",
+					"type_line": "Creature — Dinosaur",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "18f01273-c100-48ef-8528-f912652bbb36",
+					"oracle_id": "f0fe2695-9d90-4e4e-976f-1ad8c716560b",
+					"hcid": "raptor1",
+					"name": "raptor",
+					"set": "HCT",
+					"collector_number": "2209",
+					"image": "https://storage.googleapis.com/hellscube-images/18f01273-c100-48ef-8528-f912652bbb36%20-%20raptor1.png",
+					"type_line": "Raptor",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "ec24f7cf-058f-4adc-ab54-33407fcf1a33",
+			"oracle_id": "f6650679-5677-4e24-bad0-30c6e4ec0124",
+			"hcid": "Bee3",
+			"name": "Bee",
+			"export_name": "Bee_",
+			"set": "HCT",
+			"collector_number": "2210",
+			"accepted_order": "2210",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/ec24f7cf-058f-4adc-ab54-33407fcf1a33%20-%20Bee3.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Bee"
+			],
+			"type_line": "Bee",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"BaconBasedGod"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "6875cbfc-20fe-480f-9abf-089937a70484",
+					"oracle_id": "b8582e19-cdab-4ee3-b1ca-7a6cca4d18c9",
+					"hcid": "4834",
+					"name": "Beeza, the Beending Spring",
+					"set": "HC7_1",
+					"collector_number": "29",
+					"image": "https://lh3.googleusercontent.com/d/1pUSyU0vlI60mROF-WeKAsWhWnRKVqHNK",
+					"type_line": "Legendary Creature — Elemental Insect Bee",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "ec24f7cf-058f-4adc-ab54-33407fcf1a33",
+					"oracle_id": "f6650679-5677-4e24-bad0-30c6e4ec0124",
+					"hcid": "Bee3",
+					"name": "Bee",
+					"set": "HCT",
+					"collector_number": "2210",
+					"image": "https://storage.googleapis.com/hellscube-images/ec24f7cf-058f-4adc-ab54-33407fcf1a33%20-%20Bee3.png",
+					"type_line": "Bee",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "2a341b57-714e-4aae-8638-65f6cd9ffacc",
+			"has_default_id": true,
+			"oracle_id": "dd77963e-85f9-4d85-8399-687ffdf7b38e",
+			"hcid": "Tea1",
+			"name": "Tea",
+			"set": "HCT",
+			"collector_number": "2211",
+			"accepted_order": "2211",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/2a341b57-714e-4aae-8638-65f6cd9ffacc%20-%20Tea1.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Tea"
+			],
+			"type_line": "Tea",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"BaconBasedGod"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "e6cea061-581d-4a71-aed4-772196a1c895",
+					"oracle_id": "f9cf2ad4-319c-40b6-a7f9-3ad33821929d",
+					"hcid": "1904",
+					"name": "Man // Door // Hand // Hook // Car Door",
+					"set": "HC3_1",
+					"collector_number": "545",
+					"image": "https://lh3.googleusercontent.com/d/1X5YAV5tKhFWs8qmCs7T8vsY_RrfgoRc3",
+					"type_line": "Sorcery // Sorcery // Sorcery // Sorcery // Sorcery",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "2a341b57-714e-4aae-8638-65f6cd9ffacc",
+					"oracle_id": "dd77963e-85f9-4d85-8399-687ffdf7b38e",
+					"hcid": "Tea1",
+					"name": "Tea",
+					"set": "HCT",
+					"collector_number": "2211",
+					"image": "https://storage.googleapis.com/hellscube-images/2a341b57-714e-4aae-8638-65f6cd9ffacc%20-%20Tea1.png",
+					"type_line": "Tea",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "44555a69-579d-463e-a4ce-0a071fab912c",
+			"oracle_id": "44b5a846-2d17-4b09-8ff1-017e625b7c4d",
+			"hcid": "Blood5",
+			"name": "Blood",
+			"export_name": "Blood_",
+			"set": "HCT",
+			"collector_number": "2212",
+			"accepted_order": "2212",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/44555a69-579d-463e-a4ce-0a071fab912c%20-%20Blood5.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Blood"
+			],
+			"type_line": "Blood",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"BaconBasedGod"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "bfdff8f0-0b34-4c3c-89c1-704f5ecbc38d",
+					"oracle_id": "e819b23a-4aed-46e6-9d6d-b18706b2e882",
+					"hcid": "8707",
+					"name": "Bloodborne",
+					"set": "HC9_1",
+					"collector_number": "50",
+					"image": "https://storage.googleapis.com/hellscube-images/bfdff8f0-0b34-4c3c-89c1-704f5ecbc38d%20-%20Bloodborne.png",
+					"type_line": "Enchantment",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "44555a69-579d-463e-a4ce-0a071fab912c",
+					"oracle_id": "44b5a846-2d17-4b09-8ff1-017e625b7c4d",
+					"hcid": "Blood5",
+					"name": "Blood",
+					"set": "HCT",
+					"collector_number": "2212",
+					"image": "https://storage.googleapis.com/hellscube-images/44555a69-579d-463e-a4ce-0a071fab912c%20-%20Blood5.png",
+					"type_line": "Blood",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "03d0c96a-f868-4c0f-97a7-04073ef98a2f",
+			"oracle_id": "df23a2da-2662-4429-b638-aead2a82d5cd",
+			"hcid": "Beast10",
+			"name": "Beast",
+			"export_name": "Beast_",
+			"set": "HCT",
+			"collector_number": "2213",
+			"accepted_order": "2213",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/03d0c96a-f868-4c0f-97a7-04073ef98a2f%20-%20Beast10.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Beast"
+			],
+			"type_line": "Beast",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"BaconBasedGod"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "753cd98b-acb8-41fb-af7c-2d0b6a33b7f3",
+					"oracle_id": "a6d4b4ce-22bd-460f-8149-0717094029a2",
+					"hcid": "1555",
+					"name": "Beast With Inn",
+					"set": "HC3_0",
+					"collector_number": "398",
+					"image": "https://lh3.googleusercontent.com/d/1ZbrIp1ybEqkZG9Ni-oMxkUX1t-yfaWnV",
+					"type_line": "Sorcery",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "cc672777-c1df-49a2-abf8-274f4ae0f24a",
+					"oracle_id": "aa92c180-7fdf-4368-8a18-1fd5bb98dd19",
+					"hcid": "6738",
+					"name": "tusk",
+					"set": "HC2_1",
+					"collector_number": "468",
+					"image": "https://lh3.googleusercontent.com/d/1EryP3DhR-BAzU4uYwFZYdL92MMJJSS4_",
+					"type_line": "Sorcery",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "42080958-ddeb-433e-978c-2b9b2d757839",
+					"oracle_id": "b2ab7ef7-f8ed-40b9-9147-fb08ab4e7097",
+					"hcid": "2634",
+					"name": "Beast Withsperer",
+					"set": "HC4_1",
+					"collector_number": "406",
+					"image": "https://lh3.googleusercontent.com/d/1BeGCv89f-m4BIF8ckSeD4Opak0Yyf_6a",
+					"type_line": "Creature — Elf Druid",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "79951449-d24c-4a40-84b2-4928d31413be",
+					"oracle_id": "bf762356-6fbf-4f62-a9fa-96e05ca52c21",
+					"hcid": "8716",
+					"name": "Garruk, Completely in Pie",
+					"set": "HC9_1",
+					"collector_number": "59",
+					"image": "https://storage.googleapis.com/hellscube-images/79951449-d24c-4a40-84b2-4928d31413be%20-%20Garruk_%20Completely%20in%20Pie.png",
+					"type_line": "Legendary Planeswalker — Garruk",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "03d0c96a-f868-4c0f-97a7-04073ef98a2f",
+					"oracle_id": "df23a2da-2662-4429-b638-aead2a82d5cd",
+					"hcid": "Beast10",
+					"name": "Beast",
+					"set": "HCT",
+					"collector_number": "2213",
+					"image": "https://storage.googleapis.com/hellscube-images/03d0c96a-f868-4c0f-97a7-04073ef98a2f%20-%20Beast10.png",
+					"type_line": "Beast",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "305bdbd0-8e4b-4755-ba67-1c1a0c347050",
+			"oracle_id": "fe4c14fb-2d5e-4669-abc1-519977c0004d",
+			"hcid": "Markiplier2",
+			"name": "Markiplier",
+			"export_name": "Markiplier_",
+			"set": "HCT",
+			"collector_number": "2214",
+			"accepted_order": "2214",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/305bdbd0-8e4b-4755-ba67-1c1a0c347050%20-%20Markiplier2.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Markiplier"
+			],
+			"type_line": "Markiplier",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"leafbladefighter"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "ad24f3e0-8fe2-4427-a92a-6284e8fff115",
+					"oracle_id": "be09c917-b7c8-41d6-9ed6-e8242e16a122",
+					"hcid": "8920",
+					"name": "Summon the Entire Cast of **Iron Lung**",
+					"set": "HC9_1",
+					"collector_number": "200",
+					"image": "https://storage.googleapis.com/hellscube-images/ad24f3e0-8fe2-4427-a92a-6284e8fff115%20-%20Summon%20the%20Entire%20Cast%20of%20_Iron%20Lung_.webp",
+					"type_line": "Enchantment — Saga",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "305bdbd0-8e4b-4755-ba67-1c1a0c347050",
+					"oracle_id": "fe4c14fb-2d5e-4669-abc1-519977c0004d",
+					"hcid": "Markiplier2",
+					"name": "Markiplier",
+					"set": "HCT",
+					"collector_number": "2214",
+					"image": "https://storage.googleapis.com/hellscube-images/305bdbd0-8e4b-4755-ba67-1c1a0c347050%20-%20Markiplier2.png",
+					"type_line": "Markiplier",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "20d4ca9f-e4a7-465f-a4ff-452c00b815ec",
+			"oracle_id": "7a1d893a-84a7-4afb-9520-41e8802f3fc2",
+			"hcid": "Blood6",
+			"name": "Blood",
+			"export_name": "Blood__",
+			"set": "HCT",
+			"collector_number": "2215",
+			"accepted_order": "2215",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/20d4ca9f-e4a7-465f-a4ff-452c00b815ec%20-%20Blood6.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Blood"
+			],
+			"type_line": "Blood",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"leafbladefighter"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "ad24f3e0-8fe2-4427-a92a-6284e8fff115",
+					"oracle_id": "be09c917-b7c8-41d6-9ed6-e8242e16a122",
+					"hcid": "8920",
+					"name": "Summon the Entire Cast of **Iron Lung**",
+					"set": "HC9_1",
+					"collector_number": "200",
+					"image": "https://storage.googleapis.com/hellscube-images/ad24f3e0-8fe2-4427-a92a-6284e8fff115%20-%20Summon%20the%20Entire%20Cast%20of%20_Iron%20Lung_.webp",
+					"type_line": "Enchantment — Saga",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "20d4ca9f-e4a7-465f-a4ff-452c00b815ec",
+					"oracle_id": "7a1d893a-84a7-4afb-9520-41e8802f3fc2",
+					"hcid": "Blood6",
+					"name": "Blood",
+					"set": "HCT",
+					"collector_number": "2215",
+					"image": "https://storage.googleapis.com/hellscube-images/20d4ca9f-e4a7-465f-a4ff-452c00b815ec%20-%20Blood6.png",
+					"type_line": "Blood",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "08af7f2d-f9c7-4b1a-b507-f2528f5cd915",
+			"has_default_id": true,
+			"oracle_id": "9e0fcf00-20af-4dcf-93f8-d393fcdf2aab",
+			"hcid": "3/3 Beast1",
+			"name": "3/3 Beast",
+			"export_name": "_3/3 Beast",
+			"set": "HCT",
+			"collector_number": "2216",
+			"accepted_order": "2216",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/08af7f2d-f9c7-4b1a-b507-f2528f5cd915%20-%203_3%20Beast1.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"3/3",
+				"Beast"
+			],
+			"type_line": "3/3 Beast",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"leafbladefighter"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "79951449-d24c-4a40-84b2-4928d31413be",
+					"oracle_id": "bf762356-6fbf-4f62-a9fa-96e05ca52c21",
+					"hcid": "8716",
+					"name": "Garruk, Completely in Pie",
+					"set": "HC9_1",
+					"collector_number": "59",
+					"image": "https://storage.googleapis.com/hellscube-images/79951449-d24c-4a40-84b2-4928d31413be%20-%20Garruk_%20Completely%20in%20Pie.png",
+					"type_line": "Legendary Planeswalker — Garruk",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "08af7f2d-f9c7-4b1a-b507-f2528f5cd915",
+					"oracle_id": "9e0fcf00-20af-4dcf-93f8-d393fcdf2aab",
+					"hcid": "3/3 Beast1",
+					"name": "3/3 Beast",
+					"set": "HCT",
+					"collector_number": "2216",
+					"image": "https://storage.googleapis.com/hellscube-images/08af7f2d-f9c7-4b1a-b507-f2528f5cd915%20-%203_3%20Beast1.png",
+					"type_line": "3/3 Beast",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "68b050c1-0092-4132-b723-3345306bcecc",
+			"has_default_id": true,
+			"oracle_id": "bcbeef83-8349-4086-85c4-276fc2b922d5",
+			"hcid": "4/4 Beast1",
+			"name": "4/4 Beast",
+			"export_name": "_4/4 Beast",
+			"set": "HCT",
+			"collector_number": "2217",
+			"accepted_order": "2217",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/68b050c1-0092-4132-b723-3345306bcecc%20-%204_4%20Beast1.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"4/4",
+				"Beast"
+			],
+			"type_line": "4/4 Beast",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"leafbladefighter"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "79951449-d24c-4a40-84b2-4928d31413be",
+					"oracle_id": "bf762356-6fbf-4f62-a9fa-96e05ca52c21",
+					"hcid": "8716",
+					"name": "Garruk, Completely in Pie",
+					"set": "HC9_1",
+					"collector_number": "59",
+					"image": "https://storage.googleapis.com/hellscube-images/79951449-d24c-4a40-84b2-4928d31413be%20-%20Garruk_%20Completely%20in%20Pie.png",
+					"type_line": "Legendary Planeswalker — Garruk",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "68b050c1-0092-4132-b723-3345306bcecc",
+					"oracle_id": "bcbeef83-8349-4086-85c4-276fc2b922d5",
+					"hcid": "4/4 Beast1",
+					"name": "4/4 Beast",
+					"set": "HCT",
+					"collector_number": "2217",
+					"image": "https://storage.googleapis.com/hellscube-images/68b050c1-0092-4132-b723-3345306bcecc%20-%204_4%20Beast1.png",
+					"type_line": "4/4 Beast",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "04fc2b99-cd38-4dbc-b364-6c69ba75490b",
+			"has_default_id": true,
+			"oracle_id": "e8f6435b-c2a4-4d70-a83b-550d2f1c3f1c",
+			"hcid": "Dirt Bike1",
+			"name": "Dirt Bike",
+			"set": "HCT",
+			"collector_number": "2218",
+			"accepted_order": "2218",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/04fc2b99-cd38-4dbc-b364-6c69ba75490b%20-%20Dirt%20Bike1.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Dirt",
+				"Bike"
+			],
+			"type_line": "Dirt Bike",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"JamDonut"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "bf5906fb-9d1a-41fd-a671-be0cd2e0a55c",
+					"oracle_id": "30050914-fda4-4fa1-99d0-b35920a4f2c0",
+					"hcid": "6172",
+					"name": "Bike Path to Exile",
+					"set": "HCJ",
+					"collector_number": "282",
+					"image": "https://lh3.googleusercontent.com/d/1Q3z58PHfut3VmfWE4EPOBU6LfqV7aSty",
+					"type_line": "Instant",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "04fc2b99-cd38-4dbc-b364-6c69ba75490b",
+					"oracle_id": "e8f6435b-c2a4-4d70-a83b-550d2f1c3f1c",
+					"hcid": "Dirt Bike1",
+					"name": "Dirt Bike",
+					"set": "HCT",
+					"collector_number": "2218",
+					"image": "https://storage.googleapis.com/hellscube-images/04fc2b99-cd38-4dbc-b364-6c69ba75490b%20-%20Dirt%20Bike1.png",
+					"type_line": "Dirt Bike",
+					"component": "self"
+				}
+			]
+		},
+		{
+			"object": "card",
+			"kind": "token",
+			"id": "e799fe29-e84e-4b8a-9fdf-cf62e2743c4a",
+			"oracle_id": "bf477d0f-00a3-4646-9c40-99c9be7f57bb",
+			"hcid": "Sheep3",
+			"name": "Sheep",
+			"set": "HCT",
+			"collector_number": "2219",
+			"accepted_order": "2219",
+			"released_at": "2026-10-02",
+			"layout": "token",
+			"image_status": "highres",
+			"image": "https://storage.googleapis.com/hellscube-images/e799fe29-e84e-4b8a-9fdf-cf62e2743c4a%20-%20Sheep3.png",
+			"mana_cost": "",
+			"mana_value": 0,
+			"subtypes": [
+				"Sheep"
+			],
+			"type_line": "Sheep",
+			"oracle_text": "",
+			"colors": [],
+			"color_identity": [],
+			"color_identity_hybrid": [],
+			"keywords": [],
+			"legalities": {
+				"standard": "not_legal",
+				"4cb": "not_legal",
+				"commander": "not_legal"
+			},
+			"creators": [
+				"JamDonut"
+			],
+			"rulings": "",
+			"finish": "nonfoil",
+			"border_color": "black",
+			"frame": "token_2020",
+			"all_parts": [
+				{
+					"object": "related_card",
+					"id": "f229dd16-1243-44c1-80cb-4777b73a8c79",
+					"oracle_id": "513c786d-804f-4f52-a6db-bdd9bd21e47c",
+					"hcid": "6007",
+					"name": "Listenwolf",
+					"set": "HCJ",
+					"collector_number": "380",
+					"image": "https://lh3.googleusercontent.com/d/1AajFSC2TKbv2Q24TE-dLqaCCL1hTXu46",
+					"type_line": "Sorcery",
+					"component": "token_maker"
+				},
+				{
+					"object": "related_card",
+					"id": "e799fe29-e84e-4b8a-9fdf-cf62e2743c4a",
+					"oracle_id": "bf477d0f-00a3-4646-9c40-99c9be7f57bb",
+					"hcid": "Sheep3",
+					"name": "Sheep",
+					"set": "HCT",
+					"collector_number": "2219",
+					"image": "https://storage.googleapis.com/hellscube-images/e799fe29-e84e-4b8a-9fdf-cf62e2743c4a%20-%20Sheep3.png",
+					"type_line": "Sheep",
 					"component": "self"
 				}
 			]
@@ -1138068,13 +1142721,13 @@
 				},
 				{
 					"object": "related_card",
-					"id": "464b0fb2-dfe7-47ce-aee7-1368bf78bdb6",
+					"id": "60cfa744-0a80-46e7-9f4b-f0add9e8109c",
 					"oracle_id": "9f4d4913-e4ab-4b8a-9750-e5e0dc07eb59",
-					"hcid": "6055",
+					"hcid": "9169",
 					"name": "Bone",
-					"set": "HCJ",
-					"collector_number": "15",
-					"image": "https://lh3.googleusercontent.com/d/1WPFfMwkJ68Mou42eeqGcKIroRYBXyNxl",
+					"set": "SCL.13",
+					"collector_number": "67",
+					"image": "https://storage.googleapis.com/hellscube-images/60cfa744-0a80-46e7-9f4b-f0add9e8109c%20-%20Bone.png",
 					"type_line": "Creature",
 					"component": "token_maker"
 				},
@@ -1153623,7 +1158276,6 @@
 			"oracle_id_is_scryfall": true,
 			"hcid": "Faerie Rogue1",
 			"name": "Faerie Rogue",
-			"export_name": "Faerie Rogue Token_",
 			"set": "SFT",
 			"collector_number": "171",
 			"accepted_order": "171",
@@ -1163550,7 +1168202,7 @@
 			"oracle_id_is_scryfall": true,
 			"hcid": "Desert1",
 			"name": "Desert",
-			"export_name": "Desert___",
+			"export_name": "Desert__",
 			"set": "SFT",
 			"collector_number": "318",
 			"accepted_order": "318",
@@ -1163913,96 +1168565,6 @@
 					"collector_number": "326",
 					"image": "https://cards.scryfall.io/large/front/0/a/0ad38866-fc5f-4f62-89c1-afc0f50765aa.jpg",
 					"type_line": "Creature — Human Detective",
-					"component": "self"
-				}
-			]
-		},
-		{
-			"object": "card",
-			"kind": "scryfall",
-			"id": "0e3aedae-e4bb-48e3-9f8b-bea0430df306",
-			"id_is_scryfall": true,
-			"has_default_id": true,
-			"oracle_id": "f255492e-4e12-48b4-9c19-8a2a2780a1b7",
-			"oracle_id_is_scryfall": true,
-			"hcid": "Sneaky Snacker1",
-			"name": "Sneaky Snacker",
-			"export_name": "Sneaky Snacker_",
-			"set": "SFT",
-			"collector_number": "327",
-			"accepted_order": "327",
-			"layout": "real_card_token",
-			"image_status": "highres",
-			"image": "https://cards.scryfall.io/large/front/0/e/0e3aedae-e4bb-48e3-9f8b-bea0430df306.jpg",
-			"mana_cost": "{U}{B}",
-			"mana_value": 2,
-			"types": [
-				"Creature"
-			],
-			"subtypes": [
-				"Faerie",
-				"Rogue"
-			],
-			"type_line": "Creature — Faerie Rogue",
-			"oracle_text": "Flying\nWhen you draw your third card in a turn, return this card from your graveyard to the battlefield tapped.",
-			"flavor_text": "Though the High Fae gave explicit instructions not to tarry, she stayed in Sweettooth Village for seconds, thirds, and then dessert.",
-			"power": "2",
-			"toughness": "1",
-			"colors": [
-				"U",
-				"B"
-			],
-			"color_identity": [
-				"U",
-				"B"
-			],
-			"color_identity_hybrid": [
-				[
-					"U"
-				],
-				[
-					"B"
-				]
-			],
-			"keywords": [
-				"flying"
-			],
-			"legalities": {
-				"standard": "not_legal",
-				"4cb": "not_legal",
-				"commander": "not_legal"
-			},
-			"creators": [],
-			"artists": [
-				"Irina Nordsol"
-			],
-			"rulings": "",
-			"finish": "nonfoil",
-			"border_color": "black",
-			"frame": "2015",
-			"all_parts": [
-				{
-					"object": "related_card",
-					"id": "5470dca7-bb62-4bf8-a156-4dddcea3b431",
-					"oracle_id": "70ca7dc4-f3d9-4918-bc86-e5d86d03cd0c",
-					"hcid": "8899",
-					"name": "Introduction to Pauper",
-					"set": "HC9_1",
-					"collector_number": "179",
-					"image": "https://storage.googleapis.com/hellscube-images/5470dca7-bb62-4bf8-a156-4dddcea3b431%20-%20Introduction%20to%20Pauper.png",
-					"type_line": "Conspiracy",
-					"component": "token_maker"
-				},
-				{
-					"object": "related_card",
-					"id": "0e3aedae-e4bb-48e3-9f8b-bea0430df306",
-					"oracle_id": "f255492e-4e12-48b4-9c19-8a2a2780a1b7",
-					"hcid": "Sneaky Snacker1",
-					"name": "Sneaky Snacker",
-					"set": "SFT",
-					"collector_number": "327",
-					"image": "https://cards.scryfall.io/large/front/0/e/0e3aedae-e4bb-48e3-9f8b-bea0430df306.jpg",
-					"type_line": "Creature — Faerie Rogue",
 					"component": "self"
 				}
 			]
