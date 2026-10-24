@@ -1,6 +1,9 @@
 // https://github.com/Cockatrice/Cockatrice/wiki/Custom-Cards-&-Sets
-import { DOMParser, XMLSerializer } from 'xmldom';
+import { DOMParser, XMLSerializer } from '@xmldom/xmldom';
 import { allSetsList, HCSet, SetCode } from '@hellfall/shared/types';
+
+type XmlDocument = ReturnType<DOMParser['parseFromString']>;
+type XmlElement = ReturnType<XmlDocument['createElement']>;
 import { CockCardProps } from './cockTypes';
 import {
   CardMap,
@@ -14,19 +17,19 @@ import { prettifyXml } from './prettifyXml';
 import { toTitleCase } from '../textHandling';
 import { getSet, toSetNumber } from '../setDateHandling';
 
-type RecursiveChild = (Node | RecursiveChild)[];
+type RecursiveChild = (XmlElement | RecursiveChild)[];
 
 /**
  * Recursively applies nodes to a parent node
  * @param parent parent node
  * @param children child nodes
  */
-export const recursiveAdoption = (parent: Node, children: RecursiveChild) => {
+export const recursiveAdoption = (parent: XmlElement, children: RecursiveChild) => {
   for (let i = 0; i < children.length; i++) {
     if (children[i] instanceof Array) {
-      recursiveAdoption(children[i - 1] as Node, children[i] as RecursiveChild);
+      recursiveAdoption(children[i - 1] as XmlElement, children[i] as RecursiveChild);
     } else {
-      parent.appendChild(children[i] as Node);
+      parent.appendChild(children[i] as XmlElement);
     }
   }
 };
@@ -100,7 +103,11 @@ export const toCockCube = ({
     '<cockatrice_carddatabase version="2"/>',
     'application/xml'
   );
-  xmlDoc.documentElement.setAttribute('version', '4');
+  const root = xmlDoc.documentElement;
+  if (!root) {
+    throw new Error('cockatrice template missing root element');
+  }
+  root.setAttribute('version', '4');
 
   const setsElement = xmlDoc.createElement('sets');
   /**
@@ -128,7 +135,7 @@ export const toCockCube = ({
 
   const cardsElement = xmlDoc.createElement('cards');
 
-  recursiveAdoption(xmlDoc.documentElement, [setsElement, cardsElement]);
+  recursiveAdoption(root, [setsElement, cardsElement]);
 
   /**
    * Appends a cockatrice card to the document
@@ -219,7 +226,7 @@ export const toCockCube = ({
         fourcb.textContent = 'legal';
         prop.appendChild(fourcb);
       }
-      const maybeElements: HTMLElement[] = [];
+      const maybeElements: XmlElement[] = [];
       if (entry.token) {
         const token = xmlDoc.createElement('token');
         token.textContent = '1';
