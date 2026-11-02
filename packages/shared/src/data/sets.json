@@ -791,9 +791,10 @@
 				"SCL_09",
 				"SCL_10",
 				"SCL_11",
-				"SCL_12"
+				"SCL_12",
+				"SCL_13"
 			],
-			"card_count": 64,
+			"card_count": 69,
 			"filename": "scl.svg"
 		},
 		{
@@ -1003,6 +1004,17 @@
 		},
 		{
 			"object": "set",
+			"id": "cc0c8aa5-994c-4dd2-b7fc-d2146a5b4fcb",
+			"code": "SCL_13",
+			"name": "Scube Lair Drop: Spooky Season",
+			"description": "Spooky Season",
+			"set_type": "lair",
+			"released_at": "2026-10-22",
+			"parent_set_code": "SCL",
+			"card_count": 5
+		},    
+		{
+			"object": "set",
 			"id": "b65627ea-38e8-4b8a-85cf-7a1997f8322b",
 			"code": "HCV",
 			"name": "Hellscube V(eto)",
@@ -1027,7 +1039,7 @@
 				"HCV_HDH",
 				"HCV_SOH"
 			],
-			"card_count": 943,
+			"card_count": 950,
 			"filename": "hcv.svg"
 		},
 		{
