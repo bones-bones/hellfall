@@ -2657,12 +2657,24 @@
     {
       "filename": "hybrid/two/misc/PinkG.svg",
       "symbol": "Pink/G",
-      "english": "one pink or Green mana",
+      "english": "one pink or green mana",
       "represents_mana": true,
       "mana_value": 1,
       "colors": [
         "Pink",
         "G"
+      ],
+      "hybrid": true
+    },
+    {
+      "filename": "hybrid/two/misc/YellowR.svg",
+      "symbol": "Yellow/R",
+      "english": "one yellow or red mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "Yellow",
+        "R"
       ],
       "hybrid": true
     },
@@ -3543,6 +3555,13 @@
       "filename": "symbols/emoji/thegarfieldshowlogo.png",
       "symbol": "thegarfieldshowlogo.png",
       "english": "thegarfieldshowlogo.png",
+      "represents_mana": false,
+      "no_shadow": true
+    },
+    {
+      "filename": "symbols/emoji/rustymetalpipe.png",
+      "symbol": "rustymetalpipe",
+      "english": "rustymetalpipe",
       "represents_mana": false,
       "no_shadow": true
     }
