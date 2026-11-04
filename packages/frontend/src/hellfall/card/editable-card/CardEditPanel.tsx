@@ -52,6 +52,11 @@ const IMAGE_URL_KEYS = new Set<ImageTarget['imageProp']>([
 
 const COLLAPSED_NAME_KEYS = new Set(['flavor_name', 'export_name']);
 
+const ORACLE_TEXT_CHARS = [
+  { char: '—', label: 'em dash' },
+  { char: '•', label: 'bullet' },
+] as const;
+
 function isImageUrlKey(key: string): key is ImageTarget['imageProp'] {
   return IMAGE_URL_KEYS.has(key as ImageTarget['imageProp']);
 }
@@ -532,6 +537,23 @@ function FieldEditor({
               ?
             </HelpButton>
           )}
+          {config.key === 'oracle_text' && (
+            <OracleCharHelpers>
+              {ORACLE_TEXT_CHARS.map(({ char, label }) => (
+                <OracleCharButton
+                  key={char}
+                  type="button"
+                  title={`Copy ${label}`}
+                  aria-label={`Copy ${label}`}
+                  onClick={() => {
+                    void navigator.clipboard.writeText(char);
+                  }}
+                >
+                  {char}
+                </OracleCharButton>
+              ))}
+            </OracleCharHelpers>
+          )}
         </LabelRow>
         {showExplanation && config.explanation && (
           <ExplanationText>{config.explanation}</ExplanationText>
@@ -698,6 +720,33 @@ const FieldRow = createStyledDiv(fieldRowStyles, 'FieldRow');
 
 const labelRowStyles = createStyles({ display: 'flex', alignItems: 'center', gap: 4 });
 const LabelRow = createStyledDiv(labelRowStyles, 'LabelRow');
+
+const oracleCharHelpersStyles = createStyles({
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: 4,
+  marginLeft: 'auto',
+});
+const OracleCharHelpers = createStyledDiv(oracleCharHelpersStyles, 'OracleCharHelpers');
+
+const oracleCharButtonStyles = createStyles({
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  minWidth: 22,
+  height: 22,
+  padding: '0 6px',
+  border: '1px solid #ccc',
+  borderRadius: 2,
+  background: '#fafafa',
+  color: '#333',
+  fontSize: 14,
+  lineHeight: 1,
+  cursor: 'pointer',
+  userSelect: 'all',
+  '&:hover': { borderColor: '#888', background: '#f0f0f0' },
+});
+const OracleCharButton = createStyledButton(oracleCharButtonStyles, 'OracleCharButton');
 
 const labelStyles = createStyles({ fontSize: 12, fontWeight: 600, color: '#555' });
 const Label = createStyledLabel(labelStyles, 'Label');
