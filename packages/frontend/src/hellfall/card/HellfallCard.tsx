@@ -345,7 +345,7 @@ export const HellfallCard = ({
             </ButtonGroup>
           )}
         </PreviewSection>
-        {editing && (
+        {editing && canEditCard && (
           <EditSection data-side-by-side={sideBySide}>
             <CardEditPanel
               card={displayCard}
