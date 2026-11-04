@@ -1,4 +1,4 @@
-import { HCCard } from '@hellfall/shared/types';
+import { HCCard, HCRelatedCard } from '@hellfall/shared/types';
 
 export type FieldConfig = {
   key: string;
@@ -63,4 +63,6 @@ export type FieldType =
 export type EditFormState = {
   root: Record<string, string>;
   faces: Record<string, string>[];
+  /** Related cards / tokens (`all_parts`). */
+  all_parts: HCRelatedCard[];
 };

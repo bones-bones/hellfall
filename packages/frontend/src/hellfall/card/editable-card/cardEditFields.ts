@@ -7,16 +7,22 @@ import {
   HCFinish,
   HCFrame,
   HCImageStatus,
+  HCKind,
   HCLayout,
   HCLegality,
   HCLegalitiesField,
   HCRarity,
   HCObject,
+  HCRelatedCard,
   formatList,
   isLegalitiesField,
+  relatedComponent,
+  relatedComponentList,
 } from '@hellfall/shared/types';
 import {
   anyChange,
+  cardToRelatedCard,
+  createAllPartsChange,
   createCardFacesChange,
   createFaceChange,
   createRootChange,
@@ -163,6 +169,34 @@ function readFaceValue(card: HCCard.Any, faceIndex: number, key: string, type: F
   return serializeValue((face as Record<string, unknown>)[key], type);
 }
 
+/** Components offered when linking a related card (excludes `self`). */
+export const ADDABLE_RELATED_COMPONENTS = relatedComponentList.filter(
+  (c): c is Exclude<relatedComponent, 'self'> => c !== 'self'
+);
+
+/** Default `component` when adding a related part for the card being edited. */
+export function defaultRelatedComponent(card: HCCard.Any): relatedComponent {
+  const typeLine = card.type_line ?? '';
+  if (card.kind === HCKind.Token || typeLine.toLowerCase().startsWith('token')) {
+    return 'token_maker';
+  }
+  return 'token';
+}
+
+export function relatedPartFromCard(card: HCCard.Any, component: relatedComponent): HCRelatedCard {
+  return cardToRelatedCard(card, component);
+}
+
+function relatedPartsEqual(a: HCRelatedCard, b: HCRelatedCard): boolean {
+  return (
+    a.id === b.id &&
+    a.component === b.component &&
+    a.count === b.count &&
+    a.persistent === b.persistent &&
+    a.is_draft_partner === b.is_draft_partner
+  );
+}
+
 export function buildEditFormState(card: HCCard.Any): EditFormState {
   const faces = toFaces(card);
   return {
@@ -174,6 +208,7 @@ export function buildEditFormState(card: HCCard.Any): EditFormState {
         FACE_FIELDS.map(cfg => [cfg.key, readFaceValue(card, i, cfg.key, cfg.type)])
       )
     ),
+    all_parts: structuredClone(card.all_parts ?? []),
   };
 }
 
@@ -322,6 +357,25 @@ export function buildChangesFromForm(
   if (derivedRootColors !== originalRootColors) {
     const value = parseFieldValue(derivedRootColors, 'multi-enum');
     changes.push(createRootChange('add', 'colors', value as never));
+  }
+
+  const origParts = original.all_parts ?? [];
+  const currParts = current.all_parts ?? [];
+  const origById = new Map(origParts.map(part => [part.id, part]));
+  const currById = new Map(currParts.map(part => [part.id, part]));
+
+  for (const [id] of origById) {
+    if (!currById.has(id)) {
+      changes.push(createAllPartsChange('delete', id));
+    }
+  }
+  for (const [id, part] of currById) {
+    const before = origById.get(id);
+    if (!before) {
+      changes.push(createAllPartsChange('add', undefined, part));
+    } else if (!relatedPartsEqual(before, part)) {
+      changes.push(createAllPartsChange('add', undefined, part));
+    }
   }
 
   return changes;
