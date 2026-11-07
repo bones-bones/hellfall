@@ -3283,6 +3283,13 @@
       "phyrexian": true
     },
     {
+      "filename": "symbols/additional/blank.svg",
+      "symbol": "Blank",
+      "english": "one blank mana",
+      "represents_mana": true,
+      "mana_value": 1
+    },
+    {
       "filename": "symbols/base/T.svg",
       "symbol": "T",
       "english": "tap this permanent (if this is added, spend it in place of a cost requiring this)",
