@@ -6,6 +6,7 @@ import {
   HCFormat,
   HCLegality,
   HCLegalitiesField,
+  HCRelatedCard,
   formatList,
   isLegalitiesField,
 } from '@hellfall/shared/types';
@@ -38,6 +39,7 @@ import { addPendingFace } from './faces/addPendingFace.ts';
 import { FACE_FIELD_CONFIGS } from './constants.ts';
 import { getInvalidFields, isFieldValueInvalid } from './fieldValidation.ts';
 import { ImageUploadControl, type ImageTarget } from './ImageUploadControl.tsx';
+import { RelatedPartsEditor } from './RelatedPartsEditor.tsx';
 import { parseFieldValue } from './parseFieldValue.ts';
 import { semiSplit } from '@hellfall/shared/utils';
 
@@ -111,6 +113,10 @@ export const CardEditPanel = ({
       faces[faceIndex] = { ...faces[faceIndex], [key]: value };
       return { ...prev, faces };
     });
+  }, []);
+
+  const setAllParts = useCallback((all_parts: HCRelatedCard[]) => {
+    setForm(prev => ({ ...prev, all_parts }));
   }, []);
 
   const handleSubmit = async () => {
@@ -246,6 +252,14 @@ export const CardEditPanel = ({
               );
             })}
           </FacePanel>
+
+          <SectionTitle>Related cards & tokens</SectionTitle>
+          <RelatedPartsEditor
+            card={card}
+            parts={form.all_parts}
+            originalParts={original.all_parts}
+            onChange={setAllParts}
+          />
 
           {hasChanges && invalidFields.length > 0 && (
             <ValidationSummary>
