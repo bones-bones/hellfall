@@ -732,12 +732,13 @@
 			"name": "Hellscube 9",
 			"description": "All 720 cards from the vintage cube with purple.",
 			"set_type": "main",
+			"released_at": "2026-10-29",
 			"child_set_codes": [
 				"HC9_0",
 				"HC9_1",
 				"HCV_9"
 			],
-			"card_count": 723,
+			"card_count": 724,
 			"filename": "hc9.svg"
 		},
 		{
@@ -757,9 +758,10 @@
 			"code": "HC9_1",
 			"name": "Hellscube 9.1",
 			"description": "The last 360 cards of Hellscube 9.",
+			"released_at": "2026-10-29",
 			"set_type": "main",
 			"parent_set_code": "HC9",
-			"card_count": 347
+			"card_count": 348
 		},
 		{
 			"object": "set",
@@ -768,8 +770,9 @@
 			"name": "Hellscube V(eto).9",
 			"description": "Cards vetoed or slotsed from HC9.",
 			"set_type": "veto",
+			"released_at": "2026-10-29",
 			"parent_set_code": "HCV",
-			"card_count": 145
+			"card_count": 156
 		},
 		{
 			"object": "set",
@@ -792,9 +795,10 @@
 				"SCL_10",
 				"SCL_11",
 				"SCL_12",
-				"SCL_13"
+				"SCL_13",
+				"SCL_14"
 			],
-			"card_count": 74,
+			"card_count": 79,
 			"filename": "scl.svg"
 		},
 		{
@@ -838,7 +842,7 @@
 			"description": "Cards from SCL that didn't make it into the top 5 but got enough upvotes.",
 			"set_type": "veto",
 			"parent_set_code": "HCV",
-			"card_count": 108
+			"card_count": 126
 		},
 		{
 			"object": "set",
@@ -850,7 +854,7 @@
 			"child_set_codes": [
 				"HCV_HDH"
 			],
-			"card_count": 25,
+			"card_count": 32,
 			"filename": "hdh.svg"
 		},
 		{
@@ -924,6 +928,28 @@
 			"released_at": "2026-08-16",
 			"parent_set_code": "HCV",
 			"card_count": 46
+		},
+		{
+			"object": "set",
+			"id": "421e163a-b9ca-4412-a021-f8c4a9ecfdf5",
+			"code": "PL1",
+			"name": "Pile Cube",
+			"description": "720 Cards, No Veto Council, No Slots.",
+			"set_type": "side",
+			"child_set_codes": [
+				"HCV_PL1"
+			],
+			"card_count": 0
+		},
+		{
+			"object": "set",
+			"id": "9d2193be-e5b6-43c7-b055-4136a8043b72",
+			"code": "HCV_PL1",
+			"name": "Hellscube V(eto).PL1",
+			"description": "Cards vetoed or slotsed from PL1.",
+			"set_type": "veto",
+			"parent_set_code": "HCV",
+			"card_count": 0
 		},
 		{
 			"object": "set",
@@ -1013,6 +1039,17 @@
 			"parent_set_code": "SCL",
 			"card_count": 5
 		},    
+	    {
+			"object": "set",
+			"id": "6a53cd18-00fd-43f3-ac8e-fd0b7268cbfc",
+			"code": "SCL_14",
+			"name": "Scube Lair Drop: Hellscube 6 All-Stars",
+			"description": "Hellscube 6 All-Stars",
+			"set_type": "lair",
+			"released_at": "2026-11-10",
+			"parent_set_code": "SCL",
+			"card_count": 5
+		},  
 		{
 			"object": "set",
 			"id": "b65627ea-38e8-4b8a-85cf-7a1997f8322b",
@@ -1037,7 +1074,8 @@
 				"HCV_9",
 				"HCV_SCL",
 				"HCV_HDH",
-				"HCV_SOH"
+				"HCV_SOH",
+				"HCV_PL1"
 			],
 			"card_count": 950,
 			"filename": "hcv.svg"
