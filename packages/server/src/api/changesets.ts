@@ -12,12 +12,15 @@ import {} from './lib/requireDatabaseRoleAuth.ts';
 import { recardCardChangeset } from '../lib/cardAudit.ts';
 import {
   anyChange,
-  changeIsValid,
+  cardDocumentChangeErrorMessage,
   Changeset,
+  changeIsValid,
   getChangesetDiffRows,
+  isCardDocumentChange,
   isChangesetStatus,
   isValidV4UUID,
   normalizeChangeList,
+  setDerivedProps,
 } from '@hellfall/shared/utils';
 import type { HCCard } from '@hellfall/shared/types';
 import {
@@ -25,9 +28,11 @@ import {
   cardsCollection,
   cardToFirestore,
   changesetCollection,
+  fetchRelatedCardsFromCollection,
   firestoreToCard,
   getUpdateObject,
 } from '@hellfall/shared/utils/firestore';
+import { scheduleCatalogPublish } from '../lib/publishCatalog.ts';
 
 const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
 const changesetsCol: changesetCollection = db.collection(
@@ -61,7 +66,7 @@ async function loadCardForDiff(
 ): Promise<HCCard.Any | null> {
   if (cache.has(cardId)) return cache.get(cardId) ?? null;
   const snap = await cardsCol.doc(cardId).get();
-  const card = snap.exists ? firestoreToCard(snap.data()!) : null;
+  const card = snap.exists && snap.data() ? firestoreToCard(snap.data()!) : null;
   cache.set(cardId, card);
   return card;
 }
@@ -71,16 +76,28 @@ async function serializeChangesetForApi(
   docId: string | undefined,
   cardCache: Map<string, HCCard.Any | null>
 ): Promise<Changeset> {
-  if (normalizeChangeList(data.changes).length === 0) {
+  const changes = normalizeChangeList(data.changes);
+  if (changes.length === 0) {
     return serializeChangeset(data, docId);
   }
+  const cardDocChange = changes.find(isCardDocumentChange);
   const card = await loadCardForDiff(data.cardId, cardCache);
-  if (!card) return serializeChangeset(data, docId);
+  if (!card && !cardDocChange) return serializeChangeset(data, docId);
   try {
     return serializeChangeset(data, docId, getChangesetDiffRows(card, data.changes));
   } catch {
     return serializeChangeset(data, docId);
   }
+}
+
+function soleCardDocumentChange(changes: unknown):
+  | (ReturnType<typeof normalizeChangeList>[number] & {
+      location: 'card';
+    })
+  | null {
+  const list = normalizeChangeList(changes);
+  if (list.length !== 1 || !isCardDocumentChange(list[0])) return null;
+  return list[0];
 }
 
 async function readJsonBody(req: HandlerRequest): Promise<unknown> {
@@ -118,7 +135,7 @@ async function listChangesets(req: HandlerRequest, res: HandlerResponse): Promis
   res.end(JSON.stringify({ ok: true, changesets: items }));
 }
 
-/** POST /api/changesets — submit a new changeset */
+/** POST /api/changesets — submit a new changeset (database contributors / admins only) */
 async function createChangeset(req: HandlerRequest, res: HandlerResponse): Promise<void> {
   const auth = await requireDatabaseRoleAuth(req, res);
   if (!auth) {
@@ -134,41 +151,81 @@ async function createChangeset(req: HandlerRequest, res: HandlerResponse): Promi
     return;
   }
 
-  const cardId = typeof body.cardId === 'string' ? body.cardId.trim() : '';
-  if (!cardId || !isValidV4UUID(cardId) || cardId.length > 200) {
-    res.statusCode = 400;
-    res.end(JSON.stringify({ ok: false, reason: 'invalid_card_id' }));
-    return;
-  }
-  const card = firestoreToCard((await cardsCol.doc(cardId).get()).data()!);
-  if (!card) {
-    res.statusCode = 404;
-    res.end(JSON.stringify({ ok: false, reason: 'card not found' }));
-    return;
-  }
-  if (card.kind == 'scryfall') {
-    res.statusCode = 400;
-    res.end(JSON.stringify({ ok: false, reason: 'no_modifying_scryfall' }));
-    return;
-  }
   if (!Array.isArray(body.changes) || body.changes.length === 0) {
     res.statusCode = 400;
     res.end(JSON.stringify({ ok: false, reason: 'invalid_changes' }));
     return;
   }
-  try {
-    if ((body.changes as anyChange[]).some(change => !changeIsValid(card, change))) {
+
+  const cardDocChange = soleCardDocumentChange(body.changes);
+  let cardId = typeof body.cardId === 'string' ? body.cardId.trim() : '';
+  let card: HCCard.Any | null = null;
+
+  if (cardDocChange?.change_type === 'add') {
+    const payload = cardDocChange.card;
+    if (!payload) {
       res.statusCode = 400;
       res.end(JSON.stringify({ ok: false, reason: 'invalid_changes' }));
       return;
     }
-  } catch {
-    res.statusCode = 400;
-    res.end(JSON.stringify({ ok: false, reason: 'invalid_changes' }));
-    return;
+    cardId = cardId || payload.id;
+    if (!cardId || !isValidV4UUID(cardId) || cardId.length > 200 || payload.id !== cardId) {
+      res.statusCode = 400;
+      res.end(JSON.stringify({ ok: false, reason: 'invalid_card_id' }));
+      return;
+    }
+    const existing = await cardsCol.doc(cardId).get();
+    if (existing.exists) {
+      res.statusCode = 409;
+      res.end(JSON.stringify({ ok: false, reason: 'card_already_exists' }));
+      return;
+    }
+    const err = cardDocumentChangeErrorMessage(null, cardDocChange);
+    if (err) {
+      res.statusCode = 400;
+      res.end(JSON.stringify({ ok: false, reason: 'invalid_changes', detail: err }));
+      return;
+    }
+  } else {
+    if (!cardId || !isValidV4UUID(cardId) || cardId.length > 200) {
+      res.statusCode = 400;
+      res.end(JSON.stringify({ ok: false, reason: 'invalid_card_id' }));
+      return;
+    }
+    const cardSnap = await cardsCol.doc(cardId).get();
+    if (!cardSnap.exists) {
+      res.statusCode = 404;
+      res.end(JSON.stringify({ ok: false, reason: 'card not found' }));
+      return;
+    }
+    card = firestoreToCard(cardSnap.data()!);
+    if (card.kind == 'scryfall') {
+      res.statusCode = 400;
+      res.end(JSON.stringify({ ok: false, reason: 'no_modifying_scryfall' }));
+      return;
+    }
+    try {
+      if (cardDocChange) {
+        const err = cardDocumentChangeErrorMessage(card, cardDocChange);
+        if (err) {
+          res.statusCode = 400;
+          res.end(JSON.stringify({ ok: false, reason: 'invalid_changes', detail: err }));
+          return;
+        }
+      } else if ((body.changes as anyChange[]).some(change => !changeIsValid(card!, change))) {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ ok: false, reason: 'invalid_changes' }));
+        return;
+      }
+    } catch {
+      res.statusCode = 400;
+      res.end(JSON.stringify({ ok: false, reason: 'invalid_changes' }));
+      return;
+    }
   }
+
   const id = crypto.randomUUID();
-  const docRef = await changesetsCol.doc(id).set({
+  await changesetsCol.doc(id).set({
     id,
     cardId,
     status: 'pending',
@@ -244,6 +301,122 @@ async function getChangeset(
 //   };
 // }
 
+async function acceptCardDocumentChangeset(
+  cs: Changeset,
+  changesetId: string,
+  auth: { userId: string; username: string },
+  res: HandlerResponse
+): Promise<void> {
+  const cardDocChange = soleCardDocumentChange(cs.changes);
+  if (!cardDocChange) {
+    res.statusCode = 400;
+    res.end(JSON.stringify({ ok: false, reason: 'invalid_changes_format' }));
+    return;
+  }
+
+  const cardRef = cardsCol.doc(cs.cardId);
+
+  if (cardDocChange.change_type === 'add') {
+    const payload = cardDocChange.card;
+    if (!payload || payload.id !== cs.cardId) {
+      res.statusCode = 400;
+      res.end(JSON.stringify({ ok: false, reason: 'invalid_changes' }));
+      return;
+    }
+    const existing = await cardRef.get();
+    if (existing.exists) {
+      res.statusCode = 409;
+      res.end(JSON.stringify({ ok: false, reason: 'card_already_exists' }));
+      return;
+    }
+    const newCard = structuredClone(payload);
+    setDerivedProps(newCard, ['not-transcribed']);
+    await cardRef.set({
+      ...cardToFirestore(newCard),
+      last_modified: FieldValue.serverTimestamp(),
+    });
+  } else {
+    const fire = (await cardRef.get()).data();
+    const card = fire ? firestoreToCard(fire) : null;
+    if (!card) {
+      res.statusCode = 404;
+      res.end(JSON.stringify({ ok: false, reason: 'card not found' }));
+      return;
+    }
+    if (card.kind === 'scryfall') {
+      res.statusCode = 400;
+      res.end(JSON.stringify({ ok: false, reason: 'no_modifying_scryfall' }));
+      return;
+    }
+
+    // Audit before delete so the entry is written while the card doc still exists.
+    await recardCardChangeset({
+      cardId: cs.cardId,
+      action: 'changeset_accept',
+      field: null,
+      tag: null,
+      user: { userId: auth.userId, username: auth.username },
+      changes: { before: { changesetId, submittedBy: cs.submittedBy }, after: cs.changes },
+    });
+
+    const relatedMap = await fetchRelatedCardsFromCollection(card, cardsCol);
+    await Promise.all(
+      relatedMap.cards().map(async related => {
+        if (!related.all_parts?.length) return;
+        const nextParts = related.all_parts.filter(part => part.id !== card.id);
+        if (nextParts.length === related.all_parts.length) return;
+        if (nextParts.length) {
+          related.all_parts = nextParts;
+        } else {
+          delete related.all_parts;
+        }
+        await cardsCol.doc(related.id).set({
+          ...cardToFirestore(related),
+          last_modified: FieldValue.serverTimestamp(),
+        });
+      })
+    );
+
+    const pendingForCard = await changesetsCol
+      .where('cardId', '==', cs.cardId)
+      .where('status', '==', 'pending')
+      .get();
+    await Promise.all(
+      pendingForCard.docs
+        .filter(doc => doc.id !== changesetId)
+        .map(doc =>
+          doc.ref.update({
+            status: 'rejected',
+            resolvedAt: FieldValue.serverTimestamp(),
+            resolvedBy: { userId: auth.userId, username: auth.username },
+            rejectReason: 'card_deleted',
+          })
+        )
+    );
+
+    await cardRef.delete();
+    await changesetsCol.doc(changesetId).delete();
+    scheduleCatalogPublish();
+    res.statusCode = 200;
+    res.end(JSON.stringify({ ok: true, status: 'accepted' }));
+    return;
+  }
+
+  await recardCardChangeset({
+    cardId: cs.cardId,
+    action: 'changeset_accept',
+    field: null,
+    tag: null,
+    user: { userId: auth.userId, username: auth.username },
+    changes: { before: { changesetId, submittedBy: cs.submittedBy }, after: cs.changes },
+  });
+
+  await changesetsCol.doc(changesetId).delete();
+  scheduleCatalogPublish();
+  res.statusCode = 200;
+  res.end(JSON.stringify({ ok: true, status: 'accepted' }));
+}
+
 /** POST /api/changesets/:id/accept — admin accepts changeset */
 async function acceptChangeset(
   req: HandlerRequest,
@@ -267,15 +440,20 @@ async function acceptChangeset(
     return;
   }
 
-  const cardRef = cardsCol.doc(cs.cardId);
-  const fire = (await cardRef.get()).data();
-  const card = firestoreToCard(fire!);
-  const newCard = structuredClone(card);
   if (!Array.isArray(cs.changes)) {
     res.statusCode = 400;
     res.end(JSON.stringify({ ok: false, reason: 'invalid_changes_format' }));
     return;
   }
+
+  if (soleCardDocumentChange(cs.changes)) {
+    return acceptCardDocumentChangeset(cs, changesetId, auth, res);
+  }
+
+  const cardRef = cardsCol.doc(cs.cardId);
+  const fire = (await cardRef.get()).data();
+  const card = firestoreToCard(fire!);
+  const newCard = structuredClone(card);
   await applyFromCollection(newCard, cs.changes, cardsCol);
   const update = getUpdateObject(fire!, cardToFirestore(newCard));
   update.last_modified = FieldValue.serverTimestamp();
@@ -291,6 +469,7 @@ async function acceptChangeset(
   });
 
   await changesetsCol.doc(changesetId).delete();
+  scheduleCatalogPublish();
 
   res.statusCode = 200;
   res.end(JSON.stringify({ ok: true, status: 'accepted' }));

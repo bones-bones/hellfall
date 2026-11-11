@@ -22,6 +22,7 @@ import { useAtomValue } from 'jotai';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
 import { Link } from 'react-router-dom';
 import { CardFaceContainer } from './hellfall-card-components/CardFace.tsx';
+import { useSyncPendingChangesets } from '../hooks/usePendingChangesets.ts';
 type ImageEntry = { url: string; label: string; target: ImageTarget };
 
 const getImages = (card: HCCard.Any): ImageEntry[] => {
@@ -113,6 +114,7 @@ export const HellfallCard = ({
 
   const isContributor = Boolean(user?.isAdmin || user?.isContributor);
   const canEditCard = isContributor && persistEnabled && displayCard.kind !== 'scryfall';
+  const reloadPendingChangesets = useSyncPendingChangesets(displayCard.id);
   const windowRef = useRef<HTMLDivElement>(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const cards = useAtomValue(cardsAtom);
@@ -314,7 +316,10 @@ export const HellfallCard = ({
                 <>
                   <CardEditingControls
                     canEdit={canEditCard}
+                    cardId={displayCard.id}
+                    cardName={displayCard.name}
                     onEditStart={() => setEditingState(true)}
+                    onDeleteSubmitted={reloadPendingChangesets}
                   />
                   <TagSection displayCard={displayCard} tagControls={tagControls} />
                 </>

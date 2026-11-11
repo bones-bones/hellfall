@@ -254,5 +254,8 @@ export const applyChange = (card: HCCard.Any, change: anyChange): boolean => {
       return applyAllPartsChange(card, change);
     case 'tag':
       return applyTagChange(card, change);
+    case 'card':
+      // Whole-card create/delete is applied by the changeset accept path, not in-memory.
+      return false;
   }
 };

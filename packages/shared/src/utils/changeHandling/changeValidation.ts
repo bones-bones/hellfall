@@ -22,6 +22,7 @@ import {
 import {
   allPartsChange,
   anyChange,
+  cardDocumentChange,
   cardFacesChange,
   changeType,
   faceChange,
@@ -38,7 +39,7 @@ import {
 } from './changeTypes';
 import { arbAreEqual, listIncludesValue, xor } from '../listHandling';
 import { toFaces } from '../cardHandling';
-import { textEquals } from '../textHandling';
+import { isValidV4UUID, textEquals } from '../textHandling';
 import { splitFullTag } from './tagHandling';
 
 const isArtistArray = (value: any): value is [string, string] =>
@@ -662,6 +663,68 @@ export const tagChangeIsValid = (card: HCCard.Any, value: any): value is tagChan
   !tagChangeErrorMessage(card, value);
 
 /**
+ * Gets the error message for a whole-card create/delete change.
+ * For `add`, `card` may be null (target does not exist yet).
+ */
+export const cardDocumentChangeErrorMessage = (
+  card: HCCard.Any | null,
+  value: any
+): string | undefined => {
+  if (typeof value != 'object' || value == null) {
+    return `invalid change: change isn't an object`;
+  }
+  const change = value as cardDocumentChange;
+  if (change.location != 'card') {
+    return `invalid change: location == '${change.location}', which does not equal 'card'`;
+  }
+  if (!isChangeType(change.change_type)) {
+    return `invalid change: change_type == '${change.change_type}', which is invalid`;
+  }
+  if (change.change_type == 'delete') {
+    if (!card) {
+      return `invalid change: card to delete was not found`;
+    }
+    if (card.kind == 'scryfall') {
+      return `invalid change: cannot delete scryfall cards`;
+    }
+    return;
+  }
+  const payload = change.card;
+  if (!payload || typeof payload != 'object') {
+    return `invalid change: card add requires a card payload`;
+  }
+  if (typeof payload.name != 'string' || !payload.name.trim()) {
+    return `invalid change: card add requires a name`;
+  }
+  if (!Array.isArray(payload.creators) || payload.creators.length == 0) {
+    return `invalid change: card add requires creators`;
+  }
+  if (typeof payload.image != 'string' || !payload.image.trim()) {
+    return `invalid change: card add requires an image`;
+  }
+  if (payload.kind != 'token' && (typeof payload.set != 'string' || !payload.set.trim())) {
+    return `invalid change: card add requires a set`;
+  }
+  if (payload.kind == 'scryfall') {
+    return `invalid change: cannot create scryfall cards via changeset`;
+  }
+  if (!isValidV4UUID(payload.id)) {
+    return `invalid change: card add requires a valid id`;
+  }
+  if (!isValidV4UUID(payload.oracle_id)) {
+    return `invalid change: card add requires a valid oracle_id`;
+  }
+  if (card) {
+    return `invalid change: card already exists`;
+  }
+};
+
+export const cardDocumentChangeIsValid = (
+  card: HCCard.Any | null,
+  value: any
+): value is cardDocumentChange => !cardDocumentChangeErrorMessage(card, value);
+
+/**
  * Gets the error message for a given change
  * @param card card that the change would be applied to
  * @param value change to get the error message for
@@ -686,6 +749,8 @@ export const changeErrorMessage = (card: HCCard.Any, value: any) => {
       return allPartsChangeErrorMessage(card, change);
     case 'tag':
       return tagChangeErrorMessage(card, change);
+    case 'card':
+      return cardDocumentChangeErrorMessage(card, change);
   }
 };
 
