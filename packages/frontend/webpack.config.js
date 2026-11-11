@@ -54,7 +54,7 @@ function loadClientEnvFiles(basePath) {
 }
 
 /** Env keys exposed to browser bundles (Webpack 5 does not define process). */
-const BROWSER_ENV_KEYS = new Set(["CARD_CATALOG_URL"]);
+const BROWSER_ENV_KEYS = new Set(["CARD_CATALOG_URL", "DEV_LOGGED_IN"]);
 
 function getBrowserProcessEnv() {
   const env = {
