@@ -108,6 +108,9 @@ export const CardEditPanel = ({
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const changes = useMemo(() => buildChangesFromForm(card, original, form), [card, original, form]);
   const hasChanges = changes.length > 0 || (isCreate && Boolean(form.root.image?.trim()));
@@ -175,6 +178,36 @@ export const CardEditPanel = ({
       setError(e instanceof Error ? e.message : 'Failed to submit');
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!baseUrl || isCreate) return;
+    setDeleting(true);
+    setDeleteError(null);
+    try {
+      const res = await fetch(`${baseUrl}/api/changesets`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          cardId: card.id,
+          changes: [createCardDocumentChange('delete')],
+          comment: comment.trim() || `Delete ${card.name}`,
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.detail || data.reason || `Error ${res.status}`);
+      }
+      setConfirmingDelete(false);
+      setSuccess(true);
+      await reloadPendingChangesets();
+      onSubmitted?.();
+    } catch (e) {
+      setDeleteError(e instanceof Error ? e.message : 'Failed to submit delete');
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -353,15 +386,54 @@ export const CardEditPanel = ({
           </CommentRow>
           {error && <ErrorMsg size="small">{error}</ErrorMsg>}
           <ActionRow>
-            <SubmitButton disabled={!canSubmit || submitting} onClick={handleSubmit}>
+            <SubmitButton disabled={!canSubmit || submitting || deleting} onClick={handleSubmit}>
               {submitting
                 ? 'Submitting...'
                 : isCreate
                 ? 'Submit for approval'
                 : 'Submit for Review'}
             </SubmitButton>
-            <CancelButton onClick={onClose}>Cancel</CancelButton>
+            <CancelButton onClick={onClose} disabled={submitting || deleting}>
+              Cancel
+            </CancelButton>
           </ActionRow>
+
+          {!isCreate && (
+            <DangerZone>
+              <DangerTitle>Delete card</DangerTitle>
+              <DangerHint>
+                Proposes deleting this card. An approver must accept before it is removed.
+              </DangerHint>
+              {!confirmingDelete ? (
+                <ProposeDeleteButton
+                  type="button"
+                  disabled={submitting || deleting}
+                  onClick={() => setConfirmingDelete(true)}
+                >
+                  Propose Delete
+                </ProposeDeleteButton>
+              ) : (
+                <ConfirmDeleteRow>
+                  <ConfirmDeleteText>Submit delete for approval?</ConfirmDeleteText>
+                  <ConfirmDeleteButton
+                    type="button"
+                    disabled={deleting || submitting}
+                    onClick={handleDelete}
+                  >
+                    {deleting ? 'Submitting…' : 'Confirm delete'}
+                  </ConfirmDeleteButton>
+                  <CancelDeleteButton
+                    type="button"
+                    disabled={deleting}
+                    onClick={() => setConfirmingDelete(false)}
+                  >
+                    Back
+                  </CancelDeleteButton>
+                </ConfirmDeleteRow>
+              )}
+              {deleteError && <ErrorMsg size="small">{deleteError}</ErrorMsg>}
+            </DangerZone>
+          )}
         </Card.Body>
       </Card>
     </Panel>
@@ -1079,8 +1151,81 @@ const cancelButtonStyles = createStyles({
   cursor: 'pointer',
   background: '#fff',
   '&:hover': { borderColor: '#888' },
+  '&:disabled': { opacity: 0.4, cursor: 'default' },
 });
 const CancelButton = createStyledButton(cancelButtonStyles, 'CancelButton');
+
+const dangerZoneStyles = createStyles({
+  marginTop: 24,
+  paddingTop: 16,
+  borderTop: '1px solid #f0c0c0',
+});
+const DangerZone = createStyledDiv(dangerZoneStyles, 'DangerZone');
+
+const dangerTitleStyles = createStyles({
+  fontSize: 13,
+  fontWeight: 600,
+  color: '#a11',
+  marginBottom: 4,
+});
+const DangerTitle = createStyledDiv(dangerTitleStyles, 'DangerTitle');
+
+const dangerHintStyles = createStyles({
+  fontSize: 12,
+  color: '#666',
+  marginBottom: 8,
+});
+const DangerHint = createStyledDiv(dangerHintStyles, 'DangerHint');
+
+const proposeDeleteButtonStyles = createStyles({
+  padding: '4px 12px',
+  border: '1px solid #dc3545',
+  color: '#dc3545',
+  borderRadius: 2,
+  fontSize: 12,
+  cursor: 'pointer',
+  background: '#fff',
+  '&:hover:not(:disabled)': { background: '#fff5f5' },
+  '&:disabled': { opacity: 0.4, cursor: 'default' },
+});
+const ProposeDeleteButton = createStyledButton(proposeDeleteButtonStyles, 'ProposeDeleteButton');
+
+const confirmDeleteRowStyles = createStyles({
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: 8,
+  alignItems: 'center',
+});
+const ConfirmDeleteRow = createStyledDiv(confirmDeleteRowStyles, 'ConfirmDeleteRow');
+
+const confirmDeleteTextStyles = createStyles({
+  fontSize: 12,
+  color: '#555',
+});
+const ConfirmDeleteText = createStyledSpan(confirmDeleteTextStyles, 'ConfirmDeleteText');
+
+const confirmDeleteButtonStyles = createStyles({
+  padding: '4px 12px',
+  border: 'none',
+  borderRadius: 2,
+  fontSize: 12,
+  cursor: 'pointer',
+  background: '#dc3545',
+  color: '#fff',
+  '&:disabled': { opacity: 0.5, cursor: 'default' },
+});
+const ConfirmDeleteButton = createStyledButton(confirmDeleteButtonStyles, 'ConfirmDeleteButton');
+
+const cancelDeleteButtonStyles = createStyles({
+  padding: '4px 12px',
+  border: '1px solid #ccc',
+  borderRadius: 2,
+  fontSize: 12,
+  cursor: 'pointer',
+  background: '#fff',
+  '&:disabled': { opacity: 0.4, cursor: 'default' },
+});
+const CancelDeleteButton = createStyledButton(cancelDeleteButtonStyles, 'CancelDeleteButton');
 
 const closeButtonStyles = createStyles({
   background: 'transparent',
