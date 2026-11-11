@@ -20,12 +20,18 @@ export function ImageUploadControl({
   target,
   onReplaced,
   compact = false,
+  cardName,
+  /** When true, return the canonical GCS URL (create form). Edit keeps cache-bust for preview. */
+  persistCanonicalUrl = false,
 }: {
   cardId: string;
   target: ImageTarget;
   onReplaced: (url: string) => void;
   /** Shorter button label for use beside form fields. */
   compact?: boolean;
+  /** Used for GCS object naming on first upload (create / missing image). */
+  cardName?: string;
+  persistCanonicalUrl?: boolean;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
@@ -46,16 +52,23 @@ export function ImageUploadControl({
           imageBase64: dataUrl,
           faceIndex: target.faceIndex,
           imageProp: target.imageProp,
+          ...(cardName?.trim() ? { cardName: cardName.trim() } : {}),
         }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
         throw new Error(data.reason || `Error ${res.status}`);
       }
-      const cacheBusted = `${data.imageUrl}${
-        data.imageUrl.includes('?') ? '&' : '?'
-      }t=${Date.now()}`;
-      onReplaced(cacheBusted);
+      const imageUrl = String(data.imageUrl ?? '');
+      if (!imageUrl) {
+        throw new Error('missing_image_url');
+      }
+      if (persistCanonicalUrl) {
+        onReplaced(imageUrl);
+      } else {
+        const cacheBusted = `${imageUrl}${imageUrl.includes('?') ? '&' : '?'}t=${Date.now()}`;
+        onReplaced(cacheBusted);
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Upload failed');
     } finally {
