@@ -298,7 +298,8 @@ function buildFaceFromFormFields(
     const raw = fields[cfg.key] ?? '';
     if (!raw.trim() && cfg.type !== 'boolean') continue;
     const value = parseFieldValue(raw, cfg.type);
-    if (value === undefined && cfg.type !== 'boolean') continue;
+    // Omit unset booleans — `undefined` keys make `isCardFace` fail and drop face adds.
+    if (value === undefined) continue;
     (face as Record<string, unknown>)[cfg.key] = value;
   }
   return face;
@@ -425,24 +426,29 @@ export function buildCardFromCreateForm(
     }
   }
 
-  const faces = toFaces(card);
-  form.faces.forEach((faceForm, i) => {
-    const face = faces[i];
-    if (!face) return;
-    for (const key of CREATE_IMAGE_KEYS) {
-      if (!(key in faceForm)) continue;
-      const raw = faceForm[key]?.trim() ?? '';
-      if (raw) {
-        (face as Record<string, unknown>)[key] = raw;
-      } else {
-        delete (face as Record<string, unknown>)[key];
+  // Single-faced cards use the root object as face 0 (`toFaces` → `[card]`).
+  // Only sync face image fields when faces are distinct objects.
+  if ('card_faces' in card && Array.isArray(card.card_faces)) {
+    form.faces.forEach((faceForm, i) => {
+      const face = card.card_faces[i];
+      if (!face) return;
+      for (const key of CREATE_IMAGE_KEYS) {
+        if (!(key in faceForm)) continue;
+        const raw = faceForm[key]?.trim() ?? '';
+        if (raw) {
+          (face as Record<string, unknown>)[key] = raw;
+        } else {
+          delete (face as Record<string, unknown>)[key];
+        }
       }
-    }
-  });
+    });
+  }
 
-  const hcid = options?.hcid?.trim() || form.root.name?.trim() || card.name;
+  const hcid = options?.hcid?.trim();
   if (hcid) {
     card.hcid = hcid;
+  } else {
+    delete (card as { hcid?: string }).hcid;
   }
 
   if (card.image && (!card.image_status || card.image_status === HCImageStatus.Missing)) {

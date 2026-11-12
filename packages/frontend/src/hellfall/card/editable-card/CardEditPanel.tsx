@@ -91,7 +91,7 @@ export const CardEditPanel = ({
   onClose: () => void;
   onSubmitted?: () => void;
   mode?: 'edit' | 'create';
-  /** Create-only: optional HCID override (defaults to name). */
+  /** Create-only: optional HCID override (server mints when omitted). */
   hcid?: string;
   onHcidChange?: (value: string) => void;
   /** When true, omit the floating edit chrome (used inside Add Card page). */
@@ -249,7 +249,7 @@ export const CardEditPanel = ({
                 <StyledInput
                   value={hcid ?? ''}
                   onChange={e => onHcidChange?.(e.target.value)}
-                  placeholder="defaults to name"
+                  placeholder="assigned on accept if blank"
                 />
               </FormField>
             </>

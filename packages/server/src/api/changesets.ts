@@ -33,6 +33,7 @@ import {
   getUpdateObject,
 } from '@hellfall/shared/utils/firestore';
 import { scheduleCatalogPublish } from '../lib/publishCatalog.ts';
+import { mintHcidForNewCard } from './postcard/hcid.ts';
 
 const db = new Firestore({ databaseId: env.FIRESTORE_DATABASE_ID });
 const changesetsCol: changesetCollection = db.collection(
@@ -330,6 +331,9 @@ async function acceptCardDocumentChangeset(
       return;
     }
     const newCard = structuredClone(payload);
+    if (!String(newCard.hcid ?? '').trim()) {
+      newCard.hcid = await mintHcidForNewCard(cardsCol, newCard.kind, newCard.name ?? '');
+    }
     setDerivedProps(newCard, ['not-transcribed']);
     await cardRef.set({
       ...cardToFirestore(newCard),
