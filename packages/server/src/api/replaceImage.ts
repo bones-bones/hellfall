@@ -1,7 +1,11 @@
 import { Firestore } from '@google-cloud/firestore';
 import { HCCard } from '@hellfall/shared/types';
 import { withCors, env, HandlerRequest, HandlerResponse, requireDatabaseRoleAuth } from './lib';
-import { isImageGcsConfigured, replaceImageBase64AtGcsUrl } from '../lib/imageGcs.ts';
+import {
+  isImageGcsConfigured,
+  replaceImageBase64AtGcsUrl,
+  uploadImageBase64ToGcs,
+} from '../lib/imageGcs.ts';
 import { cardsCollection, firestoreToCard } from '@hellfall/shared/utils/firestore';
 import { isValidV4UUID, toFaces } from '@hellfall/shared/utils';
 
@@ -51,7 +55,20 @@ function resolveImageUrl(
   return undefined;
 }
 
-/** POST /api/cards/:cardId/image — replace image bytes at the existing GCS URL. */
+function objectNameForUpload(
+  cardName: string,
+  imageProp: ImageProp,
+  faceIndex: number | undefined
+): string {
+  const base = cardName.trim() || 'image';
+  if (imageProp === 'image' && (faceIndex == null || faceIndex === 0)) {
+    return base;
+  }
+  const faceSuffix = faceIndex != null && faceIndex > 0 ? `-f${faceIndex}` : '';
+  return `${base}-${imageProp}${faceSuffix}`;
+}
+
+/** POST /api/cards/:cardId/image — replace existing GCS image, or upload a new one for create. */
 export const replaceImageHandler = async (
   req: HandlerRequest,
   res: HandlerResponse,
@@ -82,7 +99,12 @@ export const replaceImageHandler = async (
     return;
   }
 
-  let body: { imageBase64?: string; faceIndex?: number; imageProp?: string };
+  let body: {
+    imageBase64?: string;
+    faceIndex?: number;
+    imageProp?: string;
+    cardName?: string;
+  };
   try {
     body = (await readJsonBody(req)) as typeof body;
   } catch {
@@ -102,32 +124,37 @@ export const replaceImageHandler = async (
     typeof body.faceIndex === 'number' && Number.isInteger(body.faceIndex) && body.faceIndex >= 0
       ? body.faceIndex
       : undefined;
+  const cardName =
+    typeof body.cardName === 'string' && body.cardName.trim() ? body.cardName.trim() : 'image';
 
   const snap = await cardsCol.doc(cardId).get();
-  if (!snap.exists) {
-    res.statusCode = 404;
-    res.end(JSON.stringify({ ok: false, reason: 'card_not_found' }));
-    return;
-  }
-
-  const card = firestoreToCard(snap.data()!);
-  if (card.kind === 'scryfall') {
+  const card = snap.exists ? firestoreToCard(snap.data()!) : null;
+  if (card?.kind === 'scryfall') {
     res.statusCode = 400;
     res.end(JSON.stringify({ ok: false, reason: 'no_modifying_scryfall' }));
     return;
   }
 
-  const existingUrl = resolveImageUrl(card, faceIndex, imageProp);
-  if (!existingUrl) {
-    res.statusCode = 400;
-    res.end(JSON.stringify({ ok: false, reason: 'no_existing_image' }));
-    return;
-  }
+  const existingUrl = card ? resolveImageUrl(card, faceIndex, imageProp) : undefined;
 
   try {
-    const imageUrl = await replaceImageBase64AtGcsUrl(body.imageBase64, existingUrl);
+    let imageUrl: string;
+    let created = false;
+    if (existingUrl) {
+      imageUrl = await replaceImageBase64AtGcsUrl(body.imageBase64, existingUrl);
+    } else {
+      // Create flow (no Firestore doc yet) or first image on an existing card.
+      imageUrl = await uploadImageBase64ToGcs(
+        body.imageBase64,
+        cardId,
+        objectNameForUpload(cardName, imageProp, faceIndex)
+      );
+      created = true;
+    }
     res.statusCode = 200;
-    res.end(JSON.stringify({ ok: true, imageUrl, imageProp, faceIndex: faceIndex ?? null }));
+    res.end(
+      JSON.stringify({ ok: true, imageUrl, imageProp, faceIndex: faceIndex ?? null, created })
+    );
   } catch (err) {
     const reason = err instanceof Error ? err.message : 'replace_failed';
     const status = reason === 'not_gcs_url' ? 400 : 500;

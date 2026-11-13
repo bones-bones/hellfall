@@ -40,6 +40,11 @@ export const Header = () => {
                 {user.username}
                 {/* <Link to="/settings">{user.username}</Link> */}
               </span>
+              {(user.isAdmin || user.isContributor) && (
+                <>
+                  , <Link to="/cards/new">add card</Link>
+                </>
+              )}
               {(user.isAdmin || user.isContributor || user.canSyncCatalog) && (
                 <>
                   , <Link to="/review">changes</Link>

@@ -1,6 +1,7 @@
 import type {
   faceElementValueType,
   facePropType,
+  HCCard,
   HCCardFace,
   HCRelatedCard,
   rootElementValueType,
@@ -15,9 +16,9 @@ const changeTypeList = ['add', 'delete'] as const;
 export type changeType = (typeof changeTypeList)[number];
 export const isChangeType = (value: any): value is changeType => changeTypeList.includes(value);
 
-const changeLocationList = ['root', 'face', 'card_faces', 'all_parts', 'tag'] as const;
+const changeLocationList = ['root', 'face', 'card_faces', 'all_parts', 'tag', 'card'] as const;
 /**
- * The location of the change. 'root' is for changes that affect the card root; 'face' is for changes that would affect a face; 'card_faces' is for changes that add/delete card faces; 'all_parts' is for changes to related cards; and 'tag' is for tag changes
+ * The location of the change. 'root' is for changes that affect the card root; 'face' is for changes that would affect a face; 'card_faces' is for changes that add/delete card faces; 'all_parts' is for changes to related cards; 'tag' is for tag changes; and 'card' is for whole-card create/delete
  *
  * For single-faced cards, changes use root and/or face depending on whether their prop would be on the root or the face of a multifaced card
  */
@@ -559,6 +560,36 @@ export const createTagChange = (
 };
 
 /**
+ * Whole-card create or delete. Target card is `Changeset.cardId`.
+ * For `add`, `card` is the payload to create; for `delete`, `card` is omitted.
+ */
+export type cardDocumentChange = {
+  location: 'card';
+  change_type: changeType;
+  card?: HCCard.Any;
+};
+
+export const createCardDocumentChange = (
+  change_type: changeType,
+  card?: HCCard.Any
+): cardDocumentChange => {
+  const change: cardDocumentChange = {
+    location: 'card',
+    change_type,
+  };
+  if (card != undefined) {
+    change.card = card;
+  }
+  return change;
+};
+
+export const isCardDocumentChange = (value: unknown): value is cardDocumentChange =>
+  typeof value === 'object' &&
+  value != null &&
+  (value as cardDocumentChange).location === 'card' &&
+  isChangeType((value as cardDocumentChange).change_type);
+
+/**
  * Any change
  */
 export type anyChange =
@@ -566,7 +597,8 @@ export type anyChange =
   | faceChange<changeType, faceChangeablePropType<changeType>>
   | cardFacesChange
   | allPartsChange
-  | tagChange;
+  | tagChange
+  | cardDocumentChange;
 
 export const statusFilterList = ['pending', 'accepted', 'rejected', 'all'] as const;
 
@@ -608,7 +640,7 @@ export interface Changeset {
 
 export const changeTypeOrder = ['delete', 'add'];
 // export const locationOrder = ['tag', 'card_faces', 'all_parts', 'face', 'root'];
-export const locationOrder = ['tag', 'card_faces', 'all_parts', 'root', 'face'];
+export const locationOrder = ['card', 'tag', 'card_faces', 'all_parts', 'root', 'face'];
 
 /**
  * Sort function that sorts changes based on location, then change_type
