@@ -734,6 +734,16 @@
       ]
     },
     {
+      "filename": "mono/misc/Blood.svg",
+      "symbol": "BloodMana",
+      "english": "one blood mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "C"
+      ]
+    },
+    {
       "filename": "mono/misc/Ultraviolet.svg",
       "symbol": "Ultraviolet",
       "english": "one ultraviolet mana",
@@ -761,6 +771,26 @@
       "mana_value": 1,
       "colors": [
         "Lime"
+      ]
+    },
+    {
+      "filename": "mono/misc/Cyan.svg",
+      "symbol": "Cyan",
+      "english": "one cyan mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "Cyan"
+      ]
+    },
+    {
+      "filename": "mono/misc/Magenta.svg",
+      "symbol": "Magenta",
+      "english": "one magenta mana",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "Magenta"
       ]
     },
     {
@@ -2983,6 +3013,22 @@
       "hybrid": true
     },
     {
+      "filename": "hybrid/multi/anypip.png",
+      "symbol": "Any",
+      "english": "one mana of any color",
+      "represents_mana": true,
+      "mana_value": 1,
+      "colors": [
+        "W",
+        "U",
+        "P",
+        "B",
+        "R",
+        "G"
+      ],
+      "hybrid": true
+    },
+    {
       "filename": "hybrid/multi/antiU.svg",
       "symbol": "antiU",
       "english": "one mana of any color other than blue",
@@ -3548,6 +3594,13 @@
       "filename": "symbols/emoji/dreadmaw.png",
       "symbol": "dreadmaw",
       "english": "dreadmaw",
+      "represents_mana": false,
+      "no_shadow": true
+    },
+    {
+      "filename": "symbols/emoji/happylandeline.png",
+      "symbol": "happylandeline",
+      "english": "happylandeline",
       "represents_mana": false,
       "no_shadow": true
     },
