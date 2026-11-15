@@ -400,6 +400,126 @@ async function loadExistingDocs(
   return map;
 }
 
+type FirestoreDupeReport = {
+  hcidCollisions: Map<string, string[]>;
+  embeddedIdCollisions: Map<string, string[]>;
+  docIdFieldMismatches: { docId: string; fieldId: string; hcid?: string; name?: string }[];
+  orphans: { docId: string; hcid?: string; name?: string; jsonMatchId?: string }[];
+};
+
+function targetDocIdForOrphanDoc(
+  orphanId: string,
+  orphan: firestoreCard,
+  indexes: CardIndexes
+): string | undefined {
+  const { docIdByHcid, docIdsByName } = indexes;
+  if (docIdByHcid.has(orphanId)) return docIdByHcid.get(orphanId);
+
+  const hcid = orphan.hcid?.trim();
+  if (hcid && docIdByHcid.has(hcid)) return docIdByHcid.get(hcid);
+
+  const name = orphan.name?.trim();
+  const nameCandidates = name ? docIdsByName.get(name) : undefined;
+  if (nameCandidates?.length === 1) return nameCandidates[0];
+
+  return undefined;
+}
+
+function analyzeFirestoreDupes(
+  existingById: Map<string, firestoreCard>,
+  cardMap: CardMap,
+  indexes: CardIndexes
+): FirestoreDupeReport {
+  const byHcid = new Map<string, string[]>();
+  const byEmbeddedId = new Map<string, string[]>();
+  const docIdFieldMismatches: FirestoreDupeReport['docIdFieldMismatches'] = [];
+  const orphans: FirestoreDupeReport['orphans'] = [];
+
+  for (const [docId, data] of existingById) {
+    const hcid = data.hcid?.trim();
+    if (hcid) {
+      const list = byHcid.get(hcid) ?? [];
+      list.push(docId);
+      byHcid.set(hcid, list);
+    }
+    const fieldId = data.id?.trim();
+    if (fieldId) {
+      const list = byEmbeddedId.get(fieldId) ?? [];
+      list.push(docId);
+      byEmbeddedId.set(fieldId, list);
+    }
+    if (fieldId && fieldId !== docId) {
+      docIdFieldMismatches.push({
+        docId,
+        fieldId,
+        hcid: data.hcid,
+        name: data.name,
+      });
+    }
+    if (!cardMap.has(docId)) {
+      orphans.push({
+        docId,
+        hcid: data.hcid,
+        name: data.name,
+        jsonMatchId: targetDocIdForOrphanDoc(docId, data, indexes),
+      });
+    }
+  }
+
+  const hcidCollisions = new Map<string, string[]>();
+  for (const [hcid, docIds] of byHcid) {
+    if (docIds.length > 1) hcidCollisions.set(hcid, docIds);
+  }
+  const embeddedIdCollisions = new Map<string, string[]>();
+  for (const [id, docIds] of byEmbeddedId) {
+    if (docIds.length > 1) embeddedIdCollisions.set(id, docIds);
+  }
+
+  return { hcidCollisions, embeddedIdCollisions, docIdFieldMismatches, orphans };
+}
+
+function printFirestoreDupeReport(report: FirestoreDupeReport) {
+  console.log('\n--- Duplicate / consistency report ---');
+  console.log(`Duplicate hcid (2+ docs): ${report.hcidCollisions.size}`);
+  for (const [hcid, docIds] of [...report.hcidCollisions.entries()].slice(0, 20)) {
+    console.log(`  hcid=${hcid}: ${docIds.join(', ')}`);
+  }
+  if (report.hcidCollisions.size > 20) {
+    console.log(`  ... and ${report.hcidCollisions.size - 20} more`);
+  }
+
+  console.log(`Duplicate embedded id (2+ docs): ${report.embeddedIdCollisions.size}`);
+  for (const [id, docIds] of [...report.embeddedIdCollisions.entries()].slice(0, 20)) {
+    console.log(`  id=${id}: ${docIds.join(', ')}`);
+  }
+  if (report.embeddedIdCollisions.size > 20) {
+    console.log(`  ... and ${report.embeddedIdCollisions.size - 20} more`);
+  }
+
+  console.log(`Doc path id ≠ field id: ${report.docIdFieldMismatches.length}`);
+  for (const row of report.docIdFieldMismatches.slice(0, 20)) {
+    const label = row.name ? ` (${row.name})` : '';
+    console.log(`  doc=${row.docId} field.id=${row.fieldId}${label}`);
+  }
+  if (report.docIdFieldMismatches.length > 20) {
+    console.log(`  ... and ${report.docIdFieldMismatches.length - 20} more`);
+  }
+
+  const orphansWithJsonMatch = report.orphans.filter(o => o.jsonMatchId);
+  const orphansUnmatched = report.orphans.filter(o => !o.jsonMatchId);
+  console.log(`\nOrphan docs (prune candidates): ${report.orphans.length}`);
+  console.log(`  With JSON match by hcid/name: ${orphansWithJsonMatch.length}`);
+  console.log(`  No JSON match: ${orphansUnmatched.length}`);
+  for (const o of report.orphans.slice(0, 30)) {
+    const match = o.jsonMatchId ? ` → keep JSON doc ${o.jsonMatchId}` : ' → review manually';
+    const label = o.name ? ` ${o.name}` : '';
+    console.log(`  ${o.docId}${label}${match}`);
+  }
+  if (report.orphans.length > 30) {
+    console.log(`  ... and ${report.orphans.length - 30} more`);
+  }
+}
+
 async function main() {
   const { dryRun, dbPath, pruneOrphans, reportOnly, limit } = parseArgs(process.argv.slice(2));
 
@@ -519,6 +639,14 @@ async function main() {
   const orphanCount = [...(existingById?.keys() ?? [])].filter(id => !cardMap.has(id)).length;
   console.log(`Firestore orphans (id not in JSON): ${orphanCount}`);
   warnStaleAllPartRefs(stalePartRefs);
+
+  const dupeReport = analyzeFirestoreDupes(existingById, cardMap, indexes);
+  printFirestoreDupeReport(dupeReport);
+
+  const jsonMissingInFirestore = [...cardMap.keys()].filter(id => !existingById.has(id)).length;
+  if (jsonMissingInFirestore > 0) {
+    console.log(`JSON cards missing in Firestore: ${jsonMissingInFirestore}`);
+  }
 
   if (reportOnly) return;
 
