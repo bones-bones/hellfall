@@ -3,7 +3,13 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAtomValue } from 'jotai';
 import { ErrorText } from './ErrorText';
-import { Changeset, ChangesetStatus, formatChangesetDiffValue } from '@hellfall/shared/utils';
+import {
+  Changeset,
+  ChangesetStatus,
+  formatChangesetDiffValue,
+  isCardDocumentChange,
+  normalizeChangeList,
+} from '@hellfall/shared/utils';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import {
   createStenciledSpan,
@@ -36,9 +42,23 @@ export function ChangesetCard({
 }) {
   const cards = useAtomValue(cardsAtom);
   const card = cards.get(cs.cardId);
-  const preview = card ? previewCardWithChanges(card, cs.changes) : undefined;
+  const cardDocChange = normalizeChangeList(cs.changes).find(isCardDocumentChange);
+  const addPayload = cardDocChange?.change_type === 'add' ? cardDocChange.card : undefined;
+  const preview = addPayload
+    ? addPayload
+    : card
+    ? previewCardWithChanges(card, cs.changes)
+    : undefined;
   const imageUrl = preview ? getPrimaryImageUrl(preview) : undefined;
-  const cardName = preview?.name ?? card?.name;
+  const cardName =
+    preview?.name ??
+    card?.name ??
+    (cardDocChange?.change_type === 'delete' ? `Delete ${cs.cardId}` : undefined);
+  const isCardCreate = cardDocChange?.change_type === 'add';
+  const isCardDelete = cardDocChange?.change_type === 'delete';
+  const linkTarget = addPayload
+    ? `/review/${encodeURIComponent(cs.cardId)}`
+    : `/card/${encodeURIComponent(card?.hcid ?? cs.cardId)}`;
 
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -72,7 +92,7 @@ export function ChangesetCard({
             />
           )}
           {imageUrl ? (
-            <ImageLink to={`/card/${encodeURIComponent(card?.hcid ?? cs.cardId)}`}>
+            <ImageLink to={linkTarget}>
               <CardThumbnail
                 src={imageUrl}
                 alt={cardName ?? cs.cardId}
@@ -80,16 +100,16 @@ export function ChangesetCard({
               />
             </ImageLink>
           ) : (
-            <ImagePlaceholder>No image</ImagePlaceholder>
+            <ImagePlaceholder>{isCardDelete ? 'Delete' : 'No image'}</ImagePlaceholder>
           )}
           <ContentColumn>
             <HeaderRow>
               <div>
                 <strong>
-                  <Link to={`/card/${encodeURIComponent(card?.hcid ?? cs.cardId)}`}>
-                    {cardName ?? cs.cardId}
-                  </Link>
+                  <Link to={linkTarget}>{cardName ?? cs.cardId}</Link>
                 </strong>
+                {isCardCreate && <DocBadge data_kind="add">new card</DocBadge>}
+                {isCardDelete && <DocBadge data_kind="delete">delete card</DocBadge>}
                 <StatusBadge data_status={cs.status}>{cs.status}</StatusBadge>
               </div>
               <Meta>
@@ -239,6 +259,29 @@ interface StatusProps extends TextProps {
   data_status?: ChangesetStatus;
 }
 const StatusBadge = createStenciledSpan<StatusProps>(statusBadgeStencil, 'StatusBadge');
+
+const docBadgeStencil = createStencil({
+  vars: {},
+  base: {
+    display: 'inline-block',
+    marginLeft: 8,
+    padding: '2px 8px',
+    borderRadius: 4,
+    fontSize: 12,
+    fontWeight: 600,
+    textTransform: 'uppercase',
+  },
+  modifiers: {
+    data_kind: {
+      add: { background: '#e3f2fd', color: '#0d47a1' },
+      delete: { background: '#fce4ec', color: '#880e4f' },
+    },
+  },
+});
+interface DocBadgeProps extends TextProps {
+  data_kind?: 'add' | 'delete';
+}
+const DocBadge = createStenciledSpan<DocBadgeProps>(docBadgeStencil, 'DocBadge');
 
 const metaStyles = createStyles({
   fontSize: 13,

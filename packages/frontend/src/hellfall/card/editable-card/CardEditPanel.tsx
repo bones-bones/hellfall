@@ -29,8 +29,10 @@ import {
   DEFAULT_LEGALITIES,
   LEGALITY_FORMAT_LABELS,
   ROOT_FIELD_CONFIGS,
+  buildCardFromCreateForm,
   buildEditFormState,
   buildChangesFromForm,
+  createFormMissingRequired,
   sumFaceColors,
 } from './cardEditFields.ts';
 import { useSyncPendingChangesets } from '../../hooks/usePendingChangesets.ts';
@@ -41,7 +43,7 @@ import { getInvalidFields, isFieldValueInvalid } from './fieldValidation.ts';
 import { ImageUploadControl, type ImageTarget } from './ImageUploadControl.tsx';
 import { RelatedPartsEditor } from './RelatedPartsEditor.tsx';
 import { parseFieldValue } from './parseFieldValue.ts';
-import { semiSplit } from '@hellfall/shared/utils';
+import { createCardDocumentChange, semiSplit } from '@hellfall/shared/utils';
 
 const IMAGE_URL_KEYS = new Set<ImageTarget['imageProp']>([
   'image',
@@ -80,14 +82,25 @@ export const CardEditPanel = ({
   card,
   onClose,
   onSubmitted,
+  mode = 'edit',
+  hcid,
+  onHcidChange,
+  hideChrome = false,
 }: {
   card: HCCard.Any;
   onClose: () => void;
   onSubmitted?: () => void;
+  mode?: 'edit' | 'create';
+  /** Create-only: optional HCID override (server mints when omitted). */
+  hcid?: string;
+  onHcidChange?: (value: string) => void;
+  /** When true, omit the floating edit chrome (used inside Add Card page). */
+  hideChrome?: boolean;
 }) => {
+  const isCreate = mode === 'create';
   const { user } = useAuth();
   const baseUrl = getAuthApiUrl();
-  const reloadPendingChangesets = useSyncPendingChangesets(card.id);
+  const reloadPendingChangesets = useSyncPendingChangesets(isCreate ? undefined : card.id);
   const original = useMemo(() => buildEditFormState(card), [card]);
   const [form, setForm] = useState<EditFormState>(() => structuredClone(original));
   const [activeFace, setActiveFace] = useState(0);
@@ -95,13 +108,19 @@ export const CardEditPanel = ({
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const changes = useMemo(() => buildChangesFromForm(card, original, form), [card, original, form]);
-  const hasChanges = changes.length > 0;
+  const hasChanges = changes.length > 0 || (isCreate && Boolean(form.root.image?.trim()));
   const faceCount = form.faces.length;
   const isMulti = 'card_faces' in card || form.faces.length > original.faces.length;
   const invalidFields = useMemo(() => getInvalidFields(card, form, isMulti), [card, form, isMulti]);
-  const canSubmit = hasChanges && invalidFields.length === 0;
+  const createMissing = isCreate ? createFormMissingRequired(form, card.kind) : null;
+  const canSubmit = isCreate
+    ? !createMissing && invalidFields.length === 0
+    : hasChanges && invalidFields.length === 0;
 
   const setRootField = useCallback((key: string, value: string) => {
     setForm(prev => ({ ...prev, root: { ...prev.root, [key]: value } }));
@@ -124,27 +143,71 @@ export const CardEditPanel = ({
     setSubmitting(true);
     setError(null);
     try {
+      const body = isCreate
+        ? {
+            cardId: card.id,
+            changes: [
+              createCardDocumentChange(
+                'add',
+                buildCardFromCreateForm(card, original, form, { hcid })
+              ),
+            ],
+            comment: comment.trim() || undefined,
+          }
+        : {
+            cardId: card.id,
+            changes,
+            comment: comment.trim() || undefined,
+          };
+      const res = await fetch(`${baseUrl}/api/changesets`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.detail || data.reason || `Error ${res.status}`);
+      }
+      setSuccess(true);
+      if (!isCreate) {
+        await reloadPendingChangesets();
+      }
+      onSubmitted?.();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Failed to submit');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!baseUrl || isCreate) return;
+    setDeleting(true);
+    setDeleteError(null);
+    try {
       const res = await fetch(`${baseUrl}/api/changesets`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           cardId: card.id,
-          changes,
-          comment: comment.trim() || undefined,
+          changes: [createCardDocumentChange('delete')],
+          comment: comment.trim() || `Delete ${card.name}`,
         }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        throw new Error(data.reason || `Error ${res.status}`);
+        throw new Error(data.detail || data.reason || `Error ${res.status}`);
       }
+      setConfirmingDelete(false);
       setSuccess(true);
       await reloadPendingChangesets();
       onSubmitted?.();
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Failed to submit');
+      setDeleteError(e instanceof Error ? e.message : 'Failed to submit delete');
     } finally {
-      setSubmitting(false);
+      setDeleting(false);
     }
   };
 
@@ -155,7 +218,9 @@ export const CardEditPanel = ({
       <Panel>
         <Card>
           <Card.Body>
-            <SuccessMessage size="small">Change submitted for review.</SuccessMessage>
+            <SuccessMessage size="small">
+              {isCreate ? 'New card submitted for review.' : 'Change submitted for review.'}
+            </SuccessMessage>
             <CloseButton onClick={onClose}>Close</CloseButton>
           </Card.Body>
         </Card>
@@ -167,10 +232,28 @@ export const CardEditPanel = ({
     <Panel>
       <Card>
         <Card.Body>
-          <PanelHeader>
-            <PanelTitle>Edit Card</PanelTitle>
-            <CloseButton onClick={onClose}>&times;</CloseButton>
-          </PanelHeader>
+          {!hideChrome && (
+            <PanelHeader>
+              <PanelTitle>{isCreate ? 'New Card' : 'Edit Card'}</PanelTitle>
+              <CloseButton onClick={onClose}>&times;</CloseButton>
+            </PanelHeader>
+          )}
+
+          {isCreate && (
+            <>
+              <Hint>
+                Fill in the card fields below. Submitting creates a pending changeset for approval.
+              </Hint>
+              <FormField orientation="vertical">
+                <Label>HCID (optional)</Label>
+                <StyledInput
+                  value={hcid ?? ''}
+                  onChange={e => onHcidChange?.(e.target.value)}
+                  placeholder="assigned on accept if blank"
+                />
+              </FormField>
+            </>
+          )}
 
           <SectionTitle>Card-level fields</SectionTitle>
           <RootFields
@@ -178,6 +261,8 @@ export const CardEditPanel = ({
             form={form}
             original={original}
             setRootField={setRootField}
+            editableImages={isCreate}
+            allowInitialUpload={isCreate}
           />
 
           <SectionTitle>Face fields</SectionTitle>
@@ -235,6 +320,9 @@ export const CardEditPanel = ({
                         cardId={card.id}
                         faceIndex={activeFace}
                         rootImageUrl={form.root.image ?? ''}
+                        cardName={form.root.name ?? ''}
+                        editableImages={isCreate}
+                        allowInitialUpload={isCreate}
                         onChange={v => setFaceField(activeFace, cfg.key, v)}
                       />
                     ))}
@@ -245,6 +333,9 @@ export const CardEditPanel = ({
                       cardId={card.id}
                       faceIndex={activeFace}
                       rootImageUrl={form.root.image ?? ''}
+                      cardName={form.root.name ?? ''}
+                      editableImages={isCreate}
+                      allowInitialUpload={isCreate}
                       onChange={(key, v) => setFaceField(activeFace, key, v)}
                     />
                   </FieldsGrid>
@@ -261,7 +352,7 @@ export const CardEditPanel = ({
             onChange={setAllParts}
           />
 
-          {hasChanges && invalidFields.length > 0 && (
+          {(hasChanges || isCreate) && invalidFields.length > 0 && (
             <ValidationSummary>
               <SummaryTitle>Fix before submitting</SummaryTitle>
               {invalidFields.map(({ scope, faceIndex, config, message }) => (
@@ -272,7 +363,13 @@ export const CardEditPanel = ({
               ))}
             </ValidationSummary>
           )}
-          {hasChanges && (
+          {isCreate && createMissing && (
+            <ValidationSummary>
+              <SummaryTitle>Required for new cards</SummaryTitle>
+              <ValidationItem>{createMissing}</ValidationItem>
+            </ValidationSummary>
+          )}
+          {!isCreate && hasChanges && (
             <ChangeSummary>
               <SummaryTitle>{changes.length} change(s) to submit</SummaryTitle>
             </ChangeSummary>
@@ -283,17 +380,60 @@ export const CardEditPanel = ({
               <StyledInput
                 value={comment}
                 onChange={e => setComment(e.target.value)}
-                placeholder="Describe your change..."
+                placeholder={isCreate ? 'Describe the new card...' : 'Describe your change...'}
               />
             </FormField>
           </CommentRow>
           {error && <ErrorMsg size="small">{error}</ErrorMsg>}
           <ActionRow>
-            <SubmitButton disabled={!canSubmit || submitting} onClick={handleSubmit}>
-              {submitting ? 'Submitting...' : 'Submit for Review'}
+            <SubmitButton disabled={!canSubmit || submitting || deleting} onClick={handleSubmit}>
+              {submitting
+                ? 'Submitting...'
+                : isCreate
+                ? 'Submit for approval'
+                : 'Submit for Review'}
             </SubmitButton>
-            <CancelButton onClick={onClose}>Cancel</CancelButton>
+            <CancelButton onClick={onClose} disabled={submitting || deleting}>
+              Cancel
+            </CancelButton>
           </ActionRow>
+
+          {!isCreate && (
+            <DangerZone>
+              <DangerTitle>Delete card</DangerTitle>
+              <DangerHint>
+                Proposes deleting this card. An approver must accept before it is removed.
+              </DangerHint>
+              {!confirmingDelete ? (
+                <ProposeDeleteButton
+                  type="button"
+                  disabled={submitting || deleting}
+                  onClick={() => setConfirmingDelete(true)}
+                >
+                  Propose Delete
+                </ProposeDeleteButton>
+              ) : (
+                <ConfirmDeleteRow>
+                  <ConfirmDeleteText>Submit delete for approval?</ConfirmDeleteText>
+                  <ConfirmDeleteButton
+                    type="button"
+                    disabled={deleting || submitting}
+                    onClick={handleDelete}
+                  >
+                    {deleting ? 'Submitting…' : 'Confirm delete'}
+                  </ConfirmDeleteButton>
+                  <CancelDeleteButton
+                    type="button"
+                    disabled={deleting}
+                    onClick={() => setConfirmingDelete(false)}
+                  >
+                    Back
+                  </CancelDeleteButton>
+                </ConfirmDeleteRow>
+              )}
+              {deleteError && <ErrorMsg size="small">{deleteError}</ErrorMsg>}
+            </DangerZone>
+          )}
         </Card.Body>
       </Card>
     </Panel>
@@ -305,11 +445,15 @@ function RootFields({
   form,
   original,
   setRootField,
+  editableImages = false,
+  allowInitialUpload = false,
 }: {
-  cardId: string;
+  cardId?: string;
   form: EditFormState;
   original: EditFormState;
   setRootField: (key: string, value: string) => void;
+  editableImages?: boolean;
+  allowInitialUpload?: boolean;
 }) {
   const { main, collapsed } = partitionCollapsedNameFields(ROOT_FIELD_CONFIGS);
   const derivedColors = sumFaceColors(form.faces);
@@ -327,6 +471,9 @@ function RootFields({
             changed={changed}
             invalid={isFieldValueInvalid(cfg, value)}
             cardId={cardId}
+            cardName={form.root.name ?? ''}
+            editableImages={editableImages}
+            allowInitialUpload={allowInitialUpload}
             onChange={v => setRootField(cfg.key, v)}
           />
         );
@@ -336,6 +483,9 @@ function RootFields({
         values={form.root}
         originals={original.root}
         cardId={cardId}
+        cardName={form.root.name ?? ''}
+        editableImages={editableImages}
+        allowInitialUpload={allowInitialUpload}
         onChange={(key, v) => setRootField(key, v)}
       />
     </FieldsGrid>
@@ -349,14 +499,20 @@ function CollapsibleNameFields({
   cardId,
   faceIndex,
   rootImageUrl,
+  cardName,
+  editableImages = false,
+  allowInitialUpload = false,
   onChange,
 }: {
   fields: FieldConfig[];
   values: Record<string, string>;
   originals: Record<string, string>;
-  cardId: string;
+  cardId?: string;
   faceIndex?: number;
   rootImageUrl?: string;
+  cardName?: string;
+  editableImages?: boolean;
+  allowInitialUpload?: boolean;
   onChange: (key: string, value: string) => void;
 }) {
   const [expanded, setExpanded] = useState(false);
@@ -383,6 +539,9 @@ function CollapsibleNameFields({
             cardId={cardId}
             faceIndex={faceIndex}
             rootImageUrl={rootImageUrl}
+            cardName={cardName}
+            editableImages={editableImages}
+            allowInitialUpload={allowInitialUpload}
             onChange={v => onChange(cfg.key, v)}
           />
         ))}
@@ -510,6 +669,9 @@ function FieldEditor({
   cardId,
   faceIndex,
   rootImageUrl,
+  cardName,
+  editableImages = false,
+  allowInitialUpload = false,
   onChange,
 }: {
   config: FieldConfig;
@@ -520,19 +682,25 @@ function FieldEditor({
   faceIndex?: number;
   /** Card-level image URL; used to lock side-1 image when it matches. */
   rootImageUrl?: string;
+  cardName?: string;
+  /** Create mode: allow typing image URL fields that are normally upload-only. */
+  editableImages?: boolean;
+  /** Create mode: show upload even when no GCS URL exists yet. */
+  allowInitialUpload?: boolean;
   onChange: (value: string) => void;
 }) {
   const [showExplanation, setShowExplanation] = useState(false);
   const fieldId = `field-${config.key}`;
-  const isReadOnly = config.readOnly === true;
+  const isImageField = isImageUrlKey(config.key);
+  const isReadOnly = config.readOnly === true && !(editableImages && isImageField);
   // Side 1 image sharing the card URL is managed via the card-level Image URL upload.
   const side1SharesCardImage =
     faceIndex === 0 && config.key === 'image' && !!rootImageUrl && value === rootImageUrl;
   const canUpload =
     !!cardId &&
-    isImageUrlKey(config.key) &&
-    value.includes('storage.googleapis.com') &&
-    !side1SharesCardImage;
+    isImageField &&
+    !side1SharesCardImage &&
+    (allowInitialUpload || value.includes('storage.googleapis.com'));
   return (
     <FieldRow>
       <FormField orientation="vertical">
@@ -652,17 +820,23 @@ function FieldEditor({
             onChange={e => onChange(e.target.value)}
           />
         )}
-        {canUpload && isImageUrlKey(config.key) && (
+        {canUpload && isImageField && (
           <ImageUploadControl
             cardId={cardId}
             compact
+            cardName={cardName || undefined}
+            persistCanonicalUrl={allowInitialUpload}
             target={{
               label: config.label,
               faceIndex,
-              imageProp: config.key,
+              imageProp: config.key as ImageTarget['imageProp'],
             }}
-            onReplaced={() => {
-              /* GCS object replaced in place; URL field stays read-only. */
+            onReplaced={url => {
+              if (allowInitialUpload) {
+                onChange(url);
+                return;
+              }
+              /* Edit: GCS object replaced in place; URL field stays read-only. */
             }}
           />
         )}
@@ -673,6 +847,13 @@ function FieldEditor({
 
 const panelStyles = createStyles({ marginTop: 12, width: '100%' });
 const Panel = createStyledDiv(panelStyles, 'Panel');
+
+const hintStyles = createStyles({
+  color: '#555',
+  fontSize: 13,
+  marginBottom: 12,
+});
+const Hint = createStyledDiv(hintStyles, 'CreateCardHint');
 
 const panelHeaderStyles = createStyles({
   display: 'flex',
@@ -970,8 +1151,81 @@ const cancelButtonStyles = createStyles({
   cursor: 'pointer',
   background: '#fff',
   '&:hover': { borderColor: '#888' },
+  '&:disabled': { opacity: 0.4, cursor: 'default' },
 });
 const CancelButton = createStyledButton(cancelButtonStyles, 'CancelButton');
+
+const dangerZoneStyles = createStyles({
+  marginTop: 24,
+  paddingTop: 16,
+  borderTop: '1px solid #f0c0c0',
+});
+const DangerZone = createStyledDiv(dangerZoneStyles, 'DangerZone');
+
+const dangerTitleStyles = createStyles({
+  fontSize: 13,
+  fontWeight: 600,
+  color: '#a11',
+  marginBottom: 4,
+});
+const DangerTitle = createStyledDiv(dangerTitleStyles, 'DangerTitle');
+
+const dangerHintStyles = createStyles({
+  fontSize: 12,
+  color: '#666',
+  marginBottom: 8,
+});
+const DangerHint = createStyledDiv(dangerHintStyles, 'DangerHint');
+
+const proposeDeleteButtonStyles = createStyles({
+  padding: '4px 12px',
+  border: '1px solid #dc3545',
+  color: '#dc3545',
+  borderRadius: 2,
+  fontSize: 12,
+  cursor: 'pointer',
+  background: '#fff',
+  '&:hover:not(:disabled)': { background: '#fff5f5' },
+  '&:disabled': { opacity: 0.4, cursor: 'default' },
+});
+const ProposeDeleteButton = createStyledButton(proposeDeleteButtonStyles, 'ProposeDeleteButton');
+
+const confirmDeleteRowStyles = createStyles({
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: 8,
+  alignItems: 'center',
+});
+const ConfirmDeleteRow = createStyledDiv(confirmDeleteRowStyles, 'ConfirmDeleteRow');
+
+const confirmDeleteTextStyles = createStyles({
+  fontSize: 12,
+  color: '#555',
+});
+const ConfirmDeleteText = createStyledSpan(confirmDeleteTextStyles, 'ConfirmDeleteText');
+
+const confirmDeleteButtonStyles = createStyles({
+  padding: '4px 12px',
+  border: 'none',
+  borderRadius: 2,
+  fontSize: 12,
+  cursor: 'pointer',
+  background: '#dc3545',
+  color: '#fff',
+  '&:disabled': { opacity: 0.5, cursor: 'default' },
+});
+const ConfirmDeleteButton = createStyledButton(confirmDeleteButtonStyles, 'ConfirmDeleteButton');
+
+const cancelDeleteButtonStyles = createStyles({
+  padding: '4px 12px',
+  border: '1px solid #ccc',
+  borderRadius: 2,
+  fontSize: 12,
+  cursor: 'pointer',
+  background: '#fff',
+  '&:disabled': { opacity: 0.4, cursor: 'default' },
+});
+const CancelDeleteButton = createStyledButton(cancelDeleteButtonStyles, 'CancelDeleteButton');
 
 const closeButtonStyles = createStyles({
   background: 'transparent',

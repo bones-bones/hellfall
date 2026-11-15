@@ -12,6 +12,7 @@ import {
   createStyledButton,
   createStyledDiv,
   createStyledInput,
+  createStyledLink,
   createStyledSpan,
 } from '../styling';
 import { Heading } from '@workday/canvas-kit-react';
@@ -373,11 +374,16 @@ export const ReviewPage = () => {
     <PageContainer>
       <HeaderRow>
         <Heading size="medium">Changes</Heading>
-        {canSyncCatalog && (
-          <SyncButton disabled={syncBusy} onClick={handleCatalogSync}>
-            {syncBusy ? `Syncing catalog… ${syncElapsedSec}s` : 'Sync catalog to site'}
-          </SyncButton>
-        )}
+        <HeaderActions>
+          {(user.isAdmin || user.isContributor) && (
+            <AddCardLink to="/cards/new">Add card</AddCardLink>
+          )}
+          {canSyncCatalog && (
+            <SyncButton disabled={syncBusy} onClick={handleCatalogSync}>
+              {syncBusy ? `Syncing catalog… ${syncElapsedSec}s` : 'Sync catalog to site'}
+            </SyncButton>
+          )}
+        </HeaderActions>
       </HeaderRow>
       {syncMessage && <SyncMessage>{syncMessage}</SyncMessage>}
       {syncError && <ErrorText size="large">{syncError}</ErrorText>}
@@ -447,6 +453,20 @@ const headerRowStyles = createStyles({
   marginBottom: 8,
 });
 const HeaderRow = createStyledDiv(headerRowStyles, 'HeaderRow');
+
+const headerActionsStyles = createStyles({
+  display: 'flex',
+  alignItems: 'center',
+  gap: 12,
+  flexWrap: 'wrap',
+});
+const HeaderActions = createStyledDiv(headerActionsStyles, 'HeaderActions');
+
+const addCardLinkStyles = createStyles({
+  fontSize: 14,
+  fontWeight: 600,
+});
+const AddCardLink = createStyledLink(addCardLinkStyles, 'AddCardLink');
 
 const syncButtonStyles = createStyles({
   padding: '6px 14px',

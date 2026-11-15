@@ -1,0 +1,13 @@
+---
+description: PR and review screenshots must be real UI captures
+alwaysApply: true
+---
+
+# Real screenshots only
+
+When a PR, review, or docs need pictures of the product UI:
+
+- Capture **real** screenshots from a running build (local or deployed) via the browser.
+- **Never** use AI-generated mockups, Illustrator-style fakes, or invented branding/icons.
+- If the app cannot be run to capture a screen, omit pictures and say so—do not substitute generated images.
+- Delete any previously committed fake screenshots rather than leaving them in the PR.

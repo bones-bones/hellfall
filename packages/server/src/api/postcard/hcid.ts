@@ -56,7 +56,7 @@ async function hcidIsAvailable(cardsCol: cardsCollection, hcid: string): Promise
   return !cardMap.hasHCID(hcid) && !(await findByHcid(cardsCol, hcid));
 }
 
-async function mintNumericHcid(cardsCol: cardsCollection): Promise<string> {
+export async function mintNumericHcid(cardsCol: cardsCollection): Promise<string> {
   let candidate = catalogMaxNumericHcid() + 1;
   for (;;) {
     const hcid = String(candidate);
@@ -97,7 +97,7 @@ async function maxTokenHcidSuffix(cardsCol: cardsCollection, baseName: string): 
   return maxSuffix;
 }
 
-async function mintTokenHcid(cardsCol: cardsCollection, baseName: string): Promise<string> {
+export async function mintTokenHcid(cardsCol: cardsCollection, baseName: string): Promise<string> {
   let suffix = (await maxTokenHcidSuffix(cardsCol, baseName)) + 1;
   for (;;) {
     const hcid = `${baseName}${suffix}`;
@@ -106,6 +106,19 @@ async function mintTokenHcid(cardsCol: cardsCollection, baseName: string): Promi
     }
     suffix++;
   }
+}
+
+/** Mint an HCID for a brand-new card/token document (changeset accept, etc.). */
+export async function mintHcidForNewCard(
+  cardsCol: cardsCollection,
+  kind: string,
+  name: string
+): Promise<string> {
+  const { name: baseName } = splitMasterpiecePostcard(name ?? '');
+  if (kind === 'token') {
+    return mintTokenHcid(cardsCol, baseName || 'Token');
+  }
+  return mintNumericHcid(cardsCol);
 }
 
 /** Resolve upsert key: use provided hcid, reuse an existing print, or mint a new one. */

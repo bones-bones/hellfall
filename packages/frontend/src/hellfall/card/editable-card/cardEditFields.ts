@@ -21,6 +21,7 @@ import {
 } from '@hellfall/shared/types';
 import {
   anyChange,
+  applyChanges,
   cardToRelatedCard,
   createAllPartsChange,
   createCardFacesChange,
@@ -34,6 +35,7 @@ import {
   orderColors,
   rootChangeablePropType,
   rootChangeableProps,
+  setDerivedProps,
   toFaces,
 } from '@hellfall/shared/utils';
 import { pushFaceScalarChange } from './faces';
@@ -296,7 +298,8 @@ function buildFaceFromFormFields(
     const raw = fields[cfg.key] ?? '';
     if (!raw.trim() && cfg.type !== 'boolean') continue;
     const value = parseFieldValue(raw, cfg.type);
-    if (value === undefined && cfg.type !== 'boolean') continue;
+    // Omit unset booleans — `undefined` keys make `isCardFace` fail and drop face adds.
+    if (value === undefined) continue;
     (face as Record<string, unknown>)[cfg.key] = value;
   }
   return face;
@@ -393,4 +396,77 @@ export function createBlankFace(card: HCCard.Any, index: number): HCCardFace.Mul
     oracle_text: '',
     colors: [] as HCColors,
   } as HCCardFace.MultiFaced;
+}
+
+const CREATE_IMAGE_KEYS = [
+  'image',
+  'still_image',
+  'rotated_image',
+  'print_image',
+  'still_print_image',
+  'rotated_print_image',
+] as const;
+
+/** Merge create-form edits onto a stub card for a whole-card add changeset. */
+export function buildCardFromCreateForm(
+  stub: HCCard.Any,
+  original: EditFormState,
+  form: EditFormState,
+  options?: { hcid?: string }
+): HCCard.Any {
+  const card = structuredClone(stub);
+  applyChanges(card, buildChangesFromForm(card, original, form));
+
+  for (const key of CREATE_IMAGE_KEYS) {
+    const raw = form.root[key]?.trim() ?? '';
+    if (raw) {
+      (card as Record<string, unknown>)[key] = raw;
+    } else {
+      delete (card as Record<string, unknown>)[key];
+    }
+  }
+
+  // Single-faced cards use the root object as face 0 (`toFaces` → `[card]`).
+  // Only sync face image fields when faces are distinct objects.
+  if ('card_faces' in card && Array.isArray(card.card_faces)) {
+    form.faces.forEach((faceForm, i) => {
+      const face = card.card_faces[i];
+      if (!face) return;
+      for (const key of CREATE_IMAGE_KEYS) {
+        if (!(key in faceForm)) continue;
+        const raw = faceForm[key]?.trim() ?? '';
+        if (raw) {
+          (face as Record<string, unknown>)[key] = raw;
+        } else {
+          delete (face as Record<string, unknown>)[key];
+        }
+      }
+    });
+  }
+
+  const hcid = options?.hcid?.trim();
+  if (hcid) {
+    card.hcid = hcid;
+  } else {
+    delete (card as { hcid?: string }).hcid;
+  }
+
+  if (card.image && (!card.image_status || card.image_status === HCImageStatus.Missing)) {
+    card.image_status = HCImageStatus.HighRes;
+  }
+
+  setDerivedProps(card, ['not-transcribed']);
+  return card;
+}
+
+/** Create-mode required checks for the card document change validator. */
+export function createFormMissingRequired(
+  form: EditFormState,
+  kind: HCCard.Any['kind']
+): string | null {
+  if (!form.root.name?.trim()) return 'Name is required';
+  if (!form.root.creators?.trim()) return 'Creators are required';
+  if (!form.root.image?.trim()) return 'Image URL is required';
+  if (kind !== 'token' && !form.root.set?.trim()) return 'Set is required';
+  return null;
 }

@@ -23,6 +23,8 @@ export function changeFieldLabel(change: anyChange): string {
       return `Face ${change.index + 1}`;
     case 'all_parts':
       return change.part_prop ? humanizeField(change.part_prop) : 'Related card';
+    case 'card':
+      return change.change_type === 'add' ? 'Create card' : 'Delete card';
   }
 }
 
@@ -58,12 +60,51 @@ function readChangeDisplayValue(card: HCCard.Any, change: anyChange): unknown {
       }
       return card.all_parts;
     }
+    case 'card':
+      return card.name ?? card.hcid ?? card.id;
   }
 }
 
+function cardDocumentDiffRows(
+  card: HCCard.Any | null,
+  change: Extract<anyChange, { location: 'card' }>
+): ChangesetDiffRow[] {
+  if (change.change_type === 'add' && change.card) {
+    const payload = change.card;
+    return [
+      { field: 'Create card', before: undefined, after: payload.name },
+      { field: 'Set', before: undefined, after: payload.set },
+      { field: 'Creators', before: undefined, after: payload.creators },
+      { field: 'Kind', before: undefined, after: payload.kind },
+      { field: 'Image', before: undefined, after: payload.image },
+      { field: 'HCID', before: undefined, after: payload.hcid },
+    ];
+  }
+  if (change.change_type === 'delete' && card) {
+    return [
+      {
+        field: 'Delete card',
+        before: card.name ?? card.hcid ?? card.id,
+        after: undefined,
+      },
+    ];
+  }
+  return [{ field: changeFieldLabel(change), before: undefined, after: undefined }];
+}
+
 /** Field-level before/after rows for a changeset against the current card state. */
-export function getChangesetDiffRows(card: HCCard.Any, changes: unknown): ChangesetDiffRow[] {
+export function getChangesetDiffRows(
+  card: HCCard.Any | null,
+  changes: unknown
+): ChangesetDiffRow[] {
   const normalized = normalizeChangeList(changes);
+  const cardDoc = normalized.find(change => change.location === 'card');
+  if (cardDoc) {
+    return cardDocumentDiffRows(card, cardDoc);
+  }
+  if (!card) {
+    return [];
+  }
   const working = structuredClone(card);
   const rows: ChangesetDiffRow[] = [];
 
