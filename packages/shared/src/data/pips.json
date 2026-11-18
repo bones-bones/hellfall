@@ -3348,6 +3348,12 @@
       "represents_mana": false
     },
     {
+      "filename": "symbols/additional/devilT.svg",
+      "symbol": "devilT",
+      "english": "tap a permanent you don't control.",
+      "represents_mana": false
+    },
+    {
       "filename": "symbols/base/A.svg",
       "symbol": "A",
       "english": "an acorn counter",
