@@ -3604,6 +3604,19 @@
       "no_shadow": true
     },
     {
+      "filename": "symbols/emoji/mummy.png",
+      "symbol": "mummy",
+      "english": "mummy",
+      "represents_mana": false,
+      "no_shadow": true
+    },
+    {
+      "filename": "symbols/emoji/hotdog.png",
+      "symbol": "hotdog",
+      "english": "hotdog",
+      "no_shadow": true
+    },
+    {
       "filename": "symbols/emoji/happylandeline.png",
       "symbol": "happylandeline",
       "english": "happylandeline",
