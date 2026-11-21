@@ -21,6 +21,7 @@ export enum HCColor {
   Beige = 'Beige',
   Grey = 'Grey',
   Lime = 'Lime',
+  Magenta = 'Magenta',
 }
 
 export const colorList: HCColors = Object.values(HCColor);
@@ -51,6 +52,7 @@ export const HCMiscColors: HCColors = [
   'Beige',
   'Grey',
   'Lime',
+  'Magenta',
 ];
 
 /**
