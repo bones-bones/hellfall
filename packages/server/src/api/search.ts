@@ -100,7 +100,7 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse, i
       res.statusCode = 200;
       if (body.num && body.num > 1) {
         const randomCards: HCCard.Any[] = [];
-        for (let i = 0; i < body.num; i++) {
+        for (let i = 0; i < Math.min(body.num, 100); i++) {
           randomCards.push(getRandom(results));
         }
         res.end(JSON.stringify({ data: randomCards, object: 'list' }));
