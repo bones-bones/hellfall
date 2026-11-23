@@ -41,7 +41,6 @@ export const AddCardPage = () => {
   const canAdd = Boolean(user?.isAdmin || user?.isContributor) && Boolean(baseUrl);
 
   const [kind, setKind] = useState<'card' | 'token'>('card');
-  const [hcid, setHcid] = useState('');
   const stub = useMemo(() => makeStubCard(kind), [kind]);
 
   if (!user) {
@@ -69,13 +68,7 @@ export const AddCardPage = () => {
       <Heading size="medium">Add card</Heading>
       <FormField orientation="vertical">
         <Label>Kind</Label>
-        <KindSelect
-          value={kind}
-          onChange={e => {
-            setKind(e.target.value as 'card' | 'token');
-            setHcid('');
-          }}
-        >
+        <KindSelect value={kind} onChange={e => setKind(e.target.value as 'card' | 'token')}>
           <option value="card">Card</option>
           <option value="token">Token</option>
         </KindSelect>
@@ -84,8 +77,6 @@ export const AddCardPage = () => {
         key={stub.id}
         mode="create"
         card={stub}
-        hcid={hcid}
-        onHcidChange={setHcid}
         hideChrome
         onClose={() => navigate('/review')}
         onSubmitted={() => navigate('/review?status=pending')}
