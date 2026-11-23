@@ -62,17 +62,17 @@ export const ROOT_FIELD_CONFIGS: FieldConfig[] = [
     readOnly: true,
     explanation: 'Sum of side colors (edit colors on each face).',
   },
-  { key: 'image', label: 'Image URL', type: 'string', readOnly: true },
+  { key: 'image', label: 'Image', type: 'string', readOnly: true },
   {
     key: 'still_image',
-    label: 'Still Image URL',
+    label: 'Still Image',
     type: 'string',
     readOnly: true,
     explanation: 'Use this for animated cards.',
   },
   {
     key: 'rotated_image',
-    label: 'Rotated Image URL',
+    label: 'Rotated Image',
     type: 'string',
     readOnly: true,
     explanation: 'Use this for rotating cards into a draftable position (aka split cards).',
@@ -83,9 +83,9 @@ export const ROOT_FIELD_CONFIGS: FieldConfig[] = [
     type: 'enum',
     enumValues: Object.values(HCImageStatus),
   },
-  { key: 'print_image', label: 'Print Image URL', type: 'string', readOnly: true },
-  { key: 'still_print_image', label: 'Still Print Image URL', type: 'string', readOnly: true },
-  { key: 'rotated_print_image', label: 'Rotated Print Image URL', type: 'string', readOnly: true },
+  { key: 'print_image', label: 'Print Image', type: 'string', readOnly: true },
+  { key: 'still_print_image', label: 'Still Print Image', type: 'string', readOnly: true },
+  { key: 'rotated_print_image', label: 'Rotated Print Image', type: 'string', readOnly: true },
   {
     key: 'print_image_status',
     label: 'Print Image Status',
@@ -451,6 +451,8 @@ export function buildCardFromCreateForm(
     delete (card as { hcid?: string }).hcid;
   }
 
+  card.visibility = 'pending';
+
   if (card.image && (!card.image_status || card.image_status === HCImageStatus.Missing)) {
     card.image_status = HCImageStatus.HighRes;
   }
@@ -466,7 +468,7 @@ export function createFormMissingRequired(
 ): string | null {
   if (!form.root.name?.trim()) return 'Name is required';
   if (!form.root.creators?.trim()) return 'Creators are required';
-  if (!form.root.image?.trim()) return 'Image URL is required';
+  if (!form.root.image?.trim()) return 'Image is required';
   if (kind !== 'token' && !form.root.set?.trim()) return 'Set is required';
   return null;
 }

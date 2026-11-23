@@ -65,20 +65,82 @@ function readChangeDisplayValue(card: HCCard.Any, change: anyChange): unknown {
   }
 }
 
+function isEmptyDiffValue(value: unknown): boolean {
+  if (value == null) return true;
+  if (typeof value === 'string') return !value.trim();
+  if (Array.isArray(value)) return value.length === 0;
+  if (typeof value === 'object') return Object.keys(value as object).length === 0;
+  return false;
+}
+
+const CREATE_DIFF_SKIP = new Set([
+  'object',
+  'toJSON',
+  'id',
+  'oracle_id',
+  'id_is_scryfall',
+  'oracle_id_is_scryfall',
+  'has_default_id',
+  'tags',
+  'tag_notes',
+  'base_tags',
+]);
+
+function pushCreateRow(rows: ChangesetDiffRow[], field: string, after: unknown) {
+  if (isEmptyDiffValue(after)) return;
+  rows.push({ field, before: undefined, after });
+}
+
 function cardDocumentDiffRows(
   card: HCCard.Any | null,
   change: Extract<anyChange, { location: 'card' }>
 ): ChangesetDiffRow[] {
   if (change.change_type === 'add' && change.card) {
     const payload = change.card;
-    return [
+    const rows: ChangesetDiffRow[] = [
       { field: 'Create card', before: undefined, after: payload.name },
-      { field: 'Set', before: undefined, after: payload.set },
-      { field: 'Creators', before: undefined, after: payload.creators },
-      { field: 'Kind', before: undefined, after: payload.kind },
-      { field: 'Image', before: undefined, after: payload.image },
-      { field: 'HCID', before: undefined, after: payload.hcid },
     ];
+    pushCreateRow(rows, 'Visibility', payload.visibility ?? 'pending');
+    pushCreateRow(rows, 'Set', payload.set);
+    pushCreateRow(rows, 'Creators', payload.creators);
+    pushCreateRow(rows, 'Kind', payload.kind);
+    pushCreateRow(rows, 'HCID', payload.hcid);
+    pushCreateRow(rows, 'Image', payload.image);
+
+    const rootShown = new Set([
+      'name',
+      'set',
+      'creators',
+      'kind',
+      'hcid',
+      'image',
+      'visibility',
+      'card_faces',
+      'all_parts',
+    ]);
+    for (const [key, value] of Object.entries(payload as Record<string, unknown>)) {
+      if (CREATE_DIFF_SKIP.has(key) || rootShown.has(key)) continue;
+      pushCreateRow(rows, humanizeField(key), value);
+    }
+
+    if ('card_faces' in payload && Array.isArray(payload.card_faces)) {
+      payload.card_faces.forEach((face, index) => {
+        for (const [key, value] of Object.entries(face as Record<string, unknown>)) {
+          if (CREATE_DIFF_SKIP.has(key) || key === 'object') continue;
+          pushCreateRow(rows, `${humanizeField(key)} (face ${index + 1})`, value);
+        }
+      });
+    }
+
+    if (payload.all_parts?.length) {
+      pushCreateRow(
+        rows,
+        'Related cards',
+        payload.all_parts.map(p => p.name ?? p.hcid ?? p.id)
+      );
+    }
+
+    return rows;
   }
   if (change.change_type === 'delete' && card) {
     return [
@@ -123,7 +185,6 @@ export function getChangesetDiffRows(
     });
     applyChanges(working, [change]);
   }
-
   return rows;
 }
 
