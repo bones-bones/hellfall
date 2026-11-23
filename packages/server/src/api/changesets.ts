@@ -46,6 +46,18 @@ function timestampToIso(ts: Timestamp | null | undefined): string | null {
   return ts.toDate().toISOString();
 }
 
+/** Persist accept resolution so the review "accepted" filter and audit trail keep the doc. */
+async function markChangesetAccepted(
+  changesetId: string,
+  auth: { userId: string; username: string }
+): Promise<void> {
+  await changesetsCol.doc(changesetId).update({
+    status: 'accepted',
+    resolvedAt: FieldValue.serverTimestamp(),
+    resolvedBy: { userId: auth.userId, username: auth.username },
+  });
+}
+
 function serializeChangeset(data: Changeset, docId?: string, diff?: Changeset['diff']): Changeset {
   return {
     id: data.id || docId || '',
@@ -399,7 +411,7 @@ async function acceptCardDocumentChangeset(
     );
 
     await cardRef.delete();
-    await changesetsCol.doc(changesetId).delete();
+    await markChangesetAccepted(changesetId, auth);
     scheduleCatalogPublish();
     res.statusCode = 200;
     res.end(JSON.stringify({ ok: true, status: 'accepted' }));
@@ -415,7 +427,7 @@ async function acceptCardDocumentChangeset(
     changes: { before: { changesetId, submittedBy: cs.submittedBy }, after: cs.changes },
   });
 
-  await changesetsCol.doc(changesetId).delete();
+  await markChangesetAccepted(changesetId, auth);
   scheduleCatalogPublish();
   res.statusCode = 200;
   res.end(JSON.stringify({ ok: true, status: 'accepted' }));
@@ -472,7 +484,7 @@ async function acceptChangeset(
     changes: { before: { changesetId, submittedBy: cs.submittedBy }, after: cs.changes },
   });
 
-  await changesetsCol.doc(changesetId).delete();
+  await markChangesetAccepted(changesetId, auth);
   scheduleCatalogPublish();
 
   res.statusCode = 200;
