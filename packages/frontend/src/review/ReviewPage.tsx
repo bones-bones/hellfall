@@ -220,6 +220,8 @@ export const ReviewPage = () => {
     setBulkBusy(true);
     setBulkError(null);
     const ids = Array.from(selectedIds);
+    // Parallel accepts are fine: HCIDs are minted at create-time into pending docs.
+    // Mint itself is check-then-write (best-effort); collisions are accepted for now.
     const results = await Promise.allSettled(
       ids.map(id =>
         fetch(`${baseUrl}/api/changesets/${id}/accept`, {

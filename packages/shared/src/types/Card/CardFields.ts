@@ -13,6 +13,7 @@ import {
   // HCImageUris,
   // HCLanguageCode,
   HCLayout,
+  HCVisibility,
   HCLayoutGroup,
   HCLegalitiesField,
   // HCPrices,
@@ -72,6 +73,10 @@ export namespace HCCardFields.Core {
      * the old unique ID for this card in HC's database.
      */
     hcid: string;
+    /**
+     * Catalog visibility. Absent or `live` = published; `pending` = hidden until changeset accept.
+     */
+    visibility?: HCVisibility;
     /**
      * Whether this card has the default id for its name.
      * This is specifically to make streaming easier.

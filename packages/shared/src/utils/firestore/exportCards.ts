@@ -56,6 +56,9 @@ export async function loadHellscubeCatalogCards(
   const cards: HCCard.Any[] = [];
   for (const doc of snapshot.docs) {
     const data = doc.data() as firestoreCard;
+    if (data.visibility === 'pending') {
+      continue;
+    }
     if (data.object !== 'card' && !(typeof data.name === 'string' && data.name.length > 0)) {
       continue;
     }
