@@ -27,14 +27,21 @@ function shouldHideUnlessType(requiredType: string): NonNullable<FieldConfig['sh
     !getFaceTypes(card, faceIndex, faceFields).includes(requiredType);
 }
 
+/**
+ * Face edit fields.
+ * "Database" mirrors Google Sheet Database columns (incl. N* multi-face cols);
+ * "Optional" is tags/print/layout extras.
+ */
 export const FACE_FIELD_CONFIGS: FieldConfigEntry[] = [
-  { section: 'Name' },
+  { section: 'Database' },
   { key: 'name', label: 'Face Name', type: 'string' },
-  { key: 'flavor_name', label: 'Flavor Name', type: 'string' },
-  { key: 'export_name', label: 'Export Name', type: 'string' },
-  { key: 'layout', label: 'Layout', type: 'enum', enumValues: Object.values(HCLayout) },
-
-  { section: 'Mana Cost' },
+  {
+    key: 'mana_cost',
+    label: 'Mana Cost',
+    type: 'string',
+    explanation:
+      'Brace-enclosed symbols only, e.g. {2}{B}{B}, {G/U}, {X}. Leave empty for lands. Use // between faces if needed.',
+  },
   { key: 'mana_value', label: 'Mana Value', type: 'number' },
   {
     key: 'colors',
@@ -44,15 +51,6 @@ export const FACE_FIELD_CONFIGS: FieldConfigEntry[] = [
     explanation: 'Select color codes (W, U, B, R, G, P, C, or named misc colors).',
   },
   {
-    key: 'mana_cost',
-    label: 'Mana Cost',
-    type: 'string',
-    explanation:
-      'Brace-enclosed symbols only, e.g. {2}{B}{B}, {G/U}, {X}. Leave empty for lands. Use // between faces if needed.',
-  },
-
-  { section: 'Types' },
-  {
     key: 'supertypes',
     label: 'Supertypes',
     type: 'semicolon-list',
@@ -60,12 +58,8 @@ export const FACE_FIELD_CONFIGS: FieldConfigEntry[] = [
   },
   { key: 'types', label: 'Types', type: 'semicolon-list', explanation: '; seperated list' },
   { key: 'subtypes', label: 'Subtypes', type: 'semicolon-list', explanation: '; seperated list' },
-
-  { section: 'Text' },
   { key: 'oracle_text', label: 'Oracle Text', type: 'textarea' },
   { key: 'flavor_text', label: 'Flavor Text', type: 'textarea' },
-
-  { section: 'Stats' },
   { key: 'power', label: 'Power', type: 'string' },
   { key: 'toughness', label: 'Toughness', type: 'string' },
   {
@@ -75,6 +69,12 @@ export const FACE_FIELD_CONFIGS: FieldConfigEntry[] = [
     shouldHide: shouldHideUnlessType('Planeswalker'),
   },
   { key: 'defense', label: 'Defense', type: 'string', shouldHide: shouldHideUnlessType('Battle') },
+  { key: 'image', label: 'Image URL', type: 'string', readOnly: true },
+
+  { section: 'Optional', collapsed: true },
+  { key: 'flavor_name', label: 'Flavor Name', type: 'string' },
+  { key: 'export_name', label: 'Export Name', type: 'string' },
+  { key: 'layout', label: 'Layout', type: 'enum', enumValues: Object.values(HCLayout) },
   {
     key: 'hand_modifier',
     label: 'Hand Modifier',
@@ -93,8 +93,6 @@ export const FACE_FIELD_CONFIGS: FieldConfigEntry[] = [
     type: 'string',
     shouldHide: shouldHideUnlessType('Attraction'),
   },
-
-  { section: 'Image' },
   {
     key: 'image_status',
     label: 'Image Status',
@@ -102,12 +100,8 @@ export const FACE_FIELD_CONFIGS: FieldConfigEntry[] = [
     enumValues: Object.values(HCImageStatus),
     explanation: 'Common values will be highres, medres, inset (for adventures), and jank.',
   },
-  { key: 'image', label: 'Image URL', type: 'string', readOnly: true },
   { key: 'still_image', label: 'Still Image URL', type: 'string', readOnly: true },
   { key: 'rotated_image', label: 'Rotated Image URL', type: 'string', readOnly: true },
-
-  { section: 'Frame' },
-
   {
     key: 'color_indicator',
     label: 'Color Indicator',
@@ -125,8 +119,6 @@ export const FACE_FIELD_CONFIGS: FieldConfigEntry[] = [
   { key: 'frame', label: 'Frame', type: 'enum', enumValues: Object.values(HCFrame) },
   { key: 'frame_effects', label: 'Frame Effects', type: 'semicolon-list' },
   { key: 'watermark', label: 'Watermark', type: 'string' },
-
-  { section: 'Advanced' },
   { key: 'compress_face', label: 'Compress Face', type: 'boolean' },
   {
     key: 'drop_face',

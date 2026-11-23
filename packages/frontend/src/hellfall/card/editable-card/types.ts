@@ -13,6 +13,8 @@ export type FieldConfig = {
 
 export type FieldSection = {
   section: string;
+  /** When true, the edit UI may collapse this group by default. */
+  collapsed?: boolean;
 };
 
 export type FieldConfigEntry = FieldConfig | FieldSection;
@@ -27,6 +29,7 @@ export function getFieldConfigs(entries: readonly FieldConfigEntry[]): FieldConf
 
 export type FieldConfigGroup = {
   label?: string;
+  collapsed?: boolean;
   fields: FieldConfig[];
 };
 
@@ -41,7 +44,7 @@ export function groupFieldConfigs(entries: readonly FieldConfigEntry[]): FieldCo
       if (current.fields.length > 0) {
         groups.push(current);
       }
-      current = { label: entry.section, fields: [] };
+      current = { label: entry.section, collapsed: entry.collapsed, fields: [] };
     }
   }
   if (current.fields.length > 0) {

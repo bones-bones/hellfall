@@ -28,7 +28,7 @@ import {
 import {
   DEFAULT_LEGALITIES,
   LEGALITY_FORMAT_LABELS,
-  ROOT_FIELD_CONFIGS,
+  ROOT_FIELD_ENTRIES,
   buildCardFromCreateForm,
   buildEditFormState,
   buildChangesFromForm,
@@ -36,7 +36,7 @@ import {
   sumFaceColors,
 } from './cardEditFields.ts';
 import { useSyncPendingChangesets } from '../../hooks/usePendingChangesets.ts';
-import { EditFormState, FieldConfig, groupFieldConfigs } from './types.ts';
+import { EditFormState, FieldConfig, FieldConfigGroup, groupFieldConfigs } from './types.ts';
 import { addPendingFace } from './faces/addPendingFace.ts';
 import { FACE_FIELD_CONFIGS } from './constants.ts';
 import { getInvalidFields, isFieldValueInvalid } from './fieldValidation.ts';
@@ -54,8 +54,6 @@ const IMAGE_URL_KEYS = new Set<ImageTarget['imageProp']>([
   'rotated_print_image',
 ]);
 
-const COLLAPSED_NAME_KEYS = new Set(['flavor_name', 'export_name']);
-
 const ORACLE_TEXT_CHARS = [
   { char: '—', label: 'em dash' },
   { char: '•', label: 'bullet' },
@@ -63,19 +61,6 @@ const ORACLE_TEXT_CHARS = [
 
 function isImageUrlKey(key: string): key is ImageTarget['imageProp'] {
   return IMAGE_URL_KEYS.has(key as ImageTarget['imageProp']);
-}
-
-function partitionCollapsedNameFields(fields: FieldConfig[]): {
-  main: FieldConfig[];
-  collapsed: FieldConfig[];
-} {
-  const main: FieldConfig[] = [];
-  const collapsed: FieldConfig[] = [];
-  for (const cfg of fields) {
-    if (COLLAPSED_NAME_KEYS.has(cfg.key)) collapsed.push(cfg);
-    else main.push(cfg);
-  }
-  return { main, collapsed };
 }
 
 export const CardEditPanel = ({
@@ -302,44 +287,20 @@ export const CardEditPanel = ({
                   !cfg.shouldHide?.(card, activeFace, form.faces[activeFace] ?? {})
               );
               if (visibleFields.length === 0) return null;
-              const { main, collapsed } = partitionCollapsedNameFields(visibleFields);
               return (
-                <div key={group.label ?? 'default'}>
-                  {group.label && <SubSectionTitle>{group.label}</SubSectionTitle>}
-                  <FieldsGrid>
-                    {main.map(cfg => (
-                      <FieldEditor
-                        key={`${activeFace}-${cfg.key}`}
-                        config={cfg}
-                        value={form.faces[activeFace]?.[cfg.key] ?? ''}
-                        changed={
-                          (form.faces[activeFace]?.[cfg.key] ?? '') !==
-                          (original.faces[activeFace]?.[cfg.key] ?? '')
-                        }
-                        invalid={isFieldValueInvalid(cfg, form.faces[activeFace]?.[cfg.key] ?? '')}
-                        cardId={card.id}
-                        faceIndex={activeFace}
-                        rootImageUrl={form.root.image ?? ''}
-                        cardName={form.root.name ?? ''}
-                        editableImages={isCreate}
-                        allowInitialUpload={isCreate}
-                        onChange={v => setFaceField(activeFace, cfg.key, v)}
-                      />
-                    ))}
-                    <CollapsibleNameFields
-                      fields={collapsed}
-                      values={form.faces[activeFace] ?? {}}
-                      originals={original.faces[activeFace] ?? {}}
-                      cardId={card.id}
-                      faceIndex={activeFace}
-                      rootImageUrl={form.root.image ?? ''}
-                      cardName={form.root.name ?? ''}
-                      editableImages={isCreate}
-                      allowInitialUpload={isCreate}
-                      onChange={(key, v) => setFaceField(activeFace, key, v)}
-                    />
-                  </FieldsGrid>
-                </div>
+                <FieldGroup
+                  key={group.label ?? 'default'}
+                  group={{ ...group, fields: visibleFields }}
+                  values={form.faces[activeFace] ?? {}}
+                  originals={original.faces[activeFace] ?? {}}
+                  cardId={card.id}
+                  faceIndex={activeFace}
+                  rootImageUrl={form.root.image ?? ''}
+                  cardName={form.root.name ?? ''}
+                  editableImages={isCreate}
+                  allowInitialUpload={isCreate}
+                  onChange={(key, v) => setFaceField(activeFace, key, v)}
+                />
               );
             })}
           </FacePanel>
@@ -455,45 +416,32 @@ function RootFields({
   editableImages?: boolean;
   allowInitialUpload?: boolean;
 }) {
-  const { main, collapsed } = partitionCollapsedNameFields(ROOT_FIELD_CONFIGS);
   const derivedColors = sumFaceColors(form.faces);
+  const values = useMemo(
+    () => ({ ...form.root, colors: derivedColors }),
+    [form.root, derivedColors]
+  );
   return (
-    <FieldsGrid>
-      {main.map(cfg => {
-        const value = cfg.key === 'colors' ? derivedColors : form.root[cfg.key] ?? '';
-        const originalValue = original.root[cfg.key] ?? '';
-        const changed = value !== originalValue;
-        return (
-          <FieldEditor
-            key={cfg.key}
-            config={cfg}
-            value={value}
-            changed={changed}
-            invalid={isFieldValueInvalid(cfg, value)}
-            cardId={cardId}
-            cardName={form.root.name ?? ''}
-            editableImages={editableImages}
-            allowInitialUpload={allowInitialUpload}
-            onChange={v => setRootField(cfg.key, v)}
-          />
-        );
-      })}
-      <CollapsibleNameFields
-        fields={collapsed}
-        values={form.root}
-        originals={original.root}
-        cardId={cardId}
-        cardName={form.root.name ?? ''}
-        editableImages={editableImages}
-        allowInitialUpload={allowInitialUpload}
-        onChange={(key, v) => setRootField(key, v)}
-      />
-    </FieldsGrid>
+    <>
+      {groupFieldConfigs(ROOT_FIELD_ENTRIES).map(group => (
+        <FieldGroup
+          key={group.label ?? 'default'}
+          group={group}
+          values={values}
+          originals={original.root}
+          cardId={cardId}
+          cardName={form.root.name ?? ''}
+          editableImages={editableImages}
+          allowInitialUpload={allowInitialUpload}
+          onChange={(key, v) => setRootField(key, v)}
+        />
+      ))}
+    </>
   );
 }
 
-function CollapsibleNameFields({
-  fields,
+function FieldGroup({
+  group,
   values,
   originals,
   cardId,
@@ -504,7 +452,7 @@ function CollapsibleNameFields({
   allowInitialUpload = false,
   onChange,
 }: {
-  fields: FieldConfig[];
+  group: FieldConfigGroup;
   values: Record<string, string>;
   originals: Record<string, string>;
   cardId?: string;
@@ -515,9 +463,44 @@ function CollapsibleNameFields({
   allowInitialUpload?: boolean;
   onChange: (key: string, value: string) => void;
 }) {
-  const [expanded, setExpanded] = useState(false);
-  if (fields.length === 0) return null;
-  const hasValues = fields.some(cfg => (values[cfg.key] ?? '').trim() !== '');
+  const hasValues = group.fields.some(cfg => (values[cfg.key] ?? '').trim() !== '');
+  const hasChanges = group.fields.some(
+    cfg => (values[cfg.key] ?? '') !== (originals[cfg.key] ?? '')
+  );
+  const [expanded, setExpanded] = useState(() => !group.collapsed || hasValues || hasChanges);
+
+  if (group.fields.length === 0) return null;
+
+  const fields = (
+    <FieldsGrid>
+      {group.fields.map(cfg => (
+        <FieldEditor
+          key={cfg.key}
+          config={cfg}
+          value={values[cfg.key] ?? ''}
+          changed={(values[cfg.key] ?? '') !== (originals[cfg.key] ?? '')}
+          invalid={isFieldValueInvalid(cfg, values[cfg.key] ?? '')}
+          cardId={cardId}
+          faceIndex={faceIndex}
+          rootImageUrl={rootImageUrl}
+          cardName={cardName}
+          editableImages={editableImages}
+          allowInitialUpload={allowInitialUpload}
+          onChange={v => onChange(cfg.key, v)}
+        />
+      ))}
+    </FieldsGrid>
+  );
+
+  if (!group.collapsed) {
+    return (
+      <div>
+        {group.label && <SubSectionTitle>{group.label}</SubSectionTitle>}
+        {fields}
+      </div>
+    );
+  }
+
   return (
     <CollapsedBlock>
       <CollapseToggle
@@ -525,26 +508,10 @@ function CollapsibleNameFields({
         aria-expanded={expanded}
         onClick={() => setExpanded(open => !open)}
       >
-        {expanded ? '▾' : '▸'} Flavor & Export name
-        {!expanded && hasValues ? ' (set)' : ''}
+        {expanded ? '▾' : '▸'} {group.label ?? 'Optional'}
+        {!expanded && (hasChanges ? ' (changed)' : hasValues ? ' (set)' : '')}
       </CollapseToggle>
-      {expanded &&
-        fields.map(cfg => (
-          <FieldEditor
-            key={cfg.key}
-            config={cfg}
-            value={values[cfg.key] ?? ''}
-            changed={(values[cfg.key] ?? '') !== (originals[cfg.key] ?? '')}
-            invalid={isFieldValueInvalid(cfg, values[cfg.key] ?? '')}
-            cardId={cardId}
-            faceIndex={faceIndex}
-            rootImageUrl={rootImageUrl}
-            cardName={cardName}
-            editableImages={editableImages}
-            allowInitialUpload={allowInitialUpload}
-            onChange={v => onChange(cfg.key, v)}
-          />
-        ))}
+      {expanded && fields}
     </CollapsedBlock>
   );
 }
