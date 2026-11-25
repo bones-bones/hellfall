@@ -3348,7 +3348,7 @@
       "represents_mana": false
     },
     {
-      "filename": "symbols/additional/devilT.svg",
+      "filename": "symbols/additional/devilT.png",
       "symbol": "devilT",
       "english": "tap a permanent you don't control.",
       "represents_mana": false
@@ -3604,7 +3604,7 @@
       "no_shadow": true
     },
     {
-      "filename": "symbols/emoji/mummy.png",
+      "filename": "symbols/emoji/Mummy.png",
       "symbol": "mummy",
       "english": "mummy",
       "represents_mana": false,

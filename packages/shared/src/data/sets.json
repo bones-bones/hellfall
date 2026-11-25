@@ -799,7 +799,10 @@
 				"SCL_14",
         "SCL_15",
         "SCL_16",
-        "SCL_17"
+        "SCL_17",
+        "SCL_18",
+        "SCL_19", 
+        "SCL_20"
 			],
 			"card_count": 79,
 			"filename": "scl.svg"
@@ -939,10 +942,12 @@
 			"name": "Hellscube Presents: The Pile",
 			"description": "The Original Recipe: 720 Cards, No Veto Council, No Slots.",
 			"set_type": "side",
+      "released_at": "2026-11-25",
 			"child_set_codes": [
 				"HCV_PL1"
 			],
-			"card_count": 0
+			"card_count": 720,
+      "filename": "pl1.svg"
 		},
 		{
 			"object": "set",
@@ -1060,6 +1065,7 @@
 			"name": "Scube Lair Drop: Fall Fun!",
 			"description": "Fall Fun!",
 			"set_type": "lair",
+    	"released_at": "2026-11-24",
 			"parent_set_code": "SCL",
 			"card_count": 5
 		},  
@@ -1077,6 +1083,36 @@
 			"object": "set",
 			"id": "49ee792a-05c0-4b91-a183-abda39c2d152",
 			"code": "SCL_17",
+			"name": "Scube Lair Drop: ?",
+			"description": "?",
+			"set_type": "lair",
+			"parent_set_code": "SCL",
+			"card_count": 5
+		},  
+  	{
+			"object": "set",
+			"id": "e37fd268-7fc9-448d-9b4a-7336799468f6",
+			"code": "SCL_18",
+			"name": "Scube Lair Drop: ?",
+			"description": "?",
+			"set_type": "lair",
+			"parent_set_code": "SCL",
+			"card_count": 5
+		},  
+  	{
+			"object": "set",
+			"id": "acfe4219-c921-44c4-b42d-c52da47b6b49",
+			"code": "SCL_19",
+			"name": "Scube Lair Drop: ?",
+			"description": "?",
+			"set_type": "lair",
+			"parent_set_code": "SCL",
+			"card_count": 5
+		},  
+  	{
+			"object": "set",
+			"id": "06ff2148-68ed-4e3c-a944-34d24881eedb",
+			"code": "SCL_20",
 			"name": "Scube Lair Drop: ?",
 			"description": "?",
 			"set_type": "lair",
