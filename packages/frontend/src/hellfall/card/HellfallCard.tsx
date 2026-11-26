@@ -283,6 +283,19 @@ export const HellfallCard = ({
                 </SmallText>
               )}
               {displayCard.hcid && <SmallText key="hcid">Id: {displayCard.hcid}</SmallText>}
+              {displayCard.oracle_id && (
+                <SmallText key="oracle_id">
+                  Oracle Id:{' '}
+                  <Link
+                    to={`/?${new URLSearchParams([
+                      ['q', `oracleid:${displayCard.oracle_id}`],
+                    ]).toString()}`}
+                    target="_blank"
+                  >
+                    {displayCard.oracle_id}
+                  </Link>
+                </SmallText>
+              )}
               {
                 <>
                   <SetLegality legality={displayCard.legalities.standard} /> Constructed

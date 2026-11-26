@@ -54,6 +54,9 @@ const IMAGE_URL_KEYS = new Set<ImageTarget['imageProp']>([
   'rotated_print_image',
 ]);
 
+/** Hidden on add-card form; still available when editing. */
+const CREATE_HIDDEN_ROOT_KEYS = new Set(['accepted_order']);
+
 const ORACLE_TEXT_CHARS = [
   { char: '—', label: 'em dash' },
   { char: '•', label: 'bullet' },
@@ -246,6 +249,7 @@ export const CardEditPanel = ({
             form={form}
             original={original}
             setRootField={setRootField}
+            isCreate={isCreate}
             editableImages={isCreate}
             allowInitialUpload={isCreate}
           />
@@ -406,6 +410,7 @@ function RootFields({
   form,
   original,
   setRootField,
+  isCreate = false,
   editableImages = false,
   allowInitialUpload = false,
 }: {
@@ -413,6 +418,7 @@ function RootFields({
   form: EditFormState;
   original: EditFormState;
   setRootField: (key: string, value: string) => void;
+  isCreate?: boolean;
   editableImages?: boolean;
   allowInitialUpload?: boolean;
 }) {
@@ -423,19 +429,25 @@ function RootFields({
   );
   return (
     <>
-      {groupFieldConfigs(ROOT_FIELD_ENTRIES).map(group => (
-        <FieldGroup
-          key={group.label ?? 'default'}
-          group={group}
-          values={values}
-          originals={original.root}
-          cardId={cardId}
-          cardName={form.root.name ?? ''}
-          editableImages={editableImages}
-          allowInitialUpload={allowInitialUpload}
-          onChange={(key, v) => setRootField(key, v)}
-        />
-      ))}
+      {groupFieldConfigs(ROOT_FIELD_ENTRIES).map(group => {
+        const visibleGroup: FieldConfigGroup = {
+          ...group,
+          fields: group.fields.filter(cfg => !isCreate || !CREATE_HIDDEN_ROOT_KEYS.has(cfg.key)),
+        };
+        return (
+          <FieldGroup
+            key={group.label ?? 'default'}
+            group={visibleGroup}
+            values={values}
+            originals={original.root}
+            cardId={cardId}
+            cardName={form.root.name ?? ''}
+            editableImages={editableImages}
+            allowInitialUpload={allowInitialUpload}
+            onChange={(key, v) => setRootField(key, v)}
+          />
+        );
+      })}
     </>
   );
 }

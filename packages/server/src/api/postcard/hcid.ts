@@ -108,7 +108,11 @@ export async function mintTokenHcid(cardsCol: cardsCollection, baseName: string)
   }
 }
 
-/** Mint an HCID for a brand-new card/token document (changeset accept, etc.). */
+/**
+ * Mint an HCID for a brand-new card/token document (changeset create, etc.).
+ * Check-then-write only — parallel creates can theoretically collide; acceptable for now
+ * since mint runs inside a single request function before the Firestore write.
+ */
 export async function mintHcidForNewCard(
   cardsCol: cardsCollection,
   kind: string,

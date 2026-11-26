@@ -45,6 +45,31 @@ type RandomBody = {
   num?: number;
 };
 
+function headerString(value: string | string[] | undefined): string | null {
+  if (Array.isArray(value)) {
+    return value[0] ?? null;
+  }
+  return value ?? null;
+}
+
+function logSearchRequest(
+  req: HandlerRequest,
+  fields: {
+    q: string;
+    format: string;
+    total: number;
+    random: boolean;
+  }
+): void {
+  console.log('[cards/search]', {
+    ...fields,
+    origin: headerString(req.headers.origin),
+    referer: headerString(req.headers.referer),
+    userAgent: headerString(req.headers['user-agent']),
+    hasAuth: Boolean(req.headers.authorization),
+  });
+}
+
 const formatSearchResult = (
   idList: string[],
   cardMap: CardMap,
@@ -90,6 +115,12 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse, i
     );
 
     const results = searchCards(cardMap, query ?? '');
+    logSearchRequest(req, {
+      q: query ?? '',
+      format,
+      total: results.length,
+      random: Boolean(isRandom),
+    });
     if (isRandom) {
       const body = (await readJsonBody(req)) as RandomBody;
       if (!results.length) {
@@ -162,7 +193,7 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse, i
       );
     }
   } catch (error) {
-    console.error('Error serving JSON:', error);
+    console.error('[cards/search] Error serving JSON:', error);
     res.statusCode = 500;
     res.end(JSON.stringify({ error: 'Internal server error' }));
   }

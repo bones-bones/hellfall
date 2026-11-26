@@ -444,6 +444,7 @@ export const AdvancedSearch = () => {
               'HC9.0',
               'HC9.1',
               'SOH',
+              'PL1',
               'SCL',
               'HDH',
             ]}

@@ -708,6 +708,13 @@ export const cardDocumentChangeErrorMessage = (
   if (payload.kind == 'scryfall') {
     return `invalid change: cannot create scryfall cards via changeset`;
   }
+  if (
+    payload.visibility != undefined &&
+    payload.visibility != 'pending' &&
+    payload.visibility != 'live'
+  ) {
+    return `invalid change: card visibility must be pending or live`;
+  }
   if (!isValidV4UUID(payload.id)) {
     return `invalid change: card add requires a valid id`;
   }

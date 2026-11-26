@@ -17,6 +17,7 @@ import type { firestoreCard } from '@hellfall/shared/utils/firestore';
 const PAGE_SIZE = 200;
 
 function includeFirestoreDoc(data: firestoreCard): boolean {
+  if (data.visibility === 'pending') return false;
   return data.object === 'card' || (typeof data.name === 'string' && data.name.length > 0);
 }
 
