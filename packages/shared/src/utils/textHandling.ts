@@ -341,6 +341,8 @@ const costSubstitutes: [RegExp | string, string][] = [
   [/^([0134])\/\w+$/, '$1'],
   ['5/∞', '5'],
   ['∞/U', 'U'],
+  ['Yellow/Red', 'R'],
+  ['DevilT', '0'],
   [/^Yellow|Brown|Orange|Pink$/, '1'],
   ['Pink/G', 'G'],
 ];
