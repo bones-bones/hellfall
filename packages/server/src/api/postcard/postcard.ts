@@ -24,6 +24,7 @@ import {
 import { scheduleCatalogPublish } from '../../lib/publishCatalog.ts';
 import { uploadImageBase64ToGcs } from '../../lib/imageGcs.ts';
 import { cardMap } from '../cardMap.ts';
+import { resolvePostcardAcceptedOrder } from './acceptedOrder.ts';
 import { respondPostcardError } from './errors.ts';
 import { resolvePostcardHcid } from './hcid.ts';
 import { PostcardBody, PostcardKind, RollbackBody } from './types.ts';
@@ -90,7 +91,8 @@ function resolvePostcardCardId(
 }
 
 function buildStubCard(
-  body: Required<Pick<PostcardBody, 'name' | 'image' | 'creators'>> & PostcardBody
+  body: Required<Pick<PostcardBody, 'name' | 'image' | 'creators'>> & PostcardBody,
+  order: { accepted_order: string; collector_number: string }
 ): HCCard.Any {
   const kind = body.kind === 'token' ? HCKind.Token : HCKind.Card;
   const set = (kind === HCKind.Token ? 'HCT' : toSetCode(body.set ?? '') ?? body.set) as SetCode;
@@ -108,6 +110,8 @@ function buildStubCard(
       image: body.image,
       image_status: HCImageStatus.HighRes,
       creators: semiSplit(body.creators),
+      accepted_order: order.accepted_order,
+      collector_number: order.collector_number,
     },
     kind === HCKind.Token ? {} : { oracle_text: '' }
   );
@@ -178,6 +182,8 @@ type PostcardUpsertResult = {
   printId: string;
   oracle_id: string;
   hcid: string;
+  accepted_order: string;
+  collector_number: string;
   wasCreate: boolean;
   imageUrl: string;
   previous: firestoreCard | null;
@@ -189,6 +195,8 @@ function buildPostcardUpsertResult(params: {
   printId: string;
   oracle_id: string;
   hcid: string;
+  accepted_order: string;
+  collector_number: string;
   wasCreate: boolean;
   imageUrl: string;
   previous: firestoreCard | null;
@@ -206,6 +214,8 @@ function buildPostcardUpsertResult(params: {
     printId: params.printId,
     oracle_id: params.oracle_id,
     hcid: params.hcid,
+    accepted_order: params.accepted_order,
+    collector_number: params.collector_number,
     wasCreate: params.wasCreate,
     imageUrl: params.imageUrl,
     previous: params.previous,
@@ -259,6 +269,7 @@ async function upsertPostcard(body: PostcardBody) {
 
   const imageUrl = await resolveImageUrl(body, cardId);
   const bodyWithImage = { ...body, image: imageUrl };
+  const order = await resolvePostcardAcceptedOrder(body, setId, previous, cardsCol);
 
   if (existing?.exists && previous) {
     const update: cardUpdate = {
@@ -269,6 +280,10 @@ async function upsertPostcard(body: PostcardBody) {
       set: setId as SetCode,
     };
     update.hcid = hcid;
+    if (!previous.accepted_order?.trim()) {
+      update.accepted_order = order.accepted_order;
+      update.collector_number = order.collector_number;
+    }
     if (cardId !== previous.id) {
       update.id = cardId;
       if (previous.id_is_scryfall) {
@@ -291,6 +306,8 @@ async function upsertPostcard(body: PostcardBody) {
       printId: cardId,
       oracle_id,
       hcid,
+      accepted_order: order.accepted_order,
+      collector_number: order.collector_number,
       wasCreate: false,
       imageUrl,
       previous,
@@ -298,7 +315,7 @@ async function upsertPostcard(body: PostcardBody) {
     });
   }
 
-  const stub = buildStubCard({ ...bodyWithImage, kind, set: setId, hcid });
+  const stub = buildStubCard({ ...bodyWithImage, kind, set: setId, hcid }, order);
   stub.id = cardId;
   stub.oracle_id = oracle_id;
   const fireDoc = cardToFirestore(stub);
@@ -312,6 +329,8 @@ async function upsertPostcard(body: PostcardBody) {
     printId: stub.id,
     oracle_id,
     hcid: String(stub.hcid),
+    accepted_order: order.accepted_order,
+    collector_number: order.collector_number,
     wasCreate: true,
     imageUrl,
     previous: null,
@@ -385,6 +404,7 @@ export const postcardHandler = async (
       id: result.id,
       oracle_id: result.oracle_id,
       hcid: result.hcid,
+      accepted_order: result.accepted_order,
       wasCreate: result.wasCreate,
       replacedScryfallToken: result.isReplacingScryfall,
       imageUrl: result.imageUrl,
