@@ -39,20 +39,22 @@ import {
   toFaces,
 } from '@hellfall/shared/utils';
 import { pushFaceScalarChange } from './faces';
-import type { EditFormState, FieldConfig, FieldType } from './types';
+import type { EditFormState, FieldConfig, FieldConfigEntry, FieldType } from './types';
+import { getFieldConfigs } from './types';
 import { isFaceChangeable } from './faces/isFaceChangeable';
 import { isFaceDeletable } from './faces/isFaceDeleteable';
 import { parseFieldValue } from './parseFieldValue';
 import { FACE_FIELDS } from './constants';
 
-export const ROOT_FIELD_CONFIGS: FieldConfig[] = [
+/**
+ * Card-level edit fields.
+ * "Database" mirrors Google Sheet Database columns; "Optional" is tags/print/extra.
+ */
+export const ROOT_FIELD_ENTRIES: FieldConfigEntry[] = [
+  { section: 'Database' },
   { key: 'name', label: 'Name', type: 'string' },
-  { key: 'flavor_name', label: 'Flavor Name', type: 'string' },
-  { key: 'export_name', label: 'Export Name', type: 'string' },
   { key: 'set', label: 'Set', type: 'string' },
   { key: 'accepted_order', label: 'Accepted #', type: 'string' },
-  { key: 'rarity', label: 'Rarity', type: 'enum', enumValues: Object.values(HCRarity) },
-  { key: 'layout', label: 'Layout', type: 'enum', enumValues: Object.values(HCLayout) },
   { key: 'mana_value', label: 'Mana Value', type: 'number' },
   {
     key: 'colors',
@@ -62,17 +64,32 @@ export const ROOT_FIELD_CONFIGS: FieldConfig[] = [
     readOnly: true,
     explanation: 'Sum of side colors (edit colors on each face).',
   },
-  { key: 'image', label: 'Image', type: 'string', readOnly: true },
+  { key: 'image', label: 'Image URL', type: 'string', readOnly: true },
+  { key: 'creators', label: 'Creators', type: 'semicolon-list' },
+  { key: 'artists', label: 'Artists', type: 'semicolon-list' },
+  {
+    key: 'legalities',
+    label: 'Legality',
+    type: 'legalities',
+    enumValues: Object.values(HCLegality),
+  },
+  { key: 'rulings', label: 'Rulings', type: 'textarea' },
+
+  { section: 'Optional', collapsed: true },
+  { key: 'flavor_name', label: 'Flavor Name', type: 'string' },
+  { key: 'export_name', label: 'Export Name', type: 'string' },
+  { key: 'rarity', label: 'Rarity', type: 'enum', enumValues: Object.values(HCRarity) },
+  { key: 'layout', label: 'Layout', type: 'enum', enumValues: Object.values(HCLayout) },
   {
     key: 'still_image',
-    label: 'Still Image',
+    label: 'Still Image URL',
     type: 'string',
     readOnly: true,
     explanation: 'Use this for animated cards.',
   },
   {
     key: 'rotated_image',
-    label: 'Rotated Image',
+    label: 'Rotated Image URL',
     type: 'string',
     readOnly: true,
     explanation: 'Use this for rotating cards into a draftable position (aka split cards).',
@@ -83,9 +100,9 @@ export const ROOT_FIELD_CONFIGS: FieldConfig[] = [
     type: 'enum',
     enumValues: Object.values(HCImageStatus),
   },
-  { key: 'print_image', label: 'Print Image', type: 'string', readOnly: true },
-  { key: 'still_print_image', label: 'Still Print Image', type: 'string', readOnly: true },
-  { key: 'rotated_print_image', label: 'Rotated Print Image', type: 'string', readOnly: true },
+  { key: 'print_image', label: 'Print Image URL', type: 'string', readOnly: true },
+  { key: 'still_print_image', label: 'Still Print Image URL', type: 'string', readOnly: true },
+  { key: 'rotated_print_image', label: 'Rotated Print Image URL', type: 'string', readOnly: true },
   {
     key: 'print_image_status',
     label: 'Print Image Status',
@@ -109,18 +126,11 @@ export const ROOT_FIELD_CONFIGS: FieldConfig[] = [
   { key: 'frame', label: 'Frame', type: 'enum', enumValues: Object.values(HCFrame) },
   { key: 'frame_effects', label: 'Frame Effects', type: 'semicolon-list' },
   { key: 'keywords', label: 'Keywords', type: 'semicolon-list' },
-  { key: 'creators', label: 'Creators', type: 'semicolon-list' },
-  { key: 'artists', label: 'Artists', type: 'semicolon-list' },
-  {
-    key: 'legalities',
-    label: 'Legality',
-    type: 'legalities',
-    enumValues: Object.values(HCLegality),
-  },
-  { key: 'rulings', label: 'Rulings', type: 'textarea' },
   { key: 'not_directly_draftable', label: 'Not Directly Draftable', type: 'boolean' },
   { key: 'has_draft_partners', label: 'Has Draft Partners', type: 'boolean' },
 ];
+
+export const ROOT_FIELD_CONFIGS = getFieldConfigs(ROOT_FIELD_ENTRIES);
 
 export const LEGALITY_FORMAT_LABELS: Record<(typeof formatList)[number], string> = {
   standard: 'Constructed',
@@ -451,8 +461,6 @@ export function buildCardFromCreateForm(
     delete (card as { hcid?: string }).hcid;
   }
 
-  card.visibility = 'pending';
-
   if (card.image && (!card.image_status || card.image_status === HCImageStatus.Missing)) {
     card.image_status = HCImageStatus.HighRes;
   }
@@ -468,7 +476,7 @@ export function createFormMissingRequired(
 ): string | null {
   if (!form.root.name?.trim()) return 'Name is required';
   if (!form.root.creators?.trim()) return 'Creators are required';
-  if (!form.root.image?.trim()) return 'Image is required';
+  if (!form.root.image?.trim()) return 'Image URL is required';
   if (kind !== 'token' && !form.root.set?.trim()) return 'Set is required';
   return null;
 }
