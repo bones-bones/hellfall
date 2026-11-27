@@ -54,7 +54,8 @@ const CATALOG_GZIP_WRITE_OPTIONS = {
   resumable: true,
   metadata: {
     contentEncoding: 'gzip',
-    cacheControl: 'public, max-age=259200',
+    // 30d — returning browsers skip re-download; bump when catalog publish freshness matters less than egress $.
+    cacheControl: 'public, max-age=2592000',
   },
 } as const;
 

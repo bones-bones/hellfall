@@ -31,7 +31,7 @@ export const loadCardsHandler = async (
   }
 
   const headers = withCors({ 'Content-Type': 'application/json' }, req);
-  Object.assign(headers, { 'Cache-Control': 'public, max-age=' + 3 * 24 * 60 * 60 });
+  Object.assign(headers, { 'Cache-Control': 'public, max-age=' + 30 * 24 * 60 * 60 });
   Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
 
   const t0 = Date.now();
