@@ -1,5 +1,5 @@
 import { withCors, HandlerRequest, HandlerResponse, env } from './lib';
-import { cardMap } from './cardMap.ts';
+import { getCardMap } from './cardMap.ts';
 import { Firestore } from '@google-cloud/firestore';
 import {
   cardsCollection,
@@ -109,6 +109,7 @@ export async function morkHandler(req: HandlerRequest, res: HandlerResponse) {
       res.end(JSON.stringify({ ok: false, reason: 'invalid_command' }));
       return;
     }
+    const cardMap = await getCardMap();
     if (body.command == 'get_cache') {
       res.statusCode = 200;
       res.end(JSON.stringify(cardMap));

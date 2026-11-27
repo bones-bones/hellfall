@@ -1,7 +1,7 @@
 import { allSetsList, SetCode } from '@hellfall/shared/types';
 import { getAcceptedOrderSet, toSetCode } from '@hellfall/shared/utils';
 import { cardsCollection, firestoreCard } from '@hellfall/shared/utils/firestore';
-import { cardMap } from '../cardMap.ts';
+import { getCardMap } from '../cardMap.ts';
 import { PostcardBody } from './types.ts';
 
 /** Leading integer from an accepted_order / collector_number (handles variants like `38b`). */
@@ -26,7 +26,8 @@ export function setsSharingAcceptedOrder(setId: string): string[] {
   return allSetsList.filter(c => getAcceptedOrderSet(c) === orderSet);
 }
 
-function catalogMaxAcceptedOrder(setId: string): number {
+async function catalogMaxAcceptedOrder(setId: string): Promise<number> {
+  const cardMap = await getCardMap();
   const sets = setsSharingAcceptedOrder(setId).filter((c): c is SetCode =>
     allSetsList.includes(c as SetCode)
   );
@@ -64,7 +65,7 @@ async function firestoreMaxAcceptedOrder(
  */
 export async function mintAcceptedOrder(cardsCol: cardsCollection, setId: string): Promise<string> {
   const max = Math.max(
-    catalogMaxAcceptedOrder(setId),
+    await catalogMaxAcceptedOrder(setId),
     await firestoreMaxAcceptedOrder(cardsCol, setId)
   );
   return String(max + 1);

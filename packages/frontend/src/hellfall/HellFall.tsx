@@ -14,6 +14,7 @@ import {
   summaryAtom,
 } from './atoms/searchAtoms.ts';
 import { useSearchResults } from './hooks/useSearchResults.ts';
+import { useServerSearchResults } from './hooks/useServerSearchResults.ts';
 import { ControlBar } from './search-controls/ControlBar.tsx';
 import { CHUNK_SIZE } from './constants.ts';
 import { useUpdateURL } from './hooks/useUrlSync.ts';
@@ -28,8 +29,31 @@ import { PaginationBar } from './search-controls/PaginationBar.tsx';
 import { Checklist } from './display/Checklist.tsx';
 import { CardFaceContainer } from './card/hellfall-card-components/CardFace.tsx';
 import { Tooltip } from './Tooltip.tsx';
+import { canUseServerSearch } from '../auth/isServerSearchEnabled';
+import { HCCard } from '@hellfall/shared/types';
+import type { usePaginationModel } from '@workday/canvas-kit-react/pagination';
 
-export const HellFall = () => {
+type HellFallSearchModel = {
+  resultSet: HCCard.Any[];
+  totalCards: number;
+  paginationModel: ReturnType<typeof usePaginationModel>;
+  paged: boolean;
+};
+
+export const HellFall = () =>
+  canUseServerSearch() ? <HellFallServerSearch /> : <HellFallClientSearch />;
+
+const HellFallServerSearch = () => {
+  const model = useServerSearchResults();
+  return <HellFallView {...model} />;
+};
+
+const HellFallClientSearch = () => {
+  const model = useSearchResults();
+  return <HellFallView {...model} />;
+};
+
+const HellFallView = ({ resultSet, totalCards, paginationModel, paged }: HellFallSearchModel) => {
   const summary = useAtomValue(summaryAtom);
   const invalids = useAtomValue(invalidAtom);
   const query = useAtomValue(queryAtom);
@@ -40,7 +64,7 @@ export const HellFall = () => {
 
   const page = useAtomValue(pageAtom);
 
-  const { resultSet, paginationModel } = useSearchResults();
+  const pageCards = paged ? resultSet : resultSet.slice(page, page + CHUNK_SIZE);
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const inputDisplay = useAtomValue(inputDisplayAtom);
@@ -81,7 +105,7 @@ export const HellFall = () => {
       <br />
       <SearchBar alreadyOnSearch={true} />
       <Separator ref={scrollPointRef} />
-      {resultSet.length != 1 && (
+      {totalCards != 1 && (
         <>
           <ControlBar>
             <PaginationBar model={paginationModel} />
@@ -92,14 +116,14 @@ export const HellFall = () => {
 
       <Summary>
         <strong>
-          {resultSet.length == 1 ? (
-            <Link to={`/card/${encodeURIComponent(resultSet[0].hcid)}`}>Showing the one card</Link>
+          {totalCards == 1 && pageCards[0] ? (
+            <Link to={`/card/${encodeURIComponent(pageCards[0].hcid)}`}>Showing the one card</Link>
           ) : (
             `${
-              resultSet.length > CHUNK_SIZE
-                ? `${page + 1} - ${Math.min(page + CHUNK_SIZE, resultSet.length)} of `
+              totalCards > CHUNK_SIZE
+                ? `${page + 1} - ${Math.min(page + CHUNK_SIZE, totalCards)} of `
                 : ''
-            } ${resultSet.length} cards`
+            } ${totalCards} cards`
           )}
         </strong>
         {summary && ` ${summary}`}
@@ -118,20 +142,20 @@ export const HellFall = () => {
         );
       })}
 
-      {resultSet.length == 1 ? (
+      {totalCards == 1 && pageCards[0] ? (
         <Container>
           <div style={{ width: '60vw', margin: '0 auto' }}>
-            <HellfallCard data={resultSet[0]} onSinglePage={true} />
+            <HellfallCard data={pageCards[0]} onSinglePage={true} />
           </div>
         </Container>
       ) : (
         <div>
           {display == 'checklist' ? (
-            <Checklist cards={resultSet.slice(page, page + CHUNK_SIZE)} />
+            <Checklist cards={pageCards} />
           ) : display == 'text' ? (
             <Container>
               <TextGrid>
-                {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
+                {pageCards.map((entry, i) => (
                   <Card key={`${entry.id}-${i}`} cs={cardStyles}>
                     <Card.Body cs={cardBodyStyles}>
                       {toFaces(entry).map((face, j) => (
@@ -145,7 +169,7 @@ export const HellFall = () => {
           ) : display == 'full' ? (
             <Container>
               <div style={{ display: 'block', width: '100%' }}>
-                {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
+                {pageCards.map((entry, i) => (
                   <div key={`${entry.id}-${i}`}>
                     <div style={{ width: '60vw', margin: '0 auto', display: 'block' }}>
                       <HellfallCard data={entry} onSinglePage={true} />
@@ -158,7 +182,7 @@ export const HellFall = () => {
           ) : (
             <Container>
               <CardsGrid maxWidth={`${maxWidth}px`}>
-                {resultSet.slice(page, page + CHUNK_SIZE).map((entry, i) => (
+                {pageCards.map((entry, i) => (
                   <GridEntry
                     onClick={(event: React.MouseEvent<HTMLImageElement>) => {
                       if (event.button === 1 || event.metaKey || event.ctrlKey) {
@@ -186,7 +210,7 @@ export const HellFall = () => {
           )}
         </div>
       )}
-      {resultSet.length != 1 && (
+      {totalCards != 1 && (
         <>
           <Separator />
           <ControlBar>

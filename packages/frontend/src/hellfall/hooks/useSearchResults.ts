@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { usePaginationModel, getLastPage } from '@workday/canvas-kit-react/pagination';
 import { HCCard } from '@hellfall/shared/types';
 import { cardsAtom } from '../atoms/cardsAtom.ts';
-import { useAtom, useAtomValue } from 'jotai';
+import { searchPageCardsAtom } from '../atoms/searchPageCardsAtom.ts';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { queryAtom, sortAtom, pageAtom, inputUniqueAtom } from '../atoms/searchAtoms.ts';
 
 import { CHUNK_SIZE } from '../constants.ts';
@@ -18,6 +19,7 @@ export const useSearchResults = (asRandom?: boolean) => {
   const sortRules = useAtomValue(sortAtom);
   const [page, setPageAtom] = useAtom(pageAtom);
   const inputUnique = useAtomValue(inputUniqueAtom);
+  const setPageCards = useSetAtom(searchPageCardsAtom);
 
   const lastPage = getLastPage(CHUNK_SIZE, resultSet.length);
 
@@ -46,6 +48,13 @@ export const useSearchResults = (asRandom?: boolean) => {
     }
     setResultSet(tempResults);
 
+    const pageSlice = tempResults.slice(page, page + CHUNK_SIZE);
+    const map = new Map<string, HCCard.Any>();
+    for (const card of pageSlice) {
+      map.set(card.id, card);
+    }
+    setPageCards(map);
+
     const currentPageNumber = Math.floor(page / CHUNK_SIZE) + 1;
 
     if (paginationModel.state.currentPage !== currentPageNumber) {
@@ -57,5 +66,10 @@ export const useSearchResults = (asRandom?: boolean) => {
     }
   }, [query, sortRules, page, cards.size, inputUnique /*, user */]);
 
-  return { resultSet, paginationModel };
+  return {
+    resultSet,
+    totalCards: resultSet.length,
+    paginationModel,
+    paged: false as const,
+  };
 };

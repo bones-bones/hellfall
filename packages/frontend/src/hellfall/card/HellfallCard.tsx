@@ -19,9 +19,11 @@ import { Divider, Separator } from './visual-components/Divider';
 import { StyledHeading } from './visual-components/StyledHeading';
 import { MediumText, SmallLine, SmallText } from './visual-components/TextComponents.tsx';
 import { useAtomValue } from 'jotai';
-import { cardsAtom } from '../atoms/cardsAtom.ts';
+import { cardsAtom, emptyCardsAtom } from '../atoms/cardsAtom.ts';
 import { Link } from 'react-router-dom';
 import { CardFaceContainer } from './hellfall-card-components/CardFace.tsx';
+import { canUseServerSearch } from '../../auth/isServerSearchEnabled';
+import { useServerCardPrints } from '../hooks/useServerCard';
 type ImageEntry = { url: string; label: string; target: ImageTarget };
 
 const getImages = (card: HCCard.Any): ImageEntry[] => {
@@ -128,8 +130,12 @@ export const HellfallCard = ({
   const isEditingPanel = editing || editingRulings;
   const windowRef = useRef<HTMLDivElement>(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const cards = useAtomValue(cardsAtom);
-  const allPrints = cards.getAllPrints(data.oracle_id);
+  // Server search: avoid cardsAtom (full catalog). Fetch prints via API instead.
+  // Opening a card from home with server search on should not lazy-load the catalog for related prints.
+  const serverSearch = canUseServerSearch();
+  const cards = useAtomValue(serverSearch ? emptyCardsAtom : cardsAtom);
+  const serverPrints = useServerCardPrints(data.id, serverSearch);
+  const allPrints = serverSearch ? serverPrints ?? [data] : cards.getAllPrints(data.oracle_id);
 
   useEffect(() => {
     if (!windowRef.current) {

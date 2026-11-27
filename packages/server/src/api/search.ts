@@ -9,7 +9,13 @@ import {
   CardMap,
   getRandom,
 } from '@hellfall/shared/utils';
-import { cardMap } from './cardMap.ts';
+import { getCardMap } from './cardMap.ts';
+import {
+  filterOffensiveCards,
+  parseSearchPagination,
+  shouldExcludeOffensive,
+  sliceSearchResults,
+} from './searchPagination.ts';
 
 export const searchFormats = [
   'json',
@@ -106,6 +112,7 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse, i
 
     const inputSorts = typeof req.query?.order == 'string' ? [req.query?.order] : req.query?.order;
 
+    const cardMap = await getCardMap();
     const { sortObjects, invalids, summary } = parseSearchQuery(query ?? '', cardMap);
 
     const { sortList } = combineAndWinnowSorts(sortObjects, inputSorts ?? []);
@@ -114,7 +121,11 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse, i
       stripDoubleSpaces(`Invalid expression "${invalid[0]}" was ignored. ${invalid[1]}`)
     );
 
-    const results = searchCards(cardMap, query ?? '');
+    let results = searchCards(cardMap, query ?? '');
+    if (shouldExcludeOffensive(req.query)) {
+      results = filterOffensiveCards(results);
+    }
+    const pagination = parseSearchPagination(req.query);
     logSearchRequest(req, {
       q: query ?? '',
       format,
@@ -167,17 +178,23 @@ export async function searchHandler(req: HandlerRequest, res: HandlerResponse, i
       for (let i = sortList.length - 1; i >= 0; i--) {
         results.sort(sortList[i].filter);
       }
+      // Sort before slice; export formats above/below ignore pagination.
+      const page = sliceSearchResults(results, pagination);
       const response: any = {
         object: 'list',
-        total_cards: results.length,
-        details: `${results.length} card${results.length != 1 ? 's' : ''}${
+        total_cards: page.total,
+        details: `${page.total} card${page.total != 1 ? 's' : ''}${
           summary ? ` ${stripDoubleSpaces(summary)}` : ''
         }`,
       };
       if (invalidList.length) {
         response.warnings = invalidList;
       }
-      response.data = results;
+      response.data = page.data;
+      if (page.limit != null) {
+        response.offset = page.offset;
+        response.limit = page.limit;
+      }
       res.end(JSON.stringify(response, null, 2));
     } else {
       res.end(

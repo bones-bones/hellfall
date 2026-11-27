@@ -2,13 +2,15 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useKeyPress } from '../hooks';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { activeCardAtom } from './atoms/searchAtoms';
-import { cardsAtom } from './atoms/cardsAtom';
+import { cardsAtom, emptyCardsAtom } from './atoms/cardsAtom';
+import { searchPageCardsAtom } from './atoms/searchPageCardsAtom';
 import { Card, ToolbarIconButton, SidePanel, useSidePanelModel } from '@workday/canvas-kit-react';
 import { externalLinkIcon, xIcon } from '@workday/canvas-system-icons-web';
 import { HellfallCard } from './card/HellfallCard';
 import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import { createStenciledButtonDiv, createStyledDiv, StenciledButtonDivProps } from '../styling';
 import { tooltipSrcAtom } from './atoms/tooltipAtom';
+import { canUseServerSearch } from '../auth/isServerSearchEnabled';
 
 type dragCursor = 'w-resize' | 'ew-resize' | 'e-resize';
 interface ActiveCardPanelProps {
@@ -22,11 +24,18 @@ const originMap = {
 const dragField = 2;
 const minPanelWidth = 350;
 export const ActiveCardPanel = ({ origin = 'right', maxWidth }: ActiveCardPanelProps) => {
-  const cards = useAtomValue(cardsAtom);
+  // Prefer current-page results so home + server search need not download the catalog.
+  // HellfallCard fetches related prints via /api/cards/:id/prints when server search is on.
+  const serverSearch = canUseServerSearch();
+  const catalog = useAtomValue(serverSearch ? emptyCardsAtom : cardsAtom);
+  const pageCards = useAtomValue(searchPageCardsAtom);
   const escape = useKeyPress('Escape');
   const [activeCardFromAtom, setActiveCardFromAtom] = useAtom(activeCardAtom);
   const setTooltipSrc = useSetAtom(tooltipSrcAtom);
-  const activeCard = cards.get(activeCardFromAtom);
+  const activeCard =
+    (activeCardFromAtom && pageCards.get(activeCardFromAtom)) ||
+    catalog.get(activeCardFromAtom) ||
+    undefined;
   const initialTransitionState = activeCard ? 'expanded' : 'collapsed';
   const model = useSidePanelModel({ initialTransitionState });
   const scrollContainerRef = useRef<HTMLDivElement>(null);

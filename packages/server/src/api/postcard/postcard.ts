@@ -1,6 +1,7 @@
 import { FieldValue, Firestore } from '@google-cloud/firestore';
 import { HCCard, HCKind, HCImageStatus, SetCode } from '@hellfall/shared/types';
 import {
+  CardMap,
   getDefaultCard,
   isValidV4UUID,
   semiSplit,
@@ -23,7 +24,7 @@ import {
 } from '../lib/index.ts';
 import { scheduleCatalogPublish } from '../../lib/publishCatalog.ts';
 import { uploadImageBase64ToGcs } from '../../lib/imageGcs.ts';
-import { cardMap } from '../cardMap.ts';
+import { getCardMap } from '../cardMap.ts';
 import { resolvePostcardAcceptedOrder } from './acceptedOrder.ts';
 import { respondPostcardError } from './errors.ts';
 import { resolvePostcardHcid } from './hcid.ts';
@@ -79,7 +80,8 @@ const newUnlessValid = (id?: string) => (id && isValidV4UUID(id) ? id : newCardI
 function resolvePostcardCardId(
   body: PostcardBody,
   // existing: { id: string; data: () => firestoreCard | undefined } | null,
-  previous: firestoreCard | null
+  previous: firestoreCard | null,
+  cardMap: CardMap
 ): string {
   if (previous?.id) {
     return newUnlessValid(previous.id);
@@ -126,7 +128,7 @@ function buildStubCard(
 }
 
 /** Trailing `(Alias Name)` — only used when the paren text matches a real card. */
-function oracleIdFromTrailingParenAlias(name: string): string | undefined {
+function oracleIdFromTrailingParenAlias(name: string, cardMap: CardMap): string | undefined {
   const match = name.match(/\(([^()]+)\)\s*$/);
   if (!match) {
     return undefined;
@@ -140,12 +142,16 @@ function oracleIdFromTrailingParenAlias(name: string): string | undefined {
 }
 
 /** Reuse previous / catalog / Firestore oracle_id; mint only when truly new. */
-function resolvePostcardOracleId(body: PostcardBody, previous: firestoreCard | null): string {
+function resolvePostcardOracleId(
+  body: PostcardBody,
+  previous: firestoreCard | null,
+  cardMap: CardMap
+): string {
   if (previous?.oracle_id) {
     return newUnlessValid(previous.oracle_id);
   }
   const { name, code } = splitMasterpiecePostcard(body.name ?? '');
-  const fromAlias = oracleIdFromTrailingParenAlias(name);
+  const fromAlias = oracleIdFromTrailingParenAlias(name, cardMap);
   if (fromAlias) {
     return fromAlias;
   }
@@ -264,8 +270,9 @@ async function upsertPostcard(body: PostcardBody) {
     previous.set == 'SFT' &&
     setId == 'HCT' &&
     kind == 'token';
-  const cardId = isReplacingScryfall ? newCardId() : resolvePostcardCardId(body, previous);
-  const oracle_id = resolvePostcardOracleId(body, previous);
+  const cardMap = await getCardMap();
+  const cardId = isReplacingScryfall ? newCardId() : resolvePostcardCardId(body, previous, cardMap);
+  const oracle_id = resolvePostcardOracleId(body, previous, cardMap);
 
   const imageUrl = await resolveImageUrl(body, cardId);
   const bodyWithImage = { ...body, image: imageUrl };
