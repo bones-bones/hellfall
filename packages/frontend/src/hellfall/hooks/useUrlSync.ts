@@ -27,7 +27,8 @@ import {
   uniqueType,
 } from '@hellfall/shared/filters';
 import { arbAreEqual, equalityFunction, listsAreExactlyEqual } from '@hellfall/shared/utils';
-import { cardsAtom } from '../atoms/cardsAtom.ts';
+import { cardsAtom, emptyCardsAtom } from '../atoms/cardsAtom.ts';
+import { canUseServerSearch } from '../../auth/isServerSearchEnabled';
 // import { useAuth } from '../../auth/AuthContext.tsx';
 // @circular-ignore Used only for links
 import { ControlBar } from '../search-controls/ControlBar'; // used for link
@@ -63,7 +64,9 @@ export const useUrlSync = () => {
   const setTooltipSrc = useSetAtom(tooltipSrcAtom);
   const [summary, setSummary] = useAtom(summaryAtom);
   const [invalids, setInvalids] = useAtom(invalidAtom);
-  const cards = useAtomValue(cardsAtom);
+  // Server search: do not read cardsAtom (would eager-load the full catalog on every page).
+  const serverSearch = canUseServerSearch();
+  const cards = useAtomValue(serverSearch ? emptyCardsAtom : cardsAtom);
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const newQuery = params.get(/* asRandom ? 'random':  */ 'q') || '';
@@ -108,11 +111,14 @@ export const useUrlSync = () => {
     if (!listsAreExactlyEqual(inputSorts, newInputs)) {
       setInputSorts(newInputs);
     }
-    if (summary != parsedQuery.summary) {
-      setSummary(parsedQuery.summary);
-    }
-    if (!listsAreExactlyEqual(invalids, parsedQuery.invalids)) {
-      setInvalids(parsedQuery.invalids);
+    // summary/invalids come from /api/cards/search when server search is on
+    if (!serverSearch) {
+      if (summary != parsedQuery.summary) {
+        setSummary(parsedQuery.summary);
+      }
+      if (!listsAreExactlyEqual(invalids, parsedQuery.invalids)) {
+        setInvalids(parsedQuery.invalids);
+      }
     }
     // Set pagination
     if (page != parseInt(params.get('page') || '0')) {

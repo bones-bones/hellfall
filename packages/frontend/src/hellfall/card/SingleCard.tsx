@@ -13,17 +13,66 @@ import { createStyledDiv, createStyledHR } from '../../styling';
 import { Tooltip } from '../Tooltip.tsx';
 import { useKeyPress } from '../../hooks/useKeyPress.ts';
 import { tooltipSrcAtom } from '../atoms/tooltipAtom.ts';
+import { HCCard } from '@hellfall/shared/types';
+import { canUseServerSearch } from '../../auth/isServerSearchEnabled';
+import { useServerCard, useServerSearchTotal } from '../hooks/useServerCard';
 
+/** Client-catalog path: resolves the card from cardsAtom (loads full catalog). */
 export const SingleCard = () => {
+  if (canUseServerSearch()) {
+    return <ServerSingleCard />;
+  }
+  return <ClientSingleCard />;
+};
+
+const ClientSingleCard = () => {
   const cards = useAtomValue(cardsAtom);
   const { '*': cardId } = useParams();
+  const entryToRender = cards?.getFromHCID(cardId ?? '');
+  const { resultSet } = useSearchResults(true);
 
+  return (
+    <SingleCardView
+      entryToRender={entryToRender}
+      catalogReady={Boolean(cards.size)}
+      resultCount={resultSet.length}
+    />
+  );
+};
+
+/**
+ * Server-search path: fetch by HCID from the API; do not read cardsAtom.
+ */
+const ServerSingleCard = () => {
+  const { '*': cardId } = useParams();
+  const identifier = cardId ? decodeURIComponent(cardId) : undefined;
+  const { card, loading } = useServerCard(identifier);
+  const query = useAtomValue(queryAtom);
+  const resultCount = useServerSearchTotal(query);
+
+  return (
+    <SingleCardView
+      entryToRender={card ?? undefined}
+      catalogReady={!loading}
+      resultCount={resultCount ?? undefined}
+    />
+  );
+};
+
+export const SingleCardView = ({
+  entryToRender,
+  catalogReady = true,
+  resultCount,
+}: {
+  entryToRender: HCCard.Any | undefined;
+  /** False while the catalog or server fetch is still loading. */
+  catalogReady?: boolean;
+  resultCount?: number;
+}) => {
   const summary = useAtomValue(summaryAtom);
   const invalids = useAtomValue(invalidAtom);
   const query = useAtomValue(queryAtom);
-  const entryToRender = cards?.getFromHCID(cardId ?? '');
-
-  const { resultSet } = useSearchResults(true);
+  const { '*': cardId } = useParams();
 
   useUpdateURL(true);
   useEffect(() => {
@@ -44,7 +93,7 @@ export const SingleCard = () => {
 
   return (
     <div>
-      {!cards.size ? (
+      {!catalogReady ? (
         <></>
       ) : !entryToRender ? (
         <h2>Nothing was found...</h2>
@@ -63,7 +112,9 @@ export const SingleCard = () => {
                     {query == '*' ? (
                       'all of Hellscube'
                     ) : (
-                      <Link to={`/?q=${query}`}>{resultSet.length} cards</Link>
+                      <Link to={`/?q=${query}`}>
+                        {resultCount != null ? `${resultCount} cards` : 'matching cards'}
+                      </Link>
                     )}
                   </strong>
                   {query != '*' && ` ${summary}`}.{' '}
@@ -92,13 +143,7 @@ export const SingleCard = () => {
   );
 };
 
-// const CardContainer = styled.div({
-//   // width: '60vw',
-//   // paddingTop: '50px',
-//   justifyContent: 'center',
-// });
 const containerStyles = createStyles({
-  // display: 'flex',
   justifyContent: 'center',
 });
 const Container = createStyledDiv(containerStyles, 'Container');

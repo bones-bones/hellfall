@@ -1,12 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { isUniqueMode, searchCards, toUnique } from '@hellfall/shared/filters';
+import { searchCards, toUnique } from '@hellfall/shared/filters';
 import { useAtomValue } from 'jotai';
 import { cardsAtom } from './atoms/cardsAtom';
-import { tagsData } from '@hellfall/shared/data';
-import { allExceptNormal, getRandom } from '@hellfall/shared/utils';
+import { getRandom } from '@hellfall/shared/utils';
+import { canUseServerSearch } from '../auth/isServerSearchEnabled';
+import { getAuthApiUrl } from '../auth/getAuthApiUrl';
+import { HCCard } from '@hellfall/shared/types';
 
-export const Random = () => {
+export const Random = () => (canUseServerSearch() ? <ServerRandom /> : <ClientRandom />);
+
+const ClientRandom = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const cards = useAtomValue(cardsAtom).filterToMap(
@@ -19,8 +23,62 @@ export const Random = () => {
   const card = resultSet ? getRandom(resultSet) : cards.getRandomCard();
   useEffect(() => {
     navigate(`/card/${encodeURIComponent(card.hcid)}?q=${query || '*'}`, { replace: true });
-  }, [card, query, navigate]); // Dependencies ensure navigation happens when needed
+  }, [card, query, navigate]);
 
-  // Return null or a loading indicator while redirecting
+  return null;
+};
+
+/**
+ * Server-search path: POST/GET `/api/cards/random` instead of local CardMap.
+ */
+const ServerRandom = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [failed, setFailed] = useState(false);
+  const params = new URLSearchParams(location.search);
+  const query = params.get('q') || '';
+
+  useEffect(() => {
+    const base = getAuthApiUrl().replace(/\/$/, '');
+    if (!base) {
+      setFailed(true);
+      return;
+    }
+
+    let cancelled = false;
+    (async () => {
+      try {
+        const search = new URLSearchParams();
+        if (query) search.set('q', query);
+        search.set('exclude', 'offensive');
+        const res = await fetch(`${base}/api/cards/random?${search.toString()}`, {
+          method: 'GET',
+        });
+        if (cancelled) return;
+        if (!res.ok) {
+          setFailed(true);
+          return;
+        }
+        const card = (await res.json()) as HCCard.Any;
+        if (cancelled || !card?.hcid) {
+          setFailed(true);
+          return;
+        }
+        navigate(`/card/${encodeURIComponent(card.hcid)}?q=${encodeURIComponent(query || '*')}`, {
+          replace: true,
+        });
+      } catch {
+        if (!cancelled) setFailed(true);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [query, navigate]);
+
+  if (failed) {
+    return <h2>Nothing was found...</h2>;
+  }
   return null;
 };

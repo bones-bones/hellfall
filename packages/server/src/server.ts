@@ -17,6 +17,8 @@ import {
   catalogSyncRunHandler,
   cardJsonHandler,
   cardTextHandler,
+  cardByHcidHandler,
+  cardPrintsHandler,
   logoutHandler,
   exportHellscubeHandler,
   meHandler,
@@ -26,6 +28,7 @@ import { join } from 'node:path';
 import { gzipSync } from 'node:zlib';
 import { loadCardsHandler } from './api/loadCards.ts';
 import { warmCatalogCache, seedCatalogCacheGzip } from './lib/catalogCache.ts';
+import { warmServerCardMap } from './lib/serverCardMap.ts';
 import { postcardHandler } from './api/postcard/index.ts';
 import { replaceImageHandler } from './api/replaceImage.ts';
 
@@ -92,6 +95,22 @@ function parseCardTagsPath(
   return { cardId, tag, audit: false };
 }
 
+function parseCardPrintsPath(path: string): string | null {
+  if (!path.startsWith(CARD_API_PREFIX)) return null;
+  const rest = path.slice(CARD_API_PREFIX.length);
+  const parts = rest.split('/').filter(Boolean);
+  if (parts.length !== 2 || parts[1] !== 'prints') return null;
+  return parts[0];
+}
+
+/** `/api/cards/hcid/:hcid` — hcid may contain encoded slashes only as a single segment. */
+function parseCardHcidPath(path: string): string | null {
+  if (!path.startsWith(CARD_API_PREFIX + 'hcid/')) return null;
+  const rest = path.slice((CARD_API_PREFIX + 'hcid/').length);
+  if (!rest || rest.includes('/')) return null;
+  return rest;
+}
+
 function parseQuery(search: string | null): Record<string, string | string[]> {
   if (!search) return {};
   const params = new URLSearchParams(search);
@@ -140,9 +159,21 @@ createServer(async (incoming: IncomingMessage, res: ServerResponse) => {
       return;
     }
 
+    const cardHcid = parseCardHcidPath(path);
+    if (cardHcid) {
+      await cardByHcidHandler(req, res as HandlerResponse, cardHcid);
+      return;
+    }
+
     const cardImageId = parseCardImagePath(path);
     if (cardImageId) {
       await replaceImageHandler(req, res as HandlerResponse, cardImageId);
+      return;
+    }
+
+    const cardPrintsId = parseCardPrintsPath(path);
+    if (cardPrintsId) {
+      await cardPrintsHandler(req, res as HandlerResponse, cardPrintsId);
       return;
     }
 
@@ -170,6 +201,14 @@ createServer(async (incoming: IncomingMessage, res: ServerResponse) => {
       }
       if (cardId === 'random') {
         await searchHandler(req, res as HandlerResponse, true);
+        return;
+      }
+      // Reserved: `/api/cards/hcid/:hcid` is handled above; bare `hcid` is not a card id.
+      if (cardId === 'hcid') {
+        const headers = withCors({ 'Content-Type': 'application/json' }, req);
+        Object.entries(headers).forEach(([k, v]) => res.setHeader(k, v));
+        res.statusCode = 400;
+        res.end(JSON.stringify({ error: 'missing_hcid' }));
         return;
       }
       if (cardId === 'postcard') {
@@ -227,5 +266,7 @@ createServer(async (incoming: IncomingMessage, res: ServerResponse) => {
     console.error('bundled catalog seed failed', err);
     warmCatalogCache();
   }
+  // Lazy CardMap from GCS (or bundled fallback) — fire-and-forget after gzip seed.
+  warmServerCardMap();
   console.log(`Server at http://localhost:${PORT}`);
 });

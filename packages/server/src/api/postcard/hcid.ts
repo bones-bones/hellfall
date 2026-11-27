@@ -1,8 +1,7 @@
-import { cardsData } from '@hellfall/shared/data';
 import { isInteger, splitMasterpiecePostcard } from '@hellfall/shared/utils';
 import { cardsCollection, firestoreCard } from '@hellfall/shared/utils/firestore';
 import type { DocumentSnapshot } from '@google-cloud/firestore';
-import { cardMap } from '../cardMap.ts';
+import { getCardMap } from '../cardMap.ts';
 import { PostcardBody, PostcardKind } from './types.ts';
 
 const hcidQueryValues = (hcid: string): (string | number)[] => {
@@ -42,9 +41,10 @@ export async function findByNameAndSet(
   return matches.docs[0] ?? null;
 }
 
-function catalogMaxNumericHcid(): number {
+async function catalogMaxNumericHcid(): Promise<number> {
+  const cardMap = await getCardMap();
   let max = 0;
-  for (const card of cardsData.data) {
+  for (const card of cardMap.values()) {
     if (card.kind === 'card' && isInteger(card.hcid)) {
       max = Math.max(max, parseInt(card.hcid, 10));
     }
@@ -53,11 +53,12 @@ function catalogMaxNumericHcid(): number {
 }
 
 async function hcidIsAvailable(cardsCol: cardsCollection, hcid: string): Promise<boolean> {
+  const cardMap = await getCardMap();
   return !cardMap.hasHCID(hcid) && !(await findByHcid(cardsCol, hcid));
 }
 
 export async function mintNumericHcid(cardsCol: cardsCollection): Promise<string> {
-  let candidate = catalogMaxNumericHcid() + 1;
+  let candidate = (await catalogMaxNumericHcid()) + 1;
   for (;;) {
     const hcid = String(candidate);
     if (await hcidIsAvailable(cardsCol, hcid)) {

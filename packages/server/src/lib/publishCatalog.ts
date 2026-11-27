@@ -5,6 +5,7 @@ import {
   buildCatalogGzipFromFirestore,
   streamCatalogGzipFromFirestore,
 } from './catalogStreamExport.ts';
+import { releaseServerCardMap, reloadServerCardMap } from './serverCardMap.ts';
 
 let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 let pendingPublish = false;
@@ -29,6 +30,7 @@ export async function publishCatalogSnapshot(): Promise<CatalogPublishResult> {
   console.log(`[catalog/publish] start ${heapMb()}`);
 
   releaseCatalogCache();
+  releaseServerCardMap();
   console.log(`[catalog/publish] cache released ${heapMb()}`);
 
   const exportOptions = {
@@ -50,9 +52,10 @@ export async function publishCatalogSnapshot(): Promise<CatalogPublishResult> {
     cardCount = uploaded.cardCount;
     bytes = uploaded.bytes;
     version = uploaded.manifest.version;
-    // Leave cache empty — seeding gzip (~14MB) next to resident CardMap OOMs 512Mi.
+    // Leave catalog gzip cache empty — seeding gzip (~14MB) next to resident CardMap OOMs 512Mi.
     // Publish streams fullCache (idMap + light maps) without buffering gzip / toJSON().
-    // Next Origin /api/cards/load downloads from GCS lazily.
+    // Reload CardMap from GCS (no seedCatalogCacheGzip). Origin /api/cards/load downloads lazily.
+    await reloadServerCardMap();
     console.log(
       `[catalog/publish] gcs version=${version} cards=${cardCount} gzip=${bytes} cache=empty ${heapMb()}`
     );
@@ -61,6 +64,7 @@ export async function publishCatalogSnapshot(): Promise<CatalogPublishResult> {
     cardCount = built.cardCount;
     bytes = built.gzipBody.length;
     seedCatalogCacheGzip(built.gzipBody);
+    await reloadServerCardMap();
     console.log(`[catalog/publish] cache seeded cards=${cardCount} gzip=${bytes} ${heapMb()}`);
   }
 

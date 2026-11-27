@@ -27,4 +27,18 @@ async function loadCards(): Promise<CardMap> {
   }
 }
 
-export const cardsAtom = atom<Promise<CardMap>>(loadCards);
+/** Sync empty map for call sites that must not trigger a catalog download. */
+export const emptyCardsAtom = atom(new CardMap());
+
+let cardsPromise: Promise<CardMap> | undefined;
+
+/**
+ * Full CardMap. Fetch starts on first read (Draft, SetList, Cube, panel prints, etc.).
+ * HellFall home with server search must not read this atom.
+ */
+export const cardsAtom = atom(() => {
+  if (!cardsPromise) {
+    cardsPromise = loadCards();
+  }
+  return cardsPromise;
+});
