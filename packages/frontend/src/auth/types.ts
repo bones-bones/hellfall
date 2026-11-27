@@ -7,6 +7,8 @@ export interface AuthUser {
   email: string | null;
   isContributor: boolean;
   isAdmin: boolean;
+  /** Discord judge role — may submit rulings-only changesets. */
+  isJudge?: boolean;
   /** Publish Firestore → site catalog cache (admin or catalog-sync role). */
   canSyncCatalog?: boolean;
   /** Accept/reject pending changesets (admin or catalog-sync role). */

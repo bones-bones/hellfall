@@ -7,5 +7,6 @@ export * from './requireChangesetApproverAuth';
 export * from './requirePostcardAuth';
 export * from './requireReviewerAuth';
 export * from './requireDatabaseRoleAuth';
+export * from './requireJudgeAuth';
 export * from './session';
 export * from './types';

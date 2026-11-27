@@ -6,9 +6,9 @@ import {
   HandlerResponse,
   requireDatabaseRoleAuth,
   requireChangesetApproverAuth,
+  requireJudgeAuth,
   requireReviewerAuth,
 } from './lib';
-import {} from './lib/requireDatabaseRoleAuth.ts';
 import { recardCardChangeset } from '../lib/cardAudit.ts';
 import {
   anyChange,
@@ -115,6 +115,16 @@ function soleCardDocumentChange(changes: unknown):
   return list[0];
 }
 
+/** Judges may only submit root `rulings` add changes. */
+function isRulingsOnlyChanges(changes: unknown): boolean {
+  const list = normalizeChangeList(changes);
+  if (list.length === 0) return false;
+  return list.every(
+    change =>
+      change.location === 'root' && change.change_type === 'add' && change.prop === 'rulings'
+  );
+}
+
 async function readJsonBody(req: HandlerRequest): Promise<unknown> {
   const chunks: Buffer[] = [];
   for await (const chunk of req) chunks.push(chunk);
@@ -125,8 +135,13 @@ async function readJsonBody(req: HandlerRequest): Promise<unknown> {
 /** GET /api/changesets — list changesets, filterable by ?status= and ?cardId= */
 async function listChangesets(req: HandlerRequest, res: HandlerResponse): Promise<void> {
   const auth = await requireReviewerAuth(req, res, true);
-  const limAuth = await requireDatabaseRoleAuth(req, res);
-  if (!auth && !limAuth) return;
+  const limAuth = await requireDatabaseRoleAuth(req, res, true);
+  const judgeAuth = await requireJudgeAuth(req, res, true);
+  if (!auth && !limAuth && !judgeAuth) {
+    res.statusCode = 403;
+    res.end(JSON.stringify({ ok: false, reason: 'missing_role' }));
+    return;
+  }
 
   let query = changesetsCol.orderBy('createdAt', 'desc').limit(100);
   const status = req.query?.status;
@@ -137,8 +152,9 @@ async function listChangesets(req: HandlerRequest, res: HandlerResponse): Promis
   if (typeof cardId === 'string' && cardId) {
     query = query.where('cardId', '==', cardId);
   }
-  if (!auth && limAuth) {
-    query = query.where('submittedBy.userId', '==', limAuth.userId);
+  const ownOnlySubmitter = !auth ? limAuth ?? judgeAuth : null;
+  if (ownOnlySubmitter) {
+    query = query.where('submittedBy.userId', '==', ownOnlySubmitter.userId);
   }
 
   const snap = await query.get();
@@ -150,10 +166,13 @@ async function listChangesets(req: HandlerRequest, res: HandlerResponse): Promis
   res.end(JSON.stringify({ ok: true, changesets: items }));
 }
 
-/** POST /api/changesets — submit a new changeset (database contributors / admins only) */
+/** POST /api/changesets — submit a new changeset (contributors/admins; judges: rulings only) */
 async function createChangeset(req: HandlerRequest, res: HandlerResponse): Promise<void> {
-  const auth = await requireDatabaseRoleAuth(req, res);
-  if (!auth) {
+  const contribAuth = await requireDatabaseRoleAuth(req, res, true);
+  const judgeAuth = await requireJudgeAuth(req, res, true);
+  if (!contribAuth && !judgeAuth) {
+    res.statusCode = 403;
+    res.end(JSON.stringify({ ok: false, reason: 'missing_role' }));
     return;
   }
 
@@ -171,6 +190,20 @@ async function createChangeset(req: HandlerRequest, res: HandlerResponse): Promi
     res.end(JSON.stringify({ ok: false, reason: 'invalid_changes' }));
     return;
   }
+
+  if (!contribAuth && judgeAuth && !isRulingsOnlyChanges(body.changes)) {
+    res.statusCode = 403;
+    res.end(
+      JSON.stringify({
+        ok: false,
+        reason: 'judge_rulings_only',
+        detail: 'Judges may only submit rulings changes',
+      })
+    );
+    return;
+  }
+
+  const auth = contribAuth ?? judgeAuth!;
 
   const normalizedIncoming = normalizeChangeList(body.changes);
   const cardLocCount = normalizedIncoming.filter(c => c.location === 'card').length;

@@ -12,7 +12,7 @@ import { createStencil, createStyles } from '@workday/canvas-kit-styling';
 import { createStenciledDiv } from '../../styling';
 import { createStyledDiv, createStyledHR, createStyledPrimaryButtonLink } from '../../styling';
 import { TagSection } from './hellfall-card-components/TagSection';
-import { CardEditPanel, CardEditingControls } from './editable-card';
+import { CardEditPanel, CardEditingControls, RulingsEditPanel } from './editable-card';
 import { ImageUploadControl, type ImageTarget } from './editable-card';
 import { RelatedCards } from './hellfall-card-components/RelatedCards';
 import { Divider, Separator } from './visual-components/Divider';
@@ -98,21 +98,34 @@ export const HellfallCard = ({
   const [activeImageSide, setActiveImageSide] = useState(0);
   const [imageOverrides, setImageOverrides] = useState<Record<number, string>>({});
   const [editing, setEditing] = useState(false);
+  const [editingRulings, setEditingRulings] = useState(false);
 
   useEffect(() => {
     setEditing(false);
+    setEditingRulings(false);
   }, [displayCard.id]);
 
   useEffect(() => {
-    onEditingChange?.(editing);
-  }, [editing, onEditingChange]);
+    onEditingChange?.(editing || editingRulings);
+  }, [editing, editingRulings, onEditingChange]);
 
   const setEditingState = useCallback((next: boolean) => {
     setEditing(next);
+    if (next) setEditingRulings(false);
+  }, []);
+
+  const setEditingRulingsState = useCallback((next: boolean) => {
+    setEditingRulings(next);
+    if (next) setEditing(false);
   }, []);
 
   const isContributor = Boolean(user?.isAdmin || user?.isContributor);
+  const isJudge = Boolean(user?.isJudge);
   const canEditCard = isContributor && persistEnabled && displayCard.kind !== 'scryfall';
+  const canEditRulings =
+    !canEditCard && isJudge && persistEnabled && displayCard.kind !== 'scryfall';
+  const showPendingChanges = isContributor || isJudge;
+  const isEditingPanel = editing || editingRulings;
   const windowRef = useRef<HTMLDivElement>(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const cards = useAtomValue(cardsAtom);
@@ -136,12 +149,12 @@ export const HellfallCard = ({
     };
   }, []);
   const maxWidth = useMemo(() => {
-    if (editing) {
+    if (isEditingPanel) {
       return Math.min(windowWidth * 0.35, 280);
     }
     return Math.min(windowWidth - 10, 700);
-  }, [windowWidth, editing]);
-  const sideBySide = editing;
+  }, [windowWidth, isEditingPanel]);
+  const sideBySide = isEditingPanel;
 
   const imageEntries = useMemo(() => getImages(displayCard), [displayCard]);
   const activeEntry = imageEntries[activeImageSide];
@@ -219,7 +232,7 @@ export const HellfallCard = ({
 
   return (
     <div ref={windowRef} style={{ width: '100%' }}>
-      <Container key={displayCard.id} editing={editing} data-side-by-side={sideBySide}>
+      <Container key={displayCard.id} editing={isEditingPanel} data-side-by-side={sideBySide}>
         <PreviewSection data-side-by-side={sideBySide}>
           {imageSection}
           <Card cs={cardStyles}>
@@ -319,15 +332,17 @@ export const HellfallCard = ({
                 </>
               )}
               {
-                isContributor && (
+                showPendingChanges && (
                   <PendingChanges cardId={displayCard.id} />
-                ) /* todo: move isContributor into the component */
+                ) /* todo: move role gate into the component */
               }
-              {!editing && (
+              {!isEditingPanel && (
                 <>
                   <CardEditingControls
                     canEdit={canEditCard}
+                    canEditRulings={canEditRulings}
                     onEditStart={() => setEditingState(true)}
+                    onEditRulingsStart={() => setEditingRulingsState(true)}
                   />
                   <TagSection displayCard={displayCard} tagControls={tagControls} />
                 </>
@@ -340,7 +355,7 @@ export const HellfallCard = ({
             allPrints={allPrints ?? []}
             onSinglePage={onSinglePage}
           />
-          {!editing && (
+          {!isEditingPanel && (
             <ButtonGroup>
               <br />
               <LinkButton
@@ -364,6 +379,15 @@ export const HellfallCard = ({
               card={displayCard}
               onClose={() => setEditingState(false)}
               onSubmitted={() => setEditingState(false)}
+            />
+          </EditSection>
+        )}
+        {editingRulings && canEditRulings && (
+          <EditSection data-side-by-side={sideBySide}>
+            <RulingsEditPanel
+              card={displayCard}
+              onClose={() => setEditingRulingsState(false)}
+              onSubmitted={() => setEditingRulingsState(false)}
             />
           </EditSection>
         )}
