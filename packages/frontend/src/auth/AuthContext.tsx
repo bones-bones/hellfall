@@ -12,6 +12,7 @@ const DEFAULT_DEV_USER: AuthUser = {
   email: null,
   isContributor: true,
   isAdmin: true,
+  isJudge: true,
   canSyncCatalog: true,
   canApproveChangesets: true,
   defaultCludes: ['include:extras'],

@@ -85,6 +85,12 @@ export const env = {
     return v || undefined;
   },
 
+  /** Override judge role snowflake (defaults to JUDGE_ROLE in discord/constants.ts). */
+  get DISCORD_JUDGE_ROLE_ID(): string | undefined {
+    const v = process.env.DISCORD_JUDGE_ROLE_ID?.trim();
+    return v || undefined;
+  },
+
   /** GCS bucket for published catalog snapshots and card/token images. */
   get CATALOG_GCS_BUCKET(): string {
     const v = process.env.CATALOG_GCS_BUCKET?.trim();
