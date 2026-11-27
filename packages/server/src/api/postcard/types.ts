@@ -13,6 +13,11 @@ export type PostcardBody = {
   set?: string;
   /** Legacy HC id. Optional on ingest — hellfall mints one when omitted and returns it. */
   hcid?: string;
+  /**
+   * Accepted order within the set. Optional on ingest — hellfall mints the next
+   * unused value for the set's accepted-order bucket when omitted (and missing on the existing print).
+   */
+  accepted_order?: string;
   /** Hellfall print UUID (sheet BB). Used for GCS image keys; never use hcid for that. */
   id?: string;
   kind?: PostcardKind;

@@ -12,37 +12,48 @@ export type TagAuthUser = {
 /** Verifies session and DATABASE_CONTRIBUTOR or admin role. Returns user or sends error and returns null. */
 export const requireDatabaseRoleAuth = async (
   req: HandlerRequest,
-  res: HandlerResponse
+  res: HandlerResponse,
+  failSilently?: boolean
 ): Promise<TagAuthUser | null> => {
   const sessionPayload = await getSession(req);
   if (!sessionPayload) {
-    res.statusCode = 401;
-    res.end(JSON.stringify({ ok: false, reason: 'invalid_session' }));
+    if (!failSilently) {
+      res.statusCode = 401;
+      res.end(JSON.stringify({ ok: false, reason: 'invalid_session' }));
+    }
     return null;
   }
 
   const roleId = DATABASE_CONTRIBUTOR;
   if (!roleId) {
-    res.statusCode = 500;
-    res.end(JSON.stringify({ ok: false, reason: 'role_not_configured' }));
+    if (!failSilently) {
+      res.statusCode = 500;
+      res.end(JSON.stringify({ ok: false, reason: 'role_not_configured' }));
+    }
     return null;
   }
 
   if (!sessionPayload.discord_access_token) {
-    res.statusCode = 401;
-    res.end(JSON.stringify({ ok: false, reason: 'invalid_session' }));
+    if (!failSilently) {
+      res.statusCode = 401;
+      res.end(JSON.stringify({ ok: false, reason: 'invalid_session' }));
+    }
     return null;
   }
 
   const guild = await resolveGuildRoles(sessionPayload, res);
   if (guild.kind === 'oauth_invalid') {
-    res.statusCode = 401;
-    res.end(JSON.stringify({ ok: false, reason: 'discord_oauth_expired' }));
+    if (!failSilently) {
+      res.statusCode = 401;
+      res.end(JSON.stringify({ ok: false, reason: 'discord_oauth_expired' }));
+    }
     return null;
   }
   if (guild.kind === 'not_member') {
-    res.statusCode = 403;
-    res.end(JSON.stringify({ ok: false, reason: 'not_in_guild' }));
+    if (!failSilently) {
+      res.statusCode = 403;
+      res.end(JSON.stringify({ ok: false, reason: 'not_in_guild' }));
+    }
     return null;
   }
 
@@ -51,8 +62,10 @@ export const requireDatabaseRoleAuth = async (
   const isAdmin =
     Boolean(env.DISCORD_ADMIN_ROLE_ID) && guild.roles.includes(env.DISCORD_ADMIN_ROLE_ID);
   if (!isContributor && !isAdmin) {
-    res.statusCode = 403;
-    res.end(JSON.stringify({ ok: false, reason: 'missing_role' }));
+    if (!failSilently) {
+      res.statusCode = 403;
+      res.end(JSON.stringify({ ok: false, reason: 'missing_role' }));
+    }
     return null;
   }
 
